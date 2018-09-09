@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+	x:Class="PMS.UIManager.Views.Notifications" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:uielements="clr-namespace:PMS.UIComponents" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" xmlns:Controls0="clr-namespace:ICSharpCode.WpfDesign.Designer.Controls;assembly=ICSharpCode.WpfDesign.Designer">
+	<Grid />
+</UserControl>

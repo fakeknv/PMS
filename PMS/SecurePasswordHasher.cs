@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Linq;
 
-namespace PRMS
+namespace PMS
 {
     public sealed class SecurePasswordHasher
     {

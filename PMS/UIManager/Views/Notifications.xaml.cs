@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
-using PRMS.UIComponents;
+using PMS.UIComponents;
 
-namespace PRMS.UIManager.Views
+namespace PMS.UIManager.Views
 {
 	/// <summary>
 	/// Interaction logic for Notifications.xaml

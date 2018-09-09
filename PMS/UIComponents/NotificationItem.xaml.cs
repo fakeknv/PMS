@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace PRMS.UIComponents
+namespace PMS.UIComponents
 {
 	/// <summary>
 	/// Interaction logic for Test.xaml

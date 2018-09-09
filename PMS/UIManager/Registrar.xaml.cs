@@ -1,8 +1,8 @@
 ﻿using System;
 using MahApps.Metro.Controls;
-using PRMS.UIManager.Views;
+using PMS.UIManager.Views;
 
-namespace PRMS.UIManager
+namespace PMS.UIManager
 {
     /// <summary>
     /// Interaction logic for Registrar.xaml

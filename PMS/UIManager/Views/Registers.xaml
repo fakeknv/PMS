@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PRMS.UIManager.Views.Registers"
+﻿<UserControl x:Class="PMS.UIManager.Views.Registers"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 	<Grid>

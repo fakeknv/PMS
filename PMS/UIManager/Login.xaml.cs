@@ -6,7 +6,7 @@ using MahApps.Metro.Controls;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace PRMS.UIManager
+namespace PMS.UIManager
 {
     /// <summary>
     /// Interaction logic for LoginScreen.xaml
@@ -26,7 +26,7 @@ namespace PRMS.UIManager
             LoginSpinner.Visibility = Visibility.Visible;
             try
             {
-                string DBConnString = "Server=192.168.254.103;Database=prms_db;Uid=prms_app;Pwd=prms2018!;SslMode=none";
+                string DBConnString = "Server=192.168.254.103;Database=PMS_db;Uid=PMS_app;Pwd=PMS2018!;SslMode=none";
                 MySqlDataReader DBReader = null;
 
                 MySqlConnection DBConn = new MySqlConnection(DBConnString);

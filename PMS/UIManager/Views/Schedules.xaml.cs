@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace PRMS.UIManager.Views
+namespace PMS.UIManager.Views
 {
 	/// <summary>
 	/// Interaction logic for Schedules.xaml

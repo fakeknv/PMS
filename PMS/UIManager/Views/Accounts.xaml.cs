@@ -8,7 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace PRMS.UIManager.Views
+namespace PMS.UIManager.Views
 {
 	/// <summary>
 	/// Interaction logic for Account.xaml
