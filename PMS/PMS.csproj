@@ -137,7 +137,7 @@
     <Compile Include="UIManager\Views\Accounts.xaml.cs" />
     <Compile Include="UIManager\Views\Notifications.xaml.cs" />
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
-    <Compile Include="UIManager\Views\Schedules.xaml.cs" />
+    <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Transactions.xaml.cs" />
     <Page Include="UIComponents\NotificationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -163,7 +163,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIManager\Views\Schedules.xaml">
+    <Page Include="UIManager\Views\DirectoryOfTheDeceased.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

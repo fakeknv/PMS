@@ -4,13 +4,13 @@
 	ShowMinButton="True"
 	ShowMaxRestoreButton="True"
 	ShowCloseButton="True"
-	Height="518" 
+	Height="572" 
 	mc:Ignorable="d" 
 	BorderThickness="0"
 	GlowBrush="Black"
 	ResizeMode="CanResizeWithGrip"
 	WindowTransitionsEnabled="True"
-	Width="914"
+	Width="758"
 	ShowTitleBar="False"
 	WindowStyle="ThreeDBorderWindow"
 	Title="Registrar">
@@ -62,16 +62,14 @@
 			Foreground="White"
 			SelectedIndex="0"
 			HamburgerVisibility="Visible"
-			OpenPaneLength="220"
+			OpenPaneLength="260"
 			DisplayMode="CompactInline"
 			HamburgerMargin="0,0,0,0"
 			HamburgerWidth="48"
 			HamburgerHeight="48"
 			PaneForeground="White"
-			IsPaneOpen="False"
 			PaneBackground="#2071b3"
 			PanePlacement="Left"
-			VerticalScrollBarOnLeftSide="False"
 			Background="{x:Null}">
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
@@ -79,7 +77,7 @@
 						Icon="{iconPacks:FontAwesome BellSolid}"
 						Label="Notifications">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:Notifications />
+                                <views:Notifications Background="{x:Null}" Margin="0,-17,0,0" />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
@@ -97,10 +95,10 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
-						Icon="{iconPacks:FontAwesome CalendarAltSolid}"
-						Label="Mass Schedules">
+						Icon="{iconPacks:FontAwesome SitemapSolid}"
+						Label="Directory of the Deceased">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:Schedules />
+                                <views:DirectoryOfTheDeceased />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>
@@ -127,19 +125,6 @@
 								Height="48" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Border
-							Grid.Row="0"
-							Background="#ffffff">
-                                <TextBlock
-								x:Name="Header"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Center"
-								Style="{DynamicResource Roboto}"
-								FontSize="20"
-								Margin="20,0,0,0"
-								Foreground="#FF495057"
-								Text="{Binding Label}" />
-                            </Border>
                             <ContentControl
 							x:Name="TheContent"
 							Grid.Row="1"
