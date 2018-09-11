@@ -4,7 +4,8 @@
 	x:Class="PMS.UIComponents.NotificationItem"
 	Height="89"
 	Margin="15,15,15,15"
-             BorderThickness="0,0,10,0" BorderBrush="#FF005EBB">
+    BorderThickness="0,0,10,0" 
+    BorderBrush="#FF005EBB">
     <Grid Margin="0,0,13,0">
         <Border 
             x:Name="NotifIconHolder" 
@@ -26,26 +27,25 @@
 			    Content="{Binding Content}"
 			    x:Name="NotifContentHolder" 
                 Background="{x:Null}" 
-                Margin="57,17,390,41"
+                Margin="57,17,139,41"
                 FontSize="16"
                 HorizontalAlignment="Stretch"
                 RenderTransformOrigin="0,0.5"/>
             <TextBlock 
                 x:Name="NotifDetails" 
-                HorizontalAlignment="Left" 
-                Margin="66,48,0,0" 
+                Margin="50,48,127,0" 
+                TextAlignment="Left"
                 TextWrapping="Wrap" 
                 Text="This is a notification item. This area will host the notification content." 
                 VerticalAlignment="Top" 
-                Height="39" 
-                Width="232"/>
+                Height="39"/>
             <Label 
                 Content="September 9, 2018" 
-                HorizontalAlignment="Left" 
-                Margin="443,32,0,0" 
+                HorizontalAlignment="Right" 
+                Margin="0,30,0,0" 
                 VerticalAlignment="Top" 
                 Height="29" 
-                Width="134"/>
+                Width="111"/>
         </Grid>
     </Grid>
 </UserControl>
