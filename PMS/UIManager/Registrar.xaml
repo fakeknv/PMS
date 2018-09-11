@@ -74,17 +74,17 @@
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome TasksSolid}"
+						Label="Requests">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Requests />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome BellSolid}"
 						Label="Notifications">
                             <controls:HamburgerMenuIconItem.Tag>
                                 <views:Notifications Background="{x:Null}" Margin="0,-17,0,0" />
-                            </controls:HamburgerMenuIconItem.Tag>
-                        </Controls:HamburgerMenuIconItem>
-                        <Controls:HamburgerMenuIconItem
-						Icon="{iconPacks:FontAwesome TasksSolid}"
-						Label="Transactions">
-                            <controls:HamburgerMenuIconItem.Tag>
-                                <views:Transactions />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
