@@ -15,5 +15,14 @@ namespace PMS.UIComponents
 			get { return NotifContentHolder.Content.ToString(); }
   			set { NotifContentHolder.Content = value; }
 		}
-	}
+        public string NotifDetails {
+            get { return NotifContentDetails.Text; }
+            set { NotifContentDetails.Text = value; }
+        }
+        public string NotifDate
+        {
+            get { return NotifDateHolder.Content.ToString(); }
+            set { NotifDateHolder.Content = value; }
+        }
+    }
 }

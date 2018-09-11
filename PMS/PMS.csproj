@@ -139,6 +139,9 @@
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Transactions.xaml.cs" />
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Page Include="UIComponents\NotificationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -170,6 +173,10 @@
     <Page Include="UIManager\Views\Transactions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
