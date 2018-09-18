@@ -1,6 +1,5 @@
 ﻿using System;
 using MahApps.Metro.Controls;
-using PMS.UIManager.Views;
 
 namespace PMS.UIManager
 {

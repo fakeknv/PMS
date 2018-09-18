@@ -21,17 +21,17 @@
         <TextBox 
             HorizontalAlignment="Left" 
             Height="26" 
-            Margin="163,97,0,0" 
+            Margin="72,97,0,0" 
             TextWrapping="Wrap" 
             Controls:TextBoxHelper.Watermark="Enter Name of the Record Holder Here."
             VerticalAlignment="Top" 
-            Width="247"
+            Width="236"
             BorderThickness="0,0,0,1"/>
         <Label Content="NEW REQUEST FORM" HorizontalAlignment="Left" Margin="116,10,0,0" VerticalAlignment="Top" Width="179" FontWeight="Bold" HorizontalContentAlignment="Center" Height="36" FontSize="16"/>
-        <Label Content="Name of Record Holder: " HorizontalAlignment="Left" Margin="19,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="139"/>
-        <Expander Header="{Binding SelectedDate, ElementName=ReqRecordHolderBirthday, Mode=OneWay}" HorizontalAlignment="Left" Height="241" Margin="85,133,0,0" VerticalAlignment="Top" Width="187">
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="19,97,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="48"/>
+        <Expander Header="{Binding SelectedDate, ElementName=ReqRecordHolderBirthday, Mode=OneWay}" HorizontalAlignment="Left" Height="240" Margin="108,142,0,0" VerticalAlignment="Top" Width="186">
             <Calendar x:Name="ReqRecordHolderBirthday" HorizontalAlignment="Left" VerticalAlignment="Top" Height="208" Width="176"/>
         </Expander>
-        <Label Content="Birthday: " HorizontalAlignment="Left" Margin="19,133,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="61"/>
+        <Label Content="Birthday: " HorizontalAlignment="Left" Margin="19,142,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="61"/>
     </Grid>
 </Controls:MetroWindow>
