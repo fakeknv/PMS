@@ -126,10 +126,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SecurePasswordHasher.cs" />
-    <Compile Include="UIComponents\AddRequestForm.xaml.cs">
-      <DependentUpon>AddRequestForm.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIComponents\NotificationItem.xaml.cs" />
+    <Compile Include="UIComponents\RequestItem.xaml.cs">
+      <DependentUpon>RequestItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -154,13 +154,13 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
-    <Page Include="UIComponents\AddRequestForm.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UIComponents\NotificationItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\RequestItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIManager\Login.xaml">
       <SubType>Designer</SubType>

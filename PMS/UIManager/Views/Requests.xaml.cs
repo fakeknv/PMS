@@ -15,12 +15,12 @@ namespace PMS.UIManager.Views
 		public Requests()
 		{
 			InitializeComponent();
-			var xx1 = new NotificationItem();
-			xx1.Name = "TestingNotif2";
-			xx1.NotifContent = "Test Notification 2";
-			xx1.NotifDetails = "<data>tchbasdasdasdasditchbitchbitchbitchbitchbitchbitchbitchtchbitchbitchbitchbitchbitchbitchbitchbitch.</data>";
-			xx1.NotifDate = "August 8, 2018";
-			RequestList.Items.Add(xx1);
+			//var xx1 = new NotificationItem();
+			//xx1.Name = "TestingNotif2";
+			//xx1.NotifContent = "Test Notification 2";
+			//xx1.NotifDetails = "<data>tchbasdasdasdasditchbitchbitchbitchbitchbitchbitchbitchtchbitchbitchbitchbitchbitchbitchbitchbitch.</data>";
+			//xx1.NotifDate = "August 8, 2018";
+			//RequestList.Items.Add(xx1);
 		}
 		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
