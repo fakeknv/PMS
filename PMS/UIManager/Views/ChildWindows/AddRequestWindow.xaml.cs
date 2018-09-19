@@ -11,5 +11,9 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			InitializeComponent();
 		}
+		private void AddReqCancel(object sender, System.Windows.RoutedEventArgs e)
+		{
+			this.Close();
+		}
 	}
 }

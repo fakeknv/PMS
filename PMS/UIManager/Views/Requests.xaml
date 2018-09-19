@@ -6,11 +6,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
 	xmlns:UIComponents="clr-namespace:PMS.UIComponents"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     x:Class="PMS.UIManager.Views.Requests"
     Margin="0" 
     Padding="0">
-    <Grid x:Name="RequestMainGrid" Margin="0,-17,0,0">
-        <Grid x:Name="RequestTopBarGrid" HorizontalAlignment="Stretch" Margin="0">
+    <Grid 
+        x:Name="RequestMainGrid" 
+        Margin="0,-17,0,0"
+        Background="#D9D9DE">
+        <Grid 
+            x:Name="RequestTopBarGrid" 
+            HorizontalAlignment="Stretch" 
+            Margin="0"
+            Background="White">
             <TextBox x:Name="SearchRequestBox" 
                 TextWrapping="Wrap" 
                 Margin="10,7,261,0"
@@ -56,16 +64,122 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <ScrollViewer x:Name="RequestContainer" 
-            HorizontalAlignment="Stretch" 
-            Margin="10,45,0,0" 
-            VerticalAlignment="Stretch">
-            <ListBox x:Name="RequestList">
-                <UIComponents:RequestItem>
-                    
-                </UIComponents:RequestItem>
-            </ListBox>
-        </ScrollViewer>
+        <DockPanel Margin="0,49,0,0" Background="#d9d9df">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid 
+                            Background="#1568a8" 
+                            Margin="10,10,10,10"
+                            Height="163.652"
+                            Width="271.936">
+                            <iconPacks:PackIconFontAwesome 
+                                Kind="UserCircleSolid"
+                                HorizontalAlignment="Left" 
+                                Margin="51,60,0,0" 
+                                VerticalAlignment="Top" 
+                                Height="43" 
+                                Width="46" 
+                                Foreground="White"/>
+                                <Label 
+                                    Content="Baptismal Certificate"
+                                    HorizontalAlignment="Left" 
+                                    Margin="10,10,0,0" 
+                                    VerticalAlignment="Top" 
+                                    Width="140" 
+                                    Height="25" 
+                                    FontSize="14" 
+                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                                    Foreground="White"/>
+                                <Label 
+                                    Content="{Binding}" 
+                                    HorizontalAlignment="Left" 
+                                    Margin="96,66,0,0" 
+                                    VerticalAlignment="Top" 
+                                    Height="34" 
+                                    Width="149" 
+                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                                    FontSize="18" Foreground="White"/>
+                                <Grid 
+                                    Height="41" 
+                                    Margin="0,123,0,0" 
+                                    VerticalAlignment="Top" 
+                                    Background="White">
+                                    <Button 
+                                        Margin="0,0,150,0" 
+                                        Background="{x:Null}" 
+                                        Foreground="#FF464646">
+                                        <StackPanel 
+                                            Orientation="Horizontal">
+                                            <Rectangle 
+                                                Width="16"
+                                                Height="16">
+                                                <Rectangle.Fill>
+                                                    <VisualBrush 
+                                                        Stretch="Fill"
+                                                        Visual="{iconPacks:FontAwesome PrintSolid}" />
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <TextBlock 
+                                                Text="  Print" />
+                                        </StackPanel>
+                                    </Button>
+                                    <Button 
+                                        Margin="139,0,0,0" 
+                                        Background="{x:Null}" 
+                                        Foreground="#FF464646">
+                                        <StackPanel 
+                                            Orientation="Horizontal">
+                                            <Rectangle 
+                                                Width="16"
+                                                Height="16">
+                                                <Rectangle.Fill>
+                                                    <VisualBrush 
+                                                        Stretch="Fill"
+                                                        Visual="{iconPacks:FontAwesome TimesCircleSolid}" />
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <TextBlock 
+                                                Text="  Remove" />
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            <Label 
+                                Content="Searching" 
+                                HorizontalAlignment="Left" 
+                                Margin="160,10,0,0" 
+                                VerticalAlignment="Top" 
+                                Width="102" 
+                                Height="25" 
+                                FontSize="14" 
+                                FontFamily="/PMS;component/Assets/Fonts/#Roboto"
+                                HorizontalContentAlignment="Right" 
+                                Padding="0,5,0,0" 
+                                Foreground="White"/>
+                        </Grid>
+                    </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <system:String>Item #1</system:String>
+                    <system:String>Item #2</system:String>
+                    <system:String>Item #3</system:String>
+                    <system:String>Item #1</system:String>
+                    <system:String>Item #2</system:String>
+                    <system:String>Item #3</system:String>
+                    <system:String>Item #1</system:String>
+                    <system:String>Item #2</system:String>
+                    <system:String>Item #3</system:String>
+                    <system:String>Item #1</system:String>
+                    <system:String>Item #2</system:String>
+                    <system:String>Item #3</system:String>
+                </ItemsControl>
+            </ScrollViewer>
+        </DockPanel>
         <SimpleChildWindow:ChildWindow x:Name="CustomChildWindow" Content="ChildWindow" HorizontalAlignment="Left" Height="100" Margin="102,82,0,-105" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </UserControl>

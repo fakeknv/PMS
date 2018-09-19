@@ -15,12 +15,18 @@ namespace PMS.UIManager.Views
 		public Requests()
 		{
 			InitializeComponent();
-			//var xx1 = new NotificationItem();
-			//xx1.Name = "TestingNotif2";
-			//xx1.NotifContent = "Test Notification 2";
-			//xx1.NotifDetails = "<data>tchbasdasdasdasditchbitchbitchbitchbitchbitchbitchbitchtchbitchbitchbitchbitchbitchbitchbitchbitch.</data>";
-			//xx1.NotifDate = "August 8, 2018";
-			//RequestList.Items.Add(xx1);
+			/*RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
+			RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
+			RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
+
+
+			Grid.SetColumn(new RequestItem(), 0);
+			RequestItemsGrid.Children.Add(new RequestItem());
+			Grid.SetColumn(new RequestItem(), 1);
+			RequestItemsGrid.Children.Add(new RequestItem());
+			Grid.SetColumn(new RequestItem(), 2);
+			RequestItemsGrid.Children.Add(new RequestItem());*/
+
 		}
 		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{

@@ -37,7 +37,6 @@
                 Height="23" 
                 Margin="117,138,0,0" 
                 TextWrapping="Wrap" 
-                Text="TextBox" 
                 VerticalAlignment="Top"
                 Width="254">
                 <TextBox.Resources>
@@ -59,7 +58,6 @@
             Height="23" 
             Margin="127,247,0,0" 
             TextWrapping="Wrap" 
-            Text="TextBox" 
             VerticalAlignment="Top"
             Width="254">
             <TextBox.Resources>
@@ -74,7 +72,6 @@
             Height="23" 
             Margin="127,281,0,0" 
             TextWrapping="Wrap" 
-            Text="TextBox" 
             VerticalAlignment="Top"
             Width="254">
             <TextBox.Resources>
@@ -85,7 +82,7 @@
         </TextBox>
         <mah:SplitButton Height="25" Margin="127,314,65,0" VerticalAlignment="Top"/>
         <Label Content="Purpose" Margin="64,314,328,0" VerticalAlignment="Top" RenderTransformOrigin="1.57,0.513"/>
-        <Button Content="Cancel" Margin="127,361,216,37" FontFamily="Bahnschrift Light" Background="{x:Null}" Foreground="#FF237ABE"/>
+        <Button Content="Cancel" Click="AddReqCancel" Margin="127,361,216,37" FontFamily="Bahnschrift Light" Background="{x:Null}" Foreground="#FF237ABE"/>
         <Button Content="Create" Margin="234,361,107,37" FontFamily="Bahnschrift Light" Background="#FF3197D6" Foreground="White"/>
         <DatePicker HorizontalAlignment="Left" Margin="127,182,0,0" VerticalAlignment="Top" Width="254"/>
         <DatePicker HorizontalAlignment="Left" Margin="127,213,0,0" VerticalAlignment="Top" Width="254"/>
