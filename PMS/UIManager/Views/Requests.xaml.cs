@@ -15,17 +15,11 @@ namespace PMS.UIManager.Views
 		public Requests()
 		{
 			InitializeComponent();
-			/*RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
-			RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
-			RequestItemsGrid.ColumnDefinitions.Add(new ColumnDefinition());
-
-
-			Grid.SetColumn(new RequestItem(), 0);
-			RequestItemsGrid.Children.Add(new RequestItem());
-			Grid.SetColumn(new RequestItem(), 1);
-			RequestItemsGrid.Children.Add(new RequestItem());
-			Grid.SetColumn(new RequestItem(), 2);
-			RequestItemsGrid.Children.Add(new RequestItem());*/
+			for (int i = 0; i < 10; i++)
+			{
+				RequestItem uc = new RequestItem();
+				kimx.Children.Add(uc);
+			}
 
 		}
 		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)

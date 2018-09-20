@@ -19,17 +19,20 @@
             HorizontalAlignment="Stretch" 
             Margin="0"
             Background="White">
-            <TextBox x:Name="SearchRequestBox" 
+            <TextBox 
+                x:Name="SearchRequestBox" 
                 TextWrapping="Wrap" 
-                Margin="10,7,261,0"
+                Margin="10,10,261,0"
                 BorderThickness="0,0,0,1" 
-                FontSize="16" 
-                Height="35" 
+                Height="31" 
                 HorizontalAlignment="Stretch" 
                 VerticalAlignment="Top" 
                 mah:TextBoxHelper.Watermark="Search"
-                RenderTransformOrigin="0,0.5"/>
-            <Button x:Name="SearchRequestButton" 
+                RenderTransformOrigin="0,0.5" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                FontSize="14"/>
+            <Button 
+                x:Name="SearchRequestButton" 
                 Style="{DynamicResource MetroCircleButtonStyle}" 
                 Content="{iconPacks:FontAwesome SearchSolid}" 
                 Margin="0,7,261,0" 
@@ -37,149 +40,74 @@
                 Height="34" 
                 Background="White" 
                 BorderBrush="{x:Null}" 
-                RenderTransformOrigin="0.824,0.294" HorizontalAlignment="Right" Width="34"/>
-            <mah:DropDownButton x:Name="FilterRequestButton" 
+                RenderTransformOrigin="0.824,0.294"
+                HorizontalAlignment="Right" 
+                Width="34" 
+                Foreground="#FFBEBEBE"/>
+            <mah:DropDownButton 
+                x:Name="FilterRequestButton" 
                 HorizontalAlignment="Right" 
                 Height="34" 
                 Margin="0,7,127,0" 
                 VerticalAlignment="Top" 
                 Width="128" 
                 Content="Filter"
-                BorderBrush="{x:Null}"/>
-            <Button x:Name="CreateRequestButton"  
+                BorderBrush="{x:Null}" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="#FF606061" 
+                ArrowBrush="#FF606061"/>
+            <Button 
+                x:Name="CreateRequestButton"  
                 HorizontalAlignment="Right" 
                 Margin="0,7,15,0" 
                 VerticalAlignment="Top" 
                 Width="107" 
-                Height="34" Background="{x:Null}" Click="CreateRequestButton_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16"
+                Height="34" 
+                Background="{x:Null}" 
+                Click="CreateRequestButton_Click" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="#FF606061">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
                         Height="16">
                         <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill"
+                            <VisualBrush 
+                                Stretch="Fill"
                                 Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Text="  Request" />
+                    <TextBlock 
+                        Text="  Request" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
         </Grid>
-        <DockPanel Margin="0,49,0,0" Background="#d9d9df">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid 
-                            Background="#1568a8" 
-                            Margin="10,10,10,10"
-                            Height="163.652"
-                            Width="271.936">
-                            <iconPacks:PackIconFontAwesome 
-                                Kind="UserCircleSolid"
-                                HorizontalAlignment="Left" 
-                                Margin="51,60,0,0" 
-                                VerticalAlignment="Top" 
-                                Height="43" 
-                                Width="46" 
-                                Foreground="White"/>
-                                <Label 
-                                    Content="Baptismal Certificate"
-                                    HorizontalAlignment="Left" 
-                                    Margin="10,10,0,0" 
-                                    VerticalAlignment="Top" 
-                                    Width="140" 
-                                    Height="25" 
-                                    FontSize="14" 
-                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                                    Foreground="White"/>
-                                <Label 
-                                    Content="{Binding}" 
-                                    HorizontalAlignment="Left" 
-                                    Margin="96,66,0,0" 
-                                    VerticalAlignment="Top" 
-                                    Height="34" 
-                                    Width="149" 
-                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                                    FontSize="18" Foreground="White"/>
-                                <Grid 
-                                    Height="41" 
-                                    Margin="0,123,0,0" 
-                                    VerticalAlignment="Top" 
-                                    Background="White">
-                                    <Button 
-                                        Margin="0,0,150,0" 
-                                        Background="{x:Null}" 
-                                        Foreground="#FF464646">
-                                        <StackPanel 
-                                            Orientation="Horizontal">
-                                            <Rectangle 
-                                                Width="16"
-                                                Height="16">
-                                                <Rectangle.Fill>
-                                                    <VisualBrush 
-                                                        Stretch="Fill"
-                                                        Visual="{iconPacks:FontAwesome PrintSolid}" />
-                                                </Rectangle.Fill>
-                                            </Rectangle>
-                                            <TextBlock 
-                                                Text="  Print" />
-                                        </StackPanel>
-                                    </Button>
-                                    <Button 
-                                        Margin="139,0,0,0" 
-                                        Background="{x:Null}" 
-                                        Foreground="#FF464646">
-                                        <StackPanel 
-                                            Orientation="Horizontal">
-                                            <Rectangle 
-                                                Width="16"
-                                                Height="16">
-                                                <Rectangle.Fill>
-                                                    <VisualBrush 
-                                                        Stretch="Fill"
-                                                        Visual="{iconPacks:FontAwesome TimesCircleSolid}" />
-                                                </Rectangle.Fill>
-                                            </Rectangle>
-                                            <TextBlock 
-                                                Text="  Remove" />
-                                        </StackPanel>
-                                    </Button>
-                                </Grid>
-                            <Label 
-                                Content="Searching" 
-                                HorizontalAlignment="Left" 
-                                Margin="160,10,0,0" 
-                                VerticalAlignment="Top" 
-                                Width="102" 
-                                Height="25" 
-                                FontSize="14" 
-                                FontFamily="/PMS;component/Assets/Fonts/#Roboto"
-                                HorizontalContentAlignment="Right" 
-                                Padding="0,5,0,0" 
-                                Foreground="White"/>
-                        </Grid>
-                    </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <system:String>Item #1</system:String>
-                    <system:String>Item #2</system:String>
-                    <system:String>Item #3</system:String>
-                    <system:String>Item #1</system:String>
-                    <system:String>Item #2</system:String>
-                    <system:String>Item #3</system:String>
-                    <system:String>Item #1</system:String>
-                    <system:String>Item #2</system:String>
-                    <system:String>Item #3</system:String>
-                    <system:String>Item #1</system:String>
-                    <system:String>Item #2</system:String>
-                    <system:String>Item #3</system:String>
-                </ItemsControl>
+        <DockPanel 
+            Margin="0,55,0,0" 
+            Background="#d9d9df">
+            <ScrollViewer 
+                VerticalScrollBarVisibility="Auto" 
+                VerticalAlignment="Top" 
+                HorizontalContentAlignment="Left">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0"  Content="Certificates" Margin="10,2,10,470" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="18"></Label>
+                    <WrapPanel x:Name="kimx" Orientation="Horizontal" Margin="0,34,0,0"/>
+                </Grid>
             </ScrollViewer>
         </DockPanel>
-        <SimpleChildWindow:ChildWindow x:Name="CustomChildWindow" Content="ChildWindow" HorizontalAlignment="Left" Height="100" Margin="102,82,0,-105" VerticalAlignment="Top" Width="100"/>
+        <SimpleChildWindow:ChildWindow 
+            x:Name="CustomChildWindow" 
+            Content="ChildWindow" 
+            HorizontalAlignment="Left" 
+            Height="100" 
+            Margin="102,82,0,-105" 
+            VerticalAlignment="Top" 
+            Width="100"/>
     </Grid>
 </UserControl>
