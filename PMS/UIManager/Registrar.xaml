@@ -19,6 +19,7 @@
 	ResizeMode="CanResizeWithGrip"
 	WindowTransitionsEnabled="True"
 	Width="1078"
+    MinWidth="500"
 	ShowTitleBar="False"
 	WindowStyle="ThreeDBorderWindow"
 	Title="Registrar">
@@ -76,7 +77,7 @@
 			HamburgerWidth="48"
 			HamburgerHeight="48"
 			PaneForeground="White"
-			PaneBackground="#2071b3"
+			PaneBackground="#FF2C343F"
 			PanePlacement="Left"
 			Background="{x:Null}">
                 <Controls:HamburgerMenu.ItemsSource>
