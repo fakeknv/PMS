@@ -7,7 +7,9 @@
     xmlns:SimpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
 	xmlns:UIComponents="clr-namespace:PMS.UIComponents"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
     x:Class="PMS.UIManager.Views.Requests"
     Margin="0" 
     Padding="0" d:DesignHeight="616.513" d:DesignWidth="947.25">
@@ -63,7 +65,7 @@
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     Foreground="#FF545454" 
                     ArrowBrush="#FF545454"
-                    HorizontalAlignment="Right"/>
+                    HorizontalAlignment="Right" FontSize="14"/>
                 <Button 
                     Grid.Column="1"
                     x:Name="CreateRequestButton" 
@@ -123,7 +125,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="68" Margin="16,10,0,0" Height="32" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" VerticalContentAlignment="Center"/>
+                    <Label Grid.Column="0" Grid.Row="0" Content="FILTERS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="72" Margin="16,10,0,0" Height="32" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="#FF545454"/>
                     <mah:Badged Grid.Column="0" Grid.Row="1" Badge="1" BadgePlacementMode="Right">
                         <Button
                             x:Name="filter1" 
@@ -142,7 +144,7 @@
                                     <Rectangle.Fill>
                                         <VisualBrush 
                                             Stretch="Fill"
-                                            Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
+                                            Visual="{iconPacks:FontAwesome SearchSolid}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
@@ -169,7 +171,7 @@
                                     <Rectangle.Fill>
                                         <VisualBrush 
                                             Stretch="Fill"
-                                            Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
+                                            Visual="{iconPacks:FontAwesome PrintSolid}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
@@ -196,7 +198,7 @@
                                     <Rectangle.Fill>
                                         <VisualBrush 
                                         Stretch="Fill"
-                                        Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
+                                        Visual="{iconPacks:FontAwesome MoneyBillSolid}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
@@ -223,7 +225,7 @@
                                     <Rectangle.Fill>
                                         <VisualBrush 
                                             Stretch="Fill"
-                                            Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
+                                            Visual="{iconPacks:FontAwesome CheckCircleRegular}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
@@ -240,22 +242,26 @@
                     <Label>asd</Label>
                 </Grid>
                 <Button
-                            x:Name="info_btn1" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" 
-                            Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
-                            Margin="0,19,18,0" 
-                            VerticalAlignment="Top" 
-                            Height="30" 
-                            Background="White" 
-                            BorderBrush="{x:Null}" 
-                            RenderTransformOrigin="0.824,0.294" 
-                            Foreground="#FF717171" Width="30" HorizontalAlignment="Right"/>
+                    x:Name="info_btn1" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                    Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                    Margin="0,19,18,0" 
+                    VerticalAlignment="Top" 
+                    Height="30" 
+                    Background="White" 
+                    BorderBrush="{x:Null}" 
+                    RenderTransformOrigin="0.824,0.294" 
+                    Foreground="#FF717171" 
+                    Width="30" 
+                    HorizontalAlignment="Right"/>
             </Grid>
             <Grid
                 Grid.Column="1"
                 Margin="10"
                 Background="White">
-
+                <Grid Margin="0,50,0,0">
+                    <ListView x:Name="RequestItemsContainer" Background="White" BorderBrush="#E6E6E6"/>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

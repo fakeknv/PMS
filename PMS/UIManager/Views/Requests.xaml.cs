@@ -15,12 +15,11 @@ namespace PMS.UIManager.Views
 		public Requests()
 		{
 			InitializeComponent();
-			/*for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 15; i++)
 			{
-				RequestItem uc = new RequestItem();
-				kimx.Children.Add(uc);
-			}*/
-
+				RequestItem ri = new RequestItem();
+				RequestItemsContainer.Items.Add(ri);
+			}
 		}
 		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
