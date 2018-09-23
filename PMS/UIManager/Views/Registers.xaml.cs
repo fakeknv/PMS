@@ -11,5 +11,10 @@ namespace PMS.UIManager.Views
 		{
 			InitializeComponent();
 		}
+
+		private void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+
+		}
 	}
 }

@@ -126,6 +126,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="UIComponents\RegisterItem.xaml.cs">
+      <DependentUpon>RegisterItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\RequestItem.xaml.cs">
       <DependentUpon>RequestItem.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,10 @@
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Requests.xaml.cs" />
+    <Page Include="UIComponents\RegisterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIComponents\RequestItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
