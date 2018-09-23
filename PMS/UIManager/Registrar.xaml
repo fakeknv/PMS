@@ -90,13 +90,6 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
-						Icon="{iconPacks:FontAwesome BellSolid}"
-						Label="Notifications">
-                            <controls:HamburgerMenuIconItem.Tag>
-                                <views:Notifications Background="{x:Null}" Margin="0,-17,0,0" />
-                            </controls:HamburgerMenuIconItem.Tag>
-                        </Controls:HamburgerMenuIconItem>
-                        <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome BookSolid}"
 						Label="Parish Registers">
                             <controls:HamburgerMenuIconItem.Tag>

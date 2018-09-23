@@ -13,9 +13,9 @@
         Background="#FFFFF8F8"
         HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="90*"/>
-            <ColumnDefinition Width="215*"/>
+            <ColumnDefinition Width="95*"/>
+            <ColumnDefinition Width="99*"/>
+            <ColumnDefinition Width="196*"/>
             <ColumnDefinition Width="117*"/>
             <ColumnDefinition Width="293*"/>
         </Grid.ColumnDefinitions>
@@ -24,7 +24,7 @@
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Background="{x:Null}" 
-            Width="74" Margin="5,45,0,0" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Bold" FontSize="14" Padding="0,5" Foreground="#FF757575"/>
+            Width="74" Margin="11,43,0,0" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Bold" FontSize="14" Padding="0,5" Foreground="#FF757575"/>
         <Border BorderThickness="5" CornerRadius="5" Background="#FF46C37B" Grid.Column="1" Margin="5,41,4,39">
             <Label Content="Searching" Grid.Column="1" Margin="3,4,3,0" VerticalAlignment="Top" Background="Transparent" Foreground="White" Height="16" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0"/>
         </Border>

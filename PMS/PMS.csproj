@@ -126,7 +126,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SecurePasswordHasher.cs" />
-    <Compile Include="UIComponents\NotificationItem.xaml.cs" />
     <Compile Include="UIComponents\RequestItem.xaml.cs">
       <DependentUpon>RequestItem.xaml</DependentUpon>
     </Compile>
@@ -147,14 +146,9 @@
     <Compile Include="UIManager\Views\ChildWindows\DummyWindow.xaml.cs">
       <DependentUpon>DummyWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIManager\Views\Notifications.xaml.cs" />
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Requests.xaml.cs" />
-    <Page Include="UIComponents\NotificationItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIComponents\RequestItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,10 +172,6 @@
     <Page Include="UIManager\Views\ChildWindows\DummyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UIManager\Views\Notifications.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\Registers.xaml">
       <Generator>MSBuild:Compile</Generator>
