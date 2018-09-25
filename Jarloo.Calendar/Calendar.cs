@@ -60,7 +60,7 @@ namespace Jarloo.Calendar
             for (int box = 1; box <= 42; box++)
             {
                 Day day = new Day {Date = d, Enabled = true, IsTargetMonth = targetDate.Month == d.Month};
-                day.PropertyChanged += Day_Changed;
+				day.PropertyChanged += Day_Changed;
                 day.IsToday = d == DateTime.Today; 
                 Days.Add(day);
                 d = d.AddDays(1);
@@ -71,7 +71,6 @@ namespace Jarloo.Calendar
         {
             if (e.PropertyName != "Notes") return;
             if (DayChanged == null) return;
-
             DayChanged(this,new DayChangedEventArgs(sender as Day));
         }
 

@@ -24,5 +24,5 @@ namespace PMS.UIManager.Views
         {
             InitializeComponent();
         }
-    }
+	}
 }

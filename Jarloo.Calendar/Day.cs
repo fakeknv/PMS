@@ -9,20 +9,22 @@
 
 using System;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Jarloo.Calendar
 {
-    public class Day : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
+	public class Day : INotifyPropertyChanged
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        private DateTime date;
-        private string notes;
-        private bool enabled;
-        private bool isTargetMonth;
-        private bool isToday;
-        
-        public bool IsToday
+		private DateTime date;
+		private string notes;
+		private bool enabled;
+		private bool isTargetMonth;
+		private bool isToday;
+
+		public bool IsToday
         {
             get { return isToday; }
             set

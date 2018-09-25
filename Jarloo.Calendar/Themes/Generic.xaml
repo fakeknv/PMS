@@ -9,7 +9,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
-    xmlns:Jarloo="clr-namespace:Jarloo.Calendar" xmlns:Converters="clr-namespace:Jarloo.Calendar.Converters">
+    xmlns:Jarloo="clr-namespace:Jarloo.Calendar" 
+    xmlns:Converters="clr-namespace:Jarloo.Calendar.Converters">
     
     <Converters:DateConverter x:Key="DateConverter"></Converters:DateConverter>
     <Converters:DayBorderColorConverter x:Key="DayBorderColorConverter"></Converters:DayBorderColorConverter> 
@@ -27,7 +28,7 @@
                             <TextBlock Text="{Binding Date}" />
                             
                             <Grid Height="30" DockPanel.Dock="Top">
-                                <Label>asd</Label>
+                                
                             </Grid>
                             
                             <ItemsControl ItemsSource="{Binding DayNames}" DockPanel.Dock="Top">                              
@@ -36,8 +37,8 @@
                                         <TextBlock TextAlignment="Center" Text="{Binding}">
                                             <TextBlock.Background>
                                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					                                <GradientStop Color="#FF171717" Offset="0"/>
-					                                <GradientStop Color="#FF040404" Offset="1"/>
+					                                <GradientStop Color="White" Offset="0"/>
+					                                <GradientStop Color="White" Offset="1"/>
 				                                </LinearGradientBrush>
                                             </TextBlock.Background>
                                         </TextBlock>
