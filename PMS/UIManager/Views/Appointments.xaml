@@ -6,8 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:PMS.UIManager.Views"
-    xmlns:Cale="clr-namespace:PMS.UIComponents"
-    xmlns:Calendar="clr-namespace:Jarloo.Calendar;assembly=Jarloo.Calendar" 
+    xmlns:Calendar="clr-namespace:Jarloo.Calendar;assembly=Jarloo.Calendar"
     x:Class="PMS.UIManager.Views.Appointments"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -78,7 +77,9 @@
             </Grid>
         </Grid>
         <Grid Margin="0,46,0,0">
-            <Calendar:Calendar HorizontalAlignment="Left" Margin="118,62,0,0" VerticalAlignment="Top" Width="408"/>
+
+            <Calendar:Calendar HorizontalAlignment="Left" Height="404" Margin="60,0,0,0" VerticalAlignment="Top" Width="498"/>
+
         </Grid>
     </Grid>
 </UserControl>

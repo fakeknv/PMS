@@ -262,5 +262,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jarloo.Calendar\Jarloo.Calendar.csproj">
+      <Project>{31C3B4A7-504B-4EFF-BACC-C8F2FFE5AF6F}</Project>
+      <Name>Jarloo.Calendar</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
