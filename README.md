@@ -24,8 +24,6 @@ Required Nugget Packages:
 - MySql.Web
 - WebMatrix.WebData
 
-Required Projects:
-- Jarloo.Calendar http://www.jarloo.com/wpf-calendar-control/
 
 Dev Team: 
 - Victor Francis N. Vicera
