@@ -1,5 +1,5 @@
 ﻿<Controls:MetroWindow
-	x:Class="PMS.UIManager.Registrar" 
+	x:Class="PMS.UIManager.UIManager" 
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
@@ -101,6 +101,13 @@
 						Label="Directory of the Deceased">
                             <controls:HamburgerMenuIconItem.Tag>
                                 <views:DirectoryOfTheDeceased />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome CalendarAltRegular}"
+						Label="Appointments">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Appointments />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>

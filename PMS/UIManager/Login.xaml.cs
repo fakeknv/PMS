@@ -46,8 +46,8 @@ namespace PMS.UIManager
                             if (username == DBReader.GetString(1) && SecurePasswordHasher.Verify(password, DBReader.GetString(2)) == true)
                             {
                                 LoginSpinner.Visibility = Visibility.Hidden;
-                                Registrar registrar = new Registrar();
-                                registrar.Show();
+								UIManager ui = new UIManager();
+                                ui.Show();
                                 this.Close();
                             }
                             else

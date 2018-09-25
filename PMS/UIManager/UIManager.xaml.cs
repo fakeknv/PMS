@@ -6,9 +6,9 @@ namespace PMS.UIManager
     /// <summary>
     /// Interaction logic for Registrar.xaml
     /// </summary>
-    public partial class Registrar : MetroWindow
+    public partial class UIManager : MetroWindow
     {
-        public Registrar()
+        public UIManager()
         {
             InitializeComponent();
         }
