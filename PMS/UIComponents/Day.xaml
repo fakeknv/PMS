@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMS.UIComponents"
-             mc:Ignorable="d" d:DesignWidth="79.5" d:DesignHeight="76">
+             mc:Ignorable="d" d:DesignWidth="79.5" Height="89.5">
     <Grid>
-        <Border BorderBrush="Black" BorderThickness="1">
-            <Label x:Name="DayHolder" Content="Label" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="41,-1,-1,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <Border BorderBrush="#EEEEEE" BorderThickness="1">
+            <Label x:Name="DayHolder" Content="Label" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="41,-1,-1,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
         </Border>
     </Grid>
 </UserControl>
