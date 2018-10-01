@@ -65,11 +65,19 @@ namespace PMS.UIComponents
 		public DateTime Date
 		{
 			get { return date; }
-  			set { DayHolder.Content = value.ToString("dd"); }
+  			set {
+				DayHolder.Content = value.ToString("dd");
+				DateVal.Content = value.ToString("MM/dd/yyyy");
+			}
 		}
 		public Day()
         {
             InitializeComponent();
         }
-    }
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show(this.DateVal.Content.ToString());
+		}
+	}
 }

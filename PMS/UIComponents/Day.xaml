@@ -6,8 +6,12 @@
              xmlns:local="clr-namespace:PMS.UIComponents"
              mc:Ignorable="d" d:DesignWidth="79.5" Height="89.5">
     <Grid>
+        <Button Margin="4,4,4,5" Click="Button_Click" Background="{x:Null}"/>
         <Border BorderBrush="#EEEEEE" BorderThickness="1">
-            <Label x:Name="DayHolder" Content="Label" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="41,-1,-1,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
+            <Grid>
+                <Label x:Name="DateVal" Visibility="Hidden"/>
+                <Label x:Name="DayHolder" Content="Label" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="41,-1,-1,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
