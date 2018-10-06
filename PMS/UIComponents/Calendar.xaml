@@ -8,8 +8,8 @@
     x:Class="PMS.UIComponents.Calendar"             
     mc:Ignorable="d"              
     d:DesignHeight="450" d:DesignWidth="800">
-    <Grid ShowGridLines="True">
-        <Grid Margin="0,0,0,410">
+    <Grid ShowGridLines="True" x:Name="CalendarMainGrid">
+        <Grid Margin="0,0,0,410" Background="White">
             <Button 
                 x:Name="prevMonthBtn"
                 Margin="0,4,55,0" 
@@ -77,10 +77,9 @@
                 VerticalContentAlignment="Center" Foreground="#FF888888"/>
         </Grid>
         <DockPanel 
-            Background="White" 
-            Margin="0,40,0,0">
+            Margin="0,40,0,0" Background="White">
             <ItemsControl 
-                x:Name="test1x" 
+                x:Name="HeaderContainer" 
                 DockPanel.Dock="Top">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using PMS.UIComponents;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MahApps.Metro.SimpleChildWindow;
+using System.Windows;
+using MahApps.Metro.Controls;
+using PMS.UIManager.Views.ChildWindows;
+using System;
 
 namespace PMS.UIManager.Views
 {
@@ -20,9 +13,24 @@ namespace PMS.UIManager.Views
     /// </summary>
     public partial class Appointments : UserControl
     {
-        public Appointments()
+		//Required for changing the label from another class.
+		internal static Appointments app;
+		internal string Current_Date
+		{
+			get { return dayActivitiesTitle.Content.ToString(); }
+			set { Dispatcher.Invoke(new Action(() => { dayActivitiesTitle.Content = value; })); }
+		}
+
+		public Appointments()
         {
+			//Required for changing the label from another class.
+			app = this;
             InitializeComponent();
         }
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			
+		}
 	}
 }

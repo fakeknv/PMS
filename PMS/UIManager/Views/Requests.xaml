@@ -12,7 +12,9 @@
     mc:Ignorable="d"
     x:Class="PMS.UIManager.Views.Requests"
     Margin="0" 
-    Padding="0" d:DesignHeight="616.513" d:DesignWidth="947.25">
+    Padding="0" 
+    d:DesignHeight="616.513" 
+    d:DesignWidth="947.25">
     <Grid 
         x:Name="RequestMainGrid" 
         Background="#FFF1F1F3">

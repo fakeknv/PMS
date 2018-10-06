@@ -160,6 +160,9 @@
     <Compile Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml.cs">
       <DependentUpon>AddRequestWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml.cs">
+      <DependentUpon>AddAppointmentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\DummyWindow.xaml.cs">
       <DependentUpon>DummyWindow.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
     <Page Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\DummyWindow.xaml">
       <SubType>Designer</SubType>

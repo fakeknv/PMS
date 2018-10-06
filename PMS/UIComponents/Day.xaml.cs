@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using PMS.UIManager.Views;
+using PMS.UIManager.Views.ChildWindows;
 
 namespace PMS.UIComponents
 {
@@ -21,17 +25,24 @@ namespace PMS.UIComponents
     public partial class Day : UserControl
     {
 		private DateTime date;
-		private string notes;
-		private bool enabled;
 		private bool isTargetMonth;
 		private bool isToday;
 
+		/// <summary>
+		/// Checks if the day is the current day.
+		/// </summary>
 		public bool IsToday
 		{
 			get { return isToday; }
 			set
 			{
 				isToday = value;
+				if (this.IsToday == true)
+				{
+					this.Background = Brushes.LightGray;
+					//If via Hex
+					//this.Background = Color.FromArgb(0xFF0­0FF);
+				}
 			}
 		}
 
@@ -44,30 +55,12 @@ namespace PMS.UIComponents
 			}
 		}
 
-		public bool Enabled
-		{
-			get { return enabled; }
-			set
-			{
-				enabled = value;
-			}
-		}
-
-		public string Notes
-		{
-			get { return notes; }
-			set
-			{
-				notes = value;
-			}
-		}
-
 		public DateTime Date
 		{
 			get { return date; }
   			set {
 				DayHolder.Content = value.ToString("dd");
-				DateVal.Content = value.ToString("MM/dd/yyyy");
+				DateVal.Content = value.ToString("MMMM dd, yyyy");
 			}
 		}
 		public Day()
@@ -75,9 +68,11 @@ namespace PMS.UIComponents
             InitializeComponent();
         }
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void Day_Click(object sender, RoutedEventArgs args)
 		{
-			MessageBox.Show(this.DateVal.Content.ToString());
+			//Changing label dayActivitiesTitle in Appointments class.
+			//DateTime curDate = Convert.ToDateTime(this.DateVal.Content.ToString());
+			Appointments.app.Current_Date = this.DateVal.Content.ToString();
 		}
 	}
 }

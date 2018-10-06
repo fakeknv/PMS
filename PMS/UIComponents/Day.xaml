@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMS.UIComponents"
-             mc:Ignorable="d" d:DesignWidth="79.5" Height="89.5">
-    <Grid>
-        <Button Margin="4,4,4,5" Click="Button_Click" Background="{x:Null}"/>
+             mc:Ignorable="d" d:DesignWidth="79.5">
+    <Grid x:Name="DayMainGrid">
+        <Button Margin="4,4,4,5" Click="Day_Click" Background="{x:Null}"/>
         <Border BorderBrush="#EEEEEE" BorderThickness="1">
             <Grid>
                 <Label x:Name="DateVal" Visibility="Hidden"/>
