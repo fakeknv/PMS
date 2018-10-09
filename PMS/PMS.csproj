@@ -264,9 +264,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\st_raphael_logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
