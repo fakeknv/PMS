@@ -1,0 +1,70 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+    xmlns:Custom="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+    x:Class="PMS.UIComponents.DirectoryResultsItem"   
+    mc:Ignorable="d" 
+    Margin="5"
+    Width="207.979" 
+    Height="234.575">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="109*"/>
+            <RowDefinition Height="91*"/>
+        </Grid.RowDefinitions>
+        <Button 
+            Style="{DynamicResource MetroCircleButtonStyle}" 
+            Content="{iconPacks:FontAwesome EyeSolid}" 
+            Margin="0,2,10,0" 
+            VerticalAlignment="Top" 
+            Height="33" 
+            Background="White" 
+            BorderBrush="{x:Null}" 
+            RenderTransformOrigin="0.824,0.294" 
+            Foreground="#FF717171" 
+            Width="34" 
+            HorizontalAlignment="Right"/>
+        <Button 
+            Style="{DynamicResource MetroCircleButtonStyle}" 
+            Content="{Custom:FontAwesome EditRegular}" 
+            Margin="0,2,44,0" 
+            VerticalAlignment="Top" 
+            Height="33" 
+            Background="White" 
+            BorderBrush="{x:Null}" 
+            RenderTransformOrigin="0.824,0.294" 
+            Foreground="#FF717171" 
+            Width="34" 
+            HorizontalAlignment="Right"/>
+        <Border
+              Background="#FDF3E5"
+              BorderThickness="5"
+              CornerRadius="50" Margin="65,18,68,18" Grid.Row="1">
+            <Custom:PackIconFontAwesome 
+                Kind="UserSolid"
+                HorizontalAlignment="Left" 
+                Margin="14,15,0,0" 
+                VerticalAlignment="Top" 
+                Height="33" 
+                Width="39" 
+                Grid.Row="1" Foreground="#FFF3B761"/>
+        </Border>
+        <Label Content="Juan Dela Cruz" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF383838" Height="27"/>
+        <Label HorizontalAlignment="Left" Margin="10,27,0,0" Grid.Row="2" VerticalAlignment="Top" Width="188" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FFCDCDCD" Height="29">
+            <Grid Width="137">
+                <Custom:PackIconFontAwesome Kind="BirthdayCakeSolid"/>
+                <TextBlock Text="January 1 1908" Margin="28,0,0,0" Height="19" />
+            </Grid>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="10,56,0,0" Grid.Row="2" VerticalAlignment="Top" Width="188" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FFCDCDCD" Height="30">
+            <Grid Width="137">
+                <Custom:PackIconFontAwesome Kind="SkullSolid"/>
+                <TextBlock Text="January 1 1908" Margin="28,0,0,0" Height="19" />
+            </Grid>
+        </Label>
+    </Grid>
+</UserControl>

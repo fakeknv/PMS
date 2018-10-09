@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using PMS.UIComponents;
+using System.Windows.Controls;
 
 namespace PMS.UIManager.Views
 {
