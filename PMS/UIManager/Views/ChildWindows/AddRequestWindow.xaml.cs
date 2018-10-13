@@ -112,6 +112,8 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private void AddReqConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
+			Login li = new Login();
+
 			string reqType;
 			string name = ReqName.Text;
 			string bday = ReqBday.Text;
@@ -143,7 +145,11 @@ namespace PMS.UIManager.Views.ChildWindows
 			DateTime cTime = Convert.ToDateTime(dt[1]);
 			string curDate = cDate.ToString("yyyy-MM-dd");
 			string curTime = cTime.ToString("HH:mm:ss");
-			MessageBox.Show(curTime);
+			string comDate = null;
+			string comTime = null;
+			string placedBy = "";
+			string compeltedBy = null;
+			MessageBox.Show(li.userID);
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
