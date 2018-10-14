@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 using MySql.Data.MySqlClient;
-
+using System.Data;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -11,6 +11,9 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// </summary>
 	public partial class AddRequestWindow : ChildWindow
 	{
+		//MYSQL Related Stuff
+		private DBConnectionManager dbman;
+
 		private MySqlConnection connection;
 		private string server;
 		private string database;
@@ -18,13 +21,32 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string password;
 		private string ssl_mode;
 
+		private string reqType;
+		private string name;
+		private string bday;
+		private string recdate;
+		private string parent1;
+		private string parent2;
+		private string purpose;
+		private string status;
+		private DateTime cDate;
+		private DateTime cTime;
+		private string curDate;
+		private string curTime;
+		private string comDate;
+		private string comTime;
+		private string placedBy;
+		private string compeltedBy;
+
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
 		public AddRequestWindow()
 		{
 			InitializeComponent();
-			server = "localhost";
+			dbman = new DBConnectionManager();
+
+			/*server = "localhost";
 			database = "prms_db";
 			uid = "prms";
 			password = "prms2018!";
@@ -33,7 +55,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
 			database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" + "SSLMODE=" + ssl_mode + ";";
 
-			connection = new MySqlConnection(connectionString);
+			connection = new MySqlConnection(connectionString);*/
 		}
 		/// <summary>
 		/// Connects to the DB Server.
@@ -82,26 +104,27 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private string GetServerDateTime()
 		{
-
+			
 			string curDateTime = "";
-			string query = "SELECT NOW() FROM DUAL;";
 
-			if (this.DBConnect() == true)
+			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
-				//Create Command
-				MySqlCommand cmd = new MySqlCommand(query, connection);
-
-				curDateTime = cmd.ExecuteScalar().ToString();
-
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT NOW() FROM DUAL;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					curDateTime = db_reader.GetString("NOW()");
+				}
 				//close Connection
-				this.DBClose();
+				dbman.DBClose();
 
 				return curDateTime;
 			}
 			else
 			{
 				//close Connection
-				this.DBClose();
+				dbman.DBClose();
 
 				return null;
 			}
@@ -114,14 +137,14 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			Login li = new Login();
 
-			string reqType;
-			string name = ReqName.Text;
-			string bday = ReqBday.Text;
-			string recdate = ReqRecDate.Text;
-			string parent1 = Parent1.Text;
-			string parent2 = Parent2.Text;
-			string purpose = Purpose.Text;
-			string status = "Initializing";
+			
+			name = ReqName.Text;
+			bday = ReqBday.Text;
+			recdate = ReqRecDate.Text;
+			parent1 = Parent1.Text;
+			parent2 = Parent2.Text;
+			purpose = Purpose.Text;
+			status = "Initializing";
 			switch (CMBRequestType.SelectedIndex)
 			{
 				case 0:
@@ -141,15 +164,16 @@ namespace PMS.UIManager.Views.ChildWindows
 					break;
 			}
 			string[] dt = GetServerDateTime().Split(null);
-			DateTime cDate = Convert.ToDateTime(dt[0]);
-			DateTime cTime = Convert.ToDateTime(dt[1]);
-			string curDate = cDate.ToString("yyyy-MM-dd");
-			string curTime = cTime.ToString("HH:mm:ss");
-			string comDate = null;
-			string comTime = null;
-			string placedBy = "";
-			string compeltedBy = null;
-			MessageBox.Show(li.userID);
+			cDate = Convert.ToDateTime(dt[0]);
+			cTime = Convert.ToDateTime(dt[1]);
+			curDate = cDate.ToString("yyyy-MM-dd");
+			curTime = cTime.ToString("HH:mm:ss");
+			comDate = null;
+			comTime = null;
+			placedBy = "";
+			compeltedBy = null;
+
+			MessageBox.Show(curDate);
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

@@ -7,7 +7,6 @@ using System.Data;
 using MySql.Data.MySqlClient;
 
 using System.Diagnostics;
-using System.Threading;
 
 namespace PMS.UIManager
 {
@@ -28,19 +27,16 @@ namespace PMS.UIManager
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+			DBConnectionManager dbman = new DBConnectionManager();
 
 			LoginSpinner.Visibility = Visibility.Visible;
 			try
             {
-
-				//string DBConnString = "Server=192.168.254.103;Database=PMS_db;Uid=PMS_app;Pwd=PMS2018!;SslMode=none";
-				string conn_str = "Server=localhost;Database=pms_db;Uid=pms;Pwd=pms2018!;SslMode=none";
-
-                MySqlConnection conn = new MySqlConnection(conn_str);
-				conn.Open();
-                if (conn.State == ConnectionState.Open)
+                if (dbman.DBConnect().State == ConnectionState.Open)
                 {
-					MySqlCommand cmd = conn.CreateCommand();
+					StatusLabel.Content = "Invalid credentials. Please try again.";
+
+					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
                     string username = UsernameField.Text;
                     string password = PasswordField.Password;
 
@@ -52,11 +48,8 @@ namespace PMS.UIManager
 						if (username == db_reader.GetString("user_name") && SecurePasswordHasher.Verify(password, db_reader.GetString("pass_key")) == true)
 						{
 							userID = db_reader.GetString("account_id");
+							dbman.DBClose();
 							this.Close();
-						}
-						else
-						{
-							StatusLabel.Content = "Invalid credentials. Please try again.";
 						}
 					}
 				}
@@ -70,6 +63,8 @@ namespace PMS.UIManager
                 StatusLabel.Content = "Error " + ex.Message;
             }
 			LoginSpinner.Visibility = Visibility.Hidden;
+
+			dbman.DBClose();
 		}
 		private void CancelButton_Click(object sender, RoutedEventArgs e)
 		{

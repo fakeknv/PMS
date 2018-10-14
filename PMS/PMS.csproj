@@ -130,6 +130,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DBConnectionManager.cs" />
     <Compile Include="SecurePasswordHasher.cs" />
     <Compile Include="UIComponents\Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
