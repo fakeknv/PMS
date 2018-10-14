@@ -12,12 +12,12 @@ namespace PMS.UIManager
         public UIManager()
         {
 			Login li = new Login();
-			if (li.userID == null)
+			if (Application.Current.Resources["uid"] == null)
 			{
 				this.Hide();
 				li.ShowDialog();
 			}
-			if (li.userID != null)
+			if (Application.Current.Resources["uid"] != null)
 			{
 				this.Show();
 			}

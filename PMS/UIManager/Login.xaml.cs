@@ -10,19 +10,17 @@ using System.Diagnostics;
 
 namespace PMS.UIManager
 {
-    /// <summary>
-    /// Interaction logic for LoginScreen.xaml
-    /// </summary>
-    public partial class Login : MetroWindow
-    {
-		public string userID;
-
+	/// <summary>
+	/// Interaction logic for LoginScreen.xaml
+	/// </summary>
+	public partial class Login : MetroWindow
+	{
         public Login()
         {
             InitializeComponent();
             InitUIElements();
         }
-        public void InitUIElements() {
+        private void InitUIElements() {
             VersionName.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -47,7 +45,7 @@ namespace PMS.UIManager
 					{
 						if (username == db_reader.GetString("user_name") && SecurePasswordHasher.Verify(password, db_reader.GetString("pass_key")) == true)
 						{
-							userID = db_reader.GetString("account_id");
+							Application.Current.Resources["uid"] = db_reader.GetString("account_id");
 							dbman.DBClose();
 							this.Close();
 						}

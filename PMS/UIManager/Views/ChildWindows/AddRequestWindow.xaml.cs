@@ -14,13 +14,6 @@ namespace PMS.UIManager.Views.ChildWindows
 		//MYSQL Related Stuff
 		private DBConnectionManager dbman;
 
-		private MySqlConnection connection;
-		private string server;
-		private string database;
-		private string uid;
-		private string password;
-		private string ssl_mode;
-
 		private string reqType;
 		private string name;
 		private string bday;
@@ -36,7 +29,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string comDate;
 		private string comTime;
 		private string placedBy;
-		private string compeltedBy;
+		private string completedBy;
 
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
@@ -44,67 +37,14 @@ namespace PMS.UIManager.Views.ChildWindows
 		public AddRequestWindow()
 		{
 			InitializeComponent();
-			dbman = new DBConnectionManager();
-
-			/*server = "localhost";
-			database = "prms_db";
-			uid = "prms";
-			password = "prms2018!";
-			ssl_mode = "none";
-
-			string connectionString = "SERVER=" + server + ";" + "DATABASE=" +
-			database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";" + "SSLMODE=" + ssl_mode + ";";
-
-			connection = new MySqlConnection(connectionString);*/
 		}
-		/// <summary>
-		/// Connects to the DB Server.
-		/// </summary>
-		private bool DBConnect()
-		{
-			try
-			{
-				connection.Open();
-				return true;
-			}
-			catch (MySqlException ex)
-			{
-				switch (ex.Number)
-				{
-					case 0:
-						MessageBox.Show(ex.ToString());
-						break;
-
-					case 1045:
-						MessageBox.Show("Invalid username/password, please try again");
-						break;
-				}
-				return false;
-			}
-		}
-		/// <summary>
-		/// Terminates connection to the DB Server.
-		/// </summary>
-		private bool DBClose()
-		{
-			try
-			{
-				connection.Close();
-				return true;
-			}
-			catch (MySqlException ex)
-			{
-				MessageBox.Show(ex.Message);
-				return false;
-			}
-		}
-
 		/// <summary>
 		/// Retrieves Current Date and Time from the Server.
 		/// </summary>
 		private string GetServerDateTime()
 		{
-			
+			dbman = new DBConnectionManager();
+
 			string curDateTime = "";
 
 			if (dbman.DBConnect().State == ConnectionState.Open)
@@ -129,22 +69,48 @@ namespace PMS.UIManager.Views.ChildWindows
 				return null;
 			}
 		}
-		private void InsertRequest()
+		private string GenerateReqID()
+		{
+			return "REQ-" + DateTime.Now.ToString("yyyymmssf");
+		}
+		private int InsertRequest()
 		{
 			//TODO
+			try
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText =
+					"INSERT INTO request(request_id, type, status, req_record_name, req_birthday, req_record_date, req_parent1, req_parent2, purpose, req_date, req_time, completion_date, completion_time, placed_by, completed_by)" + 
+					"VALUES(@request_id, @type, @status, @req_record_name, @req_birthday, @req_record_date, @req_parent1, @req_parent2, @purpose, @req_date, @req_time, @completion_date, @completion_time, @placed_by, @completed_by)";
+				cmd.Prepare();
+				cmd.Parameters.AddWithValue("@request_id", GenerateReqID());
+				cmd.Parameters.AddWithValue("@type", reqType);
+				cmd.Parameters.AddWithValue("@status", status);
+				cmd.Parameters.AddWithValue("@req_record_name", name);
+				cmd.Parameters.AddWithValue("@req_birthday", bday);
+				cmd.Parameters.AddWithValue("@req_record_date", recdate);
+				cmd.Parameters.AddWithValue("@req_parent1", parent1);
+				cmd.Parameters.AddWithValue("@req_parent2", parent2);
+				cmd.Parameters.AddWithValue("@purpose", purpose);
+				cmd.Parameters.AddWithValue("@req_date", curDate);
+				cmd.Parameters.AddWithValue("@req_time", curTime);
+				cmd.Parameters.AddWithValue("@completion_date", comDate);
+				cmd.Parameters.AddWithValue("@completion_time", comTime);
+				cmd.Parameters.AddWithValue("@placed_by", placedBy);
+				cmd.Parameters.AddWithValue("@completed_by", completedBy);
+				int stat_code = cmd.ExecuteNonQuery();
+				return stat_code;
+			}
+			catch (MySqlException ex)
+			{
+				Console.WriteLine("Error: {0}", ex.ToString());
+				return 0;
+			}
 		}
 		private void AddReqConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			Login li = new Login();
 
-			
-			name = ReqName.Text;
-			bday = ReqBday.Text;
-			recdate = ReqRecDate.Text;
-			parent1 = Parent1.Text;
-			parent2 = Parent2.Text;
-			purpose = Purpose.Text;
-			status = "Initializing";
 			switch (CMBRequestType.SelectedIndex)
 			{
 				case 0:
@@ -163,17 +129,27 @@ namespace PMS.UIManager.Views.ChildWindows
 					reqType = "NULL";
 					break;
 			}
+			name = ReqName.Text;
+			bday = Convert.ToDateTime(ReqBday.Text).ToString("yyyy-MM-dd");
+			recdate = Convert.ToDateTime(ReqRecDate.Text).ToString("yyyy-MM-dd");
+			parent1 = Parent1.Text;
+			parent2 = Parent2.Text;
+			purpose = Purpose.Text;
+			status = "Initializing";
+			
 			string[] dt = GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
 			cTime = Convert.ToDateTime(dt[1]);
 			curDate = cDate.ToString("yyyy-MM-dd");
 			curTime = cTime.ToString("HH:mm:ss");
-			comDate = null;
-			comTime = null;
-			placedBy = "";
-			compeltedBy = null;
-
-			MessageBox.Show(curDate);
+			//comDate = "TBD";
+			//comTime = "TBD";
+			placedBy = Application.Current.Resources["uid"].ToString();
+			//completedBy = "TBD";
+			if (InsertRequest() > 0)
+			{
+				this.Close();
+			}
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
