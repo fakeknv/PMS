@@ -20,7 +20,7 @@ namespace PMS.UIComponents
     /// </summary>
     public partial class RequestItem : UserControl
     {
-        public RequestItem()
+		public RequestItem()
         {
             InitializeComponent();
         }

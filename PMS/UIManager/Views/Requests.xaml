@@ -308,7 +308,7 @@
                     RenderTransformOrigin="0.824,0.294" 
                     Foreground="#FF717171" 
                     Width="34" 
-                    HorizontalAlignment="Right"/>
+                    HorizontalAlignment="Right" Click="ManualSyncButton_Click"/>
                 <Grid Margin="0,50,0,0">
                     <ListView
                         x:Name="RequestItemsContainer" 

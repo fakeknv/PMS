@@ -31,11 +31,13 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string placedBy;
 		private string completedBy;
 
+		Requests req1;
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddRequestWindow()
+		public AddRequestWindow(Requests req)
 		{
+			req1 = req;
 			InitializeComponent();
 		}
 		/// <summary>
@@ -142,12 +144,10 @@ namespace PMS.UIManager.Views.ChildWindows
 			cTime = Convert.ToDateTime(dt[1]);
 			curDate = cDate.ToString("yyyy-MM-dd");
 			curTime = cTime.ToString("HH:mm:ss");
-			//comDate = "TBD";
-			//comTime = "TBD";
 			placedBy = Application.Current.Resources["uid"].ToString();
-			//completedBy = "TBD";
 			if (InsertRequest() > 0)
 			{
+				req1.SyncRequests();
 				this.Close();
 			}
 		}

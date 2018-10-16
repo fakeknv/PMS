@@ -13,27 +13,34 @@
         Background="#FFFFF8F8"
         HorizontalAlignment="Stretch">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="95*"/>
-            <ColumnDefinition Width="99*"/>
-            <ColumnDefinition Width="196*"/>
-            <ColumnDefinition Width="117*"/>
-            <ColumnDefinition Width="293*"/>
+            <ColumnDefinition Width="133*"/>
+            <ColumnDefinition Width="102*"/>
+            <ColumnDefinition Width="185*"/>
+            <ColumnDefinition Width="114*"/>
+            <ColumnDefinition Width="266*"/>
         </Grid.ColumnDefinitions>
         <Label 
+            x:Name="RequestIDHolder"
             Content="#REQ0001" 
-            HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Background="{x:Null}" 
-            Width="74" Margin="11,43,0,0" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Bold" FontSize="14" Padding="0,5" Foreground="#FF757575"/>
+            Background="{x:Null}" Margin="11,43,0,0" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Bold" FontSize="14" Padding="0,5" Foreground="#FF757575" HorizontalAlignment="Left" Width="112"/>
         <Border BorderThickness="5" CornerRadius="5" Background="#FF46C37B" Grid.Column="1" Margin="5,41,4,39">
-            <Label Content="Searching" Grid.Column="1" Margin="3,4,3,0" VerticalAlignment="Top" Background="Transparent" Foreground="White" Height="16" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0"/>
+            <Label 
+                x:Name="StatusHolder"
+                Content="Searching" Grid.Column="1" Margin="3,4,3,0" VerticalAlignment="Top" Background="Transparent" Foreground="White" Height="16" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0"/>
         </Border>
-        <Label Content="Ricardo Dalisay" Grid.Column="2" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="207" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF6D94C6" Grid.ColumnSpan="2"/>
-        <Label Content="Added 1 minute ago." Grid.Column="2" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="124" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontStyle="Italic" Foreground="#FF999999"/>
-        <Label Content="Confirmation" Grid.Column="3" HorizontalAlignment="Left" Margin="10,45,0,0" VerticalAlignment="Top" Width="90" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" HorizontalContentAlignment="Center" Foreground="#FF999999"/>
+        <Label 
+            x:Name="NameHolder"
+            Content="Ricardo Dalisay" Grid.Column="2" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" Width="207" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF6D94C6" Grid.ColumnSpan="2"/>
+        <Label 
+            x:Name="DateAddedHolder"
+            Content="Added 1 minute ago." Grid.Column="2" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Width="165" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontStyle="Italic" Foreground="#FF999999"/>
+        <Label 
+            x:Name="TypeHolder"
+            Content="Confirmation" Grid.Column="3" Margin="10,45,14,0" VerticalAlignment="Top" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" HorizontalContentAlignment="Center" Foreground="#FF999999"/>
         <Button 
             Grid.Column="4"
-            Margin="0,42,165,0" 
+            Margin="0,42,149,0" 
             VerticalAlignment="Top" 
             Width="107" 
             Height="30" 
@@ -59,7 +66,7 @@
         </Button>
         <Button 
             Grid.Column="4"
-            Margin="0,42,53,0" 
+            Margin="0,42,28,0" 
             VerticalAlignment="Top" 
             Width="107" 
             Height="30" 
