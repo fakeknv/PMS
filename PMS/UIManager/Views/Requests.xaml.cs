@@ -23,6 +23,76 @@ namespace PMS.UIManager.Views
 			InitializeComponent();
 			SyncRequests();
 		}
+		private void SyncStat()
+		{
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				//Counts Total
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM request;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					StatTotalHolder.Content = db_reader.GetString("COUNT(*)");
+				}
+				//close Connection
+				dbman.DBClose();
+
+				//Counts Baptismal
+				cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM request WHERE type = @type;";
+				cmd.Parameters.AddWithValue("@type", "Baptismal");
+				db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					StatBaptismalHolder.Content = db_reader.GetString("COUNT(*)");
+				}
+				//close Connection
+				dbman.DBClose();
+
+				//Counts Confirmation
+				cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM request WHERE type = @type;";
+				cmd.Parameters.AddWithValue("@type", "Confirmation");
+				db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					StatConfirmationHolder.Content = db_reader.GetString("COUNT(*)");
+				}
+				//close Connection
+				dbman.DBClose();
+
+				//Counts Burial
+				cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM request WHERE type = @type;";
+				cmd.Parameters.AddWithValue("@type", "Burial");
+				db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					StatBurialHolder.Content = db_reader.GetString("COUNT(*)");
+				}
+				//close Connection
+				dbman.DBClose();
+
+				//Counts Marriage
+				cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM request WHERE type = @type;";
+				cmd.Parameters.AddWithValue("@type", "Marriage");
+				db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					StatMarriageHolder.Content = db_reader.GetString("COUNT(*)");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+		}
 		internal void SyncRequests()
 		{
 			dbman = new DBConnectionManager();
@@ -46,6 +116,7 @@ namespace PMS.UIManager.Views
 				}
 				//close Connection
 				dbman.DBClose();
+				SyncStat();
 			}
 			else
 			{
