@@ -68,7 +68,8 @@
                 Width="39" 
                 Grid.Row="1" Foreground="#FFF3B761"/>
         </Border>
-        <Label Content="Book #" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF383838"/>
-        <Label Content="2000 Entries | 200 Pages" HorizontalAlignment="Left" Margin="10,24,0,0" Grid.Row="2" VerticalAlignment="Top" Width="188" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FFCDCDCD"/>
+        <Label x:Name="BookNoHolder" Content="Book #" HorizontalAlignment="Left" Margin="46,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="119" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF383838"/>
+        <Label x:Name="BookContentStatHolder"  Content="2000 Entries | 200 Pages" HorizontalAlignment="Left" Margin="10,24,0,0" Grid.Row="2" VerticalAlignment="Top" Width="188" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FFCDCDCD"/>
+        <Label x:Name="BookTypeHolder" Content="Book #" HorizontalAlignment="Left" Margin="22,111,0,0" Grid.Row="1" VerticalAlignment="Top" Width="164" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF383838"/>
     </Grid>
 </UserControl>
