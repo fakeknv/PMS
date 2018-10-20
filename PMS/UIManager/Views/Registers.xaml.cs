@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using PMS.UIComponents;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views
 {
@@ -10,6 +12,10 @@ namespace PMS.UIManager.Views
 		public Registers()
 		{
 			InitializeComponent();
+			for (int i=0; i<10; i++) { 
+			RegisterItem ri = new RegisterItem();
+			test1.Items.Add(ri);
+			}
 		}
 
 		private void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)

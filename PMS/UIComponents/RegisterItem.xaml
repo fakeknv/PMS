@@ -8,10 +8,12 @@
     xmlns:Custom="http://metro.mahapps.com/winfx/xaml/iconpacks" 
     x:Class="PMS.UIComponents.RegisterItem"   
     mc:Ignorable="d" 
-    Margin="5"
+    Margin="0,5,0,5"
     Width="207.979" 
-    Height="234.575">
-    <Grid Background="White">
+    Height="234.575"
+    BorderBrush="#FFBBBBBB"
+    BorderThickness="1">
+    <Grid Background="White" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="35*"/>
             <RowDefinition Height="139*"/>

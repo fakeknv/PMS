@@ -24,7 +24,7 @@
             Content="#REQ0001" 
             VerticalAlignment="Top" 
             Background="{x:Null}" Margin="11,43,0,0" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Bold" FontSize="14" Padding="0,5" Foreground="#FF757575" HorizontalAlignment="Left" Width="112"/>
-        <Border BorderThickness="5" CornerRadius="5" Background="#FF46C37B" Grid.Column="1" Margin="5,41,4,39">
+        <Border x:Name="StatusHolderBG" BorderThickness="5" CornerRadius="5" Background="#FF46C37B" Grid.Column="1" Margin="5,41,4,39">
             <Label 
                 x:Name="StatusHolder"
                 Content="Searching" Grid.Column="1" Margin="3,4,3,0" VerticalAlignment="Top" Background="Transparent" Foreground="White" Height="16" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0"/>
@@ -65,6 +65,7 @@
             </StackPanel>
         </Button>
         <Button 
+            x:Name="RequestCancelButton"
             Grid.Column="4"
             Margin="0,42,28,0" 
             VerticalAlignment="Top" 

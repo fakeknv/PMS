@@ -82,7 +82,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText =
-					"INSERT INTO request(request_id, type, status, req_record_name, req_birthday, req_record_date, req_parent1, req_parent2, purpose, req_date, req_time, completion_date, completion_time, placed_by, completed_by)" + 
+					"INSERT INTO requests(request_id, type, status, req_record_name, req_birthday, req_record_date, req_parent1, req_parent2, purpose, req_date, req_time, completion_date, completion_time, placed_by, completed_by)" + 
 					"VALUES(@request_id, @type, @status, @req_record_name, @req_birthday, @req_record_date, @req_parent1, @req_parent2, @purpose, @req_date, @req_time, @completion_date, @completion_time, @placed_by, @completed_by)";
 				cmd.Prepare();
 				cmd.Parameters.AddWithValue("@request_id", GenerateReqID());
