@@ -26,11 +26,12 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DateTime cTime;
 		private string curDate;
 		private string curTime;
+		#pragma warning disable 0649
 		private string comDate;
 		private string comTime;
 		private string placedBy;
 		private string completedBy;
-
+		#pragma warning restore 0649
 		Requests req1;
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.

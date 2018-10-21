@@ -161,11 +161,17 @@
     <Compile Include="UIManager\Views\Appointments.xaml.cs">
       <DependentUpon>Appointments.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml.cs">
+      <DependentUpon>AddRegisterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml.cs">
       <DependentUpon>AddRequestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml.cs">
       <DependentUpon>AddAppointmentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\Dummy.xaml.cs">
+      <DependentUpon>Dummy.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
@@ -206,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +223,10 @@
     <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\Dummy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIManager\Views\Registers.xaml">
       <Generator>MSBuild:Compile</Generator>

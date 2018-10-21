@@ -1,7 +1,11 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using MySql.Data.MySqlClient;
 using PMS.UIComponents;
+using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Data;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -60,9 +64,11 @@ namespace PMS.UIManager.Views
 			}
 			return ret;
 		}
-		private void SyncRegisters()
+		internal void SyncRegisters()
 		{
 			dbman = new DBConnectionManager();
+
+			RegistersItemContainer.Items.Clear();
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
@@ -74,7 +80,7 @@ namespace PMS.UIManager.Views
 					ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 					ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 					ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-					RegistersContainer.Items.Add(ri);
+					RegistersItemContainer.Items.Add(ri);
 				}
 				//close Connection
 				dbman.DBClose();
@@ -84,9 +90,10 @@ namespace PMS.UIManager.Views
 
 			}
 		}
-		private void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new AddRegisterWindow(this), this.RegisterMainGrid);
 		}
 	}
 }

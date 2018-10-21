@@ -1,0 +1,141 @@
+﻿<simpleChildWindow:ChildWindow 
+    x:Class="PMS.UIManager.Views.ChildWindows.AddRegisterWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    Title="Add Request"
+    ShowTitleBar="False"
+    d:DesignHeight="427.5" 
+    d:DesignWidth="431"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsModal="False"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d">
+    <simpleChildWindow:ChildWindow.Icon>
+        <iconPacks:PackIconFontAwesome 
+            Width="22"
+            Height="22"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource IdealForegroundColorBrush}"
+            Kind="PlusSquareSolid" />
+    </simpleChildWindow:ChildWindow.Icon>
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid>
+        <Border BorderThickness="10" CornerRadius="10"/>
+        <iconPacks:PackIconFontAwesome x:Name="WindowIcon" 
+            Kind="BookSolid" 
+            HorizontalAlignment="Stretch" 
+            Margin="179,22,182,0" 
+            VerticalAlignment="Top" 
+            Height="42" 
+            Width="Auto" 
+            Foreground="#FFAAB6C0"/>
+        <Label x:Name="WindowTitle" 
+            Content="Create New Register" 
+            Margin="127,69,130,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Bahnschrift Light" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Foreground="#FF2A3B47"/>
+        <Label x:Name="RegisterTypeLabel" 
+            Content="Book Type" 
+            HorizontalAlignment="Left" 
+            Margin="77,106,0,0" 
+            VerticalAlignment="Top" 
+            Width="68"/>
+        <ComboBox
+            x:Name="RegisterType" 
+            Height="25"
+            Margin="77,132,81,0" 
+            VerticalAlignment="Top">
+            <ComboBoxItem Content="Baptismal"/>
+            <ComboBoxItem Content="Marriage"/>
+            <ComboBoxItem Content="Confirmation"/>
+            <ComboBoxItem Content="Death"/>
+        </ComboBox>
+        <Label x:Name="BookNoLabel" 
+            Content="Book No." 
+            Margin="78,162,285,0" 
+            VerticalAlignment="Top"/>
+        <TextBox 
+                x:Name="BookNo" 
+                Height="23" 
+                Margin="77,188,222,0" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="RegisterNoLabel" 
+            Content="Register No." 
+            Margin="221,162,136,0" 
+            VerticalAlignment="Top"/>
+        <TextBox 
+            x:Name="RegisterNo" 
+            Height="23" 
+            Margin="220,188,81,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="BookLabel" 
+            Content="Book" 
+            HorizontalAlignment="Left" 
+            Margin="78,221,0,0" 
+            VerticalAlignment="Top" 
+            Width="68"/>
+        <TextBox 
+            x:Name="Book" 
+            Height="23" 
+            Margin="78,247,80,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <Label x:Name="CreationDateLabel" 
+            Content="Creation Date" 
+            HorizontalAlignment="Left" 
+            Margin="78,278,0,0" 
+            VerticalAlignment="Top" 
+            Width="84"/>
+        <DatePicker x:Name="CreationDate" 
+            Margin="78,304,80,0" 
+            VerticalAlignment="Top"/>
+        <Button x:Name="CancelButton" 
+            Content="Cancel" 
+            Margin="111,359,232,39"
+            FontFamily="Bahnschrift Light" 
+            Click="AddRegCancel"
+            Background="{x:Null}" 
+            Foreground="#FF237ABE"/>
+        <Button x:Name="CreateRegisterButton" 
+            Content="Create" 
+            Margin="211,359,130,39" 
+            FontFamily="Bahnschrift Light"
+            Click="AddRegConfirm"
+            Background="#FF3197D6" 
+            Foreground="White"/>
+    </Grid>
+</simpleChildWindow:ChildWindow>

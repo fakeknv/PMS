@@ -24,7 +24,9 @@ namespace PMS.UIComponents
     /// </summary>
     public partial class Day : UserControl
     {
+		#pragma warning disable 0649
 		private DateTime date;
+		#pragma warning restore 0649
 		private bool isTargetMonth;
 		private bool isToday;
 
