@@ -1,8 +1,6 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
 using System;
-using System.Windows;
 using MySql.Data.MySqlClient;
-using System.Data;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -11,7 +9,10 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// </summary>
 	public partial class AddRegisterWindow : ChildWindow
 	{
+		//MYSQL Related Stuff
 		DBConnectionManager dbman;
+
+		private PMSUtil pmsutil;
 
 		private string regType;
 		private int bookNum;
@@ -30,41 +31,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		public AddRegisterWindow(Registers reg)
 		{
 			reg1 = reg;
+			pmsutil = new PMSUtil();
 			InitializeComponent();
 		}
 		/// <summary>
-		/// Retrieves Current Date and Time from the Server.
-		/// </summary>
-		private string GetServerDateTime()
-		{
-			dbman = new DBConnectionManager();
-
-			string curDateTime = "";
-
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT NOW() FROM DUAL;";
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					curDateTime = db_reader.GetString("NOW()");
-				}
-				//close Connection
-				dbman.DBClose();
-
-				return curDateTime;
-			}
-			else
-			{
-				//close Connection
-				dbman.DBClose();
-
-				return null;
-			}
-		}
-		/// <summary>
-		/// Closes the AddRequestForm Window.
+		/// Inserts the request to the database.
 		/// </summary>
 		private int InsertRegister()
 		{
@@ -94,12 +65,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 		}
 		/// <summary>
-		/// Closes the AddRequestForm Window.
+		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
+		/// for database insertion.
 		/// </summary>
-		private void AddRegCancel(object sender, System.Windows.RoutedEventArgs e)
-		{
-			this.Close();
-		}
 		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			switch (RegisterType.SelectedIndex)
@@ -108,13 +76,13 @@ namespace PMS.UIManager.Views.ChildWindows
 					regType = "Baptismal";
 					break;
 				case 1:
-					regType = "Marriage";
+					regType = "Matrimonial";
 					break;
 				case 2:
 					regType = "Confirmation";
 					break;
 				case 3:
-					regType = "Death";
+					regType = "Burial";
 					break;
 				default:
 					regType = "NULL";
@@ -125,7 +93,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			book = Book.Text;
 			creationDate = Convert.ToDateTime(CreationDate.Text).ToString("yyyy-MM-dd");
 
-			string[] dt = GetServerDateTime().Split(null);
+			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
 			cTime = Convert.ToDateTime(dt[1]);
 			curDate = cDate.ToString("yyyy-MM-dd");
@@ -136,6 +104,13 @@ namespace PMS.UIManager.Views.ChildWindows
 				reg1.SyncRegisters();
 				this.Close();
 			}
+		}
+		/// <summary>
+		/// Closes the AddRequestForm Window.
+		/// </summary>
+		private void AddRegCancel(object sender, System.Windows.RoutedEventArgs e)
+		{
+			this.Close();
 		}
 	}
 }

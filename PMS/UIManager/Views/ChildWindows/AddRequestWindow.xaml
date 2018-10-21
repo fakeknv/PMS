@@ -9,11 +9,12 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     Title="Add Request"
     ShowTitleBar="False"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
+    d:DesignHeight="428"
+    d:DesignWidth="445"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsModal="False"
+    IsOpen="True"
     CloseOnOverlay="True"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
@@ -47,13 +48,7 @@
                 </TextBox.Resources>
             </TextBox>
         </Border>
-        <Label 
-            Content="Request Type" 
-            HorizontalAlignment="Left" 
-            Margin="38,113,0,0" 
-            VerticalAlignment="Top" 
-            Width="84"/>
-        <iconPacks:PackIconFontAwesome 
+        <iconPacks:PackIconFontAwesome x:Name="WindowIcon" 
             Kind="EditRegular" 
             HorizontalAlignment="Left" 
             Margin="192,24,0,0" 
@@ -61,19 +56,7 @@
             Height="42" 
             Width="71" 
             Foreground="#FFAAB6C0"/>
-        <ComboBox
-            x:Name="CMBRequestType"
-            HorizontalAlignment="Left" 
-            Height="25"
-            Margin="127,113,0,0" 
-            VerticalAlignment="Top" 
-            Width="254">
-            <ComboBoxItem Content="Baptismal"/>
-            <ComboBoxItem Content="Marriage"/>
-            <ComboBoxItem Content="Confirmation"/>
-            <ComboBoxItem Content="Death"/>
-        </ComboBox>
-        <Label 
+        <Label x:Name="WindowTitle" 
             Content="Create New Request" 
             HorizontalAlignment="Left" 
             Margin="141,71,0,0" 
@@ -83,24 +66,59 @@
             FontSize="18"
             Width="174" 
             Foreground="#FF2A3B47"/>
-        <Label 
+        <Label x:Name="RequestTypeLabel" 
+            Content="Request Type" 
+            HorizontalAlignment="Left" 
+            Margin="38,113,0,0" 
+            VerticalAlignment="Top" 
+            Width="84"/>
+        <ComboBox
+            x:Name="RequestType"
+            HorizontalAlignment="Left" 
+            Height="25"
+            Margin="127,113,0,0" 
+            VerticalAlignment="Top" 
+            Width="254">
+            <ComboBoxItem Content="Baptismal"/>
+            <ComboBoxItem Content="Marriage"/>
+            <ComboBoxItem Content="Confirmation"/>
+            <ComboBoxItem Content="Burial"/>
+        </ComboBox>
+        <Label x:Name="NameLabel" 
             Content="Name" 
             HorizontalAlignment="Left" 
             Margin="77,147,0,0" 
             VerticalAlignment="Top" 
             Width="45"/>
-        <Label 
+        <Label x:Name="BirthdayLabel" 
             Content="Birthday" 
             HorizontalAlignment="Left" 
             Margin="64,182,0,0" 
             VerticalAlignment="Top" 
             Width="58"/>
-        <Label 
+        <DatePicker x:Name="ReqBday" 
+            HorizontalAlignment="Left" 
+            Margin="127,182,0,0" 
+            VerticalAlignment="Top" 
+            Width="254"/>
+        <Label x:Name="ReqDateLabel" 
             Content="Date" 
             HorizontalAlignment="Left" 
             Margin="84,213,0,0" 
             VerticalAlignment="Top" 
             Width="38" 
+            RenderTransformOrigin="1.57,0.513"/>
+        <DatePicker x:Name="ReqRecDate" 
+            HorizontalAlignment="Left" 
+            Margin="127,213,0,0" 
+            VerticalAlignment="Top" 
+            Width="254"/>
+        <Label x:Name="ParentLabel" 
+            Content="Parent/s" 
+            HorizontalAlignment="Left" 
+            Margin="64,247,0,0" 
+            VerticalAlignment="Top" 
+            Width="58" 
             RenderTransformOrigin="1.57,0.513"/>
         <TextBox x:Name="Parent1" 
             HorizontalAlignment="Left" 
@@ -115,13 +133,6 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Label 
-            Content="Parent/s" 
-            HorizontalAlignment="Left" 
-            Margin="64,247,0,0" 
-            VerticalAlignment="Top" 
-            Width="58" 
-            RenderTransformOrigin="1.57,0.513"/>
         <TextBox x:Name="Parent2" 
             HorizontalAlignment="Left" 
             Height="23" 
@@ -142,34 +153,24 @@
             <ComboBoxItem Content="For Reference"/>
             <ComboBoxItem Content="For Marriage"/>
         </ComboBox>
-        <Label 
+        <Label x:Name="PurposeLabel" 
             Content="Purpose" 
             Margin="64,314,328,0" 
             VerticalAlignment="Top" 
             RenderTransformOrigin="1.57,0.513"/>
-        <Button 
+        <Button x:Name="CancelButton" 
             Content="Cancel" 
             Click="AddReqCancel" 
             Margin="127,361,216,37"
             FontFamily="Bahnschrift Light" 
             Background="{x:Null}" 
             Foreground="#FF237ABE"/>
-        <Button 
+        <Button x:Name="CreateButton" 
             Content="Create" 
             Margin="234,361,107,37" 
             FontFamily="Bahnschrift Light" 
             Background="#FF3197D6" 
             Click="AddReqConfirm"
             Foreground="White"/>
-        <DatePicker x:Name="ReqBday" 
-            HorizontalAlignment="Left" 
-            Margin="127,182,0,0" 
-            VerticalAlignment="Top" 
-            Width="254"/>
-        <DatePicker x:Name="ReqRecDate" 
-            HorizontalAlignment="Left" 
-            Margin="127,213,0,0" 
-            VerticalAlignment="Top" 
-            Width="254"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

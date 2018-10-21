@@ -20,6 +20,7 @@
             <RowDefinition Height="61*"/>
         </Grid.RowDefinitions>
         <Button 
+            x:Name="ViewRegisterButton"
             Style="{DynamicResource MetroCircleButtonStyle}" 
             Content="{iconPacks:FontAwesome EyeSolid}" 
             Margin="0,2,10,0" 
@@ -32,6 +33,7 @@
             Width="34" 
             HorizontalAlignment="Right"/>
         <Button 
+            x:Name="EditRegisterButton"
             Style="{DynamicResource MetroCircleButtonStyle}" 
             Content="{Custom:FontAwesome EditRegular}" 
             Margin="0,2,44,0" 
@@ -44,6 +46,7 @@
             Width="34" 
             HorizontalAlignment="Right"/>
         <Button 
+            x:Name="AddRecordButton"
             Style="{DynamicResource MetroCircleButtonStyle}" 
             Content="{Custom:FontAwesome UserPlusSolid}" 
             Margin="0,2,78,0" 

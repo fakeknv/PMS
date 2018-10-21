@@ -18,10 +18,14 @@
     ShowCloseButton="True"
     mc:Ignorable="d">
     <simpleChildWindow:ChildWindow.OverlayBrush>
-        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+        <SolidColorBrush 
+            Opacity="0.7" 
+            Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid>
-        <Border BorderThickness="10" CornerRadius="10">
+        <Border 
+            BorderThickness="10" 
+            CornerRadius="10">
             <TextBox 
                 HorizontalAlignment="Left" 
                 Height="23" 
@@ -36,13 +40,55 @@
                 </TextBox.Resources>
             </TextBox>
         </Border>
-        <Label Content="Request Type" HorizontalAlignment="Left" Margin="38,113,0,0" VerticalAlignment="Top" Width="84"/>
-        <iconPacks:PackIconFontAwesome Kind="EditRegular" HorizontalAlignment="Left" Margin="192,24,0,0" VerticalAlignment="Top" Height="42" Width="71" Foreground="#FFAAB6C0"/>
-        <mah:SplitButton HorizontalAlignment="Left" Height="25" Margin="127,113,0,0" VerticalAlignment="Top" Width="254"/>
-        <Label Content="Create New Request" HorizontalAlignment="Left" Margin="141,71,0,0" VerticalAlignment="Top" FontFamily="Bahnschrift Light" FontWeight="Bold" FontSize="18" Width="174" Foreground="#FF2A3B47"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="77,147,0,0" VerticalAlignment="Top" Width="45"/>
-        <Label Content="Birthday" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top" Width="58"/>
-        <Label Content="Date" HorizontalAlignment="Left" Margin="84,213,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.57,0.513"/>
+        <Label 
+            Content="Request Type" 
+            HorizontalAlignment="Left"
+            Margin="38,113,0,0" 
+            VerticalAlignment="Top" 
+            Width="84"/>
+        <iconPacks:PackIconFontAwesome 
+            Kind="EditRegular" 
+            HorizontalAlignment="Left" 
+            Margin="192,24,0,0" 
+            VerticalAlignment="Top" 
+            Height="42" 
+            Width="71" 
+            Foreground="#FFAAB6C0"/>
+        <mah:SplitButton 
+            HorizontalAlignment="Left" 
+            Height="25" 
+            Margin="127,113,0,0" 
+            VerticalAlignment="Top" 
+            Width="254"/>
+        <Label 
+            Content="Create New Request" 
+            HorizontalAlignment="Left" 
+            Margin="141,71,0,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Bahnschrift Light" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Width="174" 
+            Foreground="#FF2A3B47"/>
+        <Label 
+            Content="Name" 
+            HorizontalAlignment="Left"
+            Margin="77,147,0,0" 
+            VerticalAlignment="Top" 
+            Width="45"/>
+        <Label 
+            Content="Birthday" 
+            HorizontalAlignment="Left"
+            Margin="64,182,0,0" 
+            VerticalAlignment="Top" 
+            Width="58"/>
+        <Label 
+            Content="Date" 
+            HorizontalAlignment="Left"
+            Margin="84,213,0,0" 
+            VerticalAlignment="Top"
+            Width="38" 
+            RenderTransformOrigin="1.57,0.513"/>
         <TextBox 
             HorizontalAlignment="Left" 
             Height="23" 
@@ -56,7 +102,13 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <Label Content="Parent/s" HorizontalAlignment="Left" Margin="64,247,0,0" VerticalAlignment="Top" Width="58" RenderTransformOrigin="1.57,0.513"/>
+        <Label 
+            Content="Parent/s" 
+            HorizontalAlignment="Left"
+            Margin="64,247,0,0"
+            VerticalAlignment="Top" 
+            Width="58" 
+            RenderTransformOrigin="1.57,0.513"/>
         <TextBox 
             HorizontalAlignment="Left" 
             Height="23" 
@@ -70,11 +122,36 @@
                 </Style>
             </TextBox.Resources>
         </TextBox>
-        <mah:SplitButton Height="25" Margin="127,314,65,0" VerticalAlignment="Top"/>
-        <Label Content="Purpose" Margin="64,314,328,0" VerticalAlignment="Top" RenderTransformOrigin="1.57,0.513"/>
-        <Button Content="Cancel" Margin="127,361,216,37" FontFamily="Bahnschrift Light" Background="{x:Null}" Foreground="#FF237ABE"/>
-        <Button Content="Create" Margin="234,361,107,37" FontFamily="Bahnschrift Light" Background="#FF3197D6" Foreground="White"/>
-        <DatePicker HorizontalAlignment="Left" Margin="127,182,0,0" VerticalAlignment="Top" Width="254"/>
-        <DatePicker HorizontalAlignment="Left" Margin="127,213,0,0" VerticalAlignment="Top" Width="254"/>
+        <mah:SplitButton 
+            Height="25" 
+            Margin="127,314,65,0"
+            VerticalAlignment="Top"/>
+        <Label 
+            Content="Purpose" 
+            Margin="64,314,328,0" 
+            VerticalAlignment="Top" 
+            RenderTransformOrigin="1.57,0.513"/>
+        <Button 
+            Content="Cancel" 
+            Margin="127,361,216,37" 
+            FontFamily="Bahnschrift Light"
+            Background="{x:Null}" 
+            Foreground="#FF237ABE"/>
+        <Button 
+            Content="Create"
+            Margin="234,361,107,37" 
+            FontFamily="Bahnschrift Light" 
+            Background="#FF3197D6" 
+            Foreground="White"/>
+        <DatePicker 
+            HorizontalAlignment="Left" 
+            Margin="127,182,0,0"
+            VerticalAlignment="Top"
+            Width="254"/>
+        <DatePicker 
+            HorizontalAlignment="Left"
+            Margin="127,213,0,0" 
+            VerticalAlignment="Top" 
+            Width="254"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

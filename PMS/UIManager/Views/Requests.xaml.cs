@@ -7,13 +7,12 @@ using PMS.UIManager.Views.ChildWindows;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System;
-using System.Web.UI.WebControls;
 using System.Windows.Media;
 
 namespace PMS.UIManager.Views
 {
 	/// <summary>
-	/// Interaction logic for Tasks.xaml
+	/// Interaction logic for Requests.xaml
 	/// </summary>
 	public partial class Requests : UserControl
 	{
@@ -37,10 +36,11 @@ namespace PMS.UIManager.Views
 				//Counts Total
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests;";
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					StatTotalHolder.Content = db_reader.GetString("COUNT(*)");
+					TotalRequestsHolder.Content = db_reader.GetString("COUNT(*)");
 				}
 				//close Connection
 				dbman.DBClose();
@@ -49,6 +49,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE type = @type;";
 				cmd.Parameters.AddWithValue("@type", "Baptismal");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -61,6 +62,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE type = @type;";
 				cmd.Parameters.AddWithValue("@type", "Confirmation");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -73,6 +75,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE type = @type;";
 				cmd.Parameters.AddWithValue("@type", "Burial");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -84,11 +87,12 @@ namespace PMS.UIManager.Views
 				//Counts Marriage
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE type = @type;";
-				cmd.Parameters.AddWithValue("@type", "Marriage");
+				cmd.Parameters.AddWithValue("@type", "Matrimonial");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					StatMarriageHolder.Content = db_reader.GetString("COUNT(*)");
+					StatMatrimonialHolder.Content = db_reader.GetString("COUNT(*)");
 				}
 				//close Connection
 				dbman.DBClose();
@@ -98,6 +102,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Searching");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -110,6 +115,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Printing");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -122,6 +128,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Paying");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -134,6 +141,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Finished");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -146,6 +154,7 @@ namespace PMS.UIManager.Views
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Cancelled");
+				cmd.Prepare();
 				db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -206,7 +215,8 @@ namespace PMS.UIManager.Views
 
 		}
 		/// <summary>
-		/// Onclick event for the CreateRequestButton.
+		/// Onclick event for the CreateRequestButton. Shows the AddRequestWindow that allows 
+		/// the user to add a request.
 		/// </summary>
 		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -214,14 +224,16 @@ namespace PMS.UIManager.Views
 			await metroWindow.ShowChildWindowAsync(new AddRequestWindow(this), this.RequestMainGrid);
 		}
 		/// <summary>
-		/// Onclick event for the ManualSyncButton.
+		/// Onclick event for the ManualSyncButton. Calls SyncRequest to manually update the
+		/// Request list.
 		/// </summary>
 		private void ManualSyncButton_Click(object sender, RoutedEventArgs e)
 		{
 			SyncRequests();
 		}
 		/// <summary>
-		/// Onclick event for the Searching Filter Button.
+		/// Onclick event for the Searching Filter Button. Filters the Requests to show requests
+		/// that are Searching.
 		/// </summary>
 		private void ShowSearching_Click(object sender, RoutedEventArgs e)
 		{
@@ -233,10 +245,10 @@ namespace PMS.UIManager.Views
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Searching");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");
@@ -255,7 +267,8 @@ namespace PMS.UIManager.Views
 			}
 		}
 		/// <summary>
-		/// Onclick event for the Searching Filter Button.
+		/// Onclick event for the Searching Filter Button. Filters the Requests to show requests
+		/// that are Searching.
 		/// </summary>
 		private void ShowPrinting_Click(object sender, RoutedEventArgs e)
 		{
@@ -267,10 +280,10 @@ namespace PMS.UIManager.Views
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Printing");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");
@@ -289,7 +302,8 @@ namespace PMS.UIManager.Views
 			}
 		}
 		/// <summary>
-		/// Onclick event for the Searching Filter Button.
+		/// Onclick event for the Paying Filter Button. Filters the Requests to show requests
+		/// that are Paying.
 		/// </summary>
 		private void ShowPaying_Click(object sender, RoutedEventArgs e)
 		{
@@ -301,10 +315,10 @@ namespace PMS.UIManager.Views
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Paying");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");
@@ -323,7 +337,8 @@ namespace PMS.UIManager.Views
 			}
 		}
 		/// <summary>
-		/// Onclick event for the Searching Filter Button.
+		/// Onclick event for the Finished Filter Button. Filters the Requests to show requests
+		/// that are Finished.
 		/// </summary>
 		private void ShowFinished_Click(object sender, RoutedEventArgs e)
 		{
@@ -335,10 +350,10 @@ namespace PMS.UIManager.Views
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Finished");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");
@@ -357,7 +372,8 @@ namespace PMS.UIManager.Views
 			}
 		}
 		/// <summary>
-		/// Onclick event for the Searching Filter Button.
+		/// Onclick event for the Cancelled Filter Button. Filters the Requests to show requests
+		/// that are Cancelled.
 		/// </summary>
 		private void ShowCancelled_Click(object sender, RoutedEventArgs e)
 		{
@@ -369,10 +385,10 @@ namespace PMS.UIManager.Views
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT COUNT(*) FROM requests WHERE status = @status;";
 				cmd.Parameters.AddWithValue("@status", "Cancelled");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");
@@ -390,9 +406,8 @@ namespace PMS.UIManager.Views
 
 			}
 		}
-
 		/// <summary>
-		/// Onclick event for the Cancel Request Button.
+		/// Onclick event for the Cancel Request Button. Cancels a request.
 		/// </summary>
 		private void RequestCancelled_Click(object sender, EventArgs e, string reqID)
 		{
@@ -411,6 +426,11 @@ namespace PMS.UIManager.Views
 				Console.WriteLine("Error: {0}", ex.ToString());
 			}
 		}
+		/// <summary>
+		/// Livesearch interaction logic. This listens to the SearchRequestBox for the query letter 
+		/// by letter then fetches the results that matches with the query and updates the Request 
+		/// list.
+		/// </summary>
 		private void SearchRequestBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			dbman = new DBConnectionManager();
@@ -425,10 +445,10 @@ namespace PMS.UIManager.Views
 					"status LIKE @query OR " +
 					"req_record_name LIKE @query";
 				cmd.Parameters.AddWithValue("@query", "%" + SearchRequestBox.Text + "%");
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					//Console.WriteLine(db_reader.GetString("request_id"));
 					RequestItem ri = new RequestItem();
 					ri.RequestIDHolder.Content = db_reader.GetString("request_id");
 					ri.StatusHolder.Content = db_reader.GetString("status");

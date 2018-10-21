@@ -116,7 +116,7 @@
                         <RowDefinition Height="42*"/>
                         <RowDefinition Height="72*"/>
                     </Grid.RowDefinitions>
-                    <Label 
+                    <Label x:Name="FiltersLabel" 
                         Grid.Column="0" 
                         Grid.Row="0" 
                         Content="Filters" 
@@ -137,7 +137,7 @@
                         Badge="1" 
                         BadgePlacementMode="Right">
                         <Button
-                            x:Name="filter1" 
+                            x:Name="SearchingFilterLabel" 
                             Margin="10,10,0,0" 
                             VerticalAlignment="Top" 
                             Height="30" 
@@ -172,7 +172,7 @@
                         Badge="1" 
                         BadgePlacementMode="Right">
                         <Button
-                            x:Name="filter1_Copy" 
+                            x:Name="PrintingFilterLabel" 
                             Margin="10,10,0,0" 
                             VerticalAlignment="Top" 
                             Height="30" 
@@ -209,7 +209,7 @@
                         Badge="1" 
                         BadgePlacementMode="Right">
                         <Button
-                            x:Name="filter1_Copy2" 
+                            x:Name="PayingFilterLabel" 
                             Margin="10,10,0,0" 
                             VerticalAlignment="Top" 
                             Height="30" 
@@ -246,7 +246,7 @@
                         Badge="1"
                         BadgePlacementMode="Right">
                         <Button
-                            x:Name="filter1_Copy1" 
+                            x:Name="FinishedFilterLabel" 
                             Margin="10,10,0,0" 
                             VerticalAlignment="Top" 
                             Height="30" 
@@ -282,7 +282,7 @@
                         Badge="1"
                         BadgePlacementMode="Right" Margin="0,0,0,30">
                         <Button
-                            x:Name="filter1_Copy3" 
+                            x:Name="CancelledFilterLabel" 
                             Margin="10,10,0,0" 
                             VerticalAlignment="Top" 
                             Height="30" 
@@ -338,7 +338,7 @@
                         <RowDefinition 
                             Height="10*"/>
                     </Grid.RowDefinitions>
-                    <Label 
+                    <Label x:Name="QuickStatsLabel" 
                         Grid.Column="0"
                         Grid.Row="0"
                         Content="Quick Stats" 
@@ -353,7 +353,7 @@
                         FontWeight="Bold" 
                         Foreground="#FF646464" Grid.RowSpan="2"/>
                     <Button
-                        x:Name="info_btn1_Copy" 
+                        x:Name="QStatsInfoButton" 
                         Style="{DynamicResource MetroCircleButtonStyle}" 
                         Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
                         Margin="0,10,10,0" 
@@ -365,7 +365,7 @@
                         Foreground="#FF646464" 
                         Width="30" 
                         HorizontalAlignment="Right" Grid.Column="1" Grid.RowSpan="2"/>
-                    <Label 
+                    <Label x:Name="TotalRequestsLabel" 
                         Content="Total Requests" 
                         HorizontalAlignment="Left"
                         Margin="10,5,0,0"
@@ -379,7 +379,7 @@
                         Foreground="#FF646464" 
                         FontWeight="Bold" Grid.RowSpan="2"/>
                     <Label 
-                        x:Name="StatTotalHolder"
+                        x:Name="TotalRequestsHolder"
                         Content="999" 
                         HorizontalAlignment="Left" 
                         Margin="10,5,0,0" 
@@ -394,7 +394,7 @@
                         FontSize="14" 
                         Foreground="#FF646464" 
                         FontWeight="Bold" Grid.RowSpan="2"/>
-                    <Label 
+                    <Label x:Name="BaptismalLabel" 
                         Content="Baptismal" 
                         HorizontalAlignment="Left" 
                         Margin="36,3,0,0" 
@@ -406,42 +406,6 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                         FontSize="14" 
                         Foreground="#FF686868" Grid.RowSpan="2"/>
-                    <Label 
-                        Content="Confirmation" 
-                        HorizontalAlignment="Left" 
-                        Margin="36,3,0,0" 
-                        Grid.Row="3" 
-                        VerticalAlignment="Top"
-                        Height="31" 
-                        Width="90" 
-                        VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                        FontSize="14" 
-                        Foreground="#FF6D6D6D"/>
-                    <Label
-                        Content="Burial" 
-                        HorizontalAlignment="Left" 
-                        Margin="36,3,0,0" 
-                        Grid.Row="4" 
-                        VerticalAlignment="Top" 
-                        Height="31" 
-                        Width="90" 
-                        VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                        FontSize="14" 
-                        Foreground="#FF6D6D6D" Grid.RowSpan="2"/>
-                    <Label 
-                        Content="Marriage" 
-                        HorizontalAlignment="Left"
-                        Margin="36,3,0,0" 
-                        Grid.Row="5" 
-                        VerticalAlignment="Top" 
-                        Height="31" 
-                        Width="90" 
-                        VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                        FontSize="14" 
-                        Foreground="#FF6D6D6D"/>
                     <Label
                         x:Name="StatBaptismalHolder"
                         Content="999" 
@@ -457,6 +421,18 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto"
                         FontSize="14" 
                         Foreground="#FF686868" Grid.RowSpan="2"/>
+                    <Label x:Name="ConfirmationLabel" 
+                        Content="Confirmation" 
+                        HorizontalAlignment="Left" 
+                        Margin="36,3,0,0" 
+                        Grid.Row="3" 
+                        VerticalAlignment="Top"
+                        Height="31" 
+                        Width="90" 
+                        VerticalContentAlignment="Center" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontSize="14" 
+                        Foreground="#FF6D6D6D"/>
                     <Label 
                         x:Name="StatConfirmationHolder"
                         Content="999" 
@@ -472,6 +448,18 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D"/>
+                    <Label x:Name="BurialLabel"
+                        Content="Burial" 
+                        HorizontalAlignment="Left" 
+                        Margin="36,3,0,0" 
+                        Grid.Row="4" 
+                        VerticalAlignment="Top" 
+                        Height="31" 
+                        Width="90" 
+                        VerticalContentAlignment="Center" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontSize="14" 
+                        Foreground="#FF6D6D6D" Grid.RowSpan="2"/>
                     <Label 
                         x:Name="StatBurialHolder"
                         Content="999" 
@@ -487,8 +475,20 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D" Grid.RowSpan="2"/>
+                    <Label x:Name="MatrimonialLabel" 
+                        Content="Matrimonial" 
+                        HorizontalAlignment="Left"
+                        Margin="36,3,0,0" 
+                        Grid.Row="5" 
+                        VerticalAlignment="Top" 
+                        Height="31" 
+                        Width="90" 
+                        VerticalContentAlignment="Center" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontSize="14" 
+                        Foreground="#FF6D6D6D"/>
                     <Label 
-                        x:Name="StatMarriageHolder"
+                        x:Name="StatMatrimonialHolder"
                         Content="999" 
                         HorizontalAlignment="Left" 
                         Margin="10,3,0,0" 
@@ -504,7 +504,7 @@
                         Foreground="#FF6D6D6D"/>
                 </Grid>
                 <Button
-                    x:Name="info_btn1" 
+                    x:Name="FiltersInfoButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
                     Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
                     Margin="0,19,18,0" 
@@ -521,7 +521,7 @@
                 Grid.Column="1"
                 Margin="10"
                 Background="White">
-                <Button 
+                <Button x:Name="RequestsManuallSyncButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
                     Content="{iconPacks:FontAwesome SyncSolid}" 
                     Margin="0,10,10,0" 
@@ -541,7 +541,7 @@
                         Background="White" 
                         BorderBrush="#E6E6E6"/>
                 </Grid>
-                <Label 
+                <Label x:Name="RequestsLabelk" 
                     Content="Requests" 
                     HorizontalAlignment="Left" 
                     Margin="10,10,0,0" 

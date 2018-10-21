@@ -14,6 +14,8 @@ namespace PMS.UIManager.Views.ChildWindows
 		//MYSQL Related Stuff
 		private DBConnectionManager dbman;
 
+		private PMSUtil pmsutil;
+
 		private string reqType;
 		private string name;
 		private string bday;
@@ -39,43 +41,16 @@ namespace PMS.UIManager.Views.ChildWindows
 		public AddRequestWindow(Requests req)
 		{
 			req1 = req;
+			pmsutil = new PMSUtil();
 			InitializeComponent();
-		}
-		/// <summary>
-		/// Retrieves Current Date and Time from the Server.
-		/// </summary>
-		private string GetServerDateTime()
-		{
-			dbman = new DBConnectionManager();
-
-			string curDateTime = "";
-
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT NOW() FROM DUAL;";
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					curDateTime = db_reader.GetString("NOW()");
-				}
-				//close Connection
-				dbman.DBClose();
-
-				return curDateTime;
-			}
-			else
-			{
-				//close Connection
-				dbman.DBClose();
-
-				return null;
-			}
 		}
 		private string GenerateReqID()
 		{
 			return "REQ-" + DateTime.Now.ToString("yyyymmssf");
 		}
+		/// <summary>
+		/// Inserts the request to the database.
+		/// </summary>
 		private int InsertRequest()
 		{
 			//TODO
@@ -110,11 +85,14 @@ namespace PMS.UIManager.Views.ChildWindows
 				return 0;
 			}
 		}
+		/// <summary>
+		/// Interaction logic for the AddReqConfirm button. Gathers and prepares the data
+		/// for database insertion.
+		/// </summary>
 		private void AddReqConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			Login li = new Login();
 
-			switch (CMBRequestType.SelectedIndex)
+			switch (RequestType.SelectedIndex)
 			{
 				case 0:
 					reqType = "Baptismal";
@@ -140,7 +118,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			purpose = Purpose.Text;
 			status = "Initializing";
 			
-			string[] dt = GetServerDateTime().Split(null);
+			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
 			cTime = Convert.ToDateTime(dt[1]);
 			curDate = cDate.ToString("yyyy-MM-dd");
@@ -153,7 +131,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 		}
 		/// <summary>
-		/// Closes the AddRequestForm Window.
+		/// Interaction logic for the AddReqCancel button. Closes the AddRequestForm Window.
 		/// </summary>
 		private void AddReqCancel(object sender, System.Windows.RoutedEventArgs e)
 		{

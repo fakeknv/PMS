@@ -1,0 +1,43 @@
+﻿<simpleChildWindow:ChildWindow 
+    x:Class="PMS.UIManager.Views.ChildWindows.ViewRegisterWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    Title="Add Request"
+    Width="1000"
+    ShowTitleBar="False"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsModal="False"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d">
+    <simpleChildWindow:ChildWindow.Icon>
+        <iconPacks:PackIconFontAwesome 
+            Width="22"
+            Height="22"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource IdealForegroundColorBrush}"
+            Kind="PlusSquareSolid" />
+    </simpleChildWindow:ChildWindow.Icon>
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid>
+        <Label 
+            x:Name="testx"
+            Width="1000"
+            Content="Purpose" 
+            Margin="64,314,328,0" 
+            VerticalAlignment="Top" 
+            RenderTransformOrigin="1.57,0.513"/>
+    </Grid>
+</simpleChildWindow:ChildWindow>
