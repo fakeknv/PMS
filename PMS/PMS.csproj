@@ -136,11 +136,17 @@
     <Compile Include="UIComponents\Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\ConfirmationEntries.xaml.cs">
+      <DependentUpon>ConfirmationEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\Day.xaml.cs">
       <DependentUpon>Day.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirectoryResultsItem.xaml.cs">
       <DependentUpon>DirectoryResultsItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\ConfirmationRecordEntryItem.xaml.cs">
+      <DependentUpon>ConfirmationRecordEntryItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
@@ -162,11 +168,11 @@
     <Compile Include="UIManager\Views\Appointments.xaml.cs">
       <DependentUpon>Appointments.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml.cs">
+      <DependentUpon>ViewRecordEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml.cs">
       <DependentUpon>AddRegisterWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIManager\Views\ChildWindows\ViewRegisterWindow.xaml.cs">
-      <DependentUpon>ViewRegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml.cs">
       <DependentUpon>AddRequestWindow.xaml</DependentUpon>
@@ -181,11 +187,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIComponents\ConfirmationEntries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIComponents\Day.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\DirectoryResultsItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\ConfirmationRecordEntryItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,11 +227,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIManager\Views\ChildWindows\ViewRegisterWindow.xaml">
+    <Page Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -11,8 +11,10 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// </summary>
 	public partial class AddRequestWindow : ChildWindow
 	{
+		#pragma warning disable 0649
 		//MYSQL Related Stuff
 		private DBConnectionManager dbman;
+		#pragma warning restore 0649
 
 		private PMSUtil pmsutil;
 

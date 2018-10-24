@@ -2,6 +2,7 @@
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
+using PMS.UIManager.Views.ChildViews;
 using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Data;
@@ -244,10 +245,10 @@ namespace PMS.UIManager.Views
 		/// Onclick event for the ViewRegisterButton. Shows the ViewRegisterWindow that allows 
 		/// the user to add a register.
 		/// </summary>
-		private async void ViewRegister_Click(object sender, EventArgs e, int bookNum)
+		private void ViewRegister_Click(object sender, EventArgs e, int bookNum)
 		{
-			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new ViewRegisterWindow(bookNum), this.RegisterMainGrid);
+			// set the content
+			this.Content = new ViewRecordEntries(bookNum);
 		}
 	}
 }
