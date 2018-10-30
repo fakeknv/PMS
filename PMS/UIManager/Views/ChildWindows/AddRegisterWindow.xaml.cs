@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
 using System;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -95,7 +96,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
-			cTime = Convert.ToDateTime(dt[1]);
+			cTime = DateTime.Parse(dt[1]+" "+dt[2]);
 			curDate = cDate.ToString("yyyy-MM-dd");
 			curTime = cTime.ToString("HH:mm:ss");
 

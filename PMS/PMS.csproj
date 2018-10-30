@@ -124,6 +124,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfControls, Version=1.0.0.7, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfControls.AutoCompleteTextBox.1.0.0.7\lib\net35\WpfControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -136,8 +139,14 @@
     <Compile Include="UIComponents\Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\BaptismalEntries.xaml.cs">
+      <DependentUpon>BaptismalEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\ConfirmationEntries.xaml.cs">
       <DependentUpon>ConfirmationEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\BaptismalRecordEntryItem.xaml.cs">
+      <DependentUpon>BaptismalRecordEntryItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Day.xaml.cs">
       <DependentUpon>Day.xaml</DependentUpon>
@@ -171,6 +180,9 @@
     <Compile Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml.cs">
       <DependentUpon>ViewRecordEntries.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddRecordEntryWindow.xaml.cs">
+      <DependentUpon>AddRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml.cs">
       <DependentUpon>AddRegisterWindow.xaml</DependentUpon>
     </Compile>
@@ -187,9 +199,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIComponents\BaptismalEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\ConfirmationEntries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\BaptismalRecordEntryItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIComponents\Day.xaml">
       <SubType>Designer</SubType>
@@ -230,6 +250,10 @@
     <Page Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

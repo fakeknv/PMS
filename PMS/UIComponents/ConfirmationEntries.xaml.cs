@@ -25,14 +25,12 @@ namespace PMS.UIComponents
 		//MYSQL
 		private DBConnectionManager dbman;
 
-        public ConfirmationEntries()
+        public ConfirmationEntries(int bookNum, int pageNum)
         {
             InitializeComponent();
-			//ConfirmationRecordEntryItem entry = new ConfirmationRecordEntryItem();
-			//EntriesHolder.Items.Add(entry);
-			SyncConfirmationEntries();
+			SyncConfirmationEntries(bookNum, pageNum);
         }
-		private void SyncConfirmationEntries()
+		private void SyncConfirmationEntries(int targBook, int pageNum)
 		{
 			dbman = new DBConnectionManager();
 
@@ -40,14 +38,17 @@ namespace PMS.UIComponents
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM records, confirmation_records WHERE records.book_number = 20 AND records.page_number = 1  AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;";
+				cmd.CommandText = "SELECT * FROM records, confirmation_records WHERE records.book_number = @book_number AND records.page_number = @page_number  AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;";
+				cmd.Parameters.AddWithValue("@book_number", targBook);
+				cmd.Parameters.AddWithValue("@page_number", pageNum);
+				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
 					ConfirmationRecordEntryItem cre = new ConfirmationRecordEntryItem();
 					cre.RegistryNumLabel.Content = db_reader.GetString("entry_number");
 					cre.ConfirmationYearLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("yyyy");
-					cre.ConfirmationDateLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMMM dd");
+					cre.ConfirmationDateLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMM dd");
 					cre.NameLabel.Text = db_reader.GetString("recordholder_fullname");
 					cre.Parent1Label.Text = db_reader.GetString("parent1_fullname");
 					cre.Parent2Label.Text = db_reader.GetString("parent2_fullname");

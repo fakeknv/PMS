@@ -14,7 +14,7 @@
     d:DesignHeight="616.513" 
     d:DesignWidth="947.25">
     <Grid 
-        x:Name="RequestMainGrid" 
+        x:Name="RecordEntriesMainGrid" 
         Background="#FFF1F1F3">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -76,7 +76,7 @@
                     Background="{x:Null}" 
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     Foreground="#FF545454" 
-                    HorizontalAlignment="Right">
+                    HorizontalAlignment="Right" Click="AddRecord_Click">
                     <StackPanel 
                         Orientation="Horizontal">
                         <Rectangle 
@@ -89,42 +89,115 @@
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBlock 
-                            Text="  Request" 
-                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="17" ><Run Text="  Record"/><LineBreak/><Run/></TextBlock>
                     </StackPanel>
                 </Button>
             </Grid>
         </Grid>
-        <Grid Margin="10,94,10,10">
-            <UIComponents:ConfirmationEntries/>
+        <Grid Margin="10,94,10,10" x:Name="EntriesHolderGrid">
+
         </Grid>
-        <Button
-                    x:Name="BackButton_Copy" 
-                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                    Content="{iconPacks:FontAwesome ChevronLeftSolid}" 
-                    Margin="93,59,0,0" 
-                    VerticalAlignment="Top" 
-                    Height="30" 
-                    Background="White" 
-                    BorderBrush="{x:Null}" 
-                    RenderTransformOrigin="0.824,0.294" 
-                    Foreground="#FF717171" 
-                    Width="30" 
-                    HorizontalAlignment="Left" Click="BackButton_Click"/>
         <Label Content="Page:" HorizontalAlignment="Left" Margin="43,62,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="27" FontSize="14"/>
-        <Label Content="1" HorizontalAlignment="Left" Margin="123,62,0,0" VerticalAlignment="Top" Height="26" Width="25" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <mah:NumericUpDown x:Name="Page" Maximum="200" Minimum="1" HorizontalAlignment="Left" Margin="93,62,0,0" VerticalAlignment="Top" Width="84" ValueChanged="UpdatePageContent1"/>
         <Button
-            x:Name="BackButton_Copy1" 
-            Style="{DynamicResource MetroCircleButtonStyle}" 
-            Content="{iconPacks:FontAwesome ChevronRightSolid}" 
-            Margin="148,59,0,0" 
+                    x:Name="CreateRequestButton_Copy" 
+                    Margin="0,58,35,0" 
+                    VerticalAlignment="Top" 
+                    Width="82" 
+                    Height="31" 
+                    Background="White" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="#FF545454" 
+                    HorizontalAlignment="Right">
+            <StackPanel 
+                        Orientation="Horizontal">
+                <Rectangle 
+                            Width="16"
+                            Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome PrintSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="52" Text="  Print" />
+            </StackPanel>
+        </Button>
+        <Button
+            x:Name="CreateRequestButton_Copy1" 
+            Margin="0,57,122,0" 
             VerticalAlignment="Top" 
-            Height="30" 
+            Width="82" 
+            Height="31" 
             Background="White" 
-            BorderBrush="{x:Null}" 
-            RenderTransformOrigin="0.824,0.294" 
-            Foreground="#FF717171" 
-            Width="30" 
-            HorizontalAlignment="Left" Click="BackButton_Click"/>
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF545454" 
+            HorizontalAlignment="Right">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{iconPacks:FontAwesome EditSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="52" Text="  Edit" />
+            </StackPanel>
+        </Button>
+        <Button
+            x:Name="CreateRequestButton_Copy2" 
+            Margin="0,57,209,0" 
+            VerticalAlignment="Top" 
+            Width="103" 
+            Height="31" 
+            Background="White" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF545454" 
+            HorizontalAlignment="Right">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{iconPacks:FontAwesome ReadmeBrands}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  Remarks" />
+            </StackPanel>
+        </Button>
+        <Button
+            x:Name="CreateRequestButton_Copy3" 
+            Margin="0,57,317,0" 
+            VerticalAlignment="Top" 
+            Width="103" 
+            Height="31" 
+            Background="White" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF545454" 
+            HorizontalAlignment="Right">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{iconPacks:FontAwesome HistorySolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  History" />
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

@@ -26,11 +26,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string parent2;
 		private string purpose;
 		private string status;
+		#pragma warning disable 0649
 		private DateTime cDate;
 		private DateTime cTime;
 		private string curDate;
 		private string curTime;
-		#pragma warning disable 0649
 		private string comDate;
 		private string comTime;
 		private string placedBy;
@@ -122,7 +122,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			
 			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
-			cTime = Convert.ToDateTime(dt[1]);
+			DateTime.Parse(dt[1] + " " + dt[2]);
 			curDate = cDate.ToString("yyyy-MM-dd");
 			curTime = cTime.ToString("HH:mm:ss");
 			placedBy = Application.Current.Resources["uid"].ToString();

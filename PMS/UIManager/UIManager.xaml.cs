@@ -19,6 +19,9 @@ namespace PMS.UIManager
 			}
 			if (Application.Current.Resources["uid"] != null)
 			{
+				//WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+				this.Top = 10;
+				this.Left = 80;
 				this.Show();
 			}
 			InitializeComponent();

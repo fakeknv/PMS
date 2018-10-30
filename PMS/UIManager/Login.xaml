@@ -30,17 +30,22 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/PMS;component/Assets/grid2bg.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
-            <PasswordBox
-                Controls:TextBoxHelper.ClearTextButton="True"
-                Controls:TextBoxHelper.Watermark="Password"
-				x:Name="PasswordField"
+            <iconPacks:PackIconFontAwesome Foreground="#FF535353" HorizontalAlignment="Left" Margin="135,45,0,0" VerticalAlignment="Top" Height="86" Width="119" Kind="UserCircleSolid"/>
+            <Label
+				Content="Please authenticate to access records."
+				Foreground="Black"
+				HorizontalContentAlignment="Center"
+				FontSize="13"
+				x:Name="StatusLabel"
+				Height="34"
 				Grid.Column="0"
 				Grid.Row="0"
-				Height="29"
+				HorizontalAlignment="Stretch"
 				VerticalAlignment="Top"
-				Margin="65,245,53,0" />
+				Margin="68,136,52,0" />
+            <controls:ProgressRing x:Name="LoginSpinner" HorizontalAlignment="Left" Margin="183,170,0,0" VerticalAlignment="Top" Height="17" Width="22" RenderTransformOrigin="-0.179,0.439" Visibility="Hidden"/>
             <TextBox
-                Controls:TextBoxHelper.Watermark="Username"
+                controls:TextBoxHelper.Watermark="Username"
 				x:Name="UsernameField"
 				Height="29"
 				Grid.Column="0"
@@ -48,6 +53,15 @@
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Top"
 				Margin="66,200,52,0" />
+            <PasswordBox
+                controls:TextBoxHelper.ClearTextButton="True"
+                controls:TextBoxHelper.Watermark="Password"
+				x:Name="PasswordField"
+				Grid.Column="0"
+				Grid.Row="0"
+				Height="29"
+				VerticalAlignment="Top"
+				Margin="65,245,53,0" />
             <Button
 				FontSize="16"
 				VerticalContentAlignment="Center"
@@ -61,20 +75,6 @@
 				VerticalAlignment="Top"
 				Margin="66,291,0,0"
 				Click="LoginButton_Click" Content="LOGIN" FontFamily="Segoe UI Light" Width="123"/>
-            <Label
-				Content="Please authenticate to access records."
-				Foreground="Black"
-				HorizontalContentAlignment="Center"
-				FontSize="13"
-				x:Name="StatusLabel"
-				Height="34"
-				Grid.Column="0"
-				Grid.Row="0"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Top"
-				Margin="68,136,52,0" />
-            <iconPacks:PackIconFontAwesome Foreground="#FF535353" HorizontalAlignment="Left" Margin="135,45,0,0" VerticalAlignment="Top" Height="86" Width="119" Kind="UserCircleSolid"/>
-            <controls:ProgressRing x:Name="LoginSpinner" HorizontalAlignment="Left" Margin="183,170,0,0" VerticalAlignment="Top" Height="17" Width="22" RenderTransformOrigin="-0.179,0.439" Visibility="Hidden"/>
             <Button
                 FontSize="16"
                 VerticalContentAlignment="Center"
