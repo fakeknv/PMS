@@ -136,6 +136,12 @@
     <Compile Include="DBConnectionManager.cs" />
     <Compile Include="PMSUtil.cs" />
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="UIComponents\BurialRecordEntryItem.xaml.cs">
+      <DependentUpon>BurialRecordEntryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\BurialEntries.xaml.cs">
+      <DependentUpon>BurialEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\MatrimonialRecordEntryItem.xaml.cs">
       <DependentUpon>MatrimonialRecordEntryItem.xaml</DependentUpon>
     </Compile>
@@ -201,6 +207,14 @@
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Requests.xaml.cs" />
+    <Page Include="UIComponents\BurialRecordEntryItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\BurialEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\MatrimonialRecordEntryItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -57,7 +57,10 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(bookNum) == "Burial")
 			{
-				
+				BurialEntries be = new BurialEntries(bookNum, 1);
+				EntriesHolderGrid.Children.Add(be);
+				Grid.SetRow(be, 0);
+				Grid.SetColumn(be, 0);
 			}
 		}
 
@@ -114,6 +117,13 @@ namespace PMS.UIManager.Views.ChildViews
 					EntriesHolderGrid.Children.Add(me);
 					Grid.SetRow(me, 0);
 					Grid.SetColumn(me, 0);
+				}
+				else if (GetRegisterType(booknum) == "Burial")
+				{
+					BurialEntries be = new BurialEntries(booknum, Convert.ToInt32(Page.Value));
+					EntriesHolderGrid.Children.Add(be);
+					Grid.SetRow(be, 0);
+					Grid.SetColumn(be, 0);
 				}
 			}
 		}
