@@ -48,6 +48,17 @@ namespace PMS.UIManager.Views.ChildViews
 				Grid.SetRow(be, 0);
 				Grid.SetColumn(be, 0);
 			}
+			else if (GetRegisterType(bookNum) == "Matrimonial")
+			{
+				MatrimonialEntries me = new MatrimonialEntries(bookNum, 1);
+				EntriesHolderGrid.Children.Add(me);
+				Grid.SetRow(me, 0);
+				Grid.SetColumn(me, 0);
+			}
+			else if (GetRegisterType(bookNum) == "Burial")
+			{
+				
+			}
 		}
 
 		private string GetRegisterType(int bookNum)
@@ -96,6 +107,13 @@ namespace PMS.UIManager.Views.ChildViews
 					EntriesHolderGrid.Children.Add(be);
 					Grid.SetRow(be, 0);
 					Grid.SetColumn(be, 0);
+				}
+				else if (GetRegisterType(booknum) == "Matrimonial")
+				{
+					MatrimonialEntries me = new MatrimonialEntries(booknum, Convert.ToInt32(Page.Value));
+					EntriesHolderGrid.Children.Add(me);
+					Grid.SetRow(me, 0);
+					Grid.SetColumn(me, 0);
 				}
 			}
 		}

@@ -136,6 +136,12 @@
     <Compile Include="DBConnectionManager.cs" />
     <Compile Include="PMSUtil.cs" />
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="UIComponents\MatrimonialRecordEntryItem.xaml.cs">
+      <DependentUpon>MatrimonialRecordEntryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\MatrimonialEntries.xaml.cs">
+      <DependentUpon>MatrimonialEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\Calendar.xaml.cs">
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
@@ -195,6 +201,14 @@
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Requests.xaml.cs" />
+    <Page Include="UIComponents\MatrimonialRecordEntryItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\MatrimonialEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\Calendar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
