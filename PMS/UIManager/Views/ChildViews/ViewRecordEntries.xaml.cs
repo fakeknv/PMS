@@ -131,7 +131,15 @@ namespace PMS.UIManager.Views.ChildViews
 		private async void AddRecord_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+
+			if (GetRegisterType(booknum) == "Confirmation")
+			{
+				await metroWindow.ShowChildWindowAsync(new AddConfirmationRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+			}
+			else if (GetRegisterType(booknum) == "Baptismal")
+			{
+
+			}
 		}
 	}
 }

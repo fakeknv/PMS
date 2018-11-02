@@ -4,13 +4,14 @@ using MySql.Data.MySqlClient;
 using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddRecordEntryWindow : ChildWindow
+	public partial class AddConfirmationRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
@@ -31,7 +32,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddRecordEntryWindow(int targBook)
+		public AddConfirmationRecordEntryWindow(int targBook)
 		{
 			
 			pmsutil = new PMSUtil();
@@ -133,15 +134,125 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			}
 		}
+		private void ShowSuggestions2(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			dbman = new DBConnectionManager();
+
+			ParishSuggestionArea.Items.Clear();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT DISTINCT parochia FROM confirmation_records WHERE " +
+					"parochia LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + Parish.Text + "%");
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ParishSuggestionArea.Items.Add(db_reader.GetString("parochia"));
+				}
+				//close Connection
+				dbman.DBClose();
+
+				Suggestions2.Visibility = System.Windows.Visibility.Visible;
+			}
+			else
+			{
+
+			}
+		}
+		private void ShowSuggestions3(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			dbman = new DBConnectionManager();
+
+			ProvinceSuggestionArea.Items.Clear();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT DISTINCT province FROM confirmation_records WHERE " +
+					"province LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + Province.Text + "%");
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ProvinceSuggestionArea.Items.Add(db_reader.GetString("province"));
+				}
+				//close Connection
+				dbman.DBClose();
+
+				Suggestions3.Visibility = System.Windows.Visibility.Visible;
+			}
+			else
+			{
+
+			}
+		}
+		private void ShowSuggestions4(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			dbman = new DBConnectionManager();
+
+			MinisterSuggestionArea.Items.Clear();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT DISTINCT minister FROM confirmation_records WHERE " +
+					"minister LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + Minister.Text + "%");
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					MinisterSuggestionArea.Items.Add(db_reader.GetString("minister"));
+				}
+				//close Connection
+				dbman.DBClose();
+
+				Suggestions4.Visibility = System.Windows.Visibility.Visible;
+			}
+			else
+			{
+
+			}
+		}
 		private void Suggestion_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
+			var cb = sender as TextBlock;
+			var item = cb.DataContext;
+			PlaceOfBaptismSuggestionArea.SelectedItem = item;
 			PlaceOfBaptism.Text = PlaceOfBaptismSuggestionArea.SelectedItem.ToString();
 			Suggestions1.Visibility = Visibility.Hidden;
 		}
-
-		private void Hide(object sender, RoutedEventArgs e)
+		private void Suggestion2_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var cb = sender as TextBlock;
+			var item = cb.DataContext;
+			ParishSuggestionArea.SelectedItem = item;
+			Parish.Text = ParishSuggestionArea.SelectedItem.ToString();
+			Suggestions2.Visibility = Visibility.Hidden;
+		}
+		private void Suggestion3_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var cb = sender as TextBlock;
+			var item = cb.DataContext;
+			ProvinceSuggestionArea.SelectedItem = item;
+			Province.Text = ProvinceSuggestionArea.SelectedItem.ToString();
+			Suggestions3.Visibility = Visibility.Hidden;
+		}
+		private void Suggestion4_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var cb = sender as TextBlock;
+			var item = cb.DataContext;
+			MinisterSuggestionArea.SelectedItem = item;
+			Minister.Text = MinisterSuggestionArea.SelectedItem.ToString();
+			Suggestions4.Visibility = Visibility.Hidden;
+		}
+		private void Hide(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
 			Suggestions1.Visibility = Visibility.Hidden;
+			Suggestions2.Visibility = Visibility.Hidden;
+			Suggestions3.Visibility = Visibility.Hidden;
+			Suggestions4.Visibility = Visibility.Hidden;
 		}
 	}
 }
