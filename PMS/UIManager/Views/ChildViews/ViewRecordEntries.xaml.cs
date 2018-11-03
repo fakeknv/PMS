@@ -138,7 +138,15 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(booknum) == "Baptismal")
 			{
-
+				await metroWindow.ShowChildWindowAsync(new AddBaptismalRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+			}
+			else if (GetRegisterType(booknum) == "Matrimonial")
+			{
+				await metroWindow.ShowChildWindowAsync(new AddMatrimonialRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+			}
+			else if (GetRegisterType(booknum) == "Burial")
+			{
+				await metroWindow.ShowChildWindowAsync(new AddBurialRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
 			}
 		}
 	}

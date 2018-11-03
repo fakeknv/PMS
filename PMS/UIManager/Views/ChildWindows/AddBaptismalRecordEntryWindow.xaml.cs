@@ -11,7 +11,7 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddConfirmationRecordEntryWindow : ChildWindow
+	public partial class AddBaptismalRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
@@ -21,12 +21,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private int pageNum;
 		private int bookNum;
 		private int entryNum;
-		private string confirmationDate;
-		private int age;
+		private string baptismDate;
+		private string birthDate;
+		private string legitimacy;
 		private string fullName;
-		private string parish;
-		private string province;
-		private string baptismPlace;
+		private string birthPlace;
 		private string parent1;
 		private string parent2;
 		private string sponsor1;
@@ -43,13 +42,13 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddConfirmationRecordEntryWindow(int targBook)
+		public AddBaptismalRecordEntryWindow(int targBook)
 		{
 			
 			pmsutil = new PMSUtil();
 			InitializeComponent();
 			bookNum = targBook;
-			Stipend.Value = FetchConfirmationStipend();
+			Stipend.Value = FetchBaptismalStipend();
 		}
 		/// <summary>
 		/// Inserts the request to the database.
@@ -70,7 +69,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				cmd.Parameters.AddWithValue("@book_number", bookNum);
 				cmd.Parameters.AddWithValue("@page_number", pageNum);
 				cmd.Parameters.AddWithValue("@entry_number", entryNum);
-				cmd.Parameters.AddWithValue("@record_date", confirmationDate);
+				cmd.Parameters.AddWithValue("@record_date", baptismDate);
 				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName);
 				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
 				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
@@ -79,15 +78,14 @@ namespace PMS.UIManager.Views.ChildWindows
 				//Phase 2
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText =
-					"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
-					"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
+					"INSERT INTO baptismal_records(record_id, birthday, legitimacy, place_of_birth, sponsor1, sponsor2, stipend, minister, remarks)" +
+					"VALUES(@record_id, @birthday, @legitimacy, @place_of_birth, @sponsor1, @sponsor2, @stipend, @minister, @remarks)";
 				cmd.Prepare();
 				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@age", age);
-				cmd.Parameters.AddWithValue("@parish", parish);
-				cmd.Parameters.AddWithValue("@province", province);
-				cmd.Parameters.AddWithValue("@place_of_baptism", baptismPlace);
-				cmd.Parameters.AddWithValue("@sponsor", sponsor1);
+				cmd.Parameters.AddWithValue("@birthday", birthDate);
+				cmd.Parameters.AddWithValue("@legitimacy", legitimacy);
+				cmd.Parameters.AddWithValue("@place_of_birth", birthPlace);
+				cmd.Parameters.AddWithValue("@sponsor1", sponsor1);
 				cmd.Parameters.AddWithValue("@sponsor2", sponsor2);
 				cmd.Parameters.AddWithValue("@stipend", stipend);
 				cmd.Parameters.AddWithValue("@minister", minister);
@@ -106,14 +104,14 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Fetches default confirmation stipend value.
 		/// </summary>
-		private int FetchConfirmationStipend() {
+		private int FetchBaptismalStipend() {
 			int ret = 0;
 			dbman = new DBConnectionManager();
 
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT key_value FROM settings WHERE key_name = 'Confirmation Stipend';";
+				cmd.CommandText = "SELECT key_value FROM settings WHERE key_name = 'Baptismal Stipend';";
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
@@ -148,14 +146,27 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
+			switch (Legitimacy.SelectedIndex)
+			{
+				case 0:
+					legitimacy = "Legitimate";
+					break;
+				case 1:
+					legitimacy = "Civil";
+					break;
+				case 2:
+					legitimacy = "Illegitimate";
+					break;
+				default:
+					legitimacy = "----";
+					break;
+			}
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
-			confirmationDate = Convert.ToDateTime(ConfirmationDate.Text).ToString("yyyy-MM-dd");
-			age = Convert.ToInt32(Age.Value);
+			baptismDate = Convert.ToDateTime(BaptismDate.Text).ToString("yyyy-MM-dd");
+			birthDate = Convert.ToDateTime(Birthdate.Text).ToString("yyyy-MM-dd");
 			fullName = ValidateInp(FullName.Text);
-			parish = ValidateInp(Parish.Text);
-			province = ValidateInp(Province.Text);
-			baptismPlace = PlaceOfBaptism.Text;
+			birthPlace = PlaceOfBirth.Text;
 			parent1 = ValidateInp(Parent1.Text);
 			parent2 = ValidateInp(Parent2.Text);
 			sponsor1 = ValidateInp(Sponsor1.Text);
@@ -163,7 +174,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			stipend = Convert.ToInt32(Stipend.Value);
 			minister = ValidateInp(Minister.Text);
 			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0) {
+			if (InsertEntry() > 0)
+			{
 				this.Close();
 			}
 		}
@@ -178,18 +190,18 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			dbman = new DBConnectionManager();
 
-			PlaceOfBaptismSuggestionArea.Items.Clear();
+			PlaceOfBirthSuggestionArea.Items.Clear();
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT place_of_baptism FROM confirmation_records WHERE " +
-					"place_of_baptism LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + PlaceOfBaptism.Text + "%");
+				cmd.CommandText = "SELECT DISTINCT place_of_birth FROM baptismal_records WHERE " +
+					"place_of_birth LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + PlaceOfBirth.Text + "%");
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					PlaceOfBaptismSuggestionArea.Items.Add(db_reader.GetString("place_of_baptism"));
+					PlaceOfBirthSuggestionArea.Items.Add(db_reader.GetString("place_of_birth"));
 				}
 				//close Connection
 				dbman.DBClose();
@@ -205,65 +217,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			dbman = new DBConnectionManager();
 
-			ParishSuggestionArea.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT parochia FROM confirmation_records WHERE " +
-					"parochia LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + Parish.Text + "%");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					ParishSuggestionArea.Items.Add(db_reader.GetString("parochia"));
-				}
-				//close Connection
-				dbman.DBClose();
-
-				Suggestions2.Visibility = System.Windows.Visibility.Visible;
-			}
-			else
-			{
-
-			}
-		}
-		private void ShowSuggestions3(object sender, System.Windows.Controls.TextChangedEventArgs e)
-		{
-			dbman = new DBConnectionManager();
-
-			ProvinceSuggestionArea.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT province FROM confirmation_records WHERE " +
-					"province LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + Province.Text + "%");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					ProvinceSuggestionArea.Items.Add(db_reader.GetString("province"));
-				}
-				//close Connection
-				dbman.DBClose();
-
-				Suggestions3.Visibility = System.Windows.Visibility.Visible;
-			}
-			else
-			{
-
-			}
-		}
-		private void ShowSuggestions4(object sender, System.Windows.Controls.TextChangedEventArgs e)
-		{
-			dbman = new DBConnectionManager();
-
 			MinisterSuggestionArea.Items.Clear();
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT minister FROM confirmation_records WHERE " +
+				cmd.CommandText = "SELECT DISTINCT minister FROM baptismal_records WHERE " +
 					"minister LIKE @query;";
 				cmd.Parameters.AddWithValue("@query", "%" + Minister.Text + "%");
 				cmd.Prepare();
@@ -275,7 +233,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				//close Connection
 				dbman.DBClose();
 
-				Suggestions4.Visibility = System.Windows.Visibility.Visible;
+				Suggestions2.Visibility = System.Windows.Visibility.Visible;
 			}
 			else
 			{
@@ -286,40 +244,22 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var cb = sender as TextBlock;
 			var item = cb.DataContext;
-			PlaceOfBaptismSuggestionArea.SelectedItem = item;
-			PlaceOfBaptism.Text = PlaceOfBaptismSuggestionArea.SelectedItem.ToString();
+			PlaceOfBirthSuggestionArea.SelectedItem = item;
+			PlaceOfBirth.Text = PlaceOfBirthSuggestionArea.SelectedItem.ToString();
 			Suggestions1.Visibility = Visibility.Hidden;
 		}
 		private void Suggestion2_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var cb = sender as TextBlock;
 			var item = cb.DataContext;
-			ParishSuggestionArea.SelectedItem = item;
-			Parish.Text = ParishSuggestionArea.SelectedItem.ToString();
-			Suggestions2.Visibility = Visibility.Hidden;
-		}
-		private void Suggestion3_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var cb = sender as TextBlock;
-			var item = cb.DataContext;
-			ProvinceSuggestionArea.SelectedItem = item;
-			Province.Text = ProvinceSuggestionArea.SelectedItem.ToString();
-			Suggestions3.Visibility = Visibility.Hidden;
-		}
-		private void Suggestion4_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var cb = sender as TextBlock;
-			var item = cb.DataContext;
 			MinisterSuggestionArea.SelectedItem = item;
 			Minister.Text = MinisterSuggestionArea.SelectedItem.ToString();
-			Suggestions4.Visibility = Visibility.Hidden;
+			Suggestions2.Visibility = Visibility.Hidden;
 		}
 		private void Hide(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
 			Suggestions1.Visibility = Visibility.Hidden;
 			Suggestions2.Visibility = Visibility.Hidden;
-			Suggestions3.Visibility = Visibility.Hidden;
-			Suggestions4.Visibility = Visibility.Hidden;
 		}
 	}
 }

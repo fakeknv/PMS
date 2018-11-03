@@ -45,7 +45,7 @@
                 <TextBlock Grid.Column="10" Margin="0,3,-1,-1" TextWrapping="WrapWithOverflow" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" TextAlignment="Center"><Run Text="Cause "/><LineBreak/><Run Text="of Death"/></TextBlock>
             </Border>
         </Grid>
-        <ListView x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="{x:Null}" BorderThickness="0">
+        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="{x:Null}" BorderThickness="0">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Padding" Value="0,0,0,0"/>

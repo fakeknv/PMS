@@ -192,6 +192,15 @@
     <Compile Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml.cs">
       <DependentUpon>ViewRecordEntries.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddBaptismalRecordEntryWindow.xaml.cs">
+      <DependentUpon>AddBaptismalRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddBurialRecordEntryWindow.xaml.cs">
+      <DependentUpon>AddBurialRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddMatrimonialRecordEntryWindow.xaml.cs">
+      <DependentUpon>AddMatrimonialRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddConfirmationRecordEntryWindow.xaml.cs">
       <DependentUpon>AddConfirmationRecordEntryWindow.xaml</DependentUpon>
     </Compile>
@@ -278,6 +287,18 @@
     <Page Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddBaptismalRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddBurialRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddMatrimonialRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\AddConfirmationRecordEntryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

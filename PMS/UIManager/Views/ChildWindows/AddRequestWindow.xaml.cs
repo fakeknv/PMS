@@ -122,7 +122,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			
 			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
-			DateTime.Parse(dt[1] + " " + dt[2]);
+			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
 			curDate = cDate.ToString("yyyy-MM-dd");
 			curTime = cTime.ToString("HH:mm:ss");
 			placedBy = Application.Current.Resources["uid"].ToString();

@@ -33,7 +33,7 @@
             <Label Content="Stipend" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="8" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FF545454" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
             <Label Content="Minister" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="9" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FF545454" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
         </Grid>
-        <ListView x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="{x:Null}" BorderThickness="0">
+        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="{x:Null}" BorderThickness="0">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="Padding" Value="0,0,0,0"/>
