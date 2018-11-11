@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PMS.UIComponents
 {
     /// <summary>
-    /// Interaction logic for RecordEntryItem.xaml
+    /// Interaction logic for AccountsItem.xaml
     /// </summary>
-    public partial class BaptismalRecordEntryItem : UserControl
+    public partial class AccountsItem : UserControl
     {
-		public BaptismalRecordEntryItem()
+        public AccountsItem()
         {
             InitializeComponent();
         }

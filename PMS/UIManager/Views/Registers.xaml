@@ -244,8 +244,9 @@
                 <ListView x:Name="RegistersItemContainer"  ItemsSource="{Binding Items}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Width" Value="220"/>
-                            <Setter Property="Height" Value="255"/>
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                            <Setter Property="Width" Value="209.979"/>
+                            <Setter Property="Height" Value="236.575"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.Template>

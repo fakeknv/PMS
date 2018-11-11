@@ -11,15 +11,15 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddConfirmationRecordEntryWindow : ChildWindow
+	public partial class EditConfirmationRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
 
+		private string recordID;
 		private int pageNum;
-		private int bookNum;
 		private int entryNum;
 		private string confirmationDate;
 		private int age;
@@ -43,46 +43,81 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddConfirmationRecordEntryWindow(int targBook)
+		public EditConfirmationRecordEntryWindow(string targRecord)
 		{
 			
 			pmsutil = new PMSUtil();
+			recordID = targRecord;
 			InitializeComponent();
-			bookNum = targBook;
 			Stipend.Value = FetchConfirmationStipend();
+
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM confirmation_records, records WHERE records.record_id = @record_id AND records.record_id = confirmation_records.record_id LIMIT 1;";
+				cmd.Parameters.AddWithValue("@record_id", targRecord);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+					ConfirmationDate.Text = db_reader.GetString("record_date");
+					Age.Value = Convert.ToDouble(db_reader.GetString("age"));
+					FullName.Text = db_reader.GetString("recordholder_fullname");
+					Parish.Text = db_reader.GetString("parochia");
+					Province.Text = db_reader.GetString("province");
+					Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
+					PlaceOfBaptism.Text = db_reader.GetString("place_of_baptism");
+					Parent1.Text = db_reader.GetString("parent1_fullname");
+					Parent2.Text = db_reader.GetString("parent2_fullname");
+					Sponsor1.Text = db_reader.GetString("sponsor");
+					Sponsor2.Text = db_reader.GetString("sponsor2");
+					Minister.Text = db_reader.GetString("minister");
+					Remarks.Text = db_reader.GetString("remarks");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+
+			Suggestions1.Visibility = Visibility.Hidden;
+			Suggestions2.Visibility = Visibility.Hidden;
+			Suggestions3.Visibility = Visibility.Hidden;
+			Suggestions4.Visibility = Visibility.Hidden;
 		}
 		/// <summary>
 		/// Inserts the request to the database.
 		/// </summary>
-		private int InsertEntry()
+		private int UpdateEntry()
 		{
 			dbman = new DBConnectionManager();
 			//TODO
 			try
 			{
-				string recID = pmsutil.GenRecordID();
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText =
-					"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
-					"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@book_number", bookNum);
+					"UPDATE records SET page_number = @page_number, entry_number = @entry_number, record_date = @record_date, recordholder_fullname = @recordholder_fullname, parent1_fullname = @parent1_fullname, parent2_fullname = @parent2_fullname WHERE record_id = @record_id;";
+				cmd.Parameters.AddWithValue("@record_id", recordID);
 				cmd.Parameters.AddWithValue("@page_number", pageNum);
 				cmd.Parameters.AddWithValue("@entry_number", entryNum);
 				cmd.Parameters.AddWithValue("@record_date", confirmationDate);
 				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName);
 				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
 				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
+				cmd.Prepare();
 				int stat_code = cmd.ExecuteNonQuery();
 				dbman.DBClose();
 				//Phase 2
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText =
-					"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
-					"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
+					"UPDATE confirmation_records SET age = @age, parochia = @parish, province = @province, place_of_baptism = @place_of_baptism, sponsor = @sponsor, sponsor2 = @sponsor2, stipend = @stipend, minister = @minister, remarks = @remarks WHERE record_id = @record_id;";
+				cmd.Parameters.AddWithValue("@record_id", recordID);
 				cmd.Parameters.AddWithValue("@age", age);
 				cmd.Parameters.AddWithValue("@parish", parish);
 				cmd.Parameters.AddWithValue("@province", province);
@@ -92,9 +127,10 @@ namespace PMS.UIManager.Views.ChildWindows
 				cmd.Parameters.AddWithValue("@stipend", stipend);
 				cmd.Parameters.AddWithValue("@minister", minister);
 				cmd.Parameters.AddWithValue("@remarks", remarks);
+				cmd.Prepare();
 				stat_code = cmd.ExecuteNonQuery();
 				dbman.DBClose();
-				string tmp = pmsutil.LogRecord(recID, "LOGC-01");
+				string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
 				return stat_code;
 			}
 			catch (MySqlException ex)
@@ -146,7 +182,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
-		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
+		private void EditRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
@@ -163,14 +199,14 @@ namespace PMS.UIManager.Views.ChildWindows
 			stipend = Convert.ToInt32(Stipend.Value);
 			minister = ValidateInp(Minister.Text);
 			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0) {
+			if (UpdateEntry() > 0) {
 				this.Close();
 			}
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
 		/// </summary>
-		private void AddRegCancel(object sender, System.Windows.RoutedEventArgs e)
+		private void EditRecCancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}

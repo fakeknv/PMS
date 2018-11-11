@@ -1,7 +1,93 @@
-﻿<UserControl x:Class="PMS.UIManager.Views.Accounts"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<Grid>
-		
-	</Grid>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl 
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
+    x:Class="PMS.UIManager.Views.Accounts"
+    Margin="0" 
+    Padding="0" 
+    d:DesignHeight="616.513" 
+    d:DesignWidth="947.25">
+    <Grid 
+        x:Name="RequestMainGrid" 
+        Background="#FFF1F1F3">
+        <Grid Background="White" Height="46" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="438*"/>
+                <ColumnDefinition Width="509*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch">
+                <TextBox 
+                    x:Name="SearchRequestBox" 
+                    TextWrapping="Wrap" 
+                    Margin="10,7,10,0"
+                    BorderThickness="0,0,0,1" 
+                    Height="31" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Top" 
+                    mah:TextBoxHelper.Watermark="Search"
+                    RenderTransformOrigin="0,0.5" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    FontSize="14"
+                    VerticalContentAlignment="Center" />
+                <Button 
+                    x:Name="SearchRequestButton" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                    Content="{iconPacks:FontAwesome SearchSolid}" 
+                    Margin="0,2,10,0" 
+                    VerticalAlignment="Top" 
+                    Height="34" 
+                    Background="White" 
+                    BorderBrush="{x:Null}" 
+                    RenderTransformOrigin="0.824,0.294" 
+                    Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
+            </Grid>
+            <Grid 
+                Grid.Column="1" HorizontalAlignment="Right" Width="509">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="372*"/>
+                    <ColumnDefinition Width="137*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Grid>
+        <Grid Height="121" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="2,51,2,0">
+            <Grid.Background>
+                <ImageBrush ImageSource="/PMS;component/Assets/pexels-photo-312105.jpeg" Stretch="UniformToFill"/>
+            </Grid.Background>
+            <Label x:Name="AccountNameHolder" Content="JOHN W. DOE" VerticalAlignment="Top" Margin="126,25,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="22" Height="38" HorizontalAlignment="Left" Width="221" Foreground="White"/>
+            <Label x:Name="AccountRoleHolder" Content="Administrator" VerticalAlignment="Top" Margin="126,63,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="18" HorizontalAlignment="Left" Width="221" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" Margin="41,25,0,0" VerticalAlignment="Top" Height="72" Width="80" Foreground="White"/>
+        </Grid>
+        <mah:MetroAnimatedTabControl Margin="2,177,2,2">
+            <TabItem Header="Personal" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+                <Grid Width="941" Height="403">
+                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CHANGE PASSWORD" Margin="0,33,530,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
+                    <PasswordBox x:Name="CurrentPassword" HorizontalAlignment="Left" Margin="47,108,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
+                    <Label Content="Current Password" HorizontalAlignment="Left" Margin="47,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <PasswordBox x:Name="NewPassword1" HorizontalAlignment="Left" Margin="47,171,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
+                    <Label Content="New Password" HorizontalAlignment="Left" Margin="47,144,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <PasswordBox x:Name="NewPassword2" HorizontalAlignment="Left" Margin="47,234,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
+                    <Label Content="Confirm New Password" HorizontalAlignment="Left" Margin="47,207,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <Button Content="Reset" Margin="294,294,530,79" Background="#FFF0A63A" Foreground="White" Click="ResetButton_Click1"/>
+                    <Button Content="Save Changes" Margin="172,294,652,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click1"/>
+                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="PERSONAL INFO" Margin="0,33,61,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
+                    <Label Content="Name" HorizontalAlignment="Left" Margin="516,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <TextBox x:Name="NameTextbox" TextWrapping="Wrap" Margin="516,108,61,264"/>
+                    <Button Content="Reset" Margin="762,294,61,79" Foreground="White" Background="#FFF0A63A" Click="ResetButton_Click2"/>
+                    <Button Content="Save Changes" Margin="639,294,184,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click2"/>
+                    <Label x:Name="InfoArea1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                    <Label x:Name="InfoArea2" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="516,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Account Log" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <DatePicker Height="100" Width="100"/>
+        </mah:MetroAnimatedTabControl>
+    </Grid>
 </UserControl>

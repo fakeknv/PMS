@@ -28,9 +28,10 @@ namespace PMS.UIManager.Views
             InitializeComponent();
         }
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private async void AddAppointment_Click(object sender, RoutedEventArgs e)
 		{
-			
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new AddAppointmentWindow(), this.AppointmentMainGrid);
 		}
 	}
 }

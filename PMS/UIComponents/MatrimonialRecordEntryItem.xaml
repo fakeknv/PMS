@@ -29,60 +29,61 @@
                 <ColumnDefinition Width="50*" MinWidth="50"/>
                 <ColumnDefinition Width="100*" MinWidth="100"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="EntryNumLabel" Content="No." FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FF545454" VerticalContentAlignment="Center" BorderThickness="1"/>
-            <Label x:Name="MarriageYearLabel" Content="Year" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" Margin="0,0,65,0" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FF545454" VerticalContentAlignment="Center"/>
-            <Label x:Name="MarriageDateLabel" Content="Date" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FF545454" HorizontalAlignment="Right" Width="65"/>
-            <Border x:Name="Name1Border" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="2" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
-                <TextBlock x:Name="Name1Label" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Name1" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Label x:Name="RecordID" Visibility="Hidden"></Label>
+            <Label x:Name="EntryNumLabel" Content="No." FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="1" Foreground="#FF474747"/>
+            <Label x:Name="MarriageYearLabel" Content="Year" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" Margin="0,0,65,0" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Foreground="#FF474747"/>
+            <Label x:Name="MarriageDateLabel" Content="Date" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" HorizontalAlignment="Right" Width="65" Foreground="#FF474747"/>
+            <Border x:Name="Name1Border" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="2" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
+                <TextBlock x:Name="Name1Label" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Name1" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Name2Border" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="2" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
-                <TextBlock x:Name="Name2Label" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Name2" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Name2Border" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="2" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
+                <TextBlock x:Name="Name2Label" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Name2" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Label x:Name="Status1Label" Content="Status" VerticalAlignment="Top" Height="107" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="3" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FF545454" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
-            <Label x:Name="Status2Label" Content="Status" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="3" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FF545454" BorderThickness="0,0,1,1" VerticalContentAlignment="Center" Margin="0,107,0,0"/>
-            <Label x:Name="Age1Label" Content="Age" VerticalAlignment="Top" Height="107" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FF545454" VerticalContentAlignment="Center" Grid.Column="4"/>
-            <Label x:Name="Age2Label" Content="Age" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FF545454" VerticalContentAlignment="Center" Grid.Column="4" Margin="0,107,0,0"/>
-            <Border x:Name="Hometown1Border" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="5" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
-                <TextBlock x:Name="Hometown1Label" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Hometown" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Label x:Name="Status1Label" Content="Status" VerticalAlignment="Top" Height="107" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="3" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
+            <Label x:Name="Status2Label" Content="Status" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="3" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,0,1,1" VerticalContentAlignment="Center" Margin="0,107,0,0" Foreground="#FF474747"/>
+            <Label x:Name="Age1Label" Content="Age" VerticalAlignment="Top" Height="107" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Grid.Column="4" Foreground="#FF474747"/>
+            <Label x:Name="Age2Label" Content="Age" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Grid.Column="4" Margin="0,107,0,0" Foreground="#FF474747"/>
+            <Border x:Name="Hometown1Border" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="5" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
+                <TextBlock x:Name="Hometown1Label" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Hometown" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Hometown2Border" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="5" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
-                <TextBlock x:Name="Hometown2Label" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Hometown" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Hometown2Border" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="5" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
+                <TextBlock x:Name="Hometown2Label" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Hometown" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Residence1Border" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="6" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
-                <TextBlock x:Name="Residence1Label" Grid.Column="2" MaxWidth="97" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Residence1Border" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="6" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
+                <TextBlock x:Name="Residence1Label" Grid.Column="2" MaxWidth="97" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Residence2Border" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="6" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
-                <TextBlock x:Name="Residence2Label" Grid.Column="2" MaxWidth="97" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Residence2Border" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="6" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
+                <TextBlock x:Name="Residence2Label" Grid.Column="2" MaxWidth="97" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Parent1Border1" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Height="55" VerticalAlignment="Top">
-                <TextBlock x:Name="Parent1Label1" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
+            <Border x:Name="Parent1Border1" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Height="55" VerticalAlignment="Top">
+                <TextBlock x:Name="Parent1Label1" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
             </Border>
-            <Border x:Name="Parent2Border1" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Margin="0,55,0,0" Height="52" VerticalAlignment="Top">
-                <TextBlock x:Name="Parent2Label1" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
+            <Border x:Name="Parent2Border1" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Margin="0,55,0,0" Height="52" VerticalAlignment="Top">
+                <TextBlock x:Name="Parent2Label1" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
             </Border>
-            <Border x:Name="Parent1Border2" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Height="55" VerticalAlignment="Top" Margin="0,107,0,0">
-                <TextBlock x:Name="Parent1Label2" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
+            <Border x:Name="Parent1Border2" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Height="55" VerticalAlignment="Top" Margin="0,107,0,0">
+                <TextBlock x:Name="Parent1Label2" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
             </Border>
-            <Border x:Name="Parent2Border2" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Margin="0,162,0,0">
-                <TextBlock x:Name="Parent2Label2" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
+            <Border x:Name="Parent2Border2" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="7" RenderTransformOrigin="0.5,0.5" Margin="0,162,0,0">
+                <TextBlock x:Name="Parent2Label2" Grid.Column="2" MaxWidth="110" TextWrapping="WrapWithOverflow" Text="Parent" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2" RenderTransformOrigin="0.516,0.5"/>
             </Border>
-            <Border x:Name="Witness1Border" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="8" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
-                <TextBlock x:Name="Witness1Label" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Witnesses" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Witness1Border" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="8" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
+                <TextBlock x:Name="Witness1Label" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Witnesses" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="Witness2Border" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="8" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
-                <TextBlock x:Name="Witness2Label" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Witnesses" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="Witness2Border" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="8" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
+                <TextBlock x:Name="Witness2Label" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Witnesses" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="WResidence1Border" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="9" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
-                <TextBlock x:Name="Residence1Label1" Grid.Column="2" MaxWidth="100" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="WResidence1Border" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="9" RenderTransformOrigin="0.5,0.5" Height="107" VerticalAlignment="Top">
+                <TextBlock x:Name="Residence1Label1" Grid.Column="2" MaxWidth="100" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="WResidence2Border" BorderThickness="0,0,1,1" BorderBrush="#FF545454" Grid.Column="9" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
-                <TextBlock x:Name="Residence2Label1" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="WResidence2Border" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" Grid.Column="9" RenderTransformOrigin="0.5,0.5" Margin="0,107,0,0">
+                <TextBlock x:Name="Residence2Label1" Grid.Column="2" MaxWidth="80" TextWrapping="WrapWithOverflow" Text="Residence" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="StipendBorder" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="10" RenderTransformOrigin="0.5,0.5">
-                <TextBlock x:Name="StipendLabel" Grid.Column="2" MaxWidth="115" TextWrapping="WrapWithOverflow" Text="Stipend" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="StipendBorder" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="10" RenderTransformOrigin="0.5,0.5">
+                <TextBlock x:Name="StipendLabel" Grid.Column="2" MaxWidth="115" TextWrapping="WrapWithOverflow" Text="Stipend" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
-            <Border x:Name="MinisterBorder" BorderThickness="0,1,1,1" BorderBrush="#FF545454" Grid.Column="11" RenderTransformOrigin="0.5,0.5">
-                <TextBlock x:Name="MinisterLabel" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Minister" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="Black" TextAlignment="Center" Margin="0,0,-1,-2"/>
+            <Border x:Name="MinisterBorder" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Grid.Column="11" RenderTransformOrigin="0.5,0.5">
+                <TextBlock x:Name="MinisterLabel" Grid.Column="2" MaxWidth="90" TextWrapping="WrapWithOverflow" Text="Minister" VerticalAlignment="Center" Height="Auto" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF474747" TextAlignment="Center" Margin="0,0,-1,-2"/>
             </Border>
 
         </Grid>

@@ -1,0 +1,64 @@
+﻿<simpleChildWindow:ChildWindow 
+    x:Class="PMS.UIManager.Views.ChildWindows.ViewHistoryWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    ShowTitleBar="False"
+    d:DesignHeight="426"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsModal="False"
+    IsOpen="True"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d" Width="537">
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush 
+            Opacity="0.7" 
+            Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid Width="527">
+        <Border 
+            BorderThickness="10" 
+            CornerRadius="10">
+            <iconPacks:PackIconFontAwesome 
+            Kind="EditRegular" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Height="33" 
+            Width="31" 
+            Foreground="#FFAAB6C0" Margin="154,-4,0,0" RenderTransformOrigin="0.516,0.135"/>
+        </Border>
+        <Label 
+            Content="RECORD ACCESS LOG" 
+            HorizontalAlignment="Left" 
+            Margin="194,10,0,0" 
+            VerticalAlignment="Top" 
+            FontFamily="Bahnschrift Light" 
+            FontWeight="Bold" 
+            FontSize="18" 
+            Width="186" 
+            Foreground="#FF2A3B47" Height="28"/>
+        <Button 
+            Content="Cancel" 
+            Margin="168,388,175,10" 
+            FontFamily="Bahnschrift Light"
+            Background="{x:Null}" 
+            Foreground="#FF237ABE"
+            Click="Close_Click"/>
+        <Border Margin="10,83,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
+            <ListView x:Name="HistoryContainer">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Border>
+    </Grid>
+</simpleChildWindow:ChildWindow>

@@ -18,9 +18,9 @@ namespace PMS.UIComponents
     /// <summary>
     /// Interaction logic for RequestItem.xaml
     /// </summary>
-    public partial class RequestItem : UserControl
+    public partial class TransactionItem : UserControl
     {
-		public RequestItem()
+		public TransactionItem()
         {
             InitializeComponent();
         }

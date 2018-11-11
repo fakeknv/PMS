@@ -98,7 +98,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				cmd.Parameters.AddWithValue("@remarks", remarks);
 				stat_code = cmd.ExecuteNonQuery();
 				dbman.DBClose();
-				string tmp = pmsutil.LogRecordInsertion(recID);
+				string tmp = pmsutil.LogRecord(recID,"LOGC-01");
 				return stat_code;
 			}
 			catch (MySqlException ex)

@@ -84,9 +84,9 @@
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome TasksSolid}"
-						Label="Requests">
+						Label="Transactions">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:Requests />
+                                <views:Transactions />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
@@ -114,6 +114,13 @@
                 </Controls:HamburgerMenu.ItemsSource>
                 <Controls:HamburgerMenu.OptionsItemsSource>
                     <Controls:HamburgerMenuItemCollection>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome SlidersHSolid}"
+						Label="Control Panel">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Settings />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome UserCircleRegular}"
 						Label="Account">

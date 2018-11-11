@@ -1,4 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using MySql.Data.MySqlClient;
+using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -46,6 +49,7 @@ namespace PMS.UIComponents
 				while (db_reader.Read())
 				{
 					MatrimonialRecordEntryItem mre = new MatrimonialRecordEntryItem();
+					mre.RecordID.Content = db_reader.GetString("record_id");
 					mre.EntryNumLabel.Content = db_reader.GetString("entry_number");
 					mre.MarriageYearLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("yyyy");
 					mre.MarriageDateLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMM dd");
@@ -78,6 +82,41 @@ namespace PMS.UIComponents
 			{
 
 			}
+		}
+		private async void Remarks_Click(object sender, RoutedEventArgs e)
+		{
+			MatrimonialRecordEntryItem lvi = (MatrimonialRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new ViewRemarksWindow(recordID.Content.ToString()), this.ParentGrid);
+		}
+
+		private async void Print_Click(object sender, RoutedEventArgs e)
+		{
+			//MatrimonialRecordEntryItem lvi = (MatrimonialRecordEntryItem)EntriesHolder.SelectedItem;
+			//Label recordID = (Label)lvi.FindName("RecordID");
+
+			//var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			//await metroWindow.ShowChildWindowAsync(new PrintBaptismalRecordEntryWindow(recordID.Content.ToString()));
+		}
+
+		private async void Edit_Click(object sender, RoutedEventArgs e)
+		{
+			MatrimonialRecordEntryItem lvi = (MatrimonialRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new EditMatrimonialRecordEntryWindow(recordID.Content.ToString()));
+		}
+
+		private async void History_Click(object sender, RoutedEventArgs e)
+		{
+			MatrimonialRecordEntryItem lvi = (MatrimonialRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new ViewHistoryWindow(recordID.Content.ToString()));
 		}
 	}
 }

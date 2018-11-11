@@ -5,103 +5,208 @@ using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using Spire.Doc;
+using System.Diagnostics;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddConfirmationRecordEntryWindow : ChildWindow
+	public partial class PrintConfirmationRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
 
+		private string recordID;
 		private int pageNum;
 		private int bookNum;
 		private int entryNum;
 		private string confirmationDate;
 		private int age;
 		private string fullName;
-		private string parish;
-		private string province;
 		private string baptismPlace;
 		private string parent1;
 		private string parent2;
 		private string sponsor1;
 		private string sponsor2;
-		private int stipend;
 		private string minister;
 		private string remarks;
-		//private DateTime cDate;
-		//private DateTime cTime;
-		//private string curDate;
-		//private string curTime;
 
 
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddConfirmationRecordEntryWindow(int targBook)
+		public PrintConfirmationRecordEntryWindow(string targRecord)
 		{
 			
 			pmsutil = new PMSUtil();
+			recordID = targRecord;
 			InitializeComponent();
-			bookNum = targBook;
-			Stipend.Value = FetchConfirmationStipend();
+			GetResidingPriests();
+			PrintingFee.Value = Convert.ToDouble(pmsutil.GetPrintFee("Confirmation"));
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM confirmation_records, records WHERE records.record_id = @record_id AND records.record_id = confirmation_records.record_id LIMIT 1;";
+				cmd.Parameters.AddWithValue("@record_id", targRecord);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					bookNum = db_reader.GetInt32("book_number");
+					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+					ConfirmationDate.Text = db_reader.GetString("record_date");
+					Age.Value = Convert.ToDouble(db_reader.GetString("age"));
+					FullName.Text = db_reader.GetString("recordholder_fullname");
+					PlaceOfBaptism.Text = db_reader.GetString("place_of_baptism");
+					Parent1.Text = db_reader.GetString("parent1_fullname");
+					Parent2.Text = db_reader.GetString("parent2_fullname");
+					Sponsor1.Text = db_reader.GetString("sponsor");
+					Sponsor2.Text = db_reader.GetString("sponsor2");
+					Minister.Text = db_reader.GetString("minister");
+					Remarks.Text = db_reader.GetString("remarks");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+
+			Suggestions1.Visibility = Visibility.Hidden;
+			Suggestions4.Visibility = Visibility.Hidden;
+		}
+		private void GetResidingPriests()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM residing_priests;";
+				cmd.Parameters.AddWithValue("@key_name", "Church Name");
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					Signatory.Items.Add(db_reader.GetString("priest_name"));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+		}
+		private string GetDaySuffix(int day)
+		{
+			switch (day)
+			{
+				case 1:
+				case 21:
+				case 31:
+					return "st";
+				case 2:
+				case 22:
+					return "nd";
+				case 3:
+				case 23:
+					return "rd";
+				default:
+					return "th";
+			}
+		}
+		private string PrepMonth(int mon)
+		{
+			switch (mon)
+			{
+				case 1:
+					return "January";
+				case 2:
+					return "February";
+				case 3:
+					return "March";
+				case 4:
+					return "April";
+				case 5:
+					return "May";
+				case 6:
+					return "June";
+				case 7:
+					return "July";
+				case 8:
+					return "August";
+				case 9:
+					return "September";
+				case 10:
+					return "October";
+				case 11:
+					return "November";
+				default:
+					return "December";
+			}
 		}
 		/// <summary>
 		/// Inserts the request to the database.
 		/// </summary>
-		private int InsertEntry()
+		private int PrintEntry()
 		{
-			dbman = new DBConnectionManager();
-			//TODO
-			try
+			string x1;
+
+			string[] spl = ConfirmationDate.Text.Split('/');
+			string suff = GetDaySuffix(int.Parse(spl[1]));
+			string mon = PrepMonth(int.Parse(spl[0]));
+			if (int.Parse(spl[2]) > 1999)
 			{
-				string recID = pmsutil.GenRecordID();
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
-					"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@book_number", bookNum);
-				cmd.Parameters.AddWithValue("@page_number", pageNum);
-				cmd.Parameters.AddWithValue("@entry_number", entryNum);
-				cmd.Parameters.AddWithValue("@record_date", confirmationDate);
-				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName);
-				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
-				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
-				int stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				//Phase 2
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
-					"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@age", age);
-				cmd.Parameters.AddWithValue("@parish", parish);
-				cmd.Parameters.AddWithValue("@province", province);
-				cmd.Parameters.AddWithValue("@place_of_baptism", baptismPlace);
-				cmd.Parameters.AddWithValue("@sponsor", sponsor1);
-				cmd.Parameters.AddWithValue("@sponsor2", sponsor2);
-				cmd.Parameters.AddWithValue("@stipend", stipend);
-				cmd.Parameters.AddWithValue("@minister", minister);
-				cmd.Parameters.AddWithValue("@remarks", remarks);
-				stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				string tmp = pmsutil.LogRecord(recID, "LOGC-01");
-				return stat_code;
+				x1 = "";
+				spl[2] = spl[2].Remove(0, 2);
 			}
-			catch (MySqlException ex)
+			else
 			{
-				Console.WriteLine("Error: {0}", ex.ToString());
-				return 0;
+				x1 = "X";
 			}
+
+			Document doc = new Document();
+			doc.LoadFromFile("file\\temp_confirmation.docx");
+			doc.Replace("name", fullName, true, true);
+			doc.Replace("day", int.Parse(spl[1]) + suff, true, true);
+			doc.Replace("month", mon, true, true);
+			doc.Replace("X", x1, true, true);
+			doc.Replace("year", spl[2], true, true);
+			doc.Replace("rev", minister, true, true);
+			doc.Replace("no", entryNum.ToString(), true, true);
+			doc.Replace("page", pageNum.ToString(), true, true);
+			doc.Replace("book", bookNum.ToString(), true, true);
+			doc.Replace("priest", Signatory.Text, true, true);
+			doc.Replace("purpose", Purpose.Text, true, true);
+			doc.Replace("date", DateTime.Now.ToString("MMMM d, yyyy"), true, true);
+			doc.SaveToFile("file\\print.docx", FileFormat.Docx);
+
+			string fpath = "file\\print.docx";
+
+			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim());
+			info.Verb = "Print";
+			info.CreateNoWindow = true;
+			info.WindowStyle = ProcessWindowStyle.Hidden;
+			Process.Start(info);
+			if (Purpose.SelectedIndex == 0)
+			{
+				//Reference
+				string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
+			}
+			else
+			{
+				//Marriage
+				string tmp = pmsutil.LogRecord(recordID, "LOGC-04");
+			}
+			pmsutil.InsertTransaction("Confirmation Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Confirmation")));
+			return 1;
 		}
 		/// <summary>
 		/// Fetches default confirmation stipend value.
@@ -146,31 +251,28 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
-		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
+		private void PrintRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
 			confirmationDate = Convert.ToDateTime(ConfirmationDate.Text).ToString("yyyy-MM-dd");
 			age = Convert.ToInt32(Age.Value);
 			fullName = ValidateInp(FullName.Text);
-			parish = ValidateInp(Parish.Text);
-			province = ValidateInp(Province.Text);
 			baptismPlace = PlaceOfBaptism.Text;
 			parent1 = ValidateInp(Parent1.Text);
 			parent2 = ValidateInp(Parent2.Text);
 			sponsor1 = ValidateInp(Sponsor1.Text);
 			sponsor2 = ValidateInp(Sponsor2.Text);
-			stipend = Convert.ToInt32(Stipend.Value);
 			minister = ValidateInp(Minister.Text);
 			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0) {
+			if (PrintEntry() > 0) {
 				this.Close();
 			}
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
 		/// </summary>
-		private void AddRegCancel(object sender, System.Windows.RoutedEventArgs e)
+		private void PrintRecCancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}
@@ -195,60 +297,6 @@ namespace PMS.UIManager.Views.ChildWindows
 				dbman.DBClose();
 
 				Suggestions1.Visibility = System.Windows.Visibility.Visible;
-			}
-			else
-			{
-
-			}
-		}
-		private void ShowSuggestions2(object sender, System.Windows.Controls.TextChangedEventArgs e)
-		{
-			dbman = new DBConnectionManager();
-
-			ParishSuggestionArea.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT parochia FROM confirmation_records WHERE " +
-					"parochia LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + Parish.Text + "%");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					ParishSuggestionArea.Items.Add(db_reader.GetString("parochia"));
-				}
-				//close Connection
-				dbman.DBClose();
-
-				Suggestions2.Visibility = System.Windows.Visibility.Visible;
-			}
-			else
-			{
-
-			}
-		}
-		private void ShowSuggestions3(object sender, System.Windows.Controls.TextChangedEventArgs e)
-		{
-			dbman = new DBConnectionManager();
-
-			ProvinceSuggestionArea.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT DISTINCT province FROM confirmation_records WHERE " +
-					"province LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + Province.Text + "%");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					ProvinceSuggestionArea.Items.Add(db_reader.GetString("province"));
-				}
-				//close Connection
-				dbman.DBClose();
-
-				Suggestions3.Visibility = System.Windows.Visibility.Visible;
 			}
 			else
 			{
@@ -290,22 +338,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			PlaceOfBaptism.Text = PlaceOfBaptismSuggestionArea.SelectedItem.ToString();
 			Suggestions1.Visibility = Visibility.Hidden;
 		}
-		private void Suggestion2_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var cb = sender as TextBlock;
-			var item = cb.DataContext;
-			ParishSuggestionArea.SelectedItem = item;
-			Parish.Text = ParishSuggestionArea.SelectedItem.ToString();
-			Suggestions2.Visibility = Visibility.Hidden;
-		}
-		private void Suggestion3_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var cb = sender as TextBlock;
-			var item = cb.DataContext;
-			ProvinceSuggestionArea.SelectedItem = item;
-			Province.Text = ProvinceSuggestionArea.SelectedItem.ToString();
-			Suggestions3.Visibility = Visibility.Hidden;
-		}
 		private void Suggestion4_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var cb = sender as TextBlock;
@@ -317,8 +349,6 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void Hide(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
 		{
 			Suggestions1.Visibility = Visibility.Hidden;
-			Suggestions2.Visibility = Visibility.Hidden;
-			Suggestions3.Visibility = Visibility.Hidden;
 			Suggestions4.Visibility = Visibility.Hidden;
 		}
 	}

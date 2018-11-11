@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="PMS.UIComponents.AccountsItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PMS.UIComponents"
+             mc:Ignorable="d" 
+             d:DesignWidth="936.5" 
+             Height="35.064" 
+             HorizontalAlignment="Stretch">
+    <Grid Background="White">
+        <Label x:Name="Username" Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Width="230" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="35" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"/>
+        <Label x:Name="AccountType" Content="Account Type" HorizontalAlignment="Left" Margin="230,0,0,0" VerticalAlignment="Top" Width="220" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto" VerticalContentAlignment="Center" Height="35" BorderThickness="0,0,0,1"/>
+        <Label x:Name="FullName" Content="Name" HorizontalAlignment="Left" Margin="450,0,0,0" VerticalAlignment="Top" Width="252" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="35" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"/>
+        <Label x:Name="Actions" Content="Actions" Margin="702,0,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="35" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"/>
+    </Grid>
+</UserControl>

@@ -11,7 +11,7 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddMatrimonialRecordEntryWindow : ChildWindow
+	public partial class EditMatrimonialRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
@@ -48,7 +48,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public AddMatrimonialRecordEntryWindow(int targBook)
+		public EditMatrimonialRecordEntryWindow(int targBook)
 		{
 			
 			pmsutil = new PMSUtil();

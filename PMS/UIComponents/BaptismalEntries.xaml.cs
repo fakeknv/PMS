@@ -1,4 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using MySql.Data.MySqlClient;
+using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Windows.Forms.ListView;
 
 namespace PMS.UIComponents
 {
@@ -28,9 +32,9 @@ namespace PMS.UIComponents
         public BaptismalEntries(int bookNum, int pageNum)
         {
             InitializeComponent();
-			SyncConfirmationEntries(bookNum, pageNum);
+			SyncBaptismalEntries(bookNum, pageNum);
 		}
-		private void SyncConfirmationEntries(int targBook, int pageNum)
+		private void SyncBaptismalEntries(int targBook, int pageNum)
 		{
 			dbman = new DBConnectionManager();
 
@@ -46,6 +50,7 @@ namespace PMS.UIComponents
 				while (db_reader.Read())
 				{
 					BaptismalRecordEntryItem bre = new BaptismalRecordEntryItem();
+					bre.RecordID.Content = db_reader.GetString("record_id");
 					bre.RegistryNumLabel.Content = db_reader.GetString("entry_number");
 					bre.BaptismalYearLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("yyyy");
 					bre.BaptismalDateLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMM dd");
@@ -68,6 +73,42 @@ namespace PMS.UIComponents
 			{
 
 			}
+		}
+
+		private async void Remarks_Click(object sender, RoutedEventArgs e)
+		{
+			BaptismalRecordEntryItem lvi = (BaptismalRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new ViewRemarksWindow(recordID.Content.ToString()), this.ParentGrid);
+		}
+
+		private async void Print_Click(object sender, RoutedEventArgs e)
+		{
+			BaptismalRecordEntryItem lvi = (BaptismalRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new PrintBaptismalRecordEntryWindow(recordID.Content.ToString()));
+		}
+
+		private async void Edit_Click(object sender, RoutedEventArgs e)
+		{
+			BaptismalRecordEntryItem lvi = (BaptismalRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new EditBaptismalRecordEntryWindow(recordID.Content.ToString()));
+		}
+
+		private async void History_Click(object sender, RoutedEventArgs e)
+		{
+			BaptismalRecordEntryItem lvi = (BaptismalRecordEntryItem)EntriesHolder.SelectedItem;
+			Label recordID = (Label)lvi.FindName("RecordID");
+
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new ViewHistoryWindow(recordID.Content.ToString()));
 		}
 	}
 }

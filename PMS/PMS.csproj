@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>church_Xly_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
@@ -69,6 +72,15 @@
     </Reference>
     <Reference Include="MySql.Web, Version=8.0.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Web.8.0.12\lib\net452\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Doc">
+      <HintPath>..\..\..\..\Desktop\Spire dll\Spire.Doc.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License">
+      <HintPath>..\..\..\..\Desktop\Spire dll\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf">
+      <HintPath>..\..\..\..\Desktop\Spire dll\Spire.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -136,6 +148,9 @@
     <Compile Include="DBConnectionManager.cs" />
     <Compile Include="PMSUtil.cs" />
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="UIComponents\AccountsItem.xaml.cs">
+      <DependentUpon>AccountsItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\BurialRecordEntryItem.xaml.cs">
       <DependentUpon>BurialRecordEntryItem.xaml</DependentUpon>
     </Compile>
@@ -172,8 +187,8 @@
     <Compile Include="UIComponents\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIComponents\RequestItem.xaml.cs">
-      <DependentUpon>RequestItem.xaml</DependentUpon>
+    <Compile Include="UIComponents\TransactionItem.xaml.cs">
+      <DependentUpon>TransactionItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -185,12 +200,43 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\CancelPaymentWindow.xaml.cs">
+      <DependentUpon>CancelPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml.cs">
+      <DependentUpon>ConfirmPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\Settings.xaml.cs" />
     <Compile Include="UIManager\Views\Accounts.xaml.cs" />
     <Compile Include="UIManager\Views\Appointments.xaml.cs">
       <DependentUpon>Appointments.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml.cs">
       <DependentUpon>ViewRecordEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditMatrimonialRecordEntryWindow.xaml.xaml.cs">
+      <DependentUpon>EditMatrimonialRecordEntryWindow.xaml.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditBurialRecordEntryWindow.xaml.cs">
+      <DependentUpon>EditBurialRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\PrintConfirmationRecordEntryWindow.xaml.cs">
+      <DependentUpon>PrintConfirmationRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditConfirmationRecordEntryWindow.xaml.cs">
+      <DependentUpon>EditConfirmationRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\PrintBaptismalRecordEntryWindow.xaml.cs">
+      <DependentUpon>PrintBaptismalRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditBaptismalRecordEntryWindow.xaml.cs">
+      <DependentUpon>EditBaptismalRecordEntryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ViewHistoryWindow.xaml.cs">
+      <DependentUpon>ViewHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ViewRemarksWindow.xaml.cs">
+      <DependentUpon>ViewRemarksWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddBaptismalRecordEntryWindow.xaml.cs">
       <DependentUpon>AddBaptismalRecordEntryWindow.xaml</DependentUpon>
@@ -207,15 +253,16 @@
     <Compile Include="UIManager\Views\ChildWindows\AddRegisterWindow.xaml.cs">
       <DependentUpon>AddRegisterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml.cs">
-      <DependentUpon>AddRequestWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml.cs">
       <DependentUpon>AddAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
     <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
-    <Compile Include="UIManager\Views\Requests.xaml.cs" />
+    <Compile Include="UIManager\Views\Transactions.xaml.cs" />
+    <Page Include="UIComponents\AccountsItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIComponents\BurialRecordEntryItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -264,7 +311,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIComponents\RequestItem.xaml">
+    <Page Include="UIComponents\TransactionItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,6 +322,18 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\CancelPaymentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\Accounts.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -287,6 +346,38 @@
     <Page Include="UIManager\Views\ChildViews\ViewRecordEntries.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditMatrimonialRecordEntryWindow.xaml.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditBurialRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\PrintConfirmationRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditConfirmationRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\PrintBaptismalRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditBaptismalRecordEntryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ViewHistoryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ViewRemarksWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\AddBaptismalRecordEntryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -308,10 +399,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIManager\Views\ChildWindows\AddRequestWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -324,7 +411,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIManager\Views\Requests.xaml">
+    <Page Include="UIManager\Views\Transactions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -367,7 +454,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\st_raphael_logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -380,6 +466,18 @@
     <Resource Include="Assets\grid2bg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\pexels-photo-458918.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\pexels-photo-312105.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\church_Xly_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="church_Xly_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
