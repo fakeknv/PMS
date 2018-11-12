@@ -200,6 +200,9 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\Archive.xaml.cs">
+      <DependentUpon>Archive.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\CancelPaymentWindow.xaml.cs">
       <DependentUpon>CancelPaymentWindow.xaml</DependentUpon>
     </Compile>
@@ -322,6 +325,10 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\Archive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\CancelPaymentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

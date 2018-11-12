@@ -31,232 +31,166 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid Width="908" Height="588">
-        <Border BorderThickness="10" CornerRadius="10"/>
-        <iconPacks:PackIconFontAwesome x:Name="WindowIcon" 
-            Kind="BookSolid" 
-            HorizontalAlignment="Stretch" 
-            Margin="194,22,167,0" 
-            VerticalAlignment="Top" 
-            Height="42" 
-            Width="Auto" 
-            Foreground="#FFAAB6C0"/>
-        <Label x:Name="WindowTitle" 
-            Content="Add Record to Register" 
-            Margin="123,69,110,0" 
-            VerticalAlignment="Top" 
-            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-            FontSize="18" 
-            Foreground="#FF2A3B47" HorizontalContentAlignment="Center"/>
         <Label x:Name="PageNumLabel" 
             Content="Page No." 
-            Margin="79,110,427,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <mah:NumericUpDown x:Name="PageNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="79,136,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="64,62,720,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <mah:NumericUpDown x:Name="PageNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="64,88,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="EntryNumLabel" 
             Content="Entry No." 
-            Margin="222,110,280,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <mah:NumericUpDown x:Name="EntryNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="222,136,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="216,62,568,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <mah:NumericUpDown x:Name="EntryNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="216,88,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="DeathDateLabel" 
             Content="Date of Death" 
             HorizontalAlignment="Left" 
-            Margin="372,110,0,0" 
+            Margin="366,62,0,0" 
             VerticalAlignment="Top" 
-            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <DatePicker x:Name="DeathDate" 
-            Margin="372,136,314,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="366,88,320,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="AgeLabel" 
             Content="Age" 
-            Margin="371,171,413,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <mah:NumericUpDown x:Name="Age" HorizontalAlignment="Left" Minimum="0" Margin="371,197,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="366,139,418,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <mah:NumericUpDown x:Name="Age" HorizontalAlignment="Left" Minimum="0" Margin="366,163,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="NameLabel" 
             Content="Fullname" 
             HorizontalAlignment="Left" 
-            Margin="79,171,0,0" 
+            Margin="64,139,0,0" 
             VerticalAlignment="Top" 
-            Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox x:Name="FullName" 
             Height="23" 
-            Margin="80,197,562,0" 
+            Margin="64,163,577,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
+
         </TextBox>
         <Label x:Name="ParentsLabel" 
             Content="Parent/s or Spouse" 
             HorizontalAlignment="Left" 
-            Margin="79,332,0,0" 
+            Margin="64,302,0,0" 
             VerticalAlignment="Top" 
-            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox 
             x:Name="Parent1" 
             Height="23" 
-            Margin="79,358,465,0" 
+            Margin="64,328,480,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
+
         </TextBox>
         <TextBox 
             x:Name="Parent2" 
             Height="23" 
-            Margin="79,388,465,0" 
+            Margin="64,358,480,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
+
         </TextBox>
         <Label x:Name="MinisterLabel" 
             Content="Minister" 
             HorizontalAlignment="Left" 
-            Margin="78,429,0,0" 
+            Margin="64,403,0,0" 
             VerticalAlignment="Top" 
-            Width="75" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="75" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
         <Label x:Name="RemarksLabel" 
             Content="Remarks" 
             HorizontalAlignment="Left" 
-            Margin="78,469,0,0" 
+            Margin="64,444,0,0" 
             VerticalAlignment="Top" 
-            Width="75" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <TextBox x:Name="Remarks" HorizontalAlignment="Left" Height="37" Margin="158,469,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="670" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <Button x:Name="CancelButton" 
-            Content="Cancel" 
-            Margin="201,540,465,0"
-            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-            Click="AddRegCancel"
-            Background="{x:Null}" 
-            Foreground="#FF237ABE" Height="27" VerticalAlignment="Top"/>
-        <Button x:Name="CreateButton" 
-            Content="Create" 
-            Margin="465,540,201,0" 
-            FontFamily="/PMS;component/Assets/Fonts/#Roboto"
-            Click="AddRegConfirm"
-            Background="#FF3197D6" 
-            Foreground="White" Height="27" VerticalAlignment="Top"/>
+            Width="75" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <TextBox x:Name="Remarks" HorizontalAlignment="Left" Height="62" Margin="144,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="699" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Minister" 
             Height="23" 
-            Margin="158,429,81,0" 
+            Margin="144,403,65,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions5" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions5" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
+
         </TextBox>
         <Label x:Name="StipendLabel" 
             Content="Stipend" 
-            Margin="704,171,80,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <mah:NumericUpDown x:Name="Stipend" HorizontalAlignment="Left" Minimum="0" Margin="704,197,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="719,139,65,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <mah:NumericUpDown x:Name="Stipend" HorizontalAlignment="Left" Minimum="0" Margin="719,163,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label 
             Content="Burial Date" 
             HorizontalAlignment="Left" 
-            Margin="606,110,0,0" 
+            Margin="621,62,0,0" 
             VerticalAlignment="Top" 
-            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <DatePicker x:Name="BurialDate" 
-            Margin="606,136,80,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="621,88,65,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="ParishLabel_Copy" 
             Content="Status" 
-            Margin="521,171,338,0" 
-            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Margin="521,139,338,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <Label x:Name="NameLabel_Copy" 
             Content="Sacrament" 
             HorizontalAlignment="Left" 
-            Margin="79,244,0,0" 
+            Margin="64,214,0,0" 
             VerticalAlignment="Top" 
-            Width="74" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
+            Width="74" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26" Padding="0,5,5,5"/>
         <Label x:Name="ParentsLabel_Copy" 
             Content="Residence" 
             HorizontalAlignment="Left" 
-            Margin="465,334,0,0" 
+            Margin="481,303,0,0" 
             VerticalAlignment="Top" 
-            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            Width="123" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox 
             x:Name="Residence1" 
             Height="23" 
-            Margin="465,358,81,0" 
+            Margin="481,328,65,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions3">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions3" Foreground="#FF474747">
+
         </TextBox>
         <TextBox 
             x:Name="Residence2" 
             Height="23" 
-            Margin="465,388,81,0" 
+            Margin="481,358,65,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions4">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions4" Foreground="#FF474747">
+
         </TextBox>
         <TextBox x:Name="CauseOfDeath" 
             Height="23" 
-            Margin="561,244,81,0" 
+            Margin="577,214,65,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions2">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions2" Foreground="#FF474747">
+
         </TextBox>
         <Label x:Name="NameLabel_Copy1" 
             Content="Cause of Death" 
             HorizontalAlignment="Left" 
-            Margin="465,244,0,0" 
+            Margin="481,214,0,0" 
             VerticalAlignment="Top" 
-            Width="94" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
+            Width="94" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26" Padding="0,5,5,5"/>
         <TextBox x:Name="Sacrament" 
             Height="23" 
-            Margin="162,244,465,0" 
+            Margin="147,214,480,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions1">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions1" Foreground="#FF474747">
+
         </TextBox>
         <Label x:Name="NameLabel_Copy2" 
             Content="Place of Interment" 
             HorizontalAlignment="Left" 
-            Margin="79,289,0,0" 
+            Margin="64,259,0,0" 
             VerticalAlignment="Top" 
-            Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
+            Width="109" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26" Padding="0,5,5,5"/>
         <TextBox x:Name="PlaceOfInterment" 
             Height="23" 
-            Margin="194,289,81,0" 
+            Margin="178,259,65,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions6">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" LostKeyboardFocus="Hide" TextChanged="ShowSuggestions6" Foreground="#FF474747">
+
         </TextBox>
-        <Grid x:Name="Suggestions1" Visibility="Hidden" Height="122" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334" Margin="162,275,0,0">
+        <Grid x:Name="Suggestions1" Visibility="Hidden" Height="122" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334" Margin="147,240,0,0">
             <Label x:Name="SuggestionsLabel1" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="SacramentSuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -268,7 +202,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="Suggestions2" Visibility="Hidden" Height="122" Margin="493,275,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
+        <Grid x:Name="Suggestions2" Visibility="Hidden" Height="122" Margin="509,240,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel2" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="CauseOfDeathSuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -280,7 +214,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="Suggestions3" Visibility="Hidden" Height="122" Margin="465,388,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
+        <Grid x:Name="Suggestions3" Visibility="Hidden" Height="122" Margin="481,354,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel3" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="Residence1SuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -292,7 +226,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="Suggestions4" Visibility="Hidden" Height="122" Margin="465,419,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
+        <Grid x:Name="Suggestions4" Visibility="Hidden" Height="122" Margin="481,384,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel4" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="Residence2SuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -304,7 +238,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="Suggestions5" Visibility="Hidden" Height="122" Margin="158,460,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
+        <Grid x:Name="Suggestions5" Visibility="Hidden" Height="122" Margin="144,429,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel5" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="MinisterSuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -316,7 +250,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <Grid x:Name="Suggestions6" Visibility="Hidden" Height="122" Margin="194,317,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
+        <Grid x:Name="Suggestions6" Visibility="Hidden" Height="122" Margin="178,285,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel6" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="PlaceOfIntermentSuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
                 <ListView.ItemTemplate>
@@ -328,7 +262,7 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-        <ComboBox x:Name="Status" SelectedIndex="0" HorizontalAlignment="Left" Margin="521,197,0,0" VerticalAlignment="Top" Width="159">
+        <ComboBox x:Name="Status" SelectedIndex="0" HorizontalAlignment="Left" Margin="521,163,0,0" VerticalAlignment="Top" Width="159" Foreground="#FF474747">
             <ComboBoxItem>Widow</ComboBoxItem>
             <ComboBoxItem>Widower</ComboBoxItem>
             <ComboBoxItem>Single</ComboBoxItem>
@@ -336,5 +270,46 @@
             <ComboBoxItem>Adult</ComboBoxItem>
             <ComboBoxItem>Infant</ComboBoxItem>
         </ComboBox>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,542,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="AddRecCancel"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="AddRecConfirm"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="BURIAL - ADD RECORD ENTRY" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="BookSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

@@ -19,6 +19,8 @@ namespace PMS.UIManager.Views
 	{
 		//MYSQL Related Stuff
 		private DBConnectionManager dbman;
+		//MYSQL Related Stuff
+		private DBConnectionManager dbman2;
 
 		public Transactions()
 		{
@@ -154,7 +156,7 @@ namespace PMS.UIManager.Views
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions ORDER BY tran_date, tran_time DESC;";
+				cmd.CommandText = "SELECT * FROM transactions ORDER BY tran_date DESC , tran_time DESC;";
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -162,7 +164,24 @@ namespace PMS.UIManager.Views
 					//Console.WriteLine(db_reader.GetString("request_id"));
 					TransactionItem ti = new TransactionItem();
 					ti.IDLabel.Content = db_reader.GetString("transaction_id");
+					if (db_reader.GetString("target_id").Substring(0, 3) == "PMS") {
+						ti.RecName.Content = GetRecordName(db_reader.GetString("target_id"));
+					}
+					else {
+						
+					}
 					ti.TypeLabel.Content = db_reader.GetString("type");
+					if (db_reader.GetString("status") == "Paying") {
+						var bc = new BrushConverter();
+						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#46C37B");
+					}
+					else if (db_reader.GetString("status") == "Cancelled") {
+						var bc = new BrushConverter();
+						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#777777");
+					} else if (db_reader.GetString("status") == "Finished") {
+						var bc = new BrushConverter();
+						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#5C90D2");
+					}
 					ti.StatusLabel.Content = db_reader.GetString("status");
 					ti.TypeLabel.Content = db_reader.GetString("type");
 					ti.FeeLabel.Content = db_reader.GetString("fee");
@@ -185,6 +204,30 @@ namespace PMS.UIManager.Views
 
 			}
 
+		}
+		internal string GetRecordName(string rid) {
+			string ret = "";
+			dbman2 = new DBConnectionManager();
+
+			if (dbman2.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd2 = dbman2.DBConnect().CreateCommand();
+				cmd2.CommandText = "SELECT * FROM records WHERE record_id = @record_id LIMIT 1;";
+				cmd2.Parameters.AddWithValue("@record_id", rid);
+				cmd2.Prepare();
+				MySqlDataReader db_reader2 = cmd2.ExecuteReader();
+				while (db_reader2.Read())
+				{
+					ret = db_reader2.GetString("recordholder_fullname");
+				}
+				//close Connection
+				dbman2.DBClose();
+			}
+			else
+			{
+				ret = "";
+			}
+			return ret;
 		}
 		/// <summary>
 		/// Onclick event for the ManualSyncButton. Calls SyncRequest to manually update the

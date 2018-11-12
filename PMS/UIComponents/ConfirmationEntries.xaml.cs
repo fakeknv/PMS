@@ -61,6 +61,7 @@ namespace PMS.UIComponents
 					cre.ProvinceLabel.Content = db_reader.GetString("province");
 					cre.PlaceOfBaptismLabel.Text = db_reader.GetString("place_of_baptism");
 					cre.Sponsor1Label.Text = db_reader.GetString("sponsor");
+					cre.Sponsor2Label.Text = db_reader.GetString("sponsor2");
 					cre.StipendLabel.Content = db_reader.GetString("stipend");
 					cre.MinisterLabel.Text = db_reader.GetString("minister");
 					EntriesHolder.Items.Add(cre);

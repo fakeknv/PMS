@@ -236,7 +236,7 @@ namespace PMS.UIManager.Views
 		/// Onclick event for the AddRegisterWindow. Shows the AddRegisterWindow that allows 
 		/// the user to add a register.
 		/// </summary>
-		private async void CreateRequestButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void CreateRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new AddRegisterWindow(this), this.RegisterMainGrid);

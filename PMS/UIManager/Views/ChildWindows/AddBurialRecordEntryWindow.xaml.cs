@@ -152,7 +152,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
-		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
+		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
@@ -202,7 +202,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Closes the AddRequestForm Window.
 		/// </summary>
-		private void AddRegCancel(object sender, System.Windows.RoutedEventArgs e)
+		private void AddRecCancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}

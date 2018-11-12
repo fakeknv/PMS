@@ -31,16 +31,13 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid Height="206">
-        <TextBox x:Name="OR" Height="23" Margin="10,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
-            <Label Content="CONFIRM PAYMENT" Margin="10,3,214,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
-        </Grid>
+        <TextBox x:Name="OR" Height="23" Margin="10,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
         <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
         <TextBlock HorizontalAlignment="Left" Margin="31,52,0,0" TextWrapping="Wrap" Text="ENTER RECEIPT NUMBER TO CONFIRM PAYMENT!" VerticalAlignment="Top" Width="321" Height="16" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,160,0,0">
             <Grid HorizontalAlignment="Left" Width="362" Height="46" VerticalAlignment="Bottom">
                 <Button x:Name="CancelButton" 
-                Content="Cancel" 
+                Content="Close" 
                 Margin="138,8,132,8"
                 FontFamily="Bahnschrift Light" 
                 Click="CancelButton_Click"
@@ -76,5 +73,9 @@
         </Border>
         <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
         <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="CONFIRM PAYMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="CheckCircleSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

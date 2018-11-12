@@ -446,10 +446,10 @@
                             </Style>
                         </ListView.ItemContainerStyle>
                     </ListView>
-                    <Label Content="ID &amp; Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="163" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Foreground="#FF474747"/>
-                    <Label Content="Status" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="169" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="163,0,0,0" Foreground="#FF474747"/>
+                    <Label Content="Name &amp; Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="193" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="1" BorderBrush="#FFE2E2E2" Foreground="#FF474747" Margin="1,0,0,0"/>
+                    <Label Content="Status" VerticalAlignment="Top" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="194,0,0,0" Foreground="#FF474747" HorizontalAlignment="Left" Width="138"/>
                     <Label Content="Fee" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="136" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="332,0,0,0" Foreground="#FF474747"/>
-                    <Label Content="OR #/Date" VerticalAlignment="Top" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1" BorderBrush="#FFE2E2E2" Margin="468,0,0,0" Foreground="#FF474747"/>
+                    <Label Content="OR #/Date" VerticalAlignment="Top" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="468,0,1,0" Foreground="#FF474747"/>
                 </Grid>
                 <Label 
                     Content="Transactions" 

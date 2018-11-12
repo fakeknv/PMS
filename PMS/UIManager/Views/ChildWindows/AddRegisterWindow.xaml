@@ -32,33 +32,16 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid>
-        <Border BorderThickness="10" CornerRadius="10"/>
-        <iconPacks:PackIconFontAwesome x:Name="WindowIcon" 
-            Kind="BookSolid" 
-            HorizontalAlignment="Stretch" 
-            Margin="179,22,182,0" 
-            VerticalAlignment="Top" 
-            Height="42" 
-            Width="Auto" 
-            Foreground="#FFAAB6C0"/>
-        <Label x:Name="WindowTitle" 
-            Content="Create New Register" 
-            Margin="127,69,130,0" 
-            VerticalAlignment="Top" 
-            FontFamily="Bahnschrift Light" 
-            FontWeight="Bold" 
-            FontSize="18" 
-            Foreground="#FF2A3B47"/>
         <Label x:Name="RegisterTypeLabel" 
-            Content="Book Type" 
+            Content="Register Type" 
             HorizontalAlignment="Left" 
-            Margin="77,106,0,0" 
+            Margin="40,55,0,0" 
             VerticalAlignment="Top" 
-            Width="68"/>
+            Width="112" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <ComboBox
             x:Name="RegisterType" 
             Height="25"
-            Margin="77,132,81,0" 
+            Margin="40,79,42,0" 
             VerticalAlignment="Top">
             <ComboBoxItem Content="Baptismal"/>
             <ComboBoxItem Content="Matrimonial"/>
@@ -67,76 +50,91 @@
         </ComboBox>
         <Label x:Name="BookNoLabel" 
             Content="Book No." 
-            Margin="78,162,285,0" 
-            VerticalAlignment="Top"/>
+            Margin="40,118,323,0" 
+            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <TextBox 
                 x:Name="BookNo" 
                 Height="23" 
-                Margin="77,188,222,0" 
+                Margin="40,142,226,0" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+
         </TextBox>
         <Label x:Name="RegisterNoLabel" 
             Content="Register No." 
-            Margin="221,162,136,0" 
-            VerticalAlignment="Top"/>
+            Margin="221,118,136,0" 
+            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <TextBox 
             x:Name="RegisterNo" 
             Height="23" 
-            Margin="220,188,81,0" 
+            Margin="221,142,42,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+
         </TextBox>
         <Label x:Name="BookLabel" 
             Content="Book" 
             HorizontalAlignment="Left" 
-            Margin="78,221,0,0" 
+            Margin="40,184,0,0" 
             VerticalAlignment="Top" 
-            Width="68"/>
+            Width="68" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox 
             x:Name="Book" 
             Height="23" 
-            Margin="78,247,80,0" 
+            Margin="40,213,42,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513">
-            <TextBox.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="3"/>
-                </Style>
-            </TextBox.Resources>
+
         </TextBox>
         <Label x:Name="CreationDateLabel" 
             Content="Creation Date" 
             HorizontalAlignment="Left" 
-            Margin="78,278,0,0" 
+            Margin="40,256,0,0" 
             VerticalAlignment="Top" 
-            Width="84"/>
+            Width="84" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <DatePicker x:Name="CreationDate" 
-            Margin="78,304,80,0" 
+            Margin="40,280,42,0" 
             VerticalAlignment="Top"/>
-        <Button x:Name="CancelButton" 
-            Content="Cancel" 
-            Margin="111,359,232,39"
-            FontFamily="Bahnschrift Light" 
-            Click="AddRegCancel"
-            Background="{x:Null}" 
-            Foreground="#FF237ABE"/>
-        <Button x:Name="CreateRegisterButton" 
-            Content="Create" 
-            Margin="211,359,130,39" 
-            FontFamily="Bahnschrift Light"
-            Click="AddRegConfirm"
-            Background="#FF3197D6" 
-            Foreground="White"/>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="ADD REGISTER" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="BookSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,379,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="AddRegCancel"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="AddRegConfirm"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
 </simpleChildWindow:ChildWindow>

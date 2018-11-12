@@ -134,7 +134,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				//Phase 2
 				cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText =
-					"UPDATE matrimonial_records SET recordholder2_fullname = @recordholder2_fullname, parent1_fullname2 = @parent1_fullname2, parent2_fullname2 = @parent2_fullname2, status1 = @status1, status2 = @status2, age1 = @age1, age2 = @age2, place_of_origin1 = @place_of_origin1, place_of_origin2 = @place_of_origin2, residence1 = @residence1, residence2 = @residence2, witness1 = @witness1, witness2 = @witness2, witness1address = @witness1address, witness2address = @witness2address, stipend = @stipend, minister = @minister, remarks = @remarks";
+					"UPDATE matrimonial_records SET recordholder2_fullname = @recordholder2_fullname, parent1_fullname2 = @parent1_fullname2, parent2_fullname2 = @parent2_fullname2, status1 = @status1, status2 = @status2, age1 = @age1, age2 = @age2, place_of_origin1 = @place_of_origin1, place_of_origin2 = @place_of_origin2, residence1 = @residence1, residence2 = @residence2, witness1 = @witness1, witness2 = @witness2, witness1address = @witness1address, witness2address = @witness2address, stipend = @stipend, minister = @minister, remarks = @remarks WHERE record_id = @record_id;";
 				cmd.Prepare();
 				cmd.Parameters.AddWithValue("@record_id", recordID);
 				cmd.Parameters.AddWithValue("@recordholder2_fullname", fullName2);

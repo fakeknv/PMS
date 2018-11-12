@@ -31,15 +31,11 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid Height="206">
-        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
-            <Label Content="CANCEL TRANSACTION" Margin="10,3,214,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White" Height="29" VerticalAlignment="Top"/>
-        </Grid>
-        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
-        <TextBlock HorizontalAlignment="Left" Margin="31,52,0,0" TextWrapping="Wrap" Text="PERFORMING THIS ACTION WILL CANCEL THIS TRANSACTION. PROCEED?" VerticalAlignment="Top" Width="321" Height="38" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
+        <TextBlock HorizontalAlignment="Left" Margin="63,57,0,0" TextWrapping="Wrap" Text="PERFORMING THIS ACTION WILL CANCEL THIS TRANSACTION. PROCEED?" VerticalAlignment="Top" Width="302" Height="38" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,160,0,0">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton" 
-                Content="Cancel" 
+                Content="Close" 
                 Margin="138,8,132,8"
                 FontFamily="Bahnschrift Light" 
                 Click="CancelButton_Click"
@@ -73,7 +69,11 @@
                 </Button>
             </Grid>
         </Border>
-        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
+        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="42,56,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
         <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="CANCEL TRANSACTION" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="TimesCircleSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>
