@@ -22,7 +22,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <TextBox 
-                    x:Name="SearchRequestBox" 
+                    x:Name="SearchTransactionBox" 
                     TextWrapping="Wrap" 
                     Margin="10,7,10,0"
                     BorderThickness="0,0,0,1" 
@@ -33,7 +33,8 @@
                     RenderTransformOrigin="0,0.5" 
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     FontSize="14"
-                    VerticalContentAlignment="Center" TextChanged="SearchRequestBox_TextChanged"/>
+                    VerticalContentAlignment="Center" 
+                    TextChanged="SearchTransactionBox_TextChanged"/>
                 <Button 
                     x:Name="SearchRequestButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 

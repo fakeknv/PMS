@@ -54,46 +54,81 @@
                     <ColumnDefinition Width="277*"/>
                     <ColumnDefinition Width="153*"/>
                 </Grid.ColumnDefinitions>
-                <Button 
-                    Grid.Column="1" 
-                    Margin="0,7,15,0" 
-                    VerticalAlignment="Top" 
-                    Width="132" 
-                    Height="31" 
-                    Background="{x:Null}" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    Foreground="#FF545454" 
-                    HorizontalAlignment="Right" Click="AddAppointment_Click">
-                    <StackPanel 
-                        Orientation="Horizontal">
-                        <Rectangle 
-                            Width="17"
-                            Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock 
-                            Text="  Appointment" 
-                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                    </StackPanel>
-                </Button>
             </Grid>
         </Grid>
         <Grid Margin="0,46,0,0">
-            <UIComponents:Calendar Margin="10,10,262,10" Background="White"/>
-            <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="242">
-                <Label x:Name="dayActivitiesTitle" Content="Today's Activities" HorizontalAlignment="Left" Margin="10,5,0,0" BorderBrush="#FFE6E6E6" BorderThickness="0,0,0,1" VerticalAlignment="Top" Width="222" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
-                <ListView x:Name="AppointmentsHolder" HorizontalAlignment="Left" Margin="10,45,0,10" Width="222">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+            <Grid Height="88" Margin="7,4,7,0" VerticalAlignment="Top">
+                <Grid.Background>
+                    <ImageBrush ImageSource="/PMS;component/Assets/pexels-photo-458918.jpeg" Stretch="UniformToFill"/>
+                </Grid.Background>
+                <Label Content="Archives" HorizontalAlignment="Left" Margin="31,29,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="221" FontSize="18" Height="24" Padding="5,0" Foreground="White"/>
+                <Label Content="Welcome Administrator" HorizontalAlignment="Left" Margin="31,53,0,0" VerticalAlignment="Top" Width="221" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="5,0" Foreground="White"/>
+            </Grid>
+            <Grid HorizontalAlignment="Left" Margin="7,94,0,6" Width="216" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="33*"/>
+                    <RowDefinition Height="271*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="ArchiveStatus" Content="Archive Status: Disconnected" Margin="27,7,10,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+                <iconPacks:PackIconFontAwesome Kind="DatabaseSolid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="17" Width="17" Foreground="#FF474747" Margin="10,10,0,0"/>
+            </Grid>
+            <Grid Margin="228,97,7,6">
+                <mah:MetroAnimatedTabControl>
+                    <TabItem Header="Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+                        <Grid Background="#FFE5E5E5">
+                            <ListView x:Name="ArchivesItemContainer" Background="{x:Null}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Padding" Value="0,0,0,0"/>
+                                        <Setter Property="Width" Value="209.979"/>
+                                        <Setter Property="Height" Value="236.575"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
+                                            <UniformGrid Columns="3" IsItemsHost="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListView.Template>
+                            </ListView>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Registers" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+                        <Grid Background="#FFF3F3F3">
+                            <ListView x:Name="RegistersItemContainer" Background="{x:Null}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Padding" Value="0,0,0,0"/>
+                                        <Setter Property="Width" Value="209.979"/>
+                                        <Setter Property="Height" Value="236.575"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
+                                            <UniformGrid Columns="3" IsItemsHost="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListView.Template>
+                            </ListView>
+                        </Grid>
+                    </TabItem>
+                </mah:MetroAnimatedTabControl>
             </Grid>
         </Grid>
+        <Button x:Name="ManualSyncButton" 
+            Style="{DynamicResource MetroCircleButtonStyle}" 
+            Content="{iconPacks:FontAwesome SyncSolid}" 
+            Margin="758,144,0,0" 
+            VerticalAlignment="Top" 
+            Height="34" 
+            Background="White" 
+            BorderBrush="{x:Null}" 
+            RenderTransformOrigin="0.824,0.294" 
+            Foreground="#FF717171" 
+            Width="34" 
+            HorizontalAlignment="Left" 
+            Click="ManualSyncButton_Click"/>
     </Grid>
 </UserControl>

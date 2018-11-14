@@ -151,7 +151,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			if (String.IsNullOrEmpty(targ))
 			{
-				return "---";
+				return "Unknown";
 			}
 			else
 			{

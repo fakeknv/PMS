@@ -133,7 +133,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string ValidateInp(string targ) {
 			if (String.IsNullOrEmpty(targ))
 			{
-				return "---";
+				return "Unknown";
 			}
 			else
 			{

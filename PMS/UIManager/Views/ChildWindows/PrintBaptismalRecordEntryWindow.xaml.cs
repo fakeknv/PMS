@@ -185,8 +185,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 
 			Document doc = new Document();
-			doc.LoadFromFile("file\\temp_baptismal.docx");
-			doc.LoadFromFile("file\\temp_baptismal.docx");
+			doc.LoadFromFile("Data\\temp_baptismal.docx");
+			doc.LoadFromFile("Data\\temp_baptismal.docx");
 			doc.Replace("name", fullName, true, true);
 			doc.Replace("father", parent1, true, true);
 			doc.Replace("mother", parent2, true, true);
@@ -209,9 +209,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("priest", minister, true, true);
 			doc.Replace("purpose", Purpose.Text, true, true);
 			doc.Replace("date", DateTime.Now.ToString("MMMM d, yyyy"), true, true);
-			doc.SaveToFile("file\\print.docx", FileFormat.Docx);
+			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
 
-			string fpath = "file\\print.docx";
+			string fpath = "Data\\print.docx";
 
 			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim())
 			{

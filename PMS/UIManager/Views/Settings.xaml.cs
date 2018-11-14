@@ -25,21 +25,21 @@ namespace PMS.UIManager.Views
 		public Settings()
 		{
 			InitializeComponent();
-			BaptismalPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Baptismal"));
-			MatrimonialPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Matrimonial"));
-			BurialPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Burial"));
-			ConfirmationPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Confirmation"));
+			BaptismalPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Baptismal"));
+			MatrimonialPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Matrimonial"));
+			BurialPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Burial"));
+			ConfirmationPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Confirmation"));
 
-			BaptismalStipend.Value = Convert.ToInt32(GetKeyValue("Baptismal Stipend"));
-			ConfirmationStipend.Value = Convert.ToInt32(GetKeyValue("Confirmation Stipend"));
-			MatrimonialStipend.Value = Convert.ToInt32(GetKeyValue("Matrimonial Stipend"));
-			BurialStipend.Value = Convert.ToInt32(GetKeyValue("Burial Stipend"));
+			BaptismalStipend.Value = Convert.ToDouble(GetKeyValue("Baptismal Stipend"));
+			ConfirmationStipend.Value = Convert.ToDouble(GetKeyValue("Confirmation Stipend"));
+			MatrimonialStipend.Value = Convert.ToDouble(GetKeyValue("Matrimonial Stipend"));
+			BurialStipend.Value = Convert.ToDouble(GetKeyValue("Burial Stipend"));
 
-			Thanksgiving.Value = Convert.ToInt32(GetKeyValue("Thanksgiving Mass Fee"));
-			PetitionMass.Value = Convert.ToInt32(GetKeyValue("Petition Mass Fee"));
-			SpecialIntentionMass.Value = Convert.ToInt32(GetKeyValue("Special Intention Fee"));
-			AllSouls.Value = Convert.ToInt32(GetKeyValue("All Souls Fee"));
-			Souls.Value = Convert.ToInt32(GetKeyValue("Soul/s of Fee"));
+			Thanksgiving.Value = Convert.ToDouble(GetKeyValue("Thanksgiving Mass Fee"));
+			PetitionMass.Value = Convert.ToDouble(GetKeyValue("Petition Mass Fee"));
+			SpecialIntentionMass.Value = Convert.ToDouble(GetKeyValue("Special Intention Fee"));
+			AllSouls.Value = Convert.ToDouble(GetKeyValue("All Souls Fee"));
+			Souls.Value = Convert.ToDouble(GetKeyValue("Soul/s of Fee"));
 
 			FetchAccounts();
 		}
@@ -249,21 +249,21 @@ namespace PMS.UIManager.Views
 			}
 		}
 		private void SyncValues() {
-			BaptismalPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Baptismal"));
-			MatrimonialPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Matrimonial"));
-			BurialPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Burial"));
-			ConfirmationPrintFee.Value = Convert.ToInt32(GetKeyValue("Print Fee Confirmation"));
+			BaptismalPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Baptismal"));
+			MatrimonialPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Matrimonial"));
+			BurialPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Burial"));
+			ConfirmationPrintFee.Value = Convert.ToDouble(GetKeyValue("Print Fee Confirmation"));
 
-			BaptismalStipend.Value = Convert.ToInt32(GetKeyValue("Baptismal Stipend"));
-			ConfirmationStipend.Value = Convert.ToInt32(GetKeyValue("Confirmation Stipend"));
-			MatrimonialStipend.Value = Convert.ToInt32(GetKeyValue("Matrimonial Stipend"));
-			BurialStipend.Value = Convert.ToInt32(GetKeyValue("Burial Stipend"));
+			BaptismalStipend.Value = Convert.ToDouble(GetKeyValue("Baptismal Stipend"));
+			ConfirmationStipend.Value = Convert.ToDouble(GetKeyValue("Confirmation Stipend"));
+			MatrimonialStipend.Value = Convert.ToDouble(GetKeyValue("Matrimonial Stipend"));
+			BurialStipend.Value = Convert.ToDouble(GetKeyValue("Burial Stipend"));
 
-			Thanksgiving.Value = Convert.ToInt32(GetKeyValue("Thanksgiving Mass Fee"));
-			PetitionMass.Value = Convert.ToInt32(GetKeyValue("Petition Mass Fee"));
-			SpecialIntentionMass.Value = Convert.ToInt32(GetKeyValue("Special Intention Fee"));
-			AllSouls.Value = Convert.ToInt32(GetKeyValue("All Souls Fee"));
-			Souls.Value = Convert.ToInt32(GetKeyValue("Soul/s of Fee"));
+			Thanksgiving.Value = Convert.ToDouble(GetKeyValue("Thanksgiving Mass Fee"));
+			PetitionMass.Value = Convert.ToDouble(GetKeyValue("Petition Mass Fee"));
+			SpecialIntentionMass.Value = Convert.ToDouble(GetKeyValue("Special Intention Fee"));
+			AllSouls.Value = Convert.ToDouble(GetKeyValue("All Souls Fee"));
+			Souls.Value = Convert.ToDouble(GetKeyValue("Soul/s of Fee"));
 		}
 		private void ResetButton_Click(object sender, RoutedEventArgs e)
 		{

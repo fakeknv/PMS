@@ -54,33 +54,33 @@
                     <ColumnDefinition Width="277*"/>
                     <ColumnDefinition Width="153*"/>
                 </Grid.ColumnDefinitions>
-                <Button 
-                    Grid.Column="1" 
-                    Margin="0,7,15,0" 
-                    VerticalAlignment="Top" 
-                    Width="132" 
-                    Height="31" 
-                    Background="{x:Null}" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    Foreground="#FF545454" 
-                    HorizontalAlignment="Right" Click="AddAppointment_Click">
-                    <StackPanel 
-                        Orientation="Horizontal">
-                        <Rectangle 
-                            Width="17"
-                            Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome PlusSquareRegular}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock 
-                            Text="  Appointment" 
-                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                    </StackPanel>
-                </Button>
             </Grid>
+            <Button
+                x:Name="CreateRequestButton" 
+                Margin="0,7,7,0" 
+                VerticalAlignment="Top" 
+                Width="166" 
+                Height="31" 
+                Background="WhiteSmoke" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="#FF474747" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="AddAppointment_Click" Grid.Column="1">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="14"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome CalendarAltRegular}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Add Appointment" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                </StackPanel>
+            </Button>
         </Grid>
         <Grid Margin="0,46,0,0">
             <UIComponents:Calendar Margin="10,10,262,10" Background="White"/>

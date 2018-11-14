@@ -9,9 +9,11 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -19,12 +21,16 @@ Global
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|x64.ActiveCfg = Debug|x64
+		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|x64.Build.0 = Debug|x64
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Debug|x86.Build.0 = Debug|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|x64.ActiveCfg = Release|x64
+		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|x64.Build.0 = Release|x64
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|x86.ActiveCfg = Release|Any CPU
 		{6188636E-F283-46A2-ABB4-FEDB5A8F441C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection

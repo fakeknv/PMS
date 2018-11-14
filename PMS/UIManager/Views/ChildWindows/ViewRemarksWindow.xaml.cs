@@ -27,12 +27,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					if (db_reader.GetString("remarks") == "---") {
-
-					}
-					else {
-						RemarksContainer.Text = db_reader.GetString("remarks");
-					}
+					RemarksContainer.Text = db_reader.GetString("remarks");
 				}
 				//close Connection
 				dbman.DBClose();

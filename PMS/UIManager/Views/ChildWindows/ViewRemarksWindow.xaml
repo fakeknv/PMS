@@ -26,34 +26,20 @@
     <Grid>
         <Border 
             BorderThickness="10" 
-            CornerRadius="10">
-            <iconPacks:PackIconFontAwesome 
-            Kind="EditRegular" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="42" 
-            Width="71" 
-            Foreground="#FFAAB6C0" Margin="100,13,0,0"/>
+            CornerRadius="10"/>
+        <Border Margin="10,45,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
+            <TextBlock x:Name="RemarksContainer" HorizontalAlignment="Left" TextWrapping="Wrap" Text="No remarks." Width="395" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="5" Margin="0,0,0,-1" Foreground="#FF3C3C3C"/>
         </Border>
-        <Label 
-            Content="REMARKS" 
-            HorizontalAlignment="Left" 
-            Margin="184,28,0,0" 
-            VerticalAlignment="Top" 
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="RECORDS REMARKS" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="StickyNoteSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Button x:Name="CancelButton" 
+            Content="Close" 
+            Margin="148,378,155,16"
             FontFamily="Bahnschrift Light" 
-            FontWeight="Bold" 
-            FontSize="18" 
-            Width="92" 
-            Foreground="#FF2A3B47"/>
-        <Button 
-            Content="Cancel" 
-            Margin="168,388,175,10" 
-            FontFamily="Bahnschrift Light"
-            Background="{x:Null}" 
-            Foreground="#FF237ABE"
-            Click="Close_Click"/>
-        <Border Margin="10,83,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
-            <TextBlock x:Name="RemarksContainer" HorizontalAlignment="Left" TextWrapping="Wrap" Text="No remarks." VerticalAlignment="Top" Width="395" Height="286"/>
-        </Border>
+            Click="Close_Click"
+            Background="#FFF0A63A" 
+            Foreground="White"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

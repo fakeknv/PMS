@@ -173,7 +173,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 
 			Document doc = new Document();
-			doc.LoadFromFile("file\\temp_confirmation.docx");
+			doc.LoadFromFile("Data\\temp_confirmation.docx");
 			doc.Replace("name", fullName, true, true);
 			doc.Replace("day", int.Parse(spl[1]) + suff, true, true);
 			doc.Replace("month", mon, true, true);
@@ -186,9 +186,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("priest", Signatory.Text, true, true);
 			doc.Replace("purpose", Purpose.Text, true, true);
 			doc.Replace("date", DateTime.Now.ToString("MMMM d, yyyy"), true, true);
-			doc.SaveToFile("file\\print.docx", FileFormat.Docx);
+			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
 
-			string fpath = "file\\print.docx";
+			string fpath = "Data\\print.docx";
 
 			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim());
 			info.Verb = "Print";
@@ -240,7 +240,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string ValidateInp(string targ) {
 			if (String.IsNullOrEmpty(targ))
 			{
-				return "---";
+				return targ;
 			}
 			else
 			{

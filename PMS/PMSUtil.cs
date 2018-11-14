@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Data.SQLite;
+using System.IO;
 using System.Windows;
 
 namespace PMS
@@ -15,6 +17,41 @@ namespace PMS
 		private string curDate;
 		private string curTime;
 
+		internal string CheckArchiveDrive(string path)
+		{
+			string ret = "";
+			DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+			foreach (DriveInfo d in allDrives)
+			{
+				if (d.IsReady == true && File.Exists(d.Name + path) == true)
+				{
+					SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
+					{
+						FailIfMissing = true,
+						DataSource = d.Name + path
+					};
+					//Copy the selected register's record to the archive drive
+					using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+					{
+						connection.Open();
+						if (connection.State.ToString() == "Open")
+						{
+							ret = d.Name + path;
+						}
+						else
+						{
+							ret = "dc";
+						}
+					}
+				}
+				else
+				{
+					ret = "dc";
+				}
+			}
+			return ret;
+		}
 		internal int InsertTransaction(string type, string status, string targetID, double fee) {
 			string uid = Application.Current.Resources["uid"].ToString();
 			string[] dt = GetServerDateTime().Split(null);

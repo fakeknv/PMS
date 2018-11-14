@@ -43,14 +43,14 @@
             <Grid 
                 Grid.Column="1" HorizontalAlignment="Right" Width="509">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="372*"/>
-                    <ColumnDefinition Width="137*"/>
+                    <ColumnDefinition Width="338*"/>
+                    <ColumnDefinition Width="171*"/>
                 </Grid.ColumnDefinitions>
                 <Button
                 x:Name="CreateRequestButton_Copy" 
-                Margin="0,6,10,0" 
+                Margin="0,8,15,0" 
                 VerticalAlignment="Top" 
-                Width="117" 
+                Width="131" 
                 Height="30" 
                 Background="WhiteSmoke" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 

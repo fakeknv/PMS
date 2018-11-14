@@ -25,34 +25,9 @@
     <Grid Width="527">
         <Border 
             BorderThickness="10" 
-            CornerRadius="10">
-            <iconPacks:PackIconFontAwesome 
-            Kind="EditRegular" 
-            HorizontalAlignment="Left" 
-            VerticalAlignment="Top" 
-            Height="33" 
-            Width="31" 
-            Foreground="#FFAAB6C0" Margin="154,-4,0,0" RenderTransformOrigin="0.516,0.135"/>
-        </Border>
-        <Label 
-            Content="RECORD ACCESS LOG" 
-            HorizontalAlignment="Left" 
-            Margin="194,10,0,0" 
-            VerticalAlignment="Top" 
-            FontFamily="Bahnschrift Light" 
-            FontWeight="Bold" 
-            FontSize="18" 
-            Width="186" 
-            Foreground="#FF2A3B47" Height="28"/>
-        <Button 
-            Content="Cancel" 
-            Margin="168,388,175,10" 
-            FontFamily="Bahnschrift Light"
-            Background="{x:Null}" 
-            Foreground="#FF237ABE"
-            Click="Close_Click"/>
-        <Border Margin="10,83,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
-            <ListView x:Name="HistoryContainer">
+            CornerRadius="10"/>
+        <Border Margin="10,42,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
+            <ListView x:Name="HistoryContainer" Padding="5" Foreground="#FF595959">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
@@ -60,5 +35,16 @@
                 </ListView.View>
             </ListView>
         </Border>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="RECORD ACCESS LOGS" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="HistorySolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Button x:Name="CancelButton" 
+            Content="Close" 
+            Margin="208,379,205,15"
+            FontFamily="Bahnschrift Light" 
+            Click="Close_Click"
+            Background="#FFF0A63A" 
+            Foreground="White"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

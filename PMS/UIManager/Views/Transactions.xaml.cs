@@ -370,7 +370,7 @@ namespace PMS.UIManager.Views
 		/// by letter then fetches the results that matches with the query and updates the Request 
 		/// list.
 		/// </summary>
-		private void SearchRequestBox_TextChanged(object sender, TextChangedEventArgs e)
+		private void SearchTransactionBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			dbman = new DBConnectionManager();
 
@@ -378,12 +378,11 @@ namespace PMS.UIManager.Views
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM requests WHERE " +
-					"request_id LIKE @query OR " +
+				cmd.CommandText = "SELECT * FROM transactions WHERE " +
+					"transaction_id LIKE @query OR " +
 					"type LIKE @query OR " +
-					"status LIKE @query OR " +
-					"req_record_name LIKE @query";
-				cmd.Parameters.AddWithValue("@query", "%" + SearchRequestBox.Text + "%");
+					"status LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + SearchTransactionBox.Text + "%");
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())

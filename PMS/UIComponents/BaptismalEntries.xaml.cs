@@ -42,29 +42,66 @@ namespace PMS.UIComponents
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM records, baptismal_records WHERE records.book_number = @book_number AND records.page_number = @page_number  AND records.record_id = baptismal_records.record_id ORDER BY records.entry_number ASC;";
+				cmd.CommandText = "SELECT * FROM registers WHERE book_number = @book_number LIMIT 1;";
 				cmd.Parameters.AddWithValue("@book_number", targBook);
-				cmd.Parameters.AddWithValue("@page_number", pageNum);
 				cmd.Prepare();
+				Console.WriteLine(targBook + " " + pageNum);
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					BaptismalRecordEntryItem bre = new BaptismalRecordEntryItem();
-					bre.RecordID.Content = db_reader.GetString("record_id");
-					bre.RegistryNumLabel.Content = db_reader.GetString("entry_number");
-					bre.BaptismalYearLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("yyyy");
-					bre.BaptismalDateLabel.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMM dd");
-					bre.NameLabel.Text = db_reader.GetString("recordholder_fullname");
-					bre.Parent1Label.Text = db_reader.GetString("parent1_fullname");
-					bre.Parent2Label.Text = db_reader.GetString("parent2_fullname");
-					bre.DateOfBirthLabel.Text = DateTime.Parse(db_reader.GetString("birthday")).ToString("MMM dd, yyyy");
-					bre.LegitimacyLabel.Content = db_reader.GetString("legitimacy");
-					bre.Sponsor1Label.Text = db_reader.GetString("sponsor1");
-					bre.Sponsor2Label.Text = db_reader.GetString("sponsor2");
-					bre.PlaceOfBirthLabel.Text = db_reader.GetString("place_of_birth");
-					bre.StipendLabel.Content = db_reader.GetInt32("stipend");
-					bre.MinisterLabel.Text = db_reader.GetString("minister");
-					EntriesHolder.Items.Add(bre);
+					if (db_reader.GetString("status") == "Archived") {
+						MySqlCommand cmd2 = dbman.DBConnect().CreateCommand();
+						cmd2.CommandText = "SELECT * FROM records WHERE records.book_number = @book_number AND records.page_number = @page_number ORDER BY records.entry_number ASC;";
+						cmd2.Parameters.AddWithValue("@book_number", targBook);
+						cmd2.Parameters.AddWithValue("@page_number", pageNum);
+						cmd2.Prepare();
+						MySqlDataReader db_reader2 = cmd2.ExecuteReader();
+						while (db_reader2.Read())
+						{
+							BaptismalRecordEntryItem bre = new BaptismalRecordEntryItem();
+							bre.RecordID.Content = db_reader2.GetString("record_id");
+							bre.RegistryNumLabel.Content = db_reader2.GetString("entry_number");
+							bre.BaptismalYearLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy");
+							bre.BaptismalDateLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd");
+							bre.NameLabel.Text = db_reader2.GetString("recordholder_fullname");
+							bre.Parent1Label.Text = db_reader2.GetString("parent1_fullname");
+							bre.Parent2Label.Text = db_reader2.GetString("parent2_fullname");
+							bre.DateOfBirthLabel.Text = "-- Archived --";
+							bre.LegitimacyLabel.Content = "-- Archived --";
+							bre.Sponsor1Label.Text = "-- Archived --";
+							bre.Sponsor2Label.Text = "-- Archived --";
+							bre.PlaceOfBirthLabel.Text = "-- Archived --";
+							bre.StipendLabel.Content = "0";
+							bre.MinisterLabel.Text = "-- Archived --";
+							EntriesHolder.Items.Add(bre);
+						}
+					} else {
+						MySqlCommand cmd2 = dbman.DBConnect().CreateCommand();
+						cmd2.CommandText = "SELECT * FROM records, baptismal_records WHERE records.book_number = @book_number AND records.page_number = @page_number  AND records.record_id = baptismal_records.record_id ORDER BY records.entry_number ASC;";
+						cmd2.Parameters.AddWithValue("@book_number", targBook);
+						cmd2.Parameters.AddWithValue("@page_number", pageNum);
+						cmd2.Prepare();
+						MySqlDataReader db_reader2 = cmd2.ExecuteReader();
+						while (db_reader2.Read())
+						{
+							BaptismalRecordEntryItem bre = new BaptismalRecordEntryItem();
+							bre.RecordID.Content = db_reader2.GetString("record_id");
+							bre.RegistryNumLabel.Content = db_reader2.GetString("entry_number");
+							bre.BaptismalYearLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy");
+							bre.BaptismalDateLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd");
+							bre.NameLabel.Text = db_reader2.GetString("recordholder_fullname");
+							bre.Parent1Label.Text = db_reader2.GetString("parent1_fullname");
+							bre.Parent2Label.Text = db_reader2.GetString("parent2_fullname");
+							bre.DateOfBirthLabel.Text = DateTime.Parse(db_reader2.GetString("birthday")).ToString("MMM dd, yyyy");
+							bre.LegitimacyLabel.Content = db_reader2.GetString("legitimacy");
+							bre.Sponsor1Label.Text = db_reader2.GetString("sponsor1");
+							bre.Sponsor2Label.Text = db_reader2.GetString("sponsor2");
+							bre.PlaceOfBirthLabel.Text = db_reader2.GetString("place_of_birth");
+							bre.StipendLabel.Content = db_reader2.GetInt32("stipend");
+							bre.MinisterLabel.Text = db_reader2.GetString("minister");
+							EntriesHolder.Items.Add(bre);
+						}
+					}
 				}
 				//close Connection
 				dbman.DBClose();
