@@ -90,7 +90,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 				cmd.CommandText = "SELECT * FROM residing_priests;";
-				cmd.Parameters.AddWithValue("@key_name", "Church Name");
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -195,6 +194,16 @@ namespace PMS.UIManager.Views.ChildWindows
 			info.CreateNoWindow = true;
 			info.WindowStyle = ProcessWindowStyle.Hidden;
 			Process.Start(info);
+			if (Purpose.SelectedIndex == 0)
+			{
+				//Reference
+				string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
+			}
+			else
+			{
+				//Marriage
+				string tmp = pmsutil.LogRecord(recordID, "LOGC-04");
+			}
 			if (Purpose.SelectedIndex == 0)
 			{
 				//Reference

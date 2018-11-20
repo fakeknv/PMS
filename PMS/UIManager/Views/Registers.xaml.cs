@@ -250,5 +250,39 @@ namespace PMS.UIManager.Views
 			// set the content
 			this.Content = new ViewRecordEntries(bookNum);
 		}
+
+		private void UpdateContent(object sender, TextChangedEventArgs e)
+		{
+			dbman = new DBConnectionManager();
+
+			RegistersItemContainer.Items.Clear();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM registers WHERE " +
+					"book_number LIKE @query OR " +
+					"book_type LIKE @query OR " +
+					"creation_date LIKE @query OR " +
+					"addition_date LIKE @query OR " +
+					"status LIKE @query;";
+				cmd.Parameters.AddWithValue("@query", "%" + SearchRegisterBox.Text + "%");
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					RegisterItem ri = new RegisterItem();
+					ri.BookTypeHolder.Content = db_reader.GetString("book_type");
+					ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
+					ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
+					RegistersItemContainer.Items.Add(ri);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+		}
 	}
 }

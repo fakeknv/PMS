@@ -5,6 +5,7 @@ using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using PMS.UIManager.Views.ChildViews;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -33,18 +34,12 @@ namespace PMS.UIManager.Views.ChildWindows
 		private int stipend;
 		private string minister;
 		private string remarks;
-		//private DateTime cDate;
-		//private DateTime cTime;
-		//private string curDate;
-		//private string curTime;
 
+		private ViewRecordEntries vre;
 
-		/// <summary>
-		/// Creates the AddRequestForm Window and Initializes DB Param.
-		/// </summary>
-		public AddBaptismalRecordEntryWindow(int targBook)
+		public AddBaptismalRecordEntryWindow(ViewRecordEntries viewRE, int targBook)
 		{
-			
+			vre = viewRE;
 			pmsutil = new PMSUtil();
 			InitializeComponent();
 			bookNum = targBook;
@@ -176,6 +171,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			remarks = ValidateInp(Remarks.Text);
 			if (InsertEntry() > 0)
 			{
+				vre.Sync(bookNum);
 				this.Close();
 			}
 		}

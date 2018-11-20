@@ -21,21 +21,25 @@ using System.Windows.Shapes;
 
 namespace PMS.UIManager.Views.ChildViews
 {
-    /// <summary>
-    /// Interaction logic for ViewRecordEntries.xaml
-    /// </summary>
-    public partial class ViewRecordEntries : UserControl
-    {
+	/// <summary>
+	/// Interaction logic for ViewRecordEntries.xaml
+	/// </summary>
+	public partial class ViewRecordEntries : UserControl
+	{
 		//MYSQL STUFF
 		private DBConnectionManager dbman;
 
 		private int booknum;
 
-        public ViewRecordEntries(int bookNum)
-        {
+		public ViewRecordEntries(int bookNum)
+		{
 			booknum = bookNum;
-            InitializeComponent();
-			if (GetRegisterType(bookNum) == "Confirmation") {
+			InitializeComponent();
+			Sync(bookNum);
+		}
+		internal void Sync(int bookNum) {
+			if (GetRegisterType(bookNum) == "Confirmation")
+			{
 				ConfirmationEntries ce = new ConfirmationEntries(bookNum, 1);
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);
@@ -63,7 +67,6 @@ namespace PMS.UIManager.Views.ChildViews
 				Grid.SetColumn(be, 0);
 			}
 		}
-
 		private string GetRegisterType(int bookNum)
 		{
 			string ret = "0";
@@ -90,7 +93,7 @@ namespace PMS.UIManager.Views.ChildViews
 			this.Content = new Registers();
 		}
 
-		private void UpdatePageContent1(object sender, RoutedPropertyChangedEventArgs<double?> e)
+		internal void UpdatePageContent1(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
 			if (Convert.ToInt32(Page.Value) < 1)
 			{
@@ -134,19 +137,19 @@ namespace PMS.UIManager.Views.ChildViews
 
 			if (GetRegisterType(booknum) == "Confirmation")
 			{
-				await metroWindow.ShowChildWindowAsync(new AddConfirmationRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new AddConfirmationRecordEntryWindow(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Baptismal")
 			{
-				await metroWindow.ShowChildWindowAsync(new AddBaptismalRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new AddBaptismalRecordEntryWindow(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Matrimonial")
 			{
-				await metroWindow.ShowChildWindowAsync(new AddMatrimonialRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new AddMatrimonialRecordEntryWindow(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Burial")
 			{
-				await metroWindow.ShowChildWindowAsync(new AddBurialRecordEntryWindow(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new AddBurialRecordEntryWindow(this, booknum), this.RecordEntriesMainGrid);
 			}
 		}
 	}

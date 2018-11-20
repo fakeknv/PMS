@@ -108,8 +108,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\..\..\..\..\Program Files\System.Data.SQLite\2015\bin\System.Data.SQLite.dll</HintPath>
+    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\System.Data.SQLite\2015\bin\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
@@ -183,9 +184,6 @@
     <Compile Include="UIComponents\BurialEntries.xaml.cs">
       <DependentUpon>BurialEntries.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIComponents\MatrimonialRecordEntryItem.xaml.cs">
-      <DependentUpon>MatrimonialRecordEntryItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIComponents\MatrimonialEntries.xaml.cs">
       <DependentUpon>MatrimonialEntries.xaml</DependentUpon>
     </Compile>
@@ -198,18 +196,15 @@
     <Compile Include="UIComponents\ConfirmationEntries.xaml.cs">
       <DependentUpon>ConfirmationEntries.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIComponents\BaptismalRecordEntryItem.xaml.cs">
-      <DependentUpon>BaptismalRecordEntryItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIComponents\Day.xaml.cs">
       <DependentUpon>Day.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirectoryResultsItem.xaml.cs">
       <DependentUpon>DirectoryResultsItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIComponents\ConfirmationRecordEntryItem.xaml.cs">
-      <DependentUpon>ConfirmationRecordEntryItem.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="UIComponents\RecordEntryBaptismal.cs" />
+    <Compile Include="UIComponents\RecordEntryConfirmation.cs" />
+    <Compile Include="UIComponents\RecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RegisterItemArchivesRestore.xaml.cs">
       <DependentUpon>RegisterItemArchivesRestore.xaml</DependentUpon>
     </Compile>
@@ -243,6 +238,9 @@
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml.cs">
       <DependentUpon>ConfirmPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\PrintBurialRecordEntryWindow.xaml.cs">
+      <DependentUpon>PrintBurialRecordEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\Settings.xaml.cs" />
     <Compile Include="UIManager\Views\Accounts.xaml.cs" />
@@ -309,10 +307,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIComponents\MatrimonialRecordEntryItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIComponents\MatrimonialEntries.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -329,19 +323,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIComponents\BaptismalRecordEntryItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIComponents\Day.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\DirectoryResultsItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UIComponents\ConfirmationRecordEntryItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -382,6 +368,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\PrintBurialRecordEntryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -494,10 +484,13 @@
     <Resource Include="Assets\Fonts\Roboto-Thin.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Data\temp_baptismal.doc">
+    <Content Include="Data\temp_baptismal.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\temp_confirmation.doc">
+    <Content Include="Data\temp_confirmation.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\temp_death.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

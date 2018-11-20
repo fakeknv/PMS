@@ -5,22 +5,23 @@ using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using PMS.UIManager.Views.ChildViews;
+using Spire.Doc;
+using System.Diagnostics;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddBurialRecordEntryWindow : ChildWindow
+	public partial class PrintBurialRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
 
+		private string recordID;
 		private int pageNum;
-		private int bookNum;
 		private int entryNum;
 		private string deathDate;
 		private string burialDate;
@@ -38,73 +39,181 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string minister;
 		private string remarks;
 
-		private ViewRecordEntries vre;
+		private string spouse, p1, p2;
 
-		public AddBurialRecordEntryWindow(ViewRecordEntries viewRE, int targBook)
+		public PrintBurialRecordEntryWindow(string targRecord)
 		{
-			vre = viewRE;
+			
 			pmsutil = new PMSUtil();
 			InitializeComponent();
-			bookNum = targBook;
+			recordID = targRecord;
+			GetResidingPriests();
+			PrintingFee.Value = Convert.ToDouble(pmsutil.GetPrintFee("Burial"));
 			Stipend.Value = FetchBurialStipend();
+
+			dbman = new DBConnectionManager();
+			Console.WriteLine(targRecord);
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM burial_records, records WHERE records.record_id = @record_id AND records.record_id = burial_records.record_id LIMIT 1;";
+				cmd.Parameters.AddWithValue("@record_id", targRecord);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					Console.WriteLine("asd");
+					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+					DeathDate.Text = db_reader.GetString("record_date");
+					BurialDate.Text = db_reader.GetString("burial_date");
+					Age.Value = Convert.ToDouble(db_reader.GetString("age"));
+					FullName.Text = db_reader.GetString("recordholder_fullname");
+					Age.Value = Convert.ToDouble(db_reader.GetString("age"));
+					Status.Text = db_reader.GetString("status");
+					Parent1.Text = db_reader.GetString("parent1_fullname");
+					Parent2.Text = db_reader.GetString("parent2_fullname");
+					Residence1.Text = db_reader.GetString("residence");
+					Residence2.Text = db_reader.GetString("residence2");
+					Sacrament.Text = db_reader.GetString("sacrament");
+					CauseOfDeath.Text = db_reader.GetString("cause_of_death");
+					PlaceOfInterment.Text = db_reader.GetString("place_of_interment");
+					Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
+					Minister.Text = db_reader.GetString("minister");
+					Remarks.Text = db_reader.GetString("remarks");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+
+			Suggestions1.Visibility = Visibility.Hidden;
+			Suggestions2.Visibility = Visibility.Hidden;
+			Suggestions3.Visibility = Visibility.Hidden;
+			Suggestions4.Visibility = Visibility.Hidden;
+			Suggestions5.Visibility = Visibility.Hidden;
+			Suggestions6.Visibility = Visibility.Hidden;
 		}
 		/// <summary>
 		/// Inserts the request to the database.
 		/// </summary>
-		private int InsertEntry()
+		private int PrintEntry()
+		{
+			string[] bspl = BurialDate.Text.Split('/');
+			string bmon = PrepMonth(int.Parse(bspl[0]));
+
+			string[] dspl = DeathDate.Text.Split('/');
+			string dmon = PrepMonth(int.Parse(dspl[0]));
+
+			Document doc = new Document();
+			doc.LoadFromFile("Data\\temp_death.docx");
+			doc.Replace("name", fullName, true, true);
+			doc.Replace("age", Convert.ToString(age), true, true);
+			doc.Replace("nationality", Nationality.Text, true, true);
+			doc.Replace("residence", residence1, true, true);
+			doc.Replace("civil", status, true, true);
+			doc.Replace("father", p1, true, true);
+			doc.Replace("mother", p2, true, true);
+			doc.Replace("spouse", spouse, true, true);
+			doc.Replace("date_of_birth", bmon + " " + bspl[1] + ", " + bspl[2], true, true);
+			doc.Replace("cause_of_death", causeOfDeath, true, true);
+			doc.Replace("date_of_burial", dmon + " " + dspl[1] + ", " + dspl[2], true, true);
+			doc.Replace("place_of_burial", intermentPlace, true, true);
+			doc.Replace("priest", minister, true, true);
+			doc.Replace("sign", Signatory.Text, true, true);
+			doc.Replace("no", Convert.ToString(entryNum), true, true);
+			doc.Replace("page", Convert.ToString(pageNum), true, true);
+			string[] date = DateTime.Now.ToString("MMMM,d,yyyy").Split(','); ;
+			doc.Replace("month", date[0], true, true);
+			doc.Replace("day", date[1], true, true);
+			doc.Replace("YY", date[2].Remove(0, 2), true, true);
+			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
+
+			string fpath = "Data\\print.docx";
+
+			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim())
+			{
+				Verb = "Print",
+				CreateNoWindow = true,
+				WindowStyle = ProcessWindowStyle.Hidden
+			};
+			Process.Start(info);
+			//Reference
+			string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
+			pmsutil.InsertTransaction("Burial Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Burial")));
+			return 1;
+		}
+		private void GetResidingPriests()
 		{
 			dbman = new DBConnectionManager();
-			//TODO
-			try
+			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
-				string recID = pmsutil.GenRecordID();
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
-					"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@book_number", bookNum);
-				cmd.Parameters.AddWithValue("@page_number", pageNum);
-				cmd.Parameters.AddWithValue("@entry_number", entryNum);
-				cmd.Parameters.AddWithValue("@record_date", deathDate);
-				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName);
-				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
-				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
-				int stat_code = cmd.ExecuteNonQuery();
+				cmd.CommandText = "SELECT * FROM residing_priests;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					Signatory.Items.Add(db_reader.GetString("priest_name"));
+				}
+				//close Connection
 				dbman.DBClose();
-				//Phase 2
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO burial_records(record_id, burial_date, age, status, residence, residence2, sacrament, cause_of_death, place_of_interment, stipend, minister, remarks)" +
-					"VALUES(@record_id, @burial_date, @age, @status, @residence, @residence2, @sacrament, @cause_of_death, @place_of_interment, @stipend, @minister, @remarks)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@burial_date", burialDate);
-				cmd.Parameters.AddWithValue("@age", age);
-				cmd.Parameters.AddWithValue("@status", status);
-				cmd.Parameters.AddWithValue("@residence", residence1);
-				cmd.Parameters.AddWithValue("@residence2", residence2);
-				cmd.Parameters.AddWithValue("@sacrament", sacrament);
-				cmd.Parameters.AddWithValue("@cause_of_death", causeOfDeath);
-				cmd.Parameters.AddWithValue("@place_of_interment", intermentPlace);
-				cmd.Parameters.AddWithValue("@stipend", stipend);
-				cmd.Parameters.AddWithValue("@minister", minister);
-				cmd.Parameters.AddWithValue("@remarks", remarks);
-				stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				string tmp = pmsutil.LogRecord(recID,"LOGC-01");
-				return stat_code;
 			}
-			catch (MySqlException ex)
+			else
 			{
-				Console.WriteLine("Error: {0}", ex.ToString());
-				return 0;
+
 			}
 		}
-		/// <summary>
-		/// Fetches default confirmation stipend value.
-		/// </summary>
+		private string GetDaySuffix(int day)
+		{
+			switch (day)
+			{
+				case 1:
+				case 21:
+				case 31:
+					return "st";
+				case 2:
+				case 22:
+					return "nd";
+				case 3:
+				case 23:
+					return "rd";
+				default:
+					return "th";
+			}
+		}
+		private string PrepMonth(int mon)
+		{
+			switch (mon)
+			{
+				case 1:
+					return "January";
+				case 2:
+					return "February";
+				case 3:
+					return "March";
+				case 4:
+					return "April";
+				case 5:
+					return "May";
+				case 6:
+					return "June";
+				case 7:
+					return "July";
+				case 8:
+					return "August";
+				case 9:
+					return "September";
+				case 10:
+					return "October";
+				case 11:
+					return "November";
+				default:
+					return "December";
+			}
+		}
 		private int FetchBurialStipend()
 		{
 			int ret = 0;
@@ -136,7 +245,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			if (String.IsNullOrEmpty(targ))
 			{
-				return "Unknown";
+				return "---";
 			}
 			else
 			{
@@ -147,7 +256,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
-		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
+		private void PrintRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
@@ -189,16 +298,15 @@ namespace PMS.UIManager.Views.ChildWindows
 			stipend = Convert.ToInt32(Stipend.Value);
 			minister = ValidateInp(Minister.Text);
 			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0)
+			if (PrintEntry() > 0)
 			{
-				vre.Sync(bookNum);
 				this.Close();
 			}
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
 		/// </summary>
-		private void AddRecCancel(object sender, System.Windows.RoutedEventArgs e)
+		private void EditRecCancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}
@@ -420,6 +528,21 @@ namespace PMS.UIManager.Views.ChildWindows
 			Suggestions4.Visibility = Visibility.Hidden;
 			Suggestions5.Visibility = Visibility.Hidden;
 			Suggestions6.Visibility = Visibility.Hidden;
+		}
+		private void Parents_Checked(object sender, RoutedEventArgs e)
+		{
+			spouse = "";
+			p1 = Parent1.Text;
+			p2 = Parent2.Text;
+			Parent2.IsEnabled = true;
+		}
+
+		private void Spouse_Checked(object sender, RoutedEventArgs e)
+		{
+			spouse = Parent1.Text;
+			p1 = "";
+			p2 = "";
+			Parent2.IsEnabled = false;
 		}
 	}
 }

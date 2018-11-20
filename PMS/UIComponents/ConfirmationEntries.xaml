@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMS.UIComponents"
              xmlns:Custom="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" d:DesignWidth="1199"
              VerticalAlignment="Stretch" d:DesignHeight="533">
     <Grid Margin="0,52,0,0" x:Name="ParentGrid">
         <Button 
-            Margin="0,-43,39,0" 
+            Margin="0,-43,18,0" 
             VerticalAlignment="Top" 
             Width="82" 
             Height="31" 
@@ -33,7 +34,7 @@
             </StackPanel>
         </Button>
         <Button 
-                Margin="0,-43,135,0" 
+                Margin="0,-43,114,0" 
                 VerticalAlignment="Top" 
                 Width="82" 
                 Height="31" 
@@ -57,7 +58,7 @@
             </StackPanel>
         </Button>
         <Button 
-            Margin="0,-43,230,0" 
+            Margin="0,-43,209,0" 
             VerticalAlignment="Top" 
             Width="103" 
             Height="31" 
@@ -81,7 +82,7 @@
             </StackPanel>
         </Button>
         <Button 
-            Margin="0,-43,348,0" 
+            Margin="0,-43,327,0" 
             VerticalAlignment="Top" 
             Width="103" 
             Height="31" 
@@ -104,48 +105,134 @@
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  History" />
             </StackPanel>
         </Button>
-        <Grid Height="44" Margin="12,8,15,0" VerticalAlignment="Top" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="130*"/>
-                <ColumnDefinition Width="35"/>
-                <ColumnDefinition Width="110*"/>
-                <ColumnDefinition Width="115"/>
-                <ColumnDefinition Width="134*"/>
-                <ColumnDefinition Width="134*"/>
-                <ColumnDefinition Width="49"/>
-                <ColumnDefinition Width="120*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="No." VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="1" Foreground="#FF474747"/>
-            <Label Content="Confirmation" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Year" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" Margin="0,22,80,0" HorizontalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Date" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="1" Padding="0" Margin="0,22,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" HorizontalAlignment="Right" Width="80" Foreground="#FF474747"/>
-            <Label x:Name="NameLabel" Content="Name" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="2" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label x:Name="AgeLabel" Content="Age" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="3" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Place of Origin" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="4" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Place of &#xD;&#xA;Baptismal" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="5" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Parents" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="6" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Sponsors" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="7" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Stipend" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="8" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-            <Label Content="Minister" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Grid.Column="9" Padding="0" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
-            <Grid Grid.Column="4" Height="22" Margin="0,22,0,0" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="13*"/>
-                    <ColumnDefinition Width="11*"/>
-                </Grid.ColumnDefinitions>
-                <Label Content="Parish" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Foreground="#FF474747"/>
-                <Label Content="Province" VerticalAlignment="Top" Height="22" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Padding="0" HorizontalContentAlignment="Center" BorderThickness="0,0,1,1" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" Grid.Column="1" Foreground="#FF474747"/>
-            </Grid>
-        </Grid>
-        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="{x:Null}" BorderThickness="0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Padding" Value="0,0,0,0"/>
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+        <TextBox 
+            x:Name="SearchBox" 
+            TextWrapping="Wrap" 
+            Margin="227,-43,445,0"
+            BorderThickness="0,0,0,1" 
+            Height="31" 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Top" 
+            mah:TextBoxHelper.Watermark="Search"
+            RenderTransformOrigin="0,0.5" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            FontSize="14"
+            VerticalContentAlignment="Center" TextChanged="UpdateContent"/>
+        <Button 
+            x:Name="SearchRequestButton" 
+            Style="{DynamicResource MetroCircleButtonStyle}" 
+            Content="{Custom:FontAwesome SearchSolid}" 
+            Margin="0,-43,445,0" 
+            VerticalAlignment="Top" 
+            Height="31" 
+            Background="White" 
+            BorderBrush="{x:Null}" 
+            RenderTransformOrigin="0.824,0.294" 
+            Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
+        <DataGrid AlternatingRowBackground="LightBlue" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="No." Binding="{Binding EntryNumber}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="C. Year" Binding="{Binding ConfirmationYear}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="C. Date" Binding="{Binding ConfirmationDate}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Name" MaxWidth="150" Binding="{Binding FullName}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Parish" Binding="{Binding Parish}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Province" Binding="{Binding Province}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Place of Baptism" MaxWidth="150" Binding="{Binding PlaceOfBaptism}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Parent" Binding="{Binding Parent1}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="" Binding="{Binding Parent2}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Sponsor" Binding="{Binding Sponsor1}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="" Binding="{Binding Sponsor2}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Stipend" Binding="{Binding Stipend}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Minister" MaxWidth="120" Binding="{Binding Minister}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextAlignment" Value="Center"></Setter>
+                            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

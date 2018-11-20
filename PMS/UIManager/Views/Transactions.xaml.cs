@@ -407,40 +407,47 @@ namespace PMS.UIManager.Views
 
 		private async void ConfirmPayment_Click(object sender, RoutedEventArgs e)
 		{
-			TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
-			Label transactionID = (Label)ti.FindName("IDLabel");
-
-			dbman = new DBConnectionManager();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			if (TransactionsItemContainer.SelectedItem == null)
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-				cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					if (db_reader.GetString("status") == "Finished")
-					{
-						MsgAlreadyPaid();
-					}
-					else if (db_reader.GetString("status") == "Cancelled")
-					{
-						//MessageBox.Show("Already cancelled!");
-						MsgCancelled();
-					}
-					else
-					{
-						var metroWindow = (Application.Current.MainWindow as MetroWindow);
-						await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, transactionID.Content.ToString()));
-					}
-				}
+				MsgNoItemSelected();
 			}
 			else
 			{
+				TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
+				Label transactionID = (Label)ti.FindName("IDLabel");
 
+				dbman = new DBConnectionManager();
+				if (dbman.DBConnect().State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+					cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetString("status") == "Finished")
+						{
+							MsgAlreadyPaid();
+						}
+						else if (db_reader.GetString("status") == "Cancelled")
+						{
+							//MessageBox.Show("Already cancelled!");
+							MsgCancelled();
+						}
+						else
+						{
+							var metroWindow = (Application.Current.MainWindow as MetroWindow);
+							await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, transactionID.Content.ToString()));
+						}
+					}
+				}
+				else
+				{
+
+				}
+				dbman.DBClose();
 			}
-			dbman.DBClose();
 		}
 		private async void MsgCancelled()
 		{
@@ -452,41 +459,53 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "The selected transaction has already been finished.");
 		}
+		private async void MsgNoItemSelected()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
+		}
 		private async void CancelTransaction_Click(object sender, RoutedEventArgs e)
 		{
-			TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
-			Label transactionID = (Label)ti.FindName("IDLabel");
-
-			dbman = new DBConnectionManager();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			if (TransactionsItemContainer.SelectedItem == null)
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-				cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					if (db_reader.GetString("status") == "Finished")
-					{
-						MsgAlreadyPaid();
-					}
-					else if (db_reader.GetString("status") == "Cancelled")
-					{
-						MsgCancelled();
-					}
-					else
-					{
-						var metroWindow = (Application.Current.MainWindow as MetroWindow);
-						await metroWindow.ShowChildWindowAsync(new CancelPaymentWindow(this, transactionID.Content.ToString()));
-					}
-				}
+				MsgNoItemSelected();
 			}
 			else
 			{
+				TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
+				Label transactionID = (Label)ti.FindName("IDLabel");
 
+				dbman = new DBConnectionManager();
+				if (dbman.DBConnect().State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+					cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetString("status") == "Finished")
+						{
+							MsgAlreadyPaid();
+						}
+						else if (db_reader.GetString("status") == "Cancelled")
+						{
+							MsgCancelled();
+						}
+						else
+						{
+							var metroWindow = (Application.Current.MainWindow as MetroWindow);
+							await metroWindow.ShowChildWindowAsync(new CancelPaymentWindow(this, transactionID.Content.ToString()));
+						}
+					}
+				}
+				else
+				{
+
+				}
+				dbman.DBClose();
 			}
-			dbman.DBClose();
 		}
 	}
 }
