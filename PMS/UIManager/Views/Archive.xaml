@@ -64,19 +64,11 @@
                 <Label Content="Archives" HorizontalAlignment="Left" Margin="31,29,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="221" FontSize="18" Height="24" Padding="5,0" Foreground="White"/>
                 <Label Content="Welcome Administrator" HorizontalAlignment="Left" Margin="31,53,0,0" VerticalAlignment="Top" Width="221" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="5,0" Foreground="White"/>
             </Grid>
-            <Grid HorizontalAlignment="Left" Margin="7,94,0,6" Width="216" Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="33*"/>
-                    <RowDefinition Height="271*"/>
-                </Grid.RowDefinitions>
-                <Label x:Name="ArchiveStatus" Content="Archive Status: Disconnected" Margin="27,7,10,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-                <iconPacks:PackIconFontAwesome Kind="DatabaseSolid" HorizontalAlignment="Left" VerticalAlignment="Top" Height="17" Width="17" Foreground="#FF474747" Margin="10,10,0,0"/>
-            </Grid>
-            <Grid Margin="228,97,7,6">
+            <Grid Margin="7,97,7,6">
                 <mah:MetroAnimatedTabControl>
                     <TabItem Header="Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-                        <Grid Background="#FFE5E5E5">
-                            <ListView x:Name="ArchivesItemContainer" Background="{x:Null}">
+                        <Grid Background="#FFF3F3F3">
+                            <ListView x:Name="ArchivesItemContainer" VerticalContentAlignment="Top" Background="{x:Null}">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListViewItem}">
                                         <Setter Property="Padding" Value="0,0,0,0"/>
@@ -117,10 +109,12 @@
                 </mah:MetroAnimatedTabControl>
             </Grid>
         </Grid>
+        <Label x:Name="ArchiveStatus" Content="Archive Status: Disconnected" Margin="0,147,47,277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" HorizontalAlignment="Right" Width="173"/>
+        <iconPacks:PackIconFontAwesome Kind="DatabaseSolid" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Width="16" Foreground="#FF474747" Margin="0,150,220,0"/>
         <Button x:Name="ManualSyncButton" 
             Style="{DynamicResource MetroCircleButtonStyle}" 
             Content="{iconPacks:FontAwesome SyncSolid}" 
-            Margin="758,144,0,0" 
+            Margin="0,144,8,0" 
             VerticalAlignment="Top" 
             Height="34" 
             Background="White" 
@@ -128,7 +122,7 @@
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" 
             Width="34" 
-            HorizontalAlignment="Left" 
+            HorizontalAlignment="Right" 
             Click="ManualSyncButton_Click"/>
     </Grid>
 </UserControl>

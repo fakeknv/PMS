@@ -105,18 +105,10 @@
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  History" />
             </StackPanel>
         </Button>
-        <ComboBox x:Name="SearchFilter" SelectedIndex="0" HorizontalAlignment="Left" Margin="151,-43,0,0" VerticalAlignment="Top" Width="124" Height="31" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
-            <ComboBoxItem Content="Search: Name"/>
-            <ComboBoxItem Content="Search: Death Date"/>
-            <ComboBoxItem Content="Search: Burial Date"/>
-            <ComboBoxItem Content="Search: Status"/>
-            <ComboBoxItem Content="Search: Place of Interment"/>
-            <ComboBoxItem Content="Search: Minister"/>
-        </ComboBox>
         <TextBox 
             x:Name="SearchBox" 
             TextWrapping="Wrap" 
-            Margin="280,-43,435,0"
+            Margin="227,-43,445,0"
             BorderThickness="0,0,0,1" 
             Height="31" 
             HorizontalAlignment="Stretch" 
@@ -125,65 +117,162 @@
             RenderTransformOrigin="0,0.5" 
             FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
             FontSize="14"
-            VerticalContentAlignment="Center" 
-            TextChanged="UpdateContent"/>
+            VerticalContentAlignment="Center" TextChanged="UpdateContent"/>
         <Button 
             x:Name="SearchRequestButton" 
             Style="{DynamicResource MetroCircleButtonStyle}" 
             Content="{Custom:FontAwesome SearchSolid}" 
-            Margin="0,-43,435,0" 
+            Margin="0,-43,445,0" 
             VerticalAlignment="Top" 
             Height="31" 
             Background="White" 
             BorderBrush="{x:Null}" 
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
-        <Grid Height="44" Margin="12,8,15,0" VerticalAlignment="Top" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="105*" MinWidth="100" MaxWidth="105"/>
-                <ColumnDefinition Width="105"/>
-                <ColumnDefinition Width="105"/>
-                <ColumnDefinition Width="37"/>
-                <ColumnDefinition Width="62"/>
-                <ColumnDefinition Width="135*"/>
-                <ColumnDefinition Width="105*"/>
-                <ColumnDefinition Width="105*"/>
-                <ColumnDefinition Width="123*"/>
-                <ColumnDefinition Width="136*"/>
-                <ColumnDefinition Width="124*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="No." VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="1" Foreground="#FF474747"/>
-            <Label Content="Name" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="1" Foreground="#FF474747"/>
-            <Label Content="Death" VerticalAlignment="Top" Height="23" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="2" Padding="0" Foreground="#FF474747"/>
-            <Label Content="Year" VerticalAlignment="Top" Height="21" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,0,1,1" Grid.Column="2" Margin="0,23,0,0" Padding="0" HorizontalAlignment="Left" Width="48" Foreground="#FF474747"/>
-            <Label Content="Date" VerticalAlignment="Top" Height="21" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,0,1,1" Grid.Column="2" Margin="48,23,0,0" Padding="0" Foreground="#FF474747"/>
-            <Label Content="Burial" VerticalAlignment="Top" Height="23" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="3" Padding="0" Foreground="#FF474747"/>
-            <Label Content="Year" VerticalAlignment="Top" Height="21" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,0,1,1" Grid.Column="3" Margin="0,23,57,0" Padding="0" Foreground="#FF474747"/>
-            <Label Content="Date" VerticalAlignment="Top" Height="21" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,0,1,1" Grid.Column="3" Margin="0,23,0,0" Padding="0" HorizontalAlignment="Right" Width="57" Foreground="#FF474747"/>
-            <Label Content="Age" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="4" Foreground="#FF474747"/>
-            <Label Content="Status" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="5" Foreground="#FF474747"/>
-            <Border Grid.Column="6" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2">
-                <TextBlock Grid.Column="10" Margin="0,3,-1,-1" TextWrapping="WrapWithOverflow" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" TextAlignment="Center" Foreground="#FF474747"><Run Text="Parents or "/><LineBreak/><Run Text="Spouse"/></TextBlock>
-            </Border>
-            <Label Content="Residence" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="7" Foreground="#FF474747"/>
-            <Label Content="Sacrament" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="8" Foreground="#FF474747"/>
-            <Border Grid.Column="10" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2">
-                <TextBlock Grid.Column="10" Margin="0,3,-1,-1" TextWrapping="WrapWithOverflow" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" TextAlignment="Center" Foreground="#FF474747"><Run Text="Place of "/><LineBreak/><Run Text="Internment"/></TextBlock>
-            </Border>
-            <Label Content="Minister" VerticalAlignment="Top" Height="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalContentAlignment="Center" BorderBrush="#FFE2E2E2" VerticalContentAlignment="Center" BorderThickness="0,1,1,1" Grid.Column="11" Foreground="#FF474747"/>
-            <Border Grid.Column="9" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2">
-                <TextBlock Grid.Column="10" Margin="0,3,-1,-1" TextWrapping="WrapWithOverflow" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" TextAlignment="Center" Foreground="#FF474747"><Run Text="Cause "/><LineBreak/><Run Text="of Death"/></TextBlock>
-            </Border>
-        </Grid>
-        <ListView ScrollViewer.VerticalScrollBarVisibility="Visible" x:Name="EntriesHolder" Margin="11,52,0,10" BorderBrush="#FFE2E2E2" BorderThickness="0">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Padding" Value="0,0,0,0"/>
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="No.">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding EntryNumber}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="D. Year">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding DeathYear}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="D. Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding DeathDate}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Burial Year">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding BurialYear}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Burial Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding BurialDate}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding FullName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Age">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Age}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Status">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Status}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Parents">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent2}"/>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Residence">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Residence1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Residence2}"/>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Sacrament">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Sacrament}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Cause of Death">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding CauseOfDeath}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Place of Interment">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding PlaceOfInterment}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Stipend">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Stipend}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Minister">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Minister}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

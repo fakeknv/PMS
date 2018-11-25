@@ -9,6 +9,7 @@
 		public string FullName { get; set; }
 		public string BirthDate { get; set; }
 		public string Legitimacy { get; set; }
+		public string PlaceOfBirth { get; set; }
 		public string Parent1 { get; set; }
 		public string Parent2 { get; set; }
 		public string Godparent1 { get; set; }

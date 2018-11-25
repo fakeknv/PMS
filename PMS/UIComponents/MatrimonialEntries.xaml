@@ -129,7 +129,7 @@
             BorderBrush="{x:Null}" 
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
-        <DataGrid AlternatingRowBackground="LightBlue" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="No.">
                     <DataGridTemplateColumn.CellTemplate>
@@ -162,8 +162,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,5,5,5" Text="{Binding FullName1}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding FullName2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding FullName1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding FullName2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -172,8 +174,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,5,5,5" Text="{Binding Status1}"/>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,5" Text="{Binding Status2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Status1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Status2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -182,8 +186,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,5,5,5" Text="{Binding Age1}"/>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,5" Text="{Binding Age2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Age1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Age2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -192,8 +198,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,5,5,5" Text="{Binding Hometown1}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Hometown2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Hometown1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Hometown2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -202,8 +210,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,5,5,5" Text="{Binding Residence1}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Residence2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Residence1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Residence2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -212,10 +222,12 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,5,5,5" Text="{Binding Parent1}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Parent2}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Parent3}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Parent4}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent1}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent2}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent3}"/>
+                                </Border>
+                                <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent4}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -224,8 +236,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Witness1}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding Witness2}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Witness1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Witness2}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -234,8 +248,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding W1Residence}"/>
-                                <TextBlock TextAlignment="Left" Padding="5,10,5,5" Text="{Binding W2Residence}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding W1Residence}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding W2Residence}"/>
+                                </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

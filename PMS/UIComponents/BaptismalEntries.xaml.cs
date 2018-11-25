@@ -84,6 +84,7 @@ namespace PMS.UIComponents
 														FullName = db_reader2.GetString("recordholder_fullname"),
 														BirthDate = "----",
 														Legitimacy = "----",
+														PlaceOfBirth = "----",
 														Parent1 = db_reader2.GetString("parent1_fullname"),
 														Parent2 = db_reader2.GetString("parent2_fullname"),
 														Godparent1 = "----",
@@ -121,6 +122,7 @@ namespace PMS.UIComponents
 														FullName = db_reader2.GetString("recordholder_fullname"),
 														BirthDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd, yyyy"),
 														Legitimacy = db_reader2.GetString("legitimacy"),
+														PlaceOfBirth = db_reader2.GetString("place_of_birth"),
 														Parent1 = db_reader2.GetString("parent1_fullname"),
 														Parent2 = db_reader2.GetString("parent2_fullname"),
 														Godparent1 = db_reader2.GetString("sponsor1"),
@@ -154,7 +156,7 @@ namespace PMS.UIComponents
 		}
 		private async void Remarks_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
+			RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
 			if (record == null)
 			{
 				MsgNoItemSelected();
@@ -168,7 +170,7 @@ namespace PMS.UIComponents
 
 		private async void Print_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
+			RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
 			if (record == null)
 			{
 				MsgNoItemSelected();
@@ -182,7 +184,7 @@ namespace PMS.UIComponents
 
 		private async void Edit_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
+			RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
 			if (record == null)
 			{
 				MsgNoItemSelected();
@@ -196,7 +198,7 @@ namespace PMS.UIComponents
 
 		private async void History_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
+			RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
 			if (record == null)
 			{
 				MsgNoItemSelected();
@@ -210,7 +212,7 @@ namespace PMS.UIComponents
 
 		private void UpdateContent(object sender, TextChangedEventArgs e)
 		{
-			cmd_tmp = "SELECT * FROM records, baptismal_records WHERE records.book_number = @book_number AND records.record_id = baptismal_records.record_id AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR baptismal_records.sponsor1 LIKE @query OR baptismal_records.sponsor2 LIKE @query) ORDER BY records.entry_number ASC;";
+			cmd_tmp = "SELECT * FROM records, baptismal_records WHERE records.book_number = @book_number AND records.record_id = baptismal_records.record_id AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR baptismal_records.sponsor1 LIKE @query OR baptismal_records.sponsor2 LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 			qry = SearchBox.Text;
 
 			BackgroundWorker worker = new BackgroundWorker
@@ -285,6 +287,7 @@ namespace PMS.UIComponents
 														FullName = db_reader2.GetString("recordholder_fullname"),
 														BirthDate = "----",
 														Legitimacy = "----",
+														PlaceOfBirth = "----",
 														Parent1 = db_reader2.GetString("parent1_fullname"),
 														Parent2 = db_reader2.GetString("parent2_fullname"),
 														Godparent1 = "----",
@@ -322,6 +325,7 @@ namespace PMS.UIComponents
 														FullName = db_reader2.GetString("recordholder_fullname"),
 														BirthDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd, yyyy"),
 														Legitimacy = db_reader2.GetString("legitimacy"),
+														PlaceOfBirth = db_reader2.GetString("place_of_birth"),
 														Parent1 = db_reader2.GetString("parent1_fullname"),
 														Parent2 = db_reader2.GetString("parent2_fullname"),
 														Godparent1 = db_reader2.GetString("sponsor1"),

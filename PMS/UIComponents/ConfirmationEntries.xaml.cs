@@ -64,7 +64,7 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = "SELECT * FROM records, confirmation_records WHERE records.book_number = @book_number AND records.page_number = @page_number AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;"; cmd2.CommandText = cmd_tmp;
+										cmd2.CommandText = "SELECT * FROM records, confirmation_records WHERE records.book_number = @book_number AND records.page_number = @page_number AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", targBook);
 										cmd2.Parameters.AddWithValue("@page_number", pageNum);
 										cmd2.Prepare();
@@ -87,7 +87,11 @@ namespace PMS.UIComponents
 														Province = "----",
 														PlaceOfBaptism = "----",
 														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname")
+														Parent2 = db_reader2.GetString("parent2_fullname"),
+														Sponsor1 = "----",
+														Sponsor2 = "----",
+														Stipend = 0,
+														Minister = "----"
 													});
 												});
 											}
@@ -144,7 +148,7 @@ namespace PMS.UIComponents
 
 				}
 				//close Connection
-				conn.Close();
+				//conn.Close();
 			}
 		}
 		private async void MsgNoItemSelected()
@@ -277,12 +281,16 @@ namespace PMS.UIComponents
 														ConfirmationYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
 														ConfirmationDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
 														FullName = db_reader2.GetString("recordholder_fullname"),
-														Age = db_reader2.GetInt32("age"),
-														Parish = db_reader2.GetString("parochia"),
-														Province = db_reader2.GetString("province"),
-														PlaceOfBaptism = db_reader2.GetString("place_of_baptism"),
+														Age = 0,
+														Parish = "----",
+														Province = "----",
+														PlaceOfBaptism = "----",
 														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname")
+														Parent2 = db_reader2.GetString("parent2_fullname"),
+														Sponsor1 = "----",
+														Sponsor2 = "----",
+														Stipend = 0,
+														Minister = "----"
 													});
 												});
 											}

@@ -117,6 +117,13 @@
                                 <views:Archive />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome ChartPieSolid}"
+						Label="Reports">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Reports />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>
                 </Controls:HamburgerMenu.ItemsSource>
                 <Controls:HamburgerMenu.OptionsItemsSource>

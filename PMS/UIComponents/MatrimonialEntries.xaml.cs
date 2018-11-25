@@ -239,7 +239,7 @@ namespace PMS.UIComponents
 		}
 		private void UpdateContent(object sender, TextChangedEventArgs e)
 		{
-			cmd_tmp = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND records.record_id = matrimonial_records.record_id AND (records.recordholder_fullname LIKE @query OR matrimonial_records.recordholder2_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR matrimonial_records.parent1_fullname2 LIKE @query OR matrimonial_records.parent2_fullname2 LIKE @query OR matrimonial_records.witness1 LIKE @query OR matrimonial_records.witness2 LIKE @query) ORDER BY records.entry_number ASC;";
+			cmd_tmp = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND records.record_id = matrimonial_records.record_id AND (records.recordholder_fullname LIKE @query OR matrimonial_records.recordholder2_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR matrimonial_records.parent1_fullname2 LIKE @query OR matrimonial_records.parent2_fullname2 LIKE @query OR matrimonial_records.witness1 LIKE @query OR matrimonial_records.witness2 LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 			qry = SearchBox.Text;
 
 			BackgroundWorker worker = new BackgroundWorker
