@@ -18,7 +18,7 @@
 		public string Sacrament { get; set; }
 		public string CauseOfDeath { get; set; }
 		public string PlaceOfInterment { get; set; }
-		public float Stipend { get; set; }
+		public double Stipend { get; set; }
 		public string Minister { get; set; }
 	}
 }

@@ -72,7 +72,7 @@
                         Foreground="#FF717171" 
                         Width="30" 
                         HorizontalAlignment="Left"/>
-                    <Label Content="Generated Report for Receipt No. 366751 - 366797" HorizontalAlignment="Left" Margin="48,10,0,0" VerticalAlignment="Top" Height="30" Width="372" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16"/>
+                    <Label x:Name="ReportLabel" Content="Showing This Week's Transactions" HorizontalAlignment="Left" Margin="48,10,0,0" VerticalAlignment="Top" Height="30" Width="304" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16"/>
                     <DataGrid x:Name="BillingDG" Margin="10,52,10,29" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" BorderBrush="#CCCFCFCF" BorderThickness="1">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Receipt Number">
@@ -84,29 +84,65 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Name">
+                            <DataGridTemplateColumn Header="Type">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Left" Text="{Binding Name}"/>
+                                            <TextBlock TextAlignment="Left" Text="{Binding Type}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Amount">
+                            <DataGridTemplateColumn Header="Status">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Amount}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Status}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Date">
+                            <DataGridTemplateColumn Header="Fee">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding EnvelopeNo}"/>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Fee}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Date Placed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding DPlaced}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Date Completed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding DCompleted}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Placed By">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding PlacedBy}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Completed By">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding CompletedBy}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -124,7 +160,7 @@
                         Foreground="#FF474747" 
                         HorizontalAlignment="Right" 
                         BorderBrush="#FFE9E9E9" 
-                        BorderThickness="1">
+                        BorderThickness="1" Click="GenReport1">
                         <StackPanel 
                             Orientation="Horizontal">
                             <Rectangle 
@@ -143,6 +179,17 @@
                     </Button>
                     <Label Content="Total Amount: PHP 37,300.00" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Bottom" Height="29" Width="208" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                     <Label Content="Total Transactions: 50" HorizontalAlignment="Right" Margin="0,0,218,0" VerticalAlignment="Bottom" Height="29" Width="139" FontFamily="/PMS;component/Assets/Fonts/#Roboto" RenderTransformOrigin="-0.301,0.575"/>
+                    <ComboBox x:Name="ReportRange" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,142,0" VerticalAlignment="Top" Width="147" Height="30" SelectionChanged="SyncChanges">
+                        <ComboBoxItem>Weekly</ComboBoxItem>
+                        <ComboBoxItem>Monthly</ComboBoxItem>
+                        <ComboBoxItem>Annually</ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="StatusType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,294,0" VerticalAlignment="Top" Width="125" Height="30" SelectionChanged="SyncChanges">
+                        <ComboBoxItem Content="All"/>
+                        <ComboBoxItem Content="Paying"/>
+                        <ComboBoxItem Content="Finished"/>
+                        <ComboBoxItem Content="Cancelled"/>
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">

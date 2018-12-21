@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Spire.Doc;
 using System.Diagnostics;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -31,8 +32,6 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string sacrament;
 		private string causeOfDeath;
 		private string intermentPlace;
-		private string parent1;
-		private string parent2;
 		private string residence1;
 		private string residence2;
 		private int stipend;
@@ -52,7 +51,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			Stipend.Value = FetchBurialStipend();
 
 			dbman = new DBConnectionManager();
-			Console.WriteLine(targRecord);
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
@@ -62,7 +60,6 @@ namespace PMS.UIManager.Views.ChildWindows
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					Console.WriteLine("asd");
 					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
 					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
 					DeathDate.Text = db_reader.GetString("record_date");
@@ -291,8 +288,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			sacrament = ValidateInp(Sacrament.Text);
 			causeOfDeath = ValidateInp(CauseOfDeath.Text);
 			intermentPlace = ValidateInp(PlaceOfInterment.Text);
-			parent1 = ValidateInp(Parent1.Text);
-			parent2 = ValidateInp(Parent2.Text);
+			p1 = ValidateInp(Parent1.Text);
+			p2 = ValidateInp(Parent2.Text);
 			residence1 = ValidateInp(Residence1.Text);
 			residence2 = ValidateInp(Residence2.Text);
 			stipend = Convert.ToInt32(Stipend.Value);
@@ -300,8 +297,23 @@ namespace PMS.UIManager.Views.ChildWindows
 			remarks = ValidateInp(Remarks.Text);
 			if (PrintEntry() > 0)
 			{
+				MsgSuccess();
 				this.Close();
 			}
+			else
+			{
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The selected record has been added to the print queue.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

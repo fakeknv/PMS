@@ -66,9 +66,9 @@
             </Grid>
             <Grid Margin="7,97,7,6">
                 <mah:MetroAnimatedTabControl>
-                    <TabItem Header="Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+                    <TabItem Header="Registers" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
                         <Grid Background="#FFF3F3F3">
-                            <ListView x:Name="ArchivesItemContainer" VerticalContentAlignment="Top" Background="{x:Null}">
+                            <ListView x:Name="RegistersItemContainer" Background="{x:Null}">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListViewItem}">
                                         <Setter Property="Padding" Value="0,0,0,0"/>
@@ -86,9 +86,9 @@
                             </ListView>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Registers" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+                    <TabItem Header="Archived" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
                         <Grid Background="#FFF3F3F3">
-                            <ListView x:Name="RegistersItemContainer" Background="{x:Null}">
+                            <ListView x:Name="ArchivesItemContainer" VerticalContentAlignment="Top" Background="{x:Null}">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="{x:Type ListViewItem}">
                                         <Setter Property="Padding" Value="0,0,0,0"/>

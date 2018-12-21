@@ -2,6 +2,8 @@
 using System;
 using MySql.Data.MySqlClient;
 using System.Windows;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -103,8 +105,23 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (InsertRegister() > 0)
 			{
 				reg1.SyncRegisters();
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				MsgSuccess();
 				this.Close();
 			}
+			else {
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The register has been added successfully.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

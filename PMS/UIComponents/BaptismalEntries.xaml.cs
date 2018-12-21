@@ -4,10 +4,10 @@ using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIManager.Views.ChildWindows;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +26,8 @@ namespace PMS.UIComponents
 
 		private string cmd_tmp;
 		private string qry;
+
+		private PMSUtil pmsutil;
 
 		private ObservableCollection<RecordEntryBaptismal> records;
 
@@ -59,7 +61,6 @@ namespace PMS.UIComponents
 							{
 								if (db_reader.GetString("status") == "Archived")
 								{
-
 									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
 									{
 										conn3.Open();
@@ -71,28 +72,84 @@ namespace PMS.UIComponents
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryBaptismal()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														FullName = db_reader2.GetString("recordholder_fullname"),
-														BirthDate = "----",
-														Legitimacy = "----",
-														PlaceOfBirth = "----",
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Godparent1 = "----",
-														Godparent2 = "----",
-														Stipend = 0f,
-														Minister = "----"
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM baptismal_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	DateTime dateOfBirth = Convert.ToDateTime(rdr["birthday"].ToString());
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryBaptismal()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			FullName = db_reader2.GetString("recordholder_fullname"),
+																			BirthDate = dateOfBirth.ToString("MMM dd, yyyy"),
+																			Legitimacy = rdr["legitimacy"].ToString(),
+																			PlaceOfBirth = rdr["place_of_birth"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Godparent1 = rdr["sponsor1"].ToString(),
+																			Godparent2 = rdr["sponsor2"].ToString(),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryBaptismal()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															FullName = db_reader2.GetString("recordholder_fullname"),
+															BirthDate = "---",
+															Legitimacy = "---",
+															PlaceOfBirth = "---",
+															Parent1 = db_reader2.GetString("parent1_fullname"),
+															Parent2 = db_reader2.GetString("parent2_fullname"),
+															Godparent1 = "---",
+															Godparent2 = "---",
+															Stipend = 0,
+															Minister = "---"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -120,7 +177,7 @@ namespace PMS.UIComponents
 														BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
 														BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
 														FullName = db_reader2.GetString("recordholder_fullname"),
-														BirthDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd, yyyy"),
+														BirthDate = DateTime.Parse(db_reader2.GetString("birthday")).ToString("MMM dd, yyyy"),
 														Legitimacy = db_reader2.GetString("legitimacy"),
 														PlaceOfBirth = db_reader2.GetString("place_of_birth"),
 														Parent1 = db_reader2.GetString("parent1_fullname"),
@@ -274,28 +331,83 @@ namespace PMS.UIComponents
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryBaptismal()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														FullName = db_reader2.GetString("recordholder_fullname"),
-														BirthDate = "----",
-														Legitimacy = "----",
-														PlaceOfBirth = "----",
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Godparent1 = "----",
-														Godparent2 = "----",
-														Stipend = 0f,
-														Minister = "----"
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM confirmation_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryBaptismal()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			FullName = db_reader2.GetString("recordholder_fullname"),
+																			BirthDate = DateTime.Parse(rdr["birthday"].ToString()).ToString("MMM dd, yyyy"),
+																			Legitimacy = rdr["legitimacy"].ToString(),
+																			PlaceOfBirth = rdr["place_of_birth"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Godparent1 = rdr["sponsor1"].ToString(),
+																			Godparent2 = rdr["sponsor2"].ToString(),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryBaptismal()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															FullName = db_reader2.GetString("recordholder_fullname"),
+															BirthDate = "---",
+															Legitimacy = "---",
+															PlaceOfBirth = "---",
+															Parent1 = db_reader2.GetString("parent1_fullname"),
+															Parent2 = db_reader2.GetString("parent2_fullname"),
+															Godparent1 = "---",
+															Godparent2 = "---",
+															Stipend = 0,
+															Minister = "---"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -310,6 +422,7 @@ namespace PMS.UIComponents
 										cmd2.Parameters.AddWithValue("@book_number", bnum);
 										cmd2.Parameters.AddWithValue("@query", "%" + qry + "%");
 										cmd2.Prepare();
+
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
 											while (db_reader2.Read())
@@ -323,7 +436,7 @@ namespace PMS.UIComponents
 														BaptismalYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
 														BaptismalDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
 														FullName = db_reader2.GetString("recordholder_fullname"),
-														BirthDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd, yyyy"),
+														BirthDate = DateTime.Parse(db_reader2.GetString("birthday")).ToString("MMM dd, yyyy"),
 														Legitimacy = db_reader2.GetString("legitimacy"),
 														PlaceOfBirth = db_reader2.GetString("place_of_birth"),
 														Parent1 = db_reader2.GetString("parent1_fullname"),

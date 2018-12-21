@@ -129,18 +129,18 @@
             BorderBrush="{x:Null}" 
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
-        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+        <DataGrid AlternatingRowBackground="#EDF6FD" CanUserSortColumns="True"  x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="No.">
+                <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding EntryNumber}"/>
+                                <Label HorizontalContentAlignment="Center" Content="{Binding EntryNumber}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="C. Year">
+                <DataGridTemplateColumn Header="Year" SortMemberPath="ConfirmationYear" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -149,7 +149,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="C. Date">
+                <DataGridTemplateColumn Header="Date" SortMemberPath="ConfirmationDate" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -158,16 +158,16 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Name">
+                <DataGridTemplateColumn Header="Name" SortMemberPath="FullName" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding FullName}"/>
+                                <TextBlock TextAlignment="Center" Padding="5,0" MaxWidth="125" TextWrapping="WrapWithOverflow" Text="{Binding FullName}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Age">
+                <DataGridTemplateColumn Header="Age" SortMemberPath="Age" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -176,7 +176,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Parish">
+                <DataGridTemplateColumn Header="Parish" SortMemberPath="Parish" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -185,7 +185,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Province">
+                <DataGridTemplateColumn Header="Province" SortMemberPath="Province" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -194,7 +194,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Place of Baptism">
+                <DataGridTemplateColumn Header="Place of Baptism" SortMemberPath="PlaceOfBaptism" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -203,7 +203,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Parents">
+                <DataGridTemplateColumn Header="Parents" SortMemberPath="Parent1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -215,7 +215,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Sponsor">
+                <DataGridTemplateColumn Header="Sponsor" SortMemberPath="Sponsor1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -227,7 +227,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Stipend">
+                <DataGridTemplateColumn Header="Stipend" SortMemberPath="Stipend" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -236,11 +236,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Minister">
+                <DataGridTemplateColumn Header="Minister" SortMemberPath="Minister" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Minister}"/>
+                                <TextBlock TextAlignment="Center" MaxWidth="180
+                                           " TextWrapping="WrapWithOverflow" Padding="5,0" Text="{Binding Minister}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

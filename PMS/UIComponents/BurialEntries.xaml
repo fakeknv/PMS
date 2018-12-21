@@ -131,7 +131,7 @@
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
         <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="No.">
+                <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -140,7 +140,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="D. Year">
+                <DataGridTemplateColumn Header="Year of Death" SortMemberPath="DeathYear" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -149,7 +149,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="D. Date">
+                <DataGridTemplateColumn Header="Date of Death" SortMemberPath="DeathDate" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -158,7 +158,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Burial Year">
+                <DataGridTemplateColumn Header="Burial Year" SortMemberPath="Burialyear" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -167,7 +167,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Burial Date">
+                <DataGridTemplateColumn Header="Burial Date" SortMemberPath="BurialDate" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -176,7 +176,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Name">
+                <DataGridTemplateColumn Header="Name" SortMemberPath="FullName" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -185,7 +185,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Age">
+                <DataGridTemplateColumn Header="Age" SortMemberPath="Age" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -194,7 +194,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Status">
+                <DataGridTemplateColumn Header="Status" SortMemberPath="Status" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -203,7 +203,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Parents">
+                <DataGridTemplateColumn Header="Parents" SortMemberPath="Parent1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -215,7 +215,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Residence">
+                <DataGridTemplateColumn Header="Residence" SortMemberPath="Residence1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -227,7 +227,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Sacrament">
+                <DataGridTemplateColumn Header="Sacrament" SortMemberPath="Sacrament" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -236,7 +236,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Cause of Death">
+                <DataGridTemplateColumn Header="Cause of Death" SortMemberPath="CauseOfDeath" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -245,7 +245,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Place of Interment">
+                <DataGridTemplateColumn Header="Place of Interment" SortMemberPath="PlaceOfInterment" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -254,7 +254,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Stipend">
+                <DataGridTemplateColumn Header="Stipend" SortMemberPath="Stipend" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -263,7 +263,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Minister">
+                <DataGridTemplateColumn Header="Minister" SortMemberPath="Minister" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

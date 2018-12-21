@@ -17,6 +17,35 @@ namespace PMS
 		private string curDate;
 		private string curTime;
 
+		internal bool IsArchived(string recordID) {
+			bool ret = false;
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT registers.status FROM records, registers WHERE records.record_id = @rid AND records.book_number = registers.book_number LIMIT 1;";
+				cmd.Parameters.AddWithValue("@rid", recordID);
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetString("status") == "Archived")
+					{
+						ret = true;
+					}
+					else 
+					{
+						ret = false;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
 		internal string CheckArchiveDrive(string path)
 		{
 			string ret = "";
@@ -209,6 +238,27 @@ namespace PMS
 				while (db_reader.Read())
 				{
 					ret = db_reader.GetString("key_value");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenAccountID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(account_id) FROM accounts;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "ACNT-" + (db_reader.GetInt32("COUNT(account_id)") + 1);
 				}
 				//close Connection
 				dbman.DBClose();

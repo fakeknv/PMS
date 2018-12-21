@@ -14,7 +14,7 @@
 		public string Parent2 { get; set; }
 		public string Godparent1 { get; set; }
 		public string Godparent2 { get; set; }
-		public float Stipend { get; set; }
+		public double Stipend { get; set; }
 		public string Minister { get; set; }
 	}
 }

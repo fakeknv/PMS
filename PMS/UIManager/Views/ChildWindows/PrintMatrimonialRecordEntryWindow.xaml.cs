@@ -5,7 +5,8 @@ using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using PMS.UIManager.Views.ChildViews;
+using System.Diagnostics;
+using Spire.Doc;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
@@ -13,15 +14,15 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for AddRecordEntryWindow.xaml
 	/// </summary>
-	public partial class AddMatrimonialRecordEntryWindow : ChildWindow
+	public partial class PrintMatrimonialRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
 
+		private string recordID;
 		private int pageNum;
-		private int bookNum;
 		private int entryNum;
 		private string marriageDate;
 		private string fullName1;
@@ -46,80 +47,189 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string minister;
 		private string remarks;
 
-		private ViewRecordEntries vre;
 
-		public AddMatrimonialRecordEntryWindow(ViewRecordEntries viewRE, int targBook)
-		{
-			vre = viewRE;
-			pmsutil = new PMSUtil();
-			InitializeComponent();
-			bookNum = targBook;
-			Stipend.Value = FetchMatrimonialStipend();
-		}
 		/// <summary>
-		/// Inserts the request to the database.
+		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		private int InsertEntry()
+		public PrintMatrimonialRecordEntryWindow(string targRecord)
+		{
+			
+			pmsutil = new PMSUtil();
+			recordID = targRecord;
+			InitializeComponent();
+			GetResidingPriests();
+			PrintingFee.Value = Convert.ToDouble(pmsutil.GetPrintFee("Matrimonial"));
+			recordID = targRecord;
+			Stipend.Value = FetchMatrimonialStipend();
+
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM matrimonial_records, records WHERE records.record_id = @record_id AND records.record_id = matrimonial_records.record_id LIMIT 1;";
+				cmd.Parameters.AddWithValue("@record_id", targRecord);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+					MarriageDate.Text = db_reader.GetString("record_date");
+					Age1.Value = Convert.ToDouble(db_reader.GetString("age1"));
+					Age2.Value = Convert.ToDouble(db_reader.GetString("age2"));
+					Status1.Text = db_reader.GetString("status1");
+					Status2.Text = db_reader.GetString("status2");
+					FullName1.Text = db_reader.GetString("recordholder_fullname");
+					FullName2.Text = db_reader.GetString("recordholder2_fullname");
+					Hometown1.Text = db_reader.GetString("place_of_origin1");
+					Hometown2.Text = db_reader.GetString("place_of_origin2");
+					Residence1.Text = db_reader.GetString("residence1");
+					Residence2.Text = db_reader.GetString("residence2");
+					Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
+					Parent1.Text = db_reader.GetString("parent1_fullname");
+					Parent2.Text = db_reader.GetString("parent2_fullname");
+					Parent3.Text = db_reader.GetString("parent1_fullname2");
+					Parent4.Text = db_reader.GetString("parent2_fullname2");
+					Sponsor1.Text = db_reader.GetString("witness1");
+					Sponsor2.Text = db_reader.GetString("witness2");
+					Residence3.Text = db_reader.GetString("witness1address");
+					Residence4.Text = db_reader.GetString("witness2address");
+					Minister.Text = db_reader.GetString("minister");
+					Remarks.Text = db_reader.GetString("remarks");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+
+			Suggestions1.Visibility = Visibility.Hidden;
+			Suggestions2.Visibility = Visibility.Hidden;
+			Suggestions3.Visibility = Visibility.Hidden;
+			Suggestions4.Visibility = Visibility.Hidden;
+			Suggestions5.Visibility = Visibility.Hidden;
+			Suggestions6.Visibility = Visibility.Hidden;
+			Suggestions7.Visibility = Visibility.Hidden;
+		}
+		private void GetResidingPriests()
 		{
 			dbman = new DBConnectionManager();
-			//TODO
-			try
+			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
-				string recID = pmsutil.GenRecordID();
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
-					"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@book_number", bookNum);
-				cmd.Parameters.AddWithValue("@page_number", pageNum);
-				cmd.Parameters.AddWithValue("@entry_number", entryNum);
-				cmd.Parameters.AddWithValue("@record_date", marriageDate);
-				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName1);
-				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
-				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
-				int stat_code = cmd.ExecuteNonQuery();
+				cmd.CommandText = "SELECT * FROM residing_priests;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					Signatory.Items.Add(db_reader.GetString("priest_name"));
+				}
+				//close Connection
 				dbman.DBClose();
-				//Phase 2
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO matrimonial_records(record_id, recordholder2_fullname, parent1_fullname2, parent2_fullname2, status1, status2, age1, age2, place_of_origin1, place_of_origin2, residence1, residence2, witness1, witness2, witness1address, witness2address, stipend, minister, remarks)" +
-					"VALUES(@record_id, @recordholder2_fullname, @parent1_fullname2, @parent2_fullname2, @status1, @status2, @age1, @age2, @place_of_origin1, @place_of_origin2, @residence1, @residence2, @witness1, @witness2, @witness1address, @witness2address, @stipend, @minister, @remarks)";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recID);
-				cmd.Parameters.AddWithValue("@recordholder2_fullname", fullName2);
-				cmd.Parameters.AddWithValue("@parent1_fullname2", parent3);
-				cmd.Parameters.AddWithValue("@parent2_fullname2", parent4);
-				cmd.Parameters.AddWithValue("@status1", status1);
-				cmd.Parameters.AddWithValue("@status2", status2);
-				cmd.Parameters.AddWithValue("@age1", age1);
-				cmd.Parameters.AddWithValue("@age2", age2);
-				cmd.Parameters.AddWithValue("@place_of_origin1", hometown1);
-				cmd.Parameters.AddWithValue("@place_of_origin2", hometown2);
-				cmd.Parameters.AddWithValue("@residence1", residence1);
-				cmd.Parameters.AddWithValue("@residence2", residence2);
-				cmd.Parameters.AddWithValue("@witness1", sponsor1);
-				cmd.Parameters.AddWithValue("@witness2", sponsor2);
-				cmd.Parameters.AddWithValue("@witness1address", residence3);
-				cmd.Parameters.AddWithValue("@witness2address", residence4);
-				cmd.Parameters.AddWithValue("@stipend", stipend);
-				cmd.Parameters.AddWithValue("@minister", minister);
-				cmd.Parameters.AddWithValue("@remarks", remarks);
-				stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				string tmp = pmsutil.LogRecord(recID,"LOGC-01");
-				return stat_code;
 			}
-			catch (MySqlException ex)
+			else
 			{
-				Console.WriteLine("Error: {0}", ex.ToString());
-				return 0;
+
 			}
 		}
-		/// <summary>
-		/// Fetches default confirmation stipend value.
-		/// </summary>
+		private string GetDaySuffix(int day)
+		{
+			switch (day)
+			{
+				case 1:
+				case 21:
+				case 31:
+					return "st";
+				case 2:
+				case 22:
+					return "nd";
+				case 3:
+				case 23:
+					return "rd";
+				default:
+					return "th";
+			}
+		}
+		private string PrepMonth(int mon)
+		{
+			switch (mon)
+			{
+				case 1:
+					return "January";
+				case 2:
+					return "February";
+				case 3:
+					return "March";
+				case 4:
+					return "April";
+				case 5:
+					return "May";
+				case 6:
+					return "June";
+				case 7:
+					return "July";
+				case 8:
+					return "August";
+				case 9:
+					return "September";
+				case 10:
+					return "October";
+				case 11:
+					return "November";
+				default:
+					return "December";
+			}
+		}
+		private int PrintEntry()
+		{
+			string[] bspl = MarriageDate.Text.Split('/');
+			string bsuff = GetDaySuffix(int.Parse(bspl[1]));
+			string bmon = PrepMonth(int.Parse(bspl[0]));
+
+			Document doc = new Document();
+			doc.LoadFromFile("Data\\temp_marriage.docx");
+			doc.Replace("name", FullName1.Text, true, true);
+			doc.Replace("name2", FullName2.Text, true, true);
+			doc.Replace("age", Age1.Value.ToString(), true, true);
+			doc.Replace("age2", Age2.Value.ToString(), true, true);
+			doc.Replace("nationality", "Filipino", true, true);
+			doc.Replace("nationality2", "Filipino", true, true);
+			doc.Replace("residence", Residence1.Text, true, true);
+			doc.Replace("residence2", Residence2.Text, true, true);
+			doc.Replace("civil", Status1.Text, true, true);
+			doc.Replace("civil2", Status2.Text, true, true);
+			doc.Replace("father", Parent1.Text, true, true);
+			doc.Replace("father2", Parent3.Text, true, true);
+			doc.Replace("mother", Parent2.Text, true, true);
+			doc.Replace("mother2", Parent4.Text, true, true);
+			doc.Replace("witness", Sponsor1.Text, true, true);
+			doc.Replace("witness2", Sponsor2.Text, true, true);
+			doc.Replace("place", "St. Raphael Parish", true, true);
+			doc.Replace("date", bmon + " " + bspl[1] + bsuff + ", " + bspl[2], true, true);
+			doc.Replace("priest", Minister.Text, true, true);
+			doc.Replace("sign", Signatory.Text, true, true);
+			doc.Replace("no", EntryNum.Value.ToString(), true, true);
+			doc.Replace("page", PageNum.Value.ToString(), true, true);
+			string[] date = DateTime.Now.ToStrin­g("MMMM,d,yyyy").Spl­it(',');
+			doc.Replace("month", date[0], true, true);
+			date[1] = date[1] + GetDaySuffix(int.Parse(date[1]));
+			doc.Replace("days", date[1], true, true);
+			doc.Replace("YY", date[2].Remove(0, 2), true, true);
+			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
+
+			string fpath = "Data\\print.docx";
+
+			ProcessStartInfo info = new ProcessStartInfo(fpa­th.Trim())
+			{
+				Verb = "Print",
+				CreateNoWindow = true,
+				WindowStyle = ProcessWindowStyle.H­idden
+			};
+			Process.Start(info);
+			return 1;
+		}
 		private int FetchMatrimonialStipend()
 		{
 			int ret = 0;
@@ -151,7 +261,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			if (String.IsNullOrEmpty(targ))
 			{
-				return "Unknown";
+				return "---";
 			}
 			else
 			{
@@ -162,7 +272,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
-		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
+		private void PrintRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
 			entryNum = Convert.ToInt32(EntryNum.Value);
 			pageNum = Convert.ToInt32(PageNum.Value);
@@ -171,54 +281,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			age2 = Convert.ToInt32(Age2.Value);
 			fullName1 = ValidateInp(FullName1.Text);
 			fullName2 = ValidateInp(FullName2.Text);
-			switch (Status1.SelectedIndex)
-			{
-				case 0:
-					status1 = "Widow";
-					break;
-				case 1:
-					status1 = "Widower";
-					break;
-				case 2:
-					status1 = "Single";
-					break;
-				case 3:
-					status1 = "Conjugal";
-					break;
-				case 4:
-					status1 = "Adult";
-					break;
-				case 5:
-					status1 = "Infant";
-					break;
-				default:
-					status1 = "----";
-					break;
-			}
-			switch (Status2.SelectedIndex)
-			{
-				case 0:
-					status2 = "Widow";
-					break;
-				case 1:
-					status2 = "Widower";
-					break;
-				case 2:
-					status2 = "Single";
-					break;
-				case 3:
-					status2 = "Conjugal";
-					break;
-				case 4:
-					status2 = "Adult";
-					break;
-				case 5:
-					status2 = "Infant";
-					break;
-				default:
-					status2 = "----";
-					break;
-			}
+			status1 = ValidateInp(Status1.Text);
+			status2 = ValidateInp(Status2.Text);
 			hometown1 = ValidateInp(Hometown1.Text);
 			hometown2 = ValidateInp(Hometown2.Text);
 			residence1 = ValidateInp(Residence1.Text);
@@ -234,10 +298,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			stipend = Convert.ToInt32(Stipend.Value);
 			minister = ValidateInp(Minister.Text);
 			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0)
+			if (PrintEntry() > 0)
 			{
 				MsgSuccess();
-				vre.Sync(bookNum);
 				this.Close();
 			}
 			else
@@ -248,7 +311,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private async void MsgSuccess()
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowMessageAsync("Success!", "The record has been added to the register successfully.");
+			await metroWindow.ShowMessageAsync("Success!", "The selected record has been added to the print queue.");
 		}
 		private async void MsgFail()
 		{
@@ -258,7 +321,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// <summary>
 		/// Closes the AddRequestForm Window.
 		/// </summary>
-		private void AddRecCancel(object sender, System.Windows.RoutedEventArgs e)
+		private void PrintRecCancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}

@@ -7,6 +7,9 @@ using System.Windows.Media;
 using System.Data.SQLite;
 using System.Data.SqlClient;
 using System.IO;
+using System.ComponentModel;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -41,56 +44,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private int ConfirmArchival()
 		{
-			string uid = Application.Current.Resources["uid"].ToString();
-			string[] dt = pmsutil.GetServerDateTime().Split(null);
-			cDate = Convert.ToDateTime(dt[0]);
-			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-			curDate = cDate.ToString("yyyy-MM-dd");
-			curTime = cTime.ToString("HH:mm:ss");
-
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			//TODO
-			try
-			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"INSERT INTO archives(book_number, date_archived, time_archived, archived_by)" +
-					"VALUES(@book_number, @date_archived, @time_archived, @archived_by)";
-				cmd.Parameters.AddWithValue("@book_number", bookNum);
-				cmd.Parameters.AddWithValue("@date_archived", curDate);
-				cmd.Parameters.AddWithValue("@time_archived", curTime);
-				cmd.Parameters.AddWithValue("@archived_by", uid);
-				cmd.Prepare();
-				int stat_code = cmd.ExecuteNonQuery();
-				dbman = new DBConnectionManager();
-				//TODO
-				try
-				{
-					//Phase 1.2
-					cmd = dbman.DBConnect().CreateCommand();
-					cmd.CommandText =
-						"UPDATE registers SET status = @status WHERE book_number = @book_number;";
-					cmd.Parameters.AddWithValue("@book_number", bookNum);
-					cmd.Parameters.AddWithValue("@status", "Archived");
-					cmd.Prepare();
-					stat_code = cmd.ExecuteNonQuery();
-					dbman.DBClose();
-				}
-				catch (MySqlException ex)
-				{
-					Console.WriteLine("Error: {0}", ex.ToString());
-					return 0;
-				}
-				dbman.DBClose();
-				Phase2();
-				return stat_code;
-			}
-			catch (MySqlException ex)
-			{
-				Console.WriteLine("Error: {0}", ex.ToString());
-				return 0;
-			}
+			return 0;
 		}
 		private void Phase2()
 		{
@@ -210,7 +164,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 									SQLiteCommand command = new SQLiteCommand(null, connection)
 									{
-										CommandText = "INSERT INTO matrimonial_records (record_id, recordholder2_fullname, parent1_fullname2, parent2_fullname2, status1, status2, age1, age2, place_of_origin1, place_of_origin2, residence1, residence2, witness1, witness2, witness1address, witness2address stipend, minister, remarks) VALUES (@record_id, @recordholder2_fullname, @parent1_fullname2, @parent2_fullname2, @status1, @status2, @age1, @age2, @place_of_origin1, @place_of_origin2, @residence1, @residence2, @witness1, @witness2, @witness1address, @witness2address stipend, @minister, @remarks);"
+										CommandText = "INSERT INTO matrimonial_records (record_id, recordholder2_fullname, parent1_fullname2, parent2_fullname2, status1, status2, age1, age2, place_of_origin1, place_of_origin2, residence1, residence2, witness1, witness2, witness1address, witness2address, stipend, minister, remarks) VALUES (@record_id, @recordholder2_fullname, @parent1_fullname2, @parent2_fullname2, @status1, @status2, @age1, @age2, @place_of_origin1, @place_of_origin2, @residence1, @residence2, @witness1, @witness2, @witness1address, @witness2address, @stipend, @minister, @remarks);"
 									};
 									command.Parameters.Add(new SQLiteParameter("@record_id", db_readertmp.GetString("record_id")));
 									command.Parameters.Add(new SQLiteParameter("@recordholder2_fullname", db_readertmp.GetString("recordholder2_fullname")));
@@ -295,16 +249,104 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private void ConfirmArchival_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
+			ArchivalProgBar.IsIndeterminate = true;
 			path = @"\archive.db";
 			if (pmsutil.CheckArchiveDrive(path) != "dc")
 			{
-				ConfirmArchival();
-				InfoArea.Foreground = new SolidColorBrush(Colors.Green);
-				InfoArea.Content = "The selected register has been archived.";
+				MsgSuccess();
 			}
-			else {
-				InfoArea.Foreground = new SolidColorBrush(Colors.Red);
-				InfoArea.Content = "The system lost connection to the archive database.";
+			else
+			{
+				MsgFail();
+			}
+			BackgroundWorker worker = new BackgroundWorker
+			{
+				WorkerReportsProgress = true
+			};
+			worker.DoWork += ArchiveItems;
+			worker.ProgressChanged += Worker_ProgressChanged;
+			worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+			worker.RunWorkerAsync(10000);
+		}
+		void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+		{
+			//if (e.UserState != null)
+			//EntriesHolder.Items.Add(e.UserState);
+		}
+		void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			//SyncChanges();
+			ArchivalProgBar.IsIndeterminate = false;
+			if (pmsutil.CheckArchiveDrive(path) != "dc")
+			{
+				MsgSuccess();
+			}
+			else
+			{
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The selected register has been archived successfully.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
+		}
+		private void ArchiveItems(object sender, DoWorkEventArgs e)
+		{
+			string uid = Application.Current.Resources["uid"].ToString();
+			string[] dt = pmsutil.GetServerDateTime().Split(null);
+			cDate = Convert.ToDateTime(dt[0]);
+			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+			curDate = cDate.ToString("yyyy-MM-dd");
+			curTime = cTime.ToString("HH:mm:ss");
+
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			//TODO
+			try
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText =
+					"INSERT INTO archives(book_number, date_archived, time_archived, archived_by)" +
+					"VALUES(@book_number, @date_archived, @time_archived, @archived_by)";
+				cmd.Parameters.AddWithValue("@book_number", bookNum);
+				cmd.Parameters.AddWithValue("@date_archived", curDate);
+				cmd.Parameters.AddWithValue("@time_archived", curTime);
+				cmd.Parameters.AddWithValue("@archived_by", uid);
+				cmd.Prepare();
+				int stat_code = cmd.ExecuteNonQuery();
+				dbman = new DBConnectionManager();
+				//TODO
+				try
+				{
+					//Phase 1.2
+					cmd = dbman.DBConnect().CreateCommand();
+					cmd.CommandText =
+						"UPDATE registers SET status = @status WHERE book_number = @book_number;";
+					cmd.Parameters.AddWithValue("@book_number", bookNum);
+					cmd.Parameters.AddWithValue("@status", "Archived");
+					cmd.Prepare();
+					stat_code = cmd.ExecuteNonQuery();
+					dbman.DBClose();
+				}
+				catch (MySqlException ex)
+				{
+					Console.WriteLine("Error: {0}", ex.ToString());
+					//return 0;
+				}
+				dbman.DBClose();
+				Phase2();
+				//return stat_code;
+			}
+			catch (MySqlException ex)
+			{
+				Console.WriteLine("Error: {0}", ex.ToString());
+				//return 0;
 			}
 		}
 		private void CancelButton_Click(object sender, System.Windows.RoutedEventArgs e)

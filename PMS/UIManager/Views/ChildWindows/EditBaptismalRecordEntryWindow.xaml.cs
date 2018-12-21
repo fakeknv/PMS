@@ -5,6 +5,8 @@ using MahApps.Metro.Controls;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Data.SQLite;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -14,6 +16,7 @@ namespace PMS.UIManager.Views.ChildWindows
 	public partial class EditBaptismalRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
+		private MySqlConnection conn;
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
@@ -48,37 +51,135 @@ namespace PMS.UIManager.Views.ChildWindows
 			Stipend.Value = FetchBaptismalStipend();
 
 			dbman = new DBConnectionManager();
-
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM baptismal_records, records WHERE records.record_id = @record_id AND records.record_id = baptismal_records.record_id LIMIT 1;";
-				cmd.Parameters.AddWithValue("@record_id", targRecord);
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
 				{
-					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
-					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
-					BaptismDate.Text = db_reader.GetString("record_date");
-					Birthdate.Text = db_reader.GetString("birthday");
-					FullName.Text = db_reader.GetString("recordholder_fullname");
-					Legitimacy.Text = db_reader.GetString("legitimacy");
-					Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
-					PlaceOfBirth.Text = db_reader.GetString("place_of_birth");
-					Parent1.Text = db_reader.GetString("parent1_fullname");
-					Parent2.Text = db_reader.GetString("parent2_fullname");
-					Sponsor1.Text = db_reader.GetString("sponsor1");
-					Sponsor2.Text = db_reader.GetString("sponsor2");
-					Minister.Text = db_reader.GetString("minister");
-					Remarks.Text = db_reader.GetString("remarks");
-				}
-				//close Connection
-				dbman.DBClose();
-			}
-			else
-			{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM records, registers WHERE records.record_id = @rid AND records.book_number = registers.book_number LIMIT 1;";
+						cmd.Parameters.AddWithValue("@rid", recordID);
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								if (db_reader.GetString("status") == "Archived")
+								{
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										MySqlCommand cmd2 = conn3.CreateCommand();
+										cmd2.CommandText = "SELECT * FROM records WHERE records.record_id = @rid ORDER BY records.entry_number ASC;";
+										cmd2.Parameters.AddWithValue("@rid", recordID);
+										cmd2.Prepare();
+										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
+										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
+											while (db_reader2.Read())
+											{
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
+												{
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
+													{
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM baptismal_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
 
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	DateTime dateOfBirth = Convert.ToDateTime(rdr["birthday"].ToString());
+
+																	EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+																	PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+																	BaptismDate.Text = db_reader.GetString("record_date");
+																	Birthdate.Text = dateOfBirth.ToString("MMM dd, yyyy");
+																	FullName.Text = db_reader.GetString("recordholder_fullname");
+																	Legitimacy.Text = rdr["legitimacy"].ToString();
+																	Stipend.Value = Convert.ToDouble(rdr["stipend"]);
+																	PlaceOfBirth.Text = rdr["place_of_birth"].ToString();
+																	Parent1.Text = db_reader.GetString("parent1_fullname");
+																	Parent2.Text = db_reader.GetString("parent2_fullname");
+																	Sponsor1.Text = rdr["sponsor1"].ToString();
+																	Sponsor2.Text = rdr["sponsor2"].ToString();
+																	Minister.Text = rdr["minister"].ToString();
+																	Remarks.Text = rdr["remarks"].ToString();
+																}
+															}
+														}
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+													PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+													BaptismDate.Text = db_reader.GetString("record_date");
+													Birthdate.Text = db_reader.GetString("birthday");
+													FullName.Text = db_reader.GetString("recordholder_fullname");
+													Legitimacy.Text = db_reader.GetString("legitimacy");
+													Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
+													PlaceOfBirth.Text = db_reader.GetString("place_of_birth");
+													Parent1.Text = db_reader.GetString("parent1_fullname");
+													Parent2.Text = db_reader.GetString("parent2_fullname");
+													Sponsor1.Text = db_reader.GetString("sponsor1");
+													Sponsor2.Text = db_reader.GetString("sponsor2");
+													Minister.Text = db_reader.GetString("minister");
+													Remarks.Text = db_reader.GetString("remarks");
+												}
+											}
+										}
+									}
+								}
+								else
+								{
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										MySqlCommand cmd2 = conn3.CreateCommand();
+										cmd2.CommandText = "SELECT * FROM records, baptismal_records WHERE records.record_id = @rid AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;";
+										cmd2.Parameters.AddWithValue("@rid", recordID);
+										cmd2.Prepare();
+										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
+										{
+											while (db_reader2.Read())
+											{
+												EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+												PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+												BaptismDate.Text = db_reader.GetString("record_date");
+												Birthdate.Text = db_reader.GetString("birthday");
+												FullName.Text = db_reader.GetString("recordholder_fullname");
+												Legitimacy.Text = db_reader.GetString("legitimacy");
+												Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
+												PlaceOfBirth.Text = db_reader.GetString("place_of_birth");
+												Parent1.Text = db_reader.GetString("parent1_fullname");
+												Parent2.Text = db_reader.GetString("parent2_fullname");
+												Sponsor1.Text = db_reader.GetString("sponsor1");
+												Sponsor2.Text = db_reader.GetString("sponsor2");
+												Minister.Text = db_reader.GetString("minister");
+												Remarks.Text = db_reader.GetString("remarks");
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 
 			Suggestions1.Visibility = Visibility.Hidden;
@@ -89,45 +190,144 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private int UpdateEntry()
 		{
+			int ret = 0;
 			dbman = new DBConnectionManager();
-			try
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"UPDATE records SET page_number = @page_number, entry_number = @entry_number, record_date = @record_date, recordholder_fullname = @recordholder_fullname, parent1_fullname = @parent1_fullname, parent2_fullname = @parent2_fullname WHERE record_id = @record_id;";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recordID);
-				cmd.Parameters.AddWithValue("@page_number", pageNum);
-				cmd.Parameters.AddWithValue("@entry_number", entryNum);
-				cmd.Parameters.AddWithValue("@record_date", baptismDate);
-				cmd.Parameters.AddWithValue("@recordholder_fullname", fullName);
-				cmd.Parameters.AddWithValue("@parent1_fullname", parent1);
-				cmd.Parameters.AddWithValue("@parent2_fullname", parent2);
-				int stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText =
-					"UPDATE baptismal_records SET birthday = @birthday, legitimacy = @legitimacy, place_of_birth = @place_of_birth, sponsor1 = @sponsor1, sponsor2 = @sponsor2, stipend = @stipend, minister = @minister, remarks = @remarks WHERE record_id = @record_id;";
-				cmd.Prepare();
-				cmd.Parameters.AddWithValue("@record_id", recordID);
-				cmd.Parameters.AddWithValue("@birthday", birthDate);
-				cmd.Parameters.AddWithValue("@legitimacy", legitimacy);
-				cmd.Parameters.AddWithValue("@place_of_birth", birthPlace);
-				cmd.Parameters.AddWithValue("@sponsor1", sponsor1);
-				cmd.Parameters.AddWithValue("@sponsor2", sponsor2);
-				cmd.Parameters.AddWithValue("@stipend", stipend);
-				cmd.Parameters.AddWithValue("@minister", minister);
-				cmd.Parameters.AddWithValue("@remarks", remarks);
-				stat_code = cmd.ExecuteNonQuery();
-				dbman.DBClose();
-				string tmp = pmsutil.LogRecord(recordID,"LOGC-02");
-				return stat_code;
-			}
-			catch (MySqlException ex)
-			{
-				Console.WriteLine("Error: {0}", ex.ToString());
-				return 0;
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM records, registers WHERE records.record_id = @rid AND records.book_number = registers.book_number LIMIT 1;";
+						cmd.Parameters.AddWithValue("@rid", recordID);
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								if (db_reader.GetString("status") == "Archived")
+								{
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										try
+										{
+											MySqlCommand cmd2 = conn3.CreateCommand();
+											cmd2.CommandText =
+												"UPDATE records SET page_number = @page_number, entry_number = @entry_number, record_date = @record_date, recordholder_fullname = @recordholder_fullname, parent1_fullname = @parent1_fullname, parent2_fullname = @parent2_fullname WHERE record_id = @record_id;";
+											cmd2.Prepare();
+											cmd2.Parameters.AddWithValue("@record_id", recordID);
+											cmd2.Parameters.AddWithValue("@page_number", pageNum);
+											cmd2.Parameters.AddWithValue("@entry_number", entryNum);
+											cmd2.Parameters.AddWithValue("@record_date", baptismDate);
+											cmd2.Parameters.AddWithValue("@recordholder_fullname", fullName);
+											cmd2.Parameters.AddWithValue("@parent1_fullname", parent1);
+											cmd2.Parameters.AddWithValue("@parent2_fullname", parent2);
+											ret = cmd2.ExecuteNonQuery();
+											conn3.Close();
+
+											conn3.Open();
+											string path = @"\archive.db";
+											pmsutil = new PMSUtil();
+											if (pmsutil.CheckArchiveDrive(path) != "dc")
+											{
+												SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
+												{
+													FailIfMissing = true,
+													DataSource = pmsutil.CheckArchiveDrive(path)
+												};
+
+												//Copy the selected register's record to the archive drive
+												using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+												{
+
+													// open the connection:
+													connection.Open();
+
+													SQLiteCommand command = new SQLiteCommand(null, connection)
+													{
+														CommandText = "UPDATE baptismal_records SET birthday = @birthday, legitimacy = @legitimacy, place_of_birth = @place_of_birth, sponsor1 = @sponsor1, sponsor2 = @sponsor2, stipend = @stipend, minister = @minister, remarks = @remarks WHERE record_id = @record_id;"
+													};
+													command.Parameters.Add(new SQLiteParameter("@record_id", recordID));
+													command.Parameters.Add(new SQLiteParameter("@birthday", birthDate));
+													command.Parameters.Add(new SQLiteParameter("@legitimacy", legitimacy));
+													command.Parameters.Add(new SQLiteParameter("@place_of_birth", birthPlace));
+													command.Parameters.Add(new SQLiteParameter("@sponsor1", sponsor1));
+													command.Parameters.Add(new SQLiteParameter("@sponsor2", sponsor2));
+													command.Parameters.Add(new SQLiteParameter("@stipend", stipend));
+													command.Parameters.Add(new SQLiteParameter("@minister", minister));
+													command.Parameters.Add(new SQLiteParameter("@remarks", remarks));
+													// Call Prepare after setting the Commandtext and Parameters.
+													command.Prepare();
+													command.ExecuteNonQuery();
+												}
+											}
+											else {
+
+											}
+											conn3.Close();
+											string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
+										}
+										catch (MySqlException ex)
+										{
+											Console.WriteLine("Error: {0}", ex.ToString());
+											ret = 0;
+										}
+									}
+								}
+								else {
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										try
+										{
+											MySqlCommand cmd2 = conn3.CreateCommand();
+											cmd2.CommandText =
+												"UPDATE records SET page_number = @page_number, entry_number = @entry_number, record_date = @record_date, recordholder_fullname = @recordholder_fullname, parent1_fullname = @parent1_fullname, parent2_fullname = @parent2_fullname WHERE record_id = @record_id;";
+											cmd2.Prepare();
+											cmd2.Parameters.AddWithValue("@record_id", recordID);
+											cmd2.Parameters.AddWithValue("@page_number", pageNum);
+											cmd2.Parameters.AddWithValue("@entry_number", entryNum);
+											cmd2.Parameters.AddWithValue("@record_date", baptismDate);
+											cmd2.Parameters.AddWithValue("@recordholder_fullname", fullName);
+											cmd2.Parameters.AddWithValue("@parent1_fullname", parent1);
+											cmd2.Parameters.AddWithValue("@parent2_fullname", parent2);
+											ret = cmd2.ExecuteNonQuery();
+											conn3.Close();
+
+											conn3.Open();
+											cmd2 = conn3.CreateCommand();
+											cmd2.CommandText =
+												"UPDATE baptismal_records SET birthday = @birthday, legitimacy = @legitimacy, place_of_birth = @place_of_birth, sponsor1 = @sponsor1, sponsor2 = @sponsor2, stipend = @stipend, minister = @minister, remarks = @remarks WHERE record_id = @record_id;";
+											cmd2.Prepare();
+											cmd2.Parameters.AddWithValue("@record_id", recordID);
+											cmd2.Parameters.AddWithValue("@birthday", birthDate);
+											cmd2.Parameters.AddWithValue("@legitimacy", legitimacy);
+											cmd2.Parameters.AddWithValue("@place_of_birth", birthPlace);
+											cmd2.Parameters.AddWithValue("@sponsor1", sponsor1);
+											cmd2.Parameters.AddWithValue("@sponsor2", sponsor2);
+											cmd2.Parameters.AddWithValue("@stipend", stipend);
+											cmd2.Parameters.AddWithValue("@minister", minister);
+											cmd2.Parameters.AddWithValue("@remarks", remarks);
+											ret = cmd2.ExecuteNonQuery();
+											conn3.Close();
+											string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
+										}
+										catch (MySqlException ex)
+										{
+											Console.WriteLine("Error: {0}", ex.ToString());
+											ret = 0;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				return ret;
 			}
 		}
 		/// <summary>
@@ -205,8 +405,22 @@ namespace PMS.UIManager.Views.ChildWindows
 			remarks = ValidateInp(Remarks.Text);
 			if (UpdateEntry() > 0)
 			{
+				MsgSuccess();
 				this.Close();
 			}
+			else {
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The register has been updated successfully.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

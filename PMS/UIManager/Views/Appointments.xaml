@@ -17,6 +17,7 @@
     <Grid 
         x:Name="AppointmentMainGrid" 
         Background="#FFF1F1F3">
+        <Label Visibility="Hidden" x:Name="dayActivitiesTitle" Content="Today's Activities" Margin="10,5,571,0" BorderBrush="#FFE6E6E6" BorderThickness="0,0,0,1" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="438*"/>
@@ -83,17 +84,8 @@
             </Button>
         </Grid>
         <Grid Margin="0,46,0,0">
-            <UIComponents:Calendar Margin="10,10,262,10" Background="White"/>
-            <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="242">
-                <Label x:Name="dayActivitiesTitle" Content="Today's Activities" HorizontalAlignment="Left" Margin="10,5,0,0" BorderBrush="#FFE6E6E6" BorderThickness="0,0,0,1" VerticalAlignment="Top" Width="222" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
-                <ListView x:Name="AppointmentsHolder" HorizontalAlignment="Left" Margin="10,45,0,10" Width="222">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
+            <UIComponents:Calendar Margin="20,10,270,10" Background="White"/>
+            <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="239"/>
         </Grid>
     </Grid>
 </UserControl>

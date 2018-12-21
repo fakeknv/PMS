@@ -124,6 +124,13 @@
                                 <views:Reports />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome UserSolid}"
+						Label="Manage Accounts">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Accounts />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>
                 </Controls:HamburgerMenu.ItemsSource>
                 <Controls:HamburgerMenu.OptionsItemsSource>
@@ -137,9 +144,9 @@
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome UserCircleRegular}"
-						Label="Account">
+						Label="My Account">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:Accounts />
+                                <views:MyAccount />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>

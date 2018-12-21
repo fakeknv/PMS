@@ -10,10 +10,10 @@
     x:Class="PMS.UIManager.Views.Accounts"
     Margin="0" 
     Padding="0" 
-    d:DesignHeight="616.513" 
+    d:DesignHeight="837.513" 
     d:DesignWidth="947.25">
     <Grid 
-        x:Name="RequestMainGrid" 
+        x:Name="AccountsMainGrid" 
         Background="#FFF1F1F3">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -53,41 +53,101 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+            <Button
+                x:Name="CreateAccountButton" 
+                Margin="0,7,24,0" 
+                VerticalAlignment="Top" 
+                Width="135" 
+                Height="31" 
+                Background="#FF3C7AC9" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                Click="CreateAccountButton_Click"
+                HorizontalAlignment="Right" Grid.Column="1">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome UserPlusSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text="  Add Account" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                </StackPanel>
+            </Button>
         </Grid>
-        <Grid Height="121" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="2,51,2,0">
-            <Grid.Background>
-                <ImageBrush ImageSource="/PMS;component/Assets/pexels-photo-312105.jpeg" Stretch="UniformToFill"/>
-            </Grid.Background>
-            <Label x:Name="AccountNameHolder" Content="JOHN W. DOE" VerticalAlignment="Top" Margin="126,25,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="22" Height="38" HorizontalAlignment="Left" Width="221" Foreground="White"/>
-            <Label x:Name="AccountRoleHolder" Content="Administrator" VerticalAlignment="Top" Margin="126,63,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="18" HorizontalAlignment="Left" Width="221" Foreground="White"/>
-            <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" Margin="41,25,0,0" VerticalAlignment="Top" Height="72" Width="80" Foreground="White"/>
-        </Grid>
-        <mah:MetroAnimatedTabControl Margin="2,177,2,2">
-            <TabItem Header="Personal" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid Width="941" Height="403">
-                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CHANGE PASSWORD" Margin="0,33,530,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
-                    <PasswordBox x:Name="CurrentPassword" HorizontalAlignment="Left" Margin="47,108,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="Current Password" HorizontalAlignment="Left" Margin="47,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <PasswordBox x:Name="NewPassword1" HorizontalAlignment="Left" Margin="47,171,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="New Password" HorizontalAlignment="Left" Margin="47,144,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <PasswordBox x:Name="NewPassword2" HorizontalAlignment="Left" Margin="47,234,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="Confirm New Password" HorizontalAlignment="Left" Margin="47,207,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <Button Content="Reset" Margin="294,294,530,79" Background="#FFF0A63A" Foreground="White" Click="ResetButton_Click1"/>
-                    <Button Content="Save Changes" Margin="172,294,652,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click1"/>
-                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="PERSONAL INFO" Margin="0,33,61,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
-                    <Label Content="Name" HorizontalAlignment="Left" Margin="516,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <TextBox x:Name="NameTextbox" TextWrapping="Wrap" Margin="516,108,61,264"/>
-                    <Button Content="Reset" Margin="762,294,61,79" Foreground="White" Background="#FFF0A63A" Click="ResetButton_Click2"/>
-                    <Button Content="Save Changes" Margin="639,294,184,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click2"/>
-                    <Label x:Name="InfoArea1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label x:Name="InfoArea2" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="516,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="Account Log" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <DatePicker Height="100" Width="100"/>
-        </mah:MetroAnimatedTabControl>
+        <DataGrid x:Name="AccountsItemContainer" Height="746" Margin="0,82,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Account ID" SortMemberPath="AccountID" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding AccountID}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Username" Width="1*" SortMemberPath="Username" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Username}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Role" Width=".5*" SortMemberPath="Role" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Role}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Employee Name" Width="1*" SortMemberPath="EmpName" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding EmpName}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Creation Date" Width=".5*" SortMemberPath="CreationDate" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding CreationDate}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Creation Time" Width=".5*" SortMemberPath="CreationTime" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding CreationTime}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="55,51,0,0" VerticalAlignment="Top" Width="77" ValueChanged="Update"/>
+        <Label Content="Page:" HorizontalAlignment="Left" Margin="3,51,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="163,51,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="285,51,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Update2">
+            <ComboBoxItem>10</ComboBoxItem>
+            <ComboBoxItem>15</ComboBoxItem>
+            <ComboBoxItem>20</ComboBoxItem>
+            <ComboBoxItem>25</ComboBoxItem>
+            <ComboBoxItem>30</ComboBoxItem>
+        </ComboBox>
     </Grid>
 </UserControl>

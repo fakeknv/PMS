@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,8 +24,9 @@ namespace PMS.UIComponents
 
 		private int pnum, bnum;
 
-		private string cmd_tmp;
 		private string qry;
+
+		private PMSUtil pmsutil;
 
 		private ObservableCollection<RecordEntryBurial> records;
 
@@ -63,39 +65,99 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.page_number = @page_number  AND records.record_id = burial_records.record_id ORDER BY records.entry_number ASC;";
+										cmd2.CommandText = "SELECT * FROM records WHERE records.book_number = @book_number AND records.page_number = @page_number ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", targBook);
 										cmd2.Parameters.AddWithValue("@page_number", pageNum);
 										cmd2.Prepare();
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryBurial()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														BurialYear = "----",
-														BurialDate = "----",
-														FullName = db_reader2.GetString("recordholder_fullname"),
-														Age = 0,
-														Status = "----",
-														Residence1 = "----",
-														Residence2 = "----",
-														Sacrament = "----",
-														CauseOfDeath = "----",
-														PlaceOfInterment = "----",
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Stipend = 0,
-														Minister = "----"
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM burial_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	DateTime dateOfBurial = Convert.ToDateTime(rdr["burial_date"].ToString());
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryBurial()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			BurialYear = dateOfBurial.ToString("yyyy"),
+																			BurialDate = dateOfBurial.ToString("MMM dd"),
+																			FullName = db_reader2.GetString("recordholder_fullname"),
+																			Age = Convert.ToInt32(rdr["age"]),
+																			Status = rdr["status"].ToString(),
+																			Residence1 = rdr["residence"].ToString(),
+																			Residence2 = rdr["residence2"].ToString(),
+																			Sacrament = rdr["sacrament"].ToString(),
+																			CauseOfDeath = rdr["cause_of_death"].ToString(),
+																			PlaceOfInterment = rdr["place_of_interment"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryBurial()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															BurialYear = "----",
+															BurialDate = "----",
+															FullName = db_reader2.GetString("recordholder_fullname"),
+															Age = 0,
+															Status = "----",
+															Residence1 = "----",
+															Residence2 = "----",
+															Sacrament = "----",
+															CauseOfDeath = "----",
+															PlaceOfInterment = "----",
+															Parent1 = db_reader2.GetString("parent1_fullname"),
+															Parent2 = db_reader2.GetString("parent2_fullname"),
+															Stipend = 0,
+															Minister = "----"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -219,111 +281,6 @@ namespace PMS.UIComponents
 
 		private void UpdateContent(object sender, TextChangedEventArgs e)
 		{
-			//dbman = new DBConnectionManager();
-
-			//EntriesHolder.Items.Clear();
-			//if (dbman.DBConnect().State == ConnectionState.Open)
-			//{
-			//	MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-			//	cmd.CommandText = "SELECT * FROM registers WHERE book_number = @book_number LIMIT 1;";
-			//	cmd.Parameters.AddWithValue("@book_number", bnum);
-			//	cmd.Prepare();
-			//	MySqlDataReader db_reader = cmd.ExecuteReader();
-			//	while (db_reader.Read())
-			//	{
-			//		if (db_reader.GetString("status") == "Archived")
-			//		{
-			//			MySqlCommand cmd2 = dbman.DBConnect().CreateCommand();
-			//			if (SearchFilter.SelectedIndex == 0){
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND recordholder_fullname LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 1) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND records.record_date LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 2) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND burial_records.burial_date LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 3) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.status LIKE @query) ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 4) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.place_of_interment LIKE @query) ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 5) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.minister LIKE @query) ORDER BY records.entry_number ASC;";
-			//			}
-			//			cmd2.Parameters.AddWithValue("@book_number", bnum);
-			//			cmd2.Parameters.AddWithValue("@query", "%" + SearchBox.Text + "%");
-			//			cmd2.Prepare();
-			//			MySqlDataReader db_reader2 = cmd2.ExecuteReader();
-			//			while (db_reader2.Read())
-			//			{
-			//				BurialRecordEntryItem bre = new BurialRecordEntryItem();
-			//				bre.RecordID.Content = db_reader2.GetString("record_id");
-			//				bre.RegistryNumLabel.Content = db_reader2.GetString("entry_number");
-			//				bre.NameLabel.Text = db_reader2.GetString("recordholder_fullname");
-			//				bre.DeathYearLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy");
-			//				bre.DeathDateLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd");
-			//				bre.BurialYearLabel.Content = "-- Archived --";
-			//				bre.BurialDateLabel.Content = "-- Archived --";
-			//				bre.AgeLabel.Content = "-- Archived --";
-			//				bre.StatusLabel.Text = "-- Archived --";
-			//				bre.ParentSpouse1Label.Text = db_reader2.GetString("parent1_fullname");
-			//				bre.ParentSpouse2Label.Text = db_reader2.GetString("parent2_fullname");
-			//				bre.ResidenceLabel.Text = "-- Archived --";
-			//				bre.SacramentLabel.Text = "-- Archived --";
-			//				bre.CauseOfDeathLabel.Text = "-- Archived --";
-			//				bre.PlaceOfIntermentLabel.Text = "-- Archived --";
-			//				bre.MinisterLabel.Text = "-- Archived --";
-			//				EntriesHolder.Items.Add(bre);
-			//			}
-			//		}
-			//		else
-			//		{
-			//			MySqlCommand cmd2 = dbman.DBConnect().CreateCommand();
-			//			if (SearchFilter.SelectedIndex == 0) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND records.recordholder_fullname LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 1) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND records.record_date LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 2) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND burial_records.burial_date LIKE @query ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 3) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.status LIKE @query) ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 4) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.place_of_interment LIKE @query) ORDER BY records.entry_number ASC;";
-			//			} else if (SearchFilter.SelectedIndex == 5) {
-			//				cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (burial_records.minister LIKE @query) ORDER BY records.entry_number ASC;";
-			//			}
-			//			cmd2.Parameters.AddWithValue("@book_number", bnum);
-			//			cmd2.Parameters.AddWithValue("@query", "%" + SearchBox.Text + "%");
-			//			cmd2.Prepare();
-			//			MySqlDataReader db_reader2 = cmd2.ExecuteReader();
-			//			while (db_reader2.Read())
-			//			{
-			//				BurialRecordEntryItem bre = new BurialRecordEntryItem();
-			//				bre.RecordID.Content = db_reader2.GetString("record_id");
-			//				bre.RegistryNumLabel.Content = db_reader2.GetString("entry_number");
-			//				bre.NameLabel.Text = db_reader2.GetString("recordholder_fullname");
-			//				bre.DeathYearLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy");
-			//				bre.DeathDateLabel.Content = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd");
-			//				bre.BurialYearLabel.Content = DateTime.Parse(db_reader2.GetString("burial_date")).ToString("yyyy");
-			//				bre.BurialDateLabel.Content = DateTime.Parse(db_reader2.GetString("burial_date")).ToString("MMM dd");
-			//				bre.AgeLabel.Content = db_reader2.GetString("age");
-			//				bre.StatusLabel.Text = db_reader2.GetString("status");
-			//				bre.ParentSpouse1Label.Text = db_reader2.GetString("parent1_fullname");
-			//				bre.ParentSpouse2Label.Text = db_reader2.GetString("parent2_fullname");
-			//				bre.ResidenceLabel.Text = db_reader2.GetString("residence");
-			//				bre.SacramentLabel.Text = db_reader2.GetString("sacrament");
-			//				bre.CauseOfDeathLabel.Text = db_reader2.GetString("cause_of_death");
-			//				bre.PlaceOfIntermentLabel.Text = db_reader2.GetString("place_of_interment");
-			//				bre.MinisterLabel.Text = db_reader2.GetString("minister");
-			//				EntriesHolder.Items.Add(bre);
-			//			}
-			//		}
-			//	}
-			//	//close Connection
-			//	dbman.DBClose();
-			//}
-			//else
-			//{
-
-			//}
-			cmd_tmp = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR burial_records.place_of_interment LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 			qry = SearchBox.Text;
 
 			BackgroundWorker worker = new BackgroundWorker
@@ -378,39 +335,99 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = cmd_tmp;
+										cmd2.CommandText = "SELECT * FROM records WHERE records.book_number = @book_number AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", bnum);
 										cmd2.Parameters.AddWithValue("@query", "%" + qry + "%");
 										cmd2.Prepare();
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryBurial()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														BurialYear = "----",
-														BurialDate = "----",
-														FullName = db_reader2.GetString("recordholder_fullname"),
-														Age = 0,
-														Status = "----",
-														Residence1 = "----",
-														Residence2 = "----",
-														Sacrament = "----",
-														CauseOfDeath = "----",
-														PlaceOfInterment = "----",
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Stipend = 0,
-														Minister = "----"
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM burial_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	DateTime dateOfBurial = Convert.ToDateTime(rdr["burial_date"].ToString());
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryBurial()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			BurialYear = dateOfBurial.ToString("yyyy"),
+																			BurialDate = dateOfBurial.ToString("MMM dd"),
+																			FullName = db_reader2.GetString("recordholder_fullname"),
+																			Age = Convert.ToInt32(rdr["age"]),
+																			Status = rdr["status"].ToString(),
+																			Residence1 = rdr["residence"].ToString(),
+																			Residence2 = rdr["residence2"].ToString(),
+																			Sacrament = rdr["sacrament"].ToString(),
+																			CauseOfDeath = rdr["cause_of_death"].ToString(),
+																			PlaceOfInterment = rdr["place_of_interment"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryBurial()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															DeathYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															DeathDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															BurialYear = "----",
+															BurialDate = "----",
+															FullName = db_reader2.GetString("recordholder_fullname"),
+															Age = 0,
+															Status = "----",
+															Residence1 = "----",
+															Residence2 = "----",
+															Sacrament = "----",
+															CauseOfDeath = "----",
+															PlaceOfInterment = "----",
+															Parent1 = db_reader2.GetString("parent1_fullname"),
+															Parent2 = db_reader2.GetString("parent2_fullname"),
+															Stipend = 0,
+															Minister = "----"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -421,7 +438,7 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = cmd_tmp;
+										cmd2.CommandText = "SELECT * FROM records, burial_records WHERE records.book_number = @book_number AND records.record_id = burial_records.record_id AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR burial_records.place_of_interment LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", bnum);
 										cmd2.Parameters.AddWithValue("@query", "%" + qry + "%");
 										cmd2.Prepare();

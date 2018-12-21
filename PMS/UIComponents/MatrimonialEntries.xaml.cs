@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,8 +35,9 @@ namespace PMS.UIComponents
 
 		private int bnum, pnum;
 
-		private string cmd_tmp;
 		private string qry;
+
+		private PMSUtil pmsutil;
 
 		private ObservableCollection<RecordEntryMatrimonial> records;
 
@@ -69,50 +71,114 @@ namespace PMS.UIComponents
 							{
 								if (db_reader.GetString("status") == "Archived")
 								{
-
 									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND records.page_number = @page_number  AND records.record_id = matrimonial_records.record_id ORDER BY records.entry_number ASC;";
+										cmd2.CommandText = "SELECT * FROM records WHERE records.book_number = @book_number AND records.page_number = @page_number ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", targBook);
 										cmd2.Parameters.AddWithValue("@page_number", pageNum);
 										cmd2.Prepare();
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryMatrimonial()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														FullName1 = db_reader2.GetString("recordholder_fullname"),
-														FullName2 = db_reader2.GetString("recordholder2_fullname"),
-														Status1 = db_reader2.GetString("status1"),
-														Status2 = db_reader2.GetString("status2"),
-														Age1 = db_reader2.GetInt32("age1"),
-														Age2 = db_reader2.GetInt32("age2"),
-														Hometown1 = db_reader2.GetString("place_of_origin1"),
-														Hometown2 = db_reader2.GetString("place_of_origin2"),
-														Residence1 = db_reader2.GetString("residence1"),
-														Residence2 = db_reader2.GetString("residence2"),
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Parent3 = db_reader2.GetString("parent1_fullname2"),
-														Parent4 = db_reader2.GetString("parent2_fullname2"),
-														Witness1 = db_reader2.GetString("witness1"),
-														Witness2 = db_reader2.GetString("witness2"),
-														W1Residence = db_reader2.GetString("witness1address"),
-														W2Residence = db_reader2.GetString("witness2address"),
-														Stipend = db_reader2.GetFloat("stipend"),
-														Minister = db_reader2.GetString("minister")
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM matrimonial_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryMatrimonial()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			FullName1 = db_reader2.GetString("recordholder_fullname"),
+																			FullName2 = rdr["recordholder2_fullname"].ToString(),
+																			Status1 = rdr["status1"].ToString(),
+																			Status2 = rdr["status2"].ToString(),
+																			Age1 = Convert.ToInt32(rdr["age1"]),
+																			Age2 = Convert.ToInt32(rdr["age2"]),
+																			Hometown1 = rdr["place_of_origin1"].ToString(),
+																			Hometown2 = rdr["place_of_origin2"].ToString(),
+																			Residence1 = rdr["residence1"].ToString(),
+																			Residence2 = rdr["residence2"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Parent3 = rdr["parent1_fullname2"].ToString(),
+																			Parent4 = rdr["parent2_fullname2"].ToString(),
+																			Witness1 = rdr["witness1"].ToString(),
+																			Witness2 = rdr["witness2"].ToString(),
+																			W1Residence = rdr["witness1address"].ToString(),
+																			W2Residence = rdr["witness2address"].ToString(),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryMatrimonial()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															FullName1 = db_reader2.GetString("recordholder_fullname"),
+															FullName2 = "---",
+															Status1 = "---",
+															Status2 = "---",
+															Age1 = 0,
+															Age2 = 0,
+															Hometown1 = "---",
+															Hometown2 = "---",
+															Residence1 = "---",
+															Residence2 = "---",
+															Parent1 = "---",
+															Parent2 = "---",
+															Parent3 = "---",
+															Parent4 = "---",
+															Witness1 = "---",
+															Witness2 = "---",
+															W1Residence = "---",
+															W2Residence = "---",
+															Stipend = 0,
+															Minister = "---"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -207,8 +273,8 @@ namespace PMS.UIComponents
 			}
 			else
 			{
-				//var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				//await metroWindow.ShowChildWindowAsync(new PrintBaptismalRecordEntryWindow(record.RecordID));
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new PrintMatrimonialRecordEntryWindow(record.RecordID));
 			}
 		}
 		private async void Edit_Click(object sender, RoutedEventArgs e)
@@ -239,7 +305,6 @@ namespace PMS.UIComponents
 		}
 		private void UpdateContent(object sender, TextChangedEventArgs e)
 		{
-			cmd_tmp = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND records.record_id = matrimonial_records.record_id AND (records.recordholder_fullname LIKE @query OR matrimonial_records.recordholder2_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR matrimonial_records.parent1_fullname2 LIKE @query OR matrimonial_records.parent2_fullname2 LIKE @query OR matrimonial_records.witness1 LIKE @query OR matrimonial_records.witness2 LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 			qry = SearchBox.Text;
 
 			BackgroundWorker worker = new BackgroundWorker
@@ -294,45 +359,110 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = cmd_tmp;
+										cmd2.CommandText = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query ) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", bnum);
 										cmd2.Parameters.AddWithValue("@query", "%" + qry + "%");
 										cmd2.Prepare();
 
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
 											while (db_reader2.Read())
 											{
-												App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+
+												pmsutil = new PMSUtil();
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
 												{
-													records.Add(new RecordEntryMatrimonial()
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
 													{
-														RecordID = db_reader2.GetString("record_id"),
-														EntryNumber = db_reader2.GetInt32("entry_number"),
-														MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
-														MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
-														FullName1 = db_reader2.GetString("recordholder_fullname"),
-														FullName2 = db_reader2.GetString("recordholder2_fullname"),
-														Status1 = db_reader2.GetString("status1"),
-														Status2 = db_reader2.GetString("status2"),
-														Age1 = db_reader2.GetInt32("age1"),
-														Age2 = db_reader2.GetInt32("age2"),
-														Hometown1 = db_reader2.GetString("place_of_origin1"),
-														Hometown2 = db_reader2.GetString("place_of_origin2"),
-														Residence1 = db_reader2.GetString("residence1"),
-														Residence2 = db_reader2.GetString("residence2"),
-														Parent1 = db_reader2.GetString("parent1_fullname"),
-														Parent2 = db_reader2.GetString("parent2_fullname"),
-														Parent3 = db_reader2.GetString("parent1_fullname2"),
-														Parent4 = db_reader2.GetString("parent2_fullname2"),
-														Witness1 = db_reader2.GetString("witness1"),
-														Witness2 = db_reader2.GetString("witness2"),
-														W1Residence = db_reader2.GetString("witness1address"),
-														W2Residence = db_reader2.GetString("witness2address"),
-														Stipend = db_reader2.GetFloat("stipend"),
-														Minister = db_reader2.GetString("minister")
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM matrimonial_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
+
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		records.Add(new RecordEntryMatrimonial()
+																		{
+																			RecordID = db_reader2.GetString("record_id"),
+																			EntryNumber = db_reader2.GetInt32("entry_number"),
+																			MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+																			MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+																			FullName1 = db_reader2.GetString("recordholder_fullname"),
+																			FullName2 = rdr["recordholder2_fullname"].ToString(),
+																			Status1 = rdr["status1"].ToString(),
+																			Status2 = rdr["status2"].ToString(),
+																			Age1 = Convert.ToInt32(rdr["age1"]),
+																			Age2 = Convert.ToInt32(rdr["age2"]),
+																			Hometown1 = rdr["place_of_origin1"].ToString(),
+																			Hometown2 = rdr["place_of_origin2"].ToString(),
+																			Residence1 = rdr["residence1"].ToString(),
+																			Residence2 = rdr["residence2"].ToString(),
+																			Parent1 = db_reader2.GetString("parent1_fullname"),
+																			Parent2 = db_reader2.GetString("parent2_fullname"),
+																			Parent3 = rdr["parent1_fullname2"].ToString(),
+																			Parent4 = rdr["parent2_fullname2"].ToString(),
+																			Witness1 = rdr["witness1"].ToString(),
+																			Witness2 = rdr["witness2"].ToString(),
+																			W1Residence = rdr["witness1address"].ToString(),
+																			W2Residence = rdr["witness2address"].ToString(),
+																			Stipend = Convert.ToDouble(rdr["stipend"]),
+																			Minister = rdr["minister"].ToString()
+																		});
+																	});
+																}
+															}
+														}
+
+													}
+												}
+												else
+												{
+													archiveDrive = "init";
+													App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+													{
+														records.Add(new RecordEntryMatrimonial()
+														{
+															RecordID = db_reader2.GetString("record_id"),
+															EntryNumber = db_reader2.GetInt32("entry_number"),
+															MarriageYear = DateTime.Parse(db_reader2.GetString("record_date")).ToString("yyyy"),
+															MarriageDate = DateTime.Parse(db_reader2.GetString("record_date")).ToString("MMM dd"),
+															FullName1 = db_reader2.GetString("recordholder_fullname"),
+															FullName2 = "---",
+															Status1 = "---",
+															Status2 = "---",
+															Age1 = 0,
+															Age2 = 0,
+															Hometown1 = "---",
+															Hometown2 = "---",
+															Residence1 = "---",
+															Residence2 = "---",
+															Parent1 = "---",
+															Parent2 = "---",
+															Parent3 = "---",
+															Parent4 = "---",
+															Witness1 = "---",
+															Witness2 = "---",
+															W1Residence = "---",
+															W2Residence = "---",
+															Stipend = 0,
+															Minister = "---"
+														});
 													});
-												});
+												}
 											}
 										}
 									}
@@ -343,7 +473,7 @@ namespace PMS.UIComponents
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = cmd_tmp;
+										cmd2.CommandText = "SELECT * FROM records, matrimonial_records WHERE records.book_number = @book_number AND records.record_id = matrimonial_records.record_id AND (records.recordholder_fullname LIKE @query OR matrimonial_records.recordholder2_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR matrimonial_records.parent1_fullname2 LIKE @query OR matrimonial_records.parent2_fullname2 LIKE @query OR matrimonial_records.witness1 LIKE @query OR matrimonial_records.witness2 LIKE @query) GROUP BY records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@book_number", bnum);
 										cmd2.Parameters.AddWithValue("@query", "%" + qry + "%");
 										cmd2.Prepare();

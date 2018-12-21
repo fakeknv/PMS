@@ -5,6 +5,9 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using PMS.UIManager.Views.ChildWindows;
 using System;
+using MySql.Data.MySqlClient;
+using System.Data;
+using System.Collections.ObjectModel;
 
 namespace PMS.UIManager.Views
 {
@@ -15,6 +18,10 @@ namespace PMS.UIManager.Views
     {
 		//Required for changing the label from another class.
 		internal static Appointments app;
+
+		//private MySqlConnection conn;
+		//private DBConnectionManager dbman;
+
 		internal string Current_Date
 		{
 			get { return dayActivitiesTitle.Content.ToString(); }
@@ -26,7 +33,8 @@ namespace PMS.UIManager.Views
 			//Required for changing the label from another class.
 			app = this;
             InitializeComponent();
-        }
+			dayActivitiesTitle.Content = DateTime.Now.ToString("MMMM d, yyyy");
+		}
 
 		private async void AddAppointment_Click(object sender, RoutedEventArgs e)
 		{

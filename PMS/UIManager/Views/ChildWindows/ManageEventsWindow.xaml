@@ -1,0 +1,157 @@
+﻿<simpleChildWindow:ChildWindow 
+    x:Class="PMS.UIManager.Views.ChildWindows.ManageEventsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    Title="Add Request"
+    ShowTitleBar="False"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsModal="False"
+    IsOpen="True"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d" Width="826" Height="544.5">
+    <simpleChildWindow:ChildWindow.Icon>
+        <iconPacks:PackIconFontAwesome 
+            Width="22"
+            Height="22"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource IdealForegroundColorBrush}"
+            Kind="PlusSquareSolid" />
+    </simpleChildWindow:ChildWindow.Icon>
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid Height="534" Width="816">
+        <Grid HorizontalAlignment="Left" Height="37" Margin="0,32,0,0" VerticalAlignment="Top" Width="816" Background="#FFE6E6E6">
+            <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="4,5,0,0" VerticalAlignment="Top" Height="27" Width="234" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+            <Button
+                Margin="0,3,3,0" 
+                VerticalAlignment="Top" 
+                Width="116" 
+                Height="30" 
+                Click="ConfirmPayment_Click"
+                Background="#FF3C7AC9" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Add Event" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,488,0,0" Height="46" VerticalAlignment="Top">
+            <Grid HorizontalAlignment="Left" Width="816" Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="CancelButton_Click"
+                    Background="#FFF0A63A" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Close" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="MANAGE EVENTS" Margin="44,3,553,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Grid Margin="0,69,0,46">
+            <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Time" SortMemberPath="Time" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Type}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Status" SortMemberPath="Status" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Sponsor" SortMemberPath="Sponsor" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Sponsor}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Additional Info" SortMemberPath="Info" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Left" Text="{Binding Info}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</simpleChildWindow:ChildWindow>

@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using PMS.UIManager.Views.ChildViews;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -171,9 +172,23 @@ namespace PMS.UIManager.Views.ChildWindows
 			remarks = ValidateInp(Remarks.Text);
 			if (InsertEntry() > 0)
 			{
+				MsgSuccess();
 				vre.Sync(bookNum);
 				this.Close();
 			}
+			else {
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The record has been added to the register successfully.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

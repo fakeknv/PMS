@@ -30,7 +30,7 @@ namespace PMS.UIComponents
 		public string Witness2 { get; set; }
 		public string W1Residence { get; set; }
 		public string W2Residence { get; set; }
-		public float Stipend { get; set; }
+		public double Stipend { get; set; }
 		public string Minister { get; set; }
 	}
 }

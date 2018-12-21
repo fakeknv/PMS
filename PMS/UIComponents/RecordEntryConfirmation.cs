@@ -21,7 +21,7 @@ namespace PMS.UIComponents
 		public string Parent2 { get; set; }
 		public string Sponsor1 { get; set; }
 		public string Sponsor2 { get; set; }
-		public float Stipend { get; set; }
+		public double Stipend { get; set; }
 		public string Minister { get; set; }
 	}
 }

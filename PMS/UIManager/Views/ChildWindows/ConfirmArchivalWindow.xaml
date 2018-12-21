@@ -31,7 +31,7 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid Height="206">
-        <TextBlock Margin="63,57,60,0" TextWrapping="Wrap" Text="PERFORMING THIS ACTION WILL ARCHIVE THE REGISTER. THE RECORDS IT CONTAINS CAN STILL BE SEARCHED BUT NEEDS THE ARCHIVE DRIVE TO BE CONNECTED BEFORWE IT CAN BE PRINTED. PROCEED?" VerticalAlignment="Top" Height="93" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
+        <TextBlock Margin="63,57,60,0" TextWrapping="Wrap" Text="PERFORMING THIS ACTION WILL ARCHIVE THE REGISTER. THE RECORDS IT CONTAINS CAN STILL BE SEARCHED BUT NEEDS THE ARCHIVE DRIVE TO BE CONNECTED BEFORE IT CAN BE PRINTED. PROCEED?" VerticalAlignment="Top" Height="63" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,160,0,0">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton" 
@@ -70,10 +70,10 @@
             </Grid>
         </Border>
         <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="42,56,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
-        <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="42,126,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="ARCHIVE THE SELECTED REGISTER?" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="TimesCircleSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
+        <mah:MetroProgressBar IsIndeterminate ="False"  x:Name="ArchivalProgBar" HorizontalAlignment="Left" Height="10" Margin="42,140,0,0" VerticalAlignment="Top" Width="382"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

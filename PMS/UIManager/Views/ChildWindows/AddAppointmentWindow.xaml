@@ -9,7 +9,6 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     ShowTitleBar="False"
     d:DesignHeight="507.955"
-    d:DesignWidth="467"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsOpen="True"
@@ -17,128 +16,201 @@
     CloseOnOverlay="True"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Width="653">
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush 
             Opacity="0.7" 
             Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="466" Height="498">
-
-        <mah:MetroTabControl HorizontalAlignment="Left" Width="466">
-            <TabItem Header="Mass" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="{x:Null}" Margin="0,0,-10,0">
-                <Grid>
-                    <iconPacks:PackIconFontAwesome 
-                            Kind="EditRegular" 
-                            HorizontalAlignment="Left" 
-                            VerticalAlignment="Top" 
-                            Height="42" 
-                            Width="71" 
-                            Foreground="#FFAAB6C0" Margin="119,18,0,0"/>
-                    <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="64,294,0,0"/>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="498">
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="ADD APPOINTMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,452,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="Cancel_Click"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="CreateMassRecord"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <TabControl x:Name="TabControl1" Margin="0,32,0,46" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="2,2,0,0" Margin="2,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightSkyBlue" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Regular Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16">
+                <Grid Margin="0,0,-4,-2">
+                    <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="52,249,0,0" Height="26" FontSize="14"/>
                     <Label 
             Content="Mass Intention" 
             HorizontalAlignment="Left"
-            Margin="64,89,0,0" 
+            Margin="52,16,0,0" 
             VerticalAlignment="Top" 
-            Width="89"/>
+            Width="132" Height="25" FontSize="14"/>
                     <ComboBox x:Name="MassType"
                         HorizontalAlignment="Left" 
                         Height="25" 
-                        Margin="64,113,0,0" 
+                        Margin="52,41,0,0" 
                         VerticalAlignment="Top" 
-                        Width="328" SelectionChanged="EnableDisableSoul">
-                        <ComboBoxItem Content="Thanksgiving Mass"/>
-                        <ComboBoxItem Content="Petition Mass"/>
-                        <ComboBoxItem Content="Special Intention"/>
-                        <ComboBoxItem Content="All Souls"/>
-                        <ComboBoxItem Content="Soul/s of"/>
+                        Width="551" SelectionChanged="EnableDisableSoul" Foreground="#FF474747">
+
                     </ComboBox>
                     <Label 
             Content="Offered by" 
             HorizontalAlignment="Left"
-            Margin="64,232,0,0" 
+            Margin="52,178,0,0" 
             VerticalAlignment="Top" 
-            Width="76" RenderTransformOrigin="0.5,1.979" Height="25"/>
+            Width="76" RenderTransformOrigin="0.5,1.979" Height="25" FontSize="14"/>
                     <TextBox x:Name="OfferedBy1" 
                 HorizontalAlignment="Left" 
                 Height="23" 
-                Margin="64,257,0,0" 
+                Margin="52,203,0,0" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Top"
-                Width="328">
-                        <TextBox.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="3"/>
-                            </Style>
-                        </TextBox.Resources>
-                    </TextBox>
-                    <Button 
-            Content="Cancel" 
-            Margin="119,404,245,24" 
-            FontFamily="Bahnschrift Light"
-            Background="{x:Null}" 
-            Foreground="#FF237ABE" Click="Cancel_Click"/>
-                    <Button 
-            Content="Create"
-            Margin="250,404,105,24" 
-            FontFamily="Bahnschrift Light" 
-            Background="#FF3197D6" 
-            Foreground="White" Click="CreateMassRecord"/>
-                    <TextBox x:Name="SoulsOf" IsEnabled="False" HorizontalAlignment="Left" Height="59" Margin="64,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+                Width="551" Foreground="#FF474747"/>
+                    <TextBox x:Name="SoulsOf" IsEnabled="False" Height="58" Margin="52,110,40,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
                     <Label 
                         Content="Soul/s of" 
                         HorizontalAlignment="Left"
-                        Margin="64,144,0,0" 
+                        Margin="52,85,0,0" 
                         VerticalAlignment="Top" 
-                        Width="76" RenderTransformOrigin="0.5,1.979"/>
-                    <ComboBox x:Name="SelectedTime1" HorizontalAlignment="Left" Margin="65,360,0,0" VerticalAlignment="Top" Width="144"/>
+                        Width="76" RenderTransformOrigin="0.5,1.979" FontSize="14" Height="25"/>
+                    <ComboBox x:Name="SelectedTime1" SelectedIndex="0" HorizontalAlignment="Left" Margin="459,249,0,0" VerticalAlignment="Top" Width="144" Foreground="#FF474747"/>
                     <Label 
                         Content="Selected Time" 
                         HorizontalAlignment="Left"
-                        Margin="64,329,0,0" 
+                        Margin="342,249,0,0" 
                         VerticalAlignment="Top" 
-                        Width="93" RenderTransformOrigin="0.5,1.979" Height="26"/>
-                    <TextBox 
-                        x:Name="SelectedDate1" 
-                        IsReadOnly="True"
-                        HorizontalAlignment="Left" 
-                        Height="23" 
-                        Margin="162,292,0,0" 
-                        TextWrapping="Wrap" 
-                        VerticalAlignment="Top"
-                        Width="230">
-                        <TextBox.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="3"/>
-                            </Style>
-                        </TextBox.Resources>
-                    </TextBox>
-                    <Label 
-                        Content="Mass Intention" 
-                        HorizontalAlignment="Left" 
-                        Margin="190,28,0,0" 
-                        VerticalAlignment="Top" 
-                        FontFamily="Bahnschrift Light" 
-                        FontWeight="Bold" 
-                        FontSize="18" 
-                        Width="129" 
-                        Foreground="#FF2A3B47"/>
-                    <mah:NumericUpDown x:Name="Fee" HorizontalAlignment="Left" Margin="235,360,0,0" VerticalAlignment="Top" Width="157"/>
+                        Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <mah:NumericUpDown x:Name="Fee" HorizontalAlignment="Left" Margin="100,298,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
                     <Label 
                         Content="Fee" 
                         HorizontalAlignment="Left"
-                        Margin="235,329,0,0" 
+                        Margin="52,298,0,0" 
                         VerticalAlignment="Top" 
-                        Width="93" RenderTransformOrigin="0.5,1.979" Height="26"/>
+                        Width="38" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <DatePicker x:Name="SelectedDate1" HorizontalAlignment="Left" Margin="172,248,0,0" VerticalAlignment="Top" Width="165" Foreground="#FF474747"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Others" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="{x:Null}" Margin="15,0,-31,0">
+            <TabItem Header="Other" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
                 <Grid>
-                    <Label Content="Selected Date:" HorizontalAlignment="Left" Margin="122,58,0,0" VerticalAlignment="Top" Width="94" Height="27"/>
-                    <Label x:Name="SelDate_Copy" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Margin="221,58,0,0"/>
+                    <Label 
+                        Content="Event/Service Type" 
+                        HorizontalAlignment="Left"
+                        Margin="52,16,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="154" Height="25" FontSize="14"/>
+                    <ComboBox x:Name="EventServiceType"
+                        SelectedIndex="0"
+                        Height="25" 
+                        Margin="52,41,36,0" 
+                        VerticalAlignment="Top" SelectionChanged="UpdateFee" Foreground="#FF474747"/>
+                    <TextBox x:Name="Remarks" IsEnabled="True" Height="58" Margin="52,110,36,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
+                    <Label 
+                        Content="Remarks" 
+                        HorizontalAlignment="Left"
+                        Margin="52,85,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="85" RenderTransformOrigin="0.5,1.979" FontSize="14" Height="25"/>
+                    <Label 
+                        Content="Offered by" 
+                        HorizontalAlignment="Left"
+                        Margin="52,178,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="76" RenderTransformOrigin="0.5,1.979" Height="25" FontSize="14"/>
+                    <TextBox x:Name="OfferedBy2" 
+                        HorizontalAlignment="Left" 
+                        Height="23" 
+                        Margin="52,203,0,0" 
+                        TextWrapping="Wrap" 
+                        VerticalAlignment="Top"
+                        Width="551" Foreground="#FF474747"/>
+                    <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="52,243,0,0" Height="26" FontSize="14"/>
+                    <Label 
+                        Content="Selected Time" 
+                        HorizontalAlignment="Left"
+                        Margin="404,243,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <mah:NumericUpDown x:Name="Fee2" HorizontalAlignment="Left" Margin="100,322,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
+                    <Label 
+                        Content="Fee" 
+                        HorizontalAlignment="Left"
+                        Margin="52,322,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="38" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <DatePicker x:Name="SelectedDate2" HorizontalAlignment="Left" Margin="52,274,0,0" VerticalAlignment="Top" Width="235" Foreground="#FF474747"/>
+                    <ComboBox x:Name="AssignedPriest"
+                        SelectedIndex="0"
+                        Height="25" 
+                        Margin="442,322,36,0" 
+                        VerticalAlignment="Top" SelectionChanged="EnableDisableSoul" Foreground="#FF474747"/>
+                    <Label 
+                        Content="Assigned Priest" 
+                        HorizontalAlignment="Left"
+                        Margin="325,322,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="404,274,0,0" VerticalAlignment="Top" Width="64"/>
+                    <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="473,274,0,0" VerticalAlignment="Top" Width="63"/>
+                    <ComboBox x:Name="TimeMode" SelectedIndex="0" HorizontalAlignment="Left" Margin="541,274,0,0" VerticalAlignment="Top" Width="62">
+                        <ComboBoxItem>AM</ComboBoxItem>
+                        <ComboBoxItem>PM</ComboBoxItem>
+                    </ComboBox>
                 </Grid>
             </TabItem>
-        </mah:MetroTabControl>
+        </TabControl>
     </Grid>
 </simpleChildWindow:ChildWindow>

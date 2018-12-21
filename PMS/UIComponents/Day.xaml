@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PMS.UIComponents"
-             mc:Ignorable="d" d:DesignWidth="79.5">
-    <Grid x:Name="DayMainGrid">
+             mc:Ignorable="d" d:DesignWidth="79.5" d:DesignHeight="70">
+    <Grid x:Name="DayMainGrid" GotFocus="Focused" LostFocus="UnFocused">
+        <Grid x:Name="AppointmentCountHolder" Visibility="Hidden" Height="28" Margin="0,28,0,0" VerticalAlignment="Top" Background="#FF03BAFF" HorizontalAlignment="Stretch">
+            <Label x:Name="EventCount" Content="Label" FontFamily="/PMS;component/Assets/Fonts/#Roboto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White"/>
+        </Grid>
         <Button Margin="4,4,4,5" Click="Day_Click" Background="{x:Null}"/>
         <Border BorderBrush="#EEEEEE" BorderThickness="1">
             <Grid>

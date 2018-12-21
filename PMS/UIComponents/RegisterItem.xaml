@@ -44,19 +44,6 @@
             Foreground="#FF717171" 
             Width="34" 
             HorizontalAlignment="Right"/>
-        <Button 
-            x:Name="AddRecordButton"
-            Style="{DynamicResource MetroCircleButtonStyle}" 
-            Content="{Custom:FontAwesome UserPlusSolid}" 
-            Margin="0,2,78,0" 
-            VerticalAlignment="Top" 
-            Height="33" 
-            Background="White" 
-            BorderBrush="{x:Null}" 
-            RenderTransformOrigin="0.824,0.294" 
-            Foreground="#FF717171" 
-            Width="34" 
-            HorizontalAlignment="Right"/>
         <Border
               Background="#FDF3E5"
               BorderThickness="5"

@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using Spire.Doc;
 using System.Diagnostics;
+using System.Data.SQLite;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -16,6 +18,7 @@ namespace PMS.UIManager.Views.ChildWindows
 	public partial class PrintBaptismalRecordEntryWindow : ChildWindow
 	{
 		//MYSQL Related Stuff
+		private MySqlConnection conn;
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
@@ -50,36 +53,122 @@ namespace PMS.UIManager.Views.ChildWindows
 			PrintingFee.Value = Convert.ToDouble(pmsutil.GetPrintFee("Baptismal"));
 			dbman = new DBConnectionManager();
 
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM baptismal_records, records WHERE records.record_id = @record_id AND records.record_id = baptismal_records.record_id LIMIT 1;";
-				cmd.Parameters.AddWithValue("@record_id", targRecord);
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
 				{
-					bookNum = db_reader.GetInt32("book_number");
-					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
-					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
-					BaptismDate.Text = db_reader.GetString("record_date");
-					Birthdate.Text = db_reader.GetString("birthday");
-					FullName.Text = db_reader.GetString("recordholder_fullname");
-					PlaceOfBirth.Text = db_reader.GetString("place_of_birth");
-					Parent1.Text = db_reader.GetString("parent1_fullname");
-					Parent2.Text = db_reader.GetString("parent2_fullname");
-					Sponsor1.Text = db_reader.GetString("sponsor1");
-					Sponsor2.Text = db_reader.GetString("sponsor2");
-					Minister.Text = db_reader.GetString("minister");
-					Remarks.Text = db_reader.GetString("remarks");
-				}
-				//close Connection
-				dbman.DBClose();
-			}
-			else
-			{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM records, registers WHERE records.record_id = @rid AND records.book_number = registers.book_number LIMIT 1;";
+						cmd.Parameters.AddWithValue("@rid", recordID);
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								if (db_reader.GetString("status") == "Archived")
+								{
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										MySqlCommand cmd2 = conn3.CreateCommand();
+										cmd2.CommandText = "SELECT * FROM records WHERE records.record_id = @rid ORDER BY records.entry_number ASC;";
+										cmd2.Parameters.AddWithValue("@rid", recordID);
+										cmd2.Prepare();
+										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
+										{
+											string archiveDrive = "init";
+											string path = @"\archive.db";
+											while (db_reader2.Read())
+											{
+												if (pmsutil.CheckArchiveDrive(path) != "dc")
+												{
+													archiveDrive = pmsutil.CheckArchiveDrive(path);
+													SQLiteConnectionStringBuilder connectionString = new SQLiteConnectionStringBuilder
+													{
+														FailIfMissing = true,
+														DataSource = archiveDrive
+													};
+													using (SQLiteConnection connection = new SQLiteConnection(connectionString.ToString()))
+													{
+														// open the connection:
+														connection.Open();
+														string stm = "SELECT * FROM baptismal_records WHERE record_id='" + db_reader2.GetString("record_id") + "';";
 
+														using (SQLiteCommand cmdx = new SQLiteCommand(stm, connection))
+														{
+															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
+															{
+																while (rdr.Read())
+																{
+																	App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+																	{
+																		bookNum = db_reader.GetInt32("book_number");
+																		EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
+																		PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
+																		BaptismDate.Text = db_reader.GetString("record_date");
+																		Birthdate.Text = rdr["birthday"].ToString();
+																		FullName.Text = db_reader.GetString("recordholder_fullname");
+																		PlaceOfBirth.Text = rdr["place_of_birth"].ToString();
+																		Parent1.Text = db_reader.GetString("parent1_fullname");
+																		Parent2.Text = db_reader.GetString("parent2_fullname");
+																		Sponsor1.Text = rdr["sponsor1"].ToString();
+																		Sponsor2.Text = rdr["sponsor1"].ToString();
+																		Minister.Text = rdr["minister"].ToString();
+																		Remarks.Text = rdr["remarks"].ToString();
+																	});
+																}
+															}
+														}
+													}
+												}
+												else
+												{
+													
+												}
+											}
+										}
+									}
+								}
+								else
+								{
+									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
+									{
+										conn3.Open();
+										MySqlCommand cmd2 = conn3.CreateCommand();
+										cmd2.CommandText = "SELECT * FROM records, baptismal_records WHERE records.record_id = @rid AND records.record_id = baptismal_records.record_id ORDER BY records.entry_number ASC;";
+										cmd2.Parameters.AddWithValue("@rid", recordID);
+										cmd2.Prepare();
+										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
+										{
+											while (db_reader2.Read())
+											{
+												bookNum = db_reader2.GetInt32("book_number");
+												EntryNum.Value = Convert.ToDouble(db_reader2.GetString("entry_number"));
+												PageNum.Value = Convert.ToDouble(db_reader2.GetString("page_number"));
+												BaptismDate.Text = db_reader2.GetString("record_date");
+												Birthdate.Text = db_reader2.GetString("birthday");
+												FullName.Text = db_reader2.GetString("recordholder_fullname");
+												PlaceOfBirth.Text = db_reader2.GetString("place_of_birth");
+												Parent1.Text = db_reader2.GetString("parent1_fullname");
+												Parent2.Text = db_reader2.GetString("parent2_fullname");
+												Sponsor1.Text = db_reader2.GetString("sponsor1");
+												Sponsor2.Text = db_reader2.GetString("sponsor2");
+												Minister.Text = db_reader2.GetString("minister");
+												Remarks.Text = db_reader2.GetString("remarks");
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
+			
 			Suggestions1.Visibility = Visibility.Hidden;
 			Suggestions2.Visibility = Visibility.Hidden;
 		}
@@ -290,8 +379,23 @@ namespace PMS.UIManager.Views.ChildWindows
 			remarks = ValidateInp(Remarks.Text);
 			if (PrintEntry() > 0)
 			{
+				MsgSuccess();
 				this.Close();
 			}
+			else
+			{
+				MsgFail();
+			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The selected record has been added to the print queue.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

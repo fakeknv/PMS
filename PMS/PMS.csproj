@@ -189,12 +189,15 @@
     </Compile>
     <Compile Include="PMSUtil.cs" />
     <Compile Include="SecurePasswordHasher.cs" />
+    <Compile Include="UIComponents\Account.cs" />
     <Compile Include="UIComponents\AccountsItem.xaml.cs">
       <DependentUpon>AccountsItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\AppointmentItem.cs" />
     <Compile Include="UIComponents\BurialEntries.xaml.cs">
       <DependentUpon>BurialEntries.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\EventsItem.cs" />
     <Compile Include="UIComponents\MatrimonialEntries.xaml.cs">
       <DependentUpon>MatrimonialEntries.xaml</DependentUpon>
     </Compile>
@@ -239,8 +242,14 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\Accounts.xaml.cs">
+      <DependentUpon>Accounts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\Archive.xaml.cs">
       <DependentUpon>Archive.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddAccountWindow.xaml.cs">
+      <DependentUpon>AddAccountWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmArchivalWindow.xaml.cs">
       <DependentUpon>ConfirmArchivalWindow.xaml</DependentUpon>
@@ -248,15 +257,25 @@
     <Compile Include="UIManager\Views\ChildWindows\CancelPaymentWindow.xaml.cs">
       <DependentUpon>CancelPaymentWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ManageEventsWindow.xaml.cs">
+      <DependentUpon>ManageEventsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml.cs">
       <DependentUpon>ConfirmPaymentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\PrintMatrimonialRecordEntryWindow.xaml.cs">
+      <DependentUpon>PrintMatrimonialRecordEntryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\PrintBurialRecordEntryWindow.xaml.cs">
       <DependentUpon>PrintBurialRecordEntryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UIManager\Views\Reports.cs" />
+    <Compile Include="UIManager\Views\MyAccount.xaml.cs">
+      <DependentUpon>MyAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\Reports.xaml.cs">
+      <DependentUpon>Reports.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\Settings.xaml.cs" />
-    <Compile Include="UIManager\Views\Accounts.xaml.cs" />
     <Compile Include="UIManager\Views\Appointments.xaml.cs">
       <DependentUpon>Appointments.xaml</DependentUpon>
     </Compile>
@@ -364,9 +383,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIManager\Views\Accounts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIManager\Views\Archive.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\ConfirmArchivalWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -376,7 +403,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIManager\Views\ChildWindows\ManageEventsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIManager\Views\ChildWindows\ConfirmPaymentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\PrintMatrimonialRecordEntryWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -384,15 +419,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIManager\Views\Reports.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="UIManager\Views\MyAccount.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\Reports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIManager\Views\Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIManager\Views\Accounts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -504,6 +539,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\temp_death.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\temp_marriage.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

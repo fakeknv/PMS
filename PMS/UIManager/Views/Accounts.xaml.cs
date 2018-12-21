@@ -1,136 +1,132 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
+using MySql.Data.MySqlClient;
+using PMS.UIComponents;
+using PMS.UIManager.Views.ChildWindows;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace PMS.UIManager.Views
 {
-	/// <summary>
-	/// Interaction logic for Account.xaml
-	/// </summary>
-	public partial class Accounts : UserControl
-	{
-		private PMSUtil pmsutil;
-		private DBConnectionManager dbman; 
-		 
+    /// <summary>
+    /// Interaction logic for Accounts.xaml
+    /// </summary>
+    public partial class Accounts : UserControl
+    {
+		private DBConnectionManager dbman;
+
+		private ObservableCollection<Account> accounts;
+		private ObservableCollection<Account> accounts_final;
+
+		private int items;
+
 		public Accounts()
-		{
-			pmsutil = new PMSUtil();
-			InitializeComponent();
-			NameTextbox.Text = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
-			AccountNameHolder.Content = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
-			AccountRoleHolder.Content = pmsutil.GetAccountType(Application.Current.Resources["uid"].ToString());
-		}
+        {
+            InitializeComponent();
+			items = Convert.ToInt32(ItemsPerPage.Text);
+			SyncAccounts();
+        }
+		private void SyncAccounts() {
 
-		private void SaveButton_Click1(object sender, RoutedEventArgs e)
-		{
+			accounts = new ObservableCollection<Account>();
+			accounts_final = new ObservableCollection<Account>();
+
+			int itemsPerPage = items;
+			int page = 1;
+			int count = 0;
+
 			dbman = new DBConnectionManager();
 
-			string uid = Application.Current.Resources["uid"].ToString();
-			string old_pass_key = CurrentPassword.Password;
-			string pass_key = SecurePasswordHasher.Hash(NewPassword1.Password);
-
-			if (NewPassword1.Password == NewPassword2.Password)
-			{
-				if (dbman.DBConnect().State == ConnectionState.Open)
-				{
-					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-					cmd.CommandText = "SELECT * FROM accounts WHERE account_id = @uid LIMIT 1;";
-					cmd.Parameters.AddWithValue("@uid", uid);
-					MySqlDataReader db_reader = cmd.ExecuteReader();
-					while (db_reader.Read())
-					{
-						if (SecurePasswordHasher.Verify(old_pass_key, db_reader.GetString("pass_key")) == true)
-						{
-							//TODO
-							try
-							{
-								MySqlCommand cmd2 = dbman.DBConnect().CreateCommand();
-								cmd2.CommandText =
-									"UPDATE accounts SET pass_key = @pass_key WHERE account_id = @account_id;";
-								cmd2.Prepare();
-								cmd2.Parameters.AddWithValue("@account_id", uid);
-								cmd2.Parameters.AddWithValue("@pass_key", pass_key);
-								int stat_code = cmd2.ExecuteNonQuery();
-								//string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
-								InfoArea1.Foreground = new SolidColorBrush(Colors.Green);
-								InfoArea1.Content = "Password successfully changed!";
-							}
-							catch (MySqlException ex)
-							{
-								Console.WriteLine("Error: {0}", ex.ToString());
-							}
-						}
-						else
-						{
-							InfoArea1.Foreground = new SolidColorBrush(Colors.Red);
-							InfoArea1.Content = "Password does not match! Please check your inputs and try again.";
-						}
-					}
-					//close Connection
-					dbman.DBClose();
-				}
-				else
-				{
-
-				}
-			}
-			else {
-				InfoArea1.Foreground = new SolidColorBrush(Colors.Red);
-				InfoArea1.Content = "Password does not match! Please check your inputs and try again.";
-			}
-		}
-		private void SaveButton_Click2(object sender, RoutedEventArgs e)
-		{
-			string uid = Application.Current.Resources["uid"].ToString();
-			string fname = NameTextbox.Text;
-			dbman = new DBConnectionManager();
-
+			//AccountsItemContainer.Items.Clear();
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
-				//TODO
-				try
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM accounts, accounts_info WHERE accounts.account_id = accounts_info.account_id;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
 				{
-					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-					cmd.CommandText =
-						"UPDATE accounts_info SET name = @fname WHERE account_id = @account_id;";
-					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@account_id", uid);
-					cmd.Parameters.AddWithValue("@fname", fname);
-					int stat_code = cmd.ExecuteNonQuery();
-					//string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
-					InfoArea2.Foreground = new SolidColorBrush(Colors.Green);
-					InfoArea2.Content = "Name successfully changed!";
-
-					//close Connection
-					dbman.DBClose();
+					string acc_type;
+					switch (db_reader.GetInt32("account_type")) {
+						case 1:
+							acc_type = "Administrator";
+							break;
+						case 2:
+							acc_type = "Secretary";
+							break;
+						case 3:
+							acc_type = "Registrar";
+							break;
+						case 4:
+							acc_type = "Cashier";
+							break;
+						case 5:
+							acc_type = "Cemetery Staff";
+							break;
+						case 6:
+							acc_type = "Custom";
+							break;
+						default:
+							acc_type = "null";
+							break;
+					}
+					accounts.Add(new Account()
+					{
+						AccountID = db_reader.GetString("account_id"),
+						Username = db_reader.GetString("user_name"),
+						Role = acc_type,
+						EmpName = db_reader.GetString("name"),
+						CreationDate = DateTime.Parse(db_reader.GetString("date_created")).ToString("MMM dd, yyyy"),
+						CreationTime = DateTime.Parse(db_reader.GetString("time_created")).ToString("hh:mm tt"),
+						Page = page
+					});
+					count++;
+					if (count == itemsPerPage) {
+						page++;
+						count = 0;
+					}
 				}
-				catch (MySqlException ex)
-				{
-					Console.WriteLine("Error: {0}", ex.ToString());
+				foreach (var cur in accounts) {
+					if (cur.Page == CurrentPage.Value) {
+						accounts_final.Add(new Account()
+						{
+							AccountID = cur.AccountID,
+							Username = cur.Username,
+							Role = cur.Role,
+							EmpName = cur.EmpName,
+							CreationDate = cur.CreationDate,
+							CreationTime = cur.CreationTime,
+							Page = cur.Page
+						});
+					}
 				}
+				//close Connection
+				dbman.DBClose();
+				//AccountsItemContainer.Items.Clear();
+				AccountsItemContainer.Items.Refresh();
+				AccountsItemContainer.ItemsSource = accounts_final;
+				AccountsItemContainer.Items.Refresh();
 			}
 			else
 			{
 
 			}
 		}
-			private void ResetButton_Click1(object sender, RoutedEventArgs e)
+
+		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
-			CurrentPassword.Clear();
-			NewPassword1.Clear();
-			NewPassword2.Clear();
+			SyncAccounts();
 		}
-		private void ResetButton_Click2(object sender, RoutedEventArgs e)
+		private void Update2(object sender, SelectionChangedEventArgs e)
 		{
-			NameTextbox.Text = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
+			SyncAccounts();
+		}
+		private async void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new AddAccountWindow());
 		}
 	}
 }
