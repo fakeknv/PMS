@@ -17,7 +17,7 @@ namespace PMS
         private const int HashSize = 20;
 
         /// <summary>
-        /// Creates a hash from a password
+        /// Creates a hash from a password.
         /// </summary>
         /// <param name="password">the password</param>
         /// <param name="iterations">number of iterations</param>
