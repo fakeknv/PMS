@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
@@ -18,27 +19,30 @@ namespace PMS.UIManager.Views
     {
 		private DBConnectionManager dbman;
 
+		private PMSUtil pmsutil;
+
 		private ObservableCollection<Account> accounts;
 		private ObservableCollection<Account> accounts_final;
-
-		private int items;
 
 		public Accounts()
         {
             InitializeComponent();
-			items = Convert.ToInt32(ItemsPerPage.Text);
 			SyncAccounts();
-        }
+			ItemsPerPage.SelectionChanged += Update2;
+			CurrentPage.ValueChanged += Update;
+		}
 		private void SyncAccounts() {
 
 			accounts = new ObservableCollection<Account>();
 			accounts_final = new ObservableCollection<Account>();
 
-			int itemsPerPage = items;
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
 			int page = 1;
 			int count = 0;
 
 			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
 
 			//AccountsItemContainer.Items.Clear();
 			if (dbman.DBConnect().State == ConnectionState.Open)
@@ -49,29 +53,7 @@ namespace PMS.UIManager.Views
 				while (db_reader.Read())
 				{
 					string acc_type;
-					switch (db_reader.GetInt32("account_type")) {
-						case 1:
-							acc_type = "Administrator";
-							break;
-						case 2:
-							acc_type = "Secretary";
-							break;
-						case 3:
-							acc_type = "Registrar";
-							break;
-						case 4:
-							acc_type = "Cashier";
-							break;
-						case 5:
-							acc_type = "Cemetery Staff";
-							break;
-						case 6:
-							acc_type = "Custom";
-							break;
-						default:
-							acc_type = "null";
-							break;
-					}
+					acc_type = pmsutil.GetAccountType(db_reader.GetString("account_id"));
 					accounts.Add(new Account()
 					{
 						AccountID = db_reader.GetString("account_id"),
@@ -127,6 +109,24 @@ namespace PMS.UIManager.Views
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new AddAccountWindow());
+		}
+		private async void MsgNoItemSelected()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
+		}
+		private async void EditAccountButton_Click(object sender, RoutedEventArgs e)
+		{
+			Account ac = (Account)AccountsItemContainer.SelectedItem;
+			if (ac == null)
+			{
+				MsgNoItemSelected();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new EditAccountWindow(ac.AccountID), this.AccountsMainGrid);
+			}
 		}
 	}
 }

@@ -7,13 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
-    x:Class="PMS.UIManager.Views.Accounts"
+    x:Class="PMS.UIManager.Views.EventTypes"
     Margin="0" 
     Padding="0" 
     d:DesignHeight="837.513" 
     d:DesignWidth="947.25">
     <Grid 
-        x:Name="AccountsMainGrid" 
+        x:Name="EventTypesMainGrid" 
         Background="#FFF1F1F3">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
                 Background="#FF3C7AC9" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 Foreground="White" 
-                Click="CreateAccountButton_Click"
+                Click="CreateTypeButton_Click"
                 HorizontalAlignment="Right" Grid.Column="1">
                 <StackPanel 
                     Orientation="Horizontal">
@@ -71,24 +71,24 @@
                         <Rectangle.Fill>
                             <VisualBrush 
                                 Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome UserPlusSolid}" />
+                                Visual="{iconPacks:FontAwesome CalendarSolid}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock 
-                        Text="  Add Account" 
+                        Text="  Add Type" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
             <Button
                 Margin="0,7,164,0" 
                 VerticalAlignment="Top" 
-                Width="89" 
+                Width="81" 
                 Height="31" 
                 Background="#FF3C7AC9" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 Foreground="White" 
-                Click="EditAccountButton_Click"
-                HorizontalAlignment="Right" Grid.Column="1">
+                HorizontalAlignment="Right" 
+                Grid.Column="1" Click="EditButtonClick">
                 <StackPanel 
                     Orientation="Horizontal">
                     <Rectangle 
@@ -106,58 +106,40 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <DataGrid x:Name="AccountsItemContainer" Height="746" Margin="0,82,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+        <DataGrid x:Name="EventTypeItemContainer" Height="746" Margin="0,82,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Account ID" SortMemberPath="AccountID" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Appointment Type" SortMemberPath="AppointmentType" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding AccountID}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" Text="{Binding AppointmentType}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Username" Width="1*" SortMemberPath="Username" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="IsCustom" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Username}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" Text="{Binding IsCustom}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Role" Width=".5*" SortMemberPath="Role" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Fee" SortMemberPath="Fee" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Role}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Employee Name" Width="1*" SortMemberPath="EmpName" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Status" SortMemberPath="IsActive" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding EmpName}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Creation Date" Width=".5*" SortMemberPath="CreationDate" CanUserSort="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding CreationDate}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Creation Time" Width=".5*" SortMemberPath="CreationTime" CanUserSort="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding CreationTime}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" Text="{Binding IsActive}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

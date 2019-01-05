@@ -1,0 +1,103 @@
+﻿<simpleChildWindow:ChildWindow 
+    x:Class="PMS.UIManager.Views.ChildWindows.AddEventTypeWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    ShowTitleBar="False"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsOpen="True"
+    IsModal="False"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d" Width="653" Height="261.955">
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush 
+            Opacity="0.7" 
+            Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="258">
+        <Grid Background="#FF3E4A59" Margin="0,0,0,226">
+            <Label Content="ADD EVENT TYPE" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="CalendarPlusSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,215,0,0" Height="46" VerticalAlignment="Top">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="Cancel_Click"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="CreateEventTypeButton_Click"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Grid Margin="0,32,0,0" Height="183" VerticalAlignment="Top">
+            <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="251,119,0,0" VerticalAlignment="Top" Width="311" Height="26">
+                <ComboBoxItem Content="Mass"/>
+                <ComboBoxItem Content="Special"/>
+            </ComboBox>
+            <Label
+                Content="Type" 
+                HorizontalAlignment="Left" 
+                Margin="203,119,0,0" 
+                VerticalAlignment="Top" 
+                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+            <Label
+                Content="Event/Service/Appointment" 
+                HorizontalAlignment="Left" 
+                Margin="79,32,0,0" 
+                VerticalAlignment="Top" 
+                Width="167" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+            <TextBox x:Name="EType" HorizontalAlignment="Left" Height="23" Margin="251,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
+            <mah:NumericUpDown x:Name="Fee" Minimum="0" HorizontalAlignment="Left" Margin="251,76,0,0" VerticalAlignment="Top" Width="125"/>
+            <Label
+                Content="Fee" 
+                HorizontalAlignment="Left" 
+                Margin="203,76,0,0" 
+                VerticalAlignment="Top" 
+                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+            <Label
+                Content="Status" 
+                HorizontalAlignment="Left" 
+                Margin="388,76,0,0" 
+                VerticalAlignment="Top" 
+                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+            <ComboBox x:Name="Active" HorizontalAlignment="Left" SelectedIndex="0" Margin="436,76,0,0" VerticalAlignment="Top" Width="126" Height="26">
+                <ComboBoxItem Content="Active"/>
+                <ComboBoxItem Content="Inactive"/>
+            </ComboBox>
+        </Grid>
+    </Grid>
+</simpleChildWindow:ChildWindow>

@@ -98,9 +98,9 @@
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome SitemapSolid}"
-						Label="Directory of the Deceased">
+						Label="Deceased Directory">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:DirectoryOfTheDeceased />
+                                <views:DeceasedDirectory />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
@@ -129,6 +129,27 @@
 						Label="Manage Accounts">
                             <controls:HamburgerMenuIconItem.Tag>
                                 <views:Accounts />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome UsersCogSolid}"
+						Label="Manage Priests">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:Priests />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome ClockSolid}"
+						Label="Manage Timeslots">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:TimeSlots />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome CalendarSolid}"
+						Label="Manage Appointment Types">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:EventTypes />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>

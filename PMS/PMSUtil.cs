@@ -131,20 +131,28 @@ namespace PMS
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					if (db_reader.GetInt32("account_type") == 1) {
+					if (db_reader.GetInt32("account_type") == 1)
+					{
 						ret = "Administrator";
 					}
 					else if (db_reader.GetInt32("account_type") == 2)
 					{
-						ret = "Cashier";
+						ret = "Secretary";
 					}
 					else if (db_reader.GetInt32("account_type") == 3)
 					{
-						ret = "Secretary";
+						ret = "Registrar";
 					}
 					else if (db_reader.GetInt32("account_type") == 4)
 					{
+						ret = "Cashier";
+					}
+					else if (db_reader.GetInt32("account_type") == 5)
+					{
 						ret = "Cemetery Personnel";
+					}
+					else {
+						ret = "Custom";
 					}
 				}
 				//close Connection
@@ -248,6 +256,48 @@ namespace PMS
 			}
 			return ret;
 		}
+		internal string GenEventTypeID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(type_id) FROM appointment_types;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "ET-" + (db_reader.GetInt32("COUNT(type_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenDirectoryID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(directory_id) FROM burial_directory;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "DIR-" + (db_reader.GetInt32("COUNT(directory_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
 		internal string GenAccountID()
 		{
 			dbman = new DBConnectionManager();
@@ -259,6 +309,48 @@ namespace PMS
 				while (db_reader.Read())
 				{
 					ret = "ACNT-" + (db_reader.GetInt32("COUNT(account_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenTimeSlotID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(timeslot_id) FROM timeslots;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "TS-" + (db_reader.GetInt32("COUNT(timeslot_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenPriestID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(priest_id) FROM residing_priests;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "PT-" + (db_reader.GetInt32("COUNT(priest_id)") + 1);
 				}
 				//close Connection
 				dbman.DBClose();
@@ -322,6 +414,27 @@ namespace PMS
 				while (db_reader.Read())
 				{
 					ret = "TRN-" + (db_reader.GetInt32("COUNT(transaction_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenAppointmentLogID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(log_id) FROM scheduling_log;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "LOG-" + (db_reader.GetInt32("COUNT(log_id)") + 1);
 				}
 				//close Connection
 				dbman.DBClose();
@@ -409,6 +522,33 @@ namespace PMS
 			cmd.Parameters.AddWithValue("@log_time", curTime);
 			cmd.Parameters.AddWithValue("@log_creator", logger);
 			cmd.Parameters.AddWithValue("@record_id", recordID);
+			ret = cmd.ExecuteNonQuery().ToString();
+			dbman.DBClose();
+			return ret;
+		}
+		internal string LogScheduling(string schedID, string logType)
+		{
+			string ret = "";
+
+			string logID = GenAppointmentLogID();
+			string logger = Application.Current.Resources["uid"].ToString();
+			string[] dt = GetServerDateTime().Split(null);
+			cDate = Convert.ToDateTime(dt[0]);
+			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+			curDate = cDate.ToString("yyyy-MM-dd");
+			curTime = cTime.ToString("HH:mm:ss");
+
+			MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+			cmd.CommandText =
+				"INSERT INTO scheduling_log(log_id, log_code, log_date, log_time, log_creator, appointment_id)" +
+				"VALUES(@log_id, @log_code, @log_date, @log_time, @log_creator, @appointment_id)";
+			cmd.Prepare();
+			cmd.Parameters.AddWithValue("@log_id", logID);
+			cmd.Parameters.AddWithValue("@log_code", logType);
+			cmd.Parameters.AddWithValue("@log_date", curDate);
+			cmd.Parameters.AddWithValue("@log_time", curTime);
+			cmd.Parameters.AddWithValue("@log_creator", logger);
+			cmd.Parameters.AddWithValue("@appointment_id", schedID);
 			ret = cmd.ExecuteNonQuery().ToString();
 			dbman.DBClose();
 			return ret;

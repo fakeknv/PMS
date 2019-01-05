@@ -56,36 +56,68 @@
                     <ColumnDefinition Width="153*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <Button
+        </Grid>
+        <Grid Margin="0,46,0,0">
+            <UIComponents:Calendar Margin="20,10,270,10" Background="White"/>
+            <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="239">
+                <Button
                 x:Name="CreateRequestButton" 
-                Margin="0,7,7,0" 
+                Margin="0,53,31,0" 
                 VerticalAlignment="Top" 
-                Width="166" 
+                Width="176" 
                 Height="31" 
                 Background="WhiteSmoke" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 Foreground="#FF474747" 
-                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="AddAppointment_Click" Grid.Column="1">
-                <StackPanel 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="AddAppointment_Click">
+                    <StackPanel 
                     Orientation="Horizontal">
-                    <Rectangle 
+                        <Rectangle 
                         Width="14"
                         Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush 
+                            <Rectangle.Fill>
+                                <VisualBrush 
                                 Stretch="Fill"
                                 Visual="{iconPacks:FontAwesome CalendarAltRegular}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock 
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
                         Text=" Add Appointment" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                </StackPanel>
-            </Button>
-        </Grid>
-        <Grid Margin="0,46,0,0">
-            <UIComponents:Calendar Margin="20,10,270,10" Background="White"/>
-            <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="239"/>
+                    </StackPanel>
+                </Button>
+                <Button 
+                    Margin="0,89,31,0" 
+                    VerticalAlignment="Top" 
+                    Width="176" 
+                    Height="31" 
+                    Background="WhiteSmoke" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="#FF474747" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="GenerateList">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="14"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome ClipboardListSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Generate Today's List" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+                <Label Content="Actions" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,0,0,1" BorderBrush="#FF474747"/>
+                <Label Content="Overview" Margin="10,174,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,0,0,1" BorderBrush="#FF474747"/>
+                <Label x:Name="Year" Content="Total Schedules: " Margin="10,214,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
+                <Label x:Name="Month" Content="This Month: " Margin="10,322,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
+                <Label x:Name="Week" Content="This Week: " Margin="10,286,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
+                <Label x:Name="Day" Content="This Day: " Margin="10,250,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

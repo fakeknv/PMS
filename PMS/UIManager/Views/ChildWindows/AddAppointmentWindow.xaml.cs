@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -51,13 +53,12 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM settings WHERE key_name = @key_name;";
-				cmd.Parameters.AddWithValue("@key_name", "Fixed Time Schedule Entry");
+				cmd.CommandText = "SELECT * FROM timeslots WHERE status = 'Active';";
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					SelectedTime1.Items.Add(DateTime.Parse(db_reader.GetString("key_value")).ToString("HH:mm tt"));
+					SelectedTime1.Items.Add(DateTime.Parse(db_reader.GetString("timeslot")).ToString("HH:mm tt"));
 				}
 				//close Connection
 				dbman.DBClose();
@@ -110,7 +111,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM residing_priests;";
+				cmd.CommandText = "SELECT * FROM residing_priests WHERE priest_status = 'Active';";
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
@@ -209,7 +210,16 @@ namespace PMS.UIManager.Views.ChildWindows
 					cmd.Prepare();
 					int stat_code = cmd.ExecuteNonQuery();
 					dbman.DBClose();
-					//string tmp = pmsutil.LogRecord(apmID, "LOGC-01");
+					if (stat_code > 0)
+					{
+						MsgSuccess();
+					}
+					else
+					{
+						MsgFail();
+					}
+					string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
+					pmsutil.InsertTransaction("Regular Serv. - " + MassType.Text, "Paying", apmID, Convert.ToDouble(Fee.Value));
 				}
 				catch (MySqlException ex)
 				{
@@ -242,7 +252,16 @@ namespace PMS.UIManager.Views.ChildWindows
 					cmd.Prepare();
 					int stat_code = cmd.ExecuteNonQuery();
 					dbman.DBClose();
-					//string tmp = pmsutil.LogRecord(apmID, "LOGC-01");
+					if (stat_code > 0)
+					{
+						MsgSuccess();
+					}
+					else
+					{
+						MsgFail();
+					}
+					string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
+					pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Paying", apmID, Convert.ToDouble(Fee2.Value));
 				}
 				catch (MySqlException ex)
 				{
@@ -298,6 +317,16 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				Fee.Value = 0f;
 			}
+		}
+		private async void MsgSuccess()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Success!", "The schedule has been placed successfully.");
+		}
+		private async void MsgFail()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
 	}
 }

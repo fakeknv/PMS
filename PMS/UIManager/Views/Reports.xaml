@@ -6,13 +6,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:local="clr-namespace:PMS"
     xmlns:MetroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart" 
     mc:Ignorable="d"
     x:Class="PMS.UIManager.Views.Reports"
     Margin="0" 
     Padding="0" 
-    d:DesignHeight="837.513" 
+    d:DesignHeight="1161.513" 
     d:DesignWidth="947.25">
     <Grid 
         x:Name="RequestMainGrid" 
@@ -56,104 +57,76 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Grid>
-        <mah:MetroAnimatedTabControl Margin="7,144,7,7">
-            <TabItem Header="Billing" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid>
-                    <Button
-                        x:Name="BackButton" 
-                        Style="{DynamicResource MetroCircleButtonStyle}" 
-                        Content="{iconPacks:FontAwesome ChevronLeftSolid}" 
-                        Margin="13,10,0,0" 
-                        VerticalAlignment="Top" 
-                        Height="30" 
-                        Background="White" 
-                        BorderBrush="{x:Null}" 
-                        RenderTransformOrigin="0.824,0.294" 
-                        Foreground="#FF717171" 
-                        Width="30" 
-                        HorizontalAlignment="Left"/>
-                    <Label x:Name="ReportLabel" Content="Showing This Week's Transactions" HorizontalAlignment="Left" Margin="48,10,0,0" VerticalAlignment="Top" Height="30" Width="304" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16"/>
-                    <DataGrid x:Name="BillingDG" Margin="10,52,10,29" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" BorderBrush="#CCCFCFCF" BorderThickness="1">
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Receipt Number">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding ReceiptNo}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Type">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Left" Text="{Binding Type}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Status">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Status}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Fee">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Fee}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Date Placed">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding DPlaced}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Date Completed">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding DCompleted}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Placed By">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding PlacedBy}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Completed By">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding CompletedBy}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+        <mah:MetroAnimatedTabControl Margin="7,51,7,7">
+            <TabItem Header="Transactions" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+                <Grid Margin="0,0,0,-2">
+                    <Label x:Name="ReportLabel" Content="Showing This Year's Monthly Transactions" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="30" Width="322" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                    <ScrollViewer Margin="0,45,0,0">
+                        <Grid Margin="0,0,0,45">
+                            <lvc:CartesianChart x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Top" Margin="28,0,10,0" >
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis x:Name="YLabel" Title="Transactions" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                            </lvc:CartesianChart>
+                            <Label x:Name="ReportLabel_Copy" Content="Summary" HorizontalAlignment="Left" Margin="74,406,0,0" VerticalAlignment="Top" Height="50" Width="212" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747" FontWeight="Bold"/>
+                            <Label Content="Total Transactions:" HorizontalAlignment="Left" Margin="126,461,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy2" Content="Amount:" HorizontalAlignment="Left" Margin="533,461,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy3" Content="This Week:" HorizontalAlignment="Left" Margin="126,496,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy4" Content="Amount:" HorizontalAlignment="Left" Margin="533,496,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy5" Content="This Month:" HorizontalAlignment="Left" Margin="126,531,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy6" Content="This Year:" HorizontalAlignment="Left" Margin="126,566,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy7" Content="Amount:" HorizontalAlignment="Left" Margin="533,531,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy8" Content="Amount:" HorizontalAlignment="Left" Margin="533,566,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy9" Content="Transactions Breakdown" HorizontalAlignment="Left" Margin="74,630,0,0" VerticalAlignment="Top" Height="50" Width="306" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747"/>
+                            <lvc:PieChart LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Margin="28,680,458,10">
+                                <lvc:PieChart.Series>
+                                    <lvc:PieSeries x:Name="BaptismalVal" Title="Baptismal" Values="3" DataLabels="True"
+                               LabelPoint="{Binding PointLabel}"/>
+                                    <lvc:PieSeries x:Name="ConfirmationVal" Title="Confirmation" Values="4" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                                    <lvc:PieSeries x:Name="MatrimonialVal" Title="Matrimonial" Values="6" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                                    <lvc:PieSeries x:Name="BurialVal" Title="Burial" Values="2" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                                    <lvc:PieSeries x:Name="OthersVal" Title="Others" Values="2" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel}"/>
+                                </lvc:PieChart.Series>
+                            </lvc:PieChart>
+                            <Label x:Name="ReportLabel_Copy10" Content="Certificate Retrieval:" HorizontalAlignment="Left" Margin="466,714,0,0" VerticalAlignment="Top" Height="30" Width="161" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy11" Content="Baptismal:" HorizontalAlignment="Left" Margin="533,749,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy12" Content="Confirmation:" HorizontalAlignment="Left" Margin="511,784,0,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy13" Content="Matrimonial:" HorizontalAlignment="Left" Margin="518,819,0,0" VerticalAlignment="Top" Height="30" Width="104" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy14" Content="Burial:" HorizontalAlignment="Left" Margin="563,854,0,0" VerticalAlignment="Top" Height="30" Width="59" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy15" Content="Other Services:" HorizontalAlignment="Left" Margin="501,924,0,0" VerticalAlignment="Top" Height="30" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="TotalCertificateRetrieval" Content="123" HorizontalAlignment="Left" Margin="632,714,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="BaptismalCount" Content="123" HorizontalAlignment="Left" Margin="632,749,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ConfirmationCount" Content="123" HorizontalAlignment="Left" Margin="632,784,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="MatrimonialCount" Content="123" HorizontalAlignment="Left" Margin="632,819,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="BurialCount" Content="123" HorizontalAlignment="Left" Margin="632,854,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="OtherCount" Content="123" HorizontalAlignment="Left" Margin="632,924,0,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="TotalTransactions" HorizontalAlignment="Left" Margin="292,461,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ThisWeeksTransactions" HorizontalAlignment="Left" Margin="292,496,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ThisMonthsTransactions" HorizontalAlignment="Left" Margin="292,531,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ThisYearsTransactions" HorizontalAlignment="Left" Margin="292,566,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="Amount1" HorizontalAlignment="Left" Margin="627,461,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="Amount2" HorizontalAlignment="Left" Margin="627,496,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="Amount3" HorizontalAlignment="Left" Margin="627,531,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="Amount4" HorizontalAlignment="Left" Margin="627,566,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
+                            <ComboBox x:Name="PieRerortType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,641,30,0" VerticalAlignment="Top" Width="152" Height="30" DropDownClosed="UpdatePieChart">
+                                <ComboBoxItem Content="Tranasction Count"/>
+                                <ComboBoxItem Content="Transaction Amount"/>
+                            </ComboBox>
+                            <Label Content="Report Type: " HorizontalAlignment="Left" Margin="642,641,0,0" VerticalAlignment="Top" Height="30" Width="95" FontFamily="Segoe UI Symbol" FontSize="14"/>
+                        </Grid>
+                    </ScrollViewer>
                     <Button
                         x:Name="CreateRequestButton_Copy" 
-                        Margin="0,10,10,0" 
+                        Margin="0,10,14,0" 
                         VerticalAlignment="Top" 
-                        Width="127" 
+                        Width="123" 
                         Height="30" 
                         Background="WhiteSmoke" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
@@ -177,14 +150,11 @@
                                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                         </StackPanel>
                     </Button>
-                    <Label Content="Total Amount: PHP 37,300.00" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Bottom" Height="29" Width="208" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label Content="Total Transactions: 50" HorizontalAlignment="Right" Margin="0,0,218,0" VerticalAlignment="Bottom" Height="29" Width="139" FontFamily="/PMS;component/Assets/Fonts/#Roboto" RenderTransformOrigin="-0.301,0.575"/>
-                    <ComboBox x:Name="ReportRange" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,142,0" VerticalAlignment="Top" Width="147" Height="30" SelectionChanged="SyncChanges">
-                        <ComboBoxItem>Weekly</ComboBoxItem>
-                        <ComboBoxItem>Monthly</ComboBoxItem>
-                        <ComboBoxItem>Annually</ComboBoxItem>
+                    <ComboBox x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,142,0" VerticalAlignment="Top" Width="147" Height="30" DropDownClosed="UpdateChart">
+                        <ComboBoxItem>Transaction Count</ComboBoxItem>
+                        <ComboBoxItem>Transaction Amount</ComboBoxItem>
                     </ComboBox>
-                    <ComboBox x:Name="StatusType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,294,0" VerticalAlignment="Top" Width="125" Height="30" SelectionChanged="SyncChanges">
+                    <ComboBox x:Name="StatusType" SelectedIndex="1" HorizontalAlignment="Right" Margin="0,10,294,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
                         <ComboBoxItem Content="All"/>
                         <ComboBoxItem Content="Paying"/>
                         <ComboBoxItem Content="Finished"/>
@@ -192,7 +162,7 @@
                     </ComboBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+            <TabItem Header="Registers and Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
                 <Grid>
                     <Button
                         x:Name="BackButton_Copy" 
@@ -237,100 +207,13 @@
                         </StackPanel>
                     </Button>
                     <Border Margin="10,45,10,0" BorderBrush="#FFCDCDCD" BorderThickness="1">
-                        <Grid Margin="0,0,0,-1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="143*"/>
-                                <RowDefinition Height="17*"/>
-                                <RowDefinition Height="445*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="242*"/>
-                                <ColumnDefinition Width="228*"/>
-                                <ColumnDefinition Width="226*"/>
-                                <ColumnDefinition Width="215*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Margin="10" Background="#FF36749E">
-                                <iconPacks:PackIconFontAwesome Kind="BookSolid" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Height="46" Width="50" Foreground="White"/>
-                                <Label Content="Total Parish Registers" HorizontalAlignment="Left" Margin="65,10,0,0" VerticalAlignment="Top" Width="159" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
-                                <Label Content="16" HorizontalAlignment="Left" Margin="65,37,0,0" VerticalAlignment="Top" Width="140" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="24" Height="57" HorizontalContentAlignment="Center" Padding="0" Foreground="White"/>
-                            </Grid>
-                            <Grid Margin="10" Background="#FF4BB5FF" Grid.Column="2">
-                                <iconPacks:PackIconFontAwesome Kind="ArchiveSolid" HorizontalAlignment="Left" Margin="15,20,0,0" VerticalAlignment="Top" Height="46" Width="48" Foreground="White"/>
-                                <Label Content="Archived Registers" HorizontalAlignment="Left" Margin="68,10,0,0" VerticalAlignment="Top" Width="148" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
-                                <Label Content="3" HorizontalAlignment="Left" Margin="68,37,0,0" VerticalAlignment="Top" Width="120" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="24" Height="57" HorizontalContentAlignment="Center" Padding="0" Foreground="White"/>
-                            </Grid>
-                            <Grid Margin="10" Background="#FF36749E" Grid.Column="1">
-                                <iconPacks:PackIconFontAwesome Kind="FileAltSolid" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" Height="47" Width="53" Foreground="White"/>
-                                <Label Content="Total Records" HorizontalAlignment="Left" Margin="63,8,0,0" VerticalAlignment="Top" Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White" HorizontalContentAlignment="Center"/>
-                                <Label Content="5892" HorizontalAlignment="Left" Margin="63,35,0,0" VerticalAlignment="Top" Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="24" Height="57" HorizontalContentAlignment="Center" Padding="0" Foreground="White"/>
-                            </Grid>
-                            <Grid Margin="0,10,10,10" Background="#FF4BB5FF" Grid.Column="3">
-                                <iconPacks:PackIconFontAwesome Kind="FileArchiveRegular" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top" Height="48" Width="48" Foreground="White"/>
-                                <Label Content="Archived Records" HorizontalAlignment="Left" Margin="58,10,0,0" VerticalAlignment="Top" Width="137" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White" HorizontalContentAlignment="Center"/>
-                                <Label Content="2654" HorizontalAlignment="Left" Margin="63,37,0,0" VerticalAlignment="Top" Width="132" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="24" Height="57" HorizontalContentAlignment="Center" Padding="0" Foreground="White"/>
-                            </Grid>
-                            <ScrollViewer Grid.Row="2" Grid.ColumnSpan="4" Margin="10,0">
-                                <DataGrid x:Name="ArchiveDG" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
-                                    <DataGrid.Columns>
-                                        <DataGridTemplateColumn Header="Book No.">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock TextAlignment="Center" Text="{Binding BookNo}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Book Type">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock TextAlignment="Center" Text="{Binding BookType}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Pages">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock TextAlignment="Center" Text="{Binding Pages}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Records">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock TextAlignment="Center" Text="{Binding Records}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Status">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <TextBlock TextAlignment="Center" Text="{Binding Status}"/>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </ScrollViewer>
+                        <Grid Height="189" VerticalAlignment="Top" HorizontalAlignment="Left" Width="232">
+                            <Label Content="Archive Drive Memory Usage" Margin="40,9,23,154" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            <Label Content="0.0 MB" Margin="40,229,23,-66" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                         </Grid>
                     </Border>
                 </Grid>
             </TabItem>
         </mah:MetroAnimatedTabControl>
-        <Grid Height="88" Margin="7,51,7,0" VerticalAlignment="Top">
-            <Grid.Background>
-                <ImageBrush ImageSource="/PMS;component/Assets/pexels-photo-458918.jpeg" Stretch="UniformToFill"/>
-            </Grid.Background>
-            <Label Content="Reports" HorizontalAlignment="Left" Margin="31,29,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="221" FontSize="18" Height="24" Padding="5,0" Foreground="White"/>
-            <Label Content="Welcome Administrator" HorizontalAlignment="Left" Margin="31,53,0,0" VerticalAlignment="Top" Width="221" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="5,0" Foreground="White"/>
-        </Grid>
     </Grid>
 </UserControl>

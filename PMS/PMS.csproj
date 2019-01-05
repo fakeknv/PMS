@@ -84,6 +84,12 @@
     <Reference Include="ICSharpCode.WpfDesign.XamlDom, Version=6.1.106.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ICSharpCode.WpfDesigner.6.1.106\lib\net40\ICSharpCode.WpfDesign.XamlDom.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.4\lib\net46\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -197,7 +203,10 @@
     <Compile Include="UIComponents\BurialEntries.xaml.cs">
       <DependentUpon>BurialEntries.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\DirectoryItem.cs" />
+    <Compile Include="UIComponents\DirectoryPreviewItem.cs" />
     <Compile Include="UIComponents\EventsItem.cs" />
+    <Compile Include="UIComponents\EventType.cs" />
     <Compile Include="UIComponents\MatrimonialEntries.xaml.cs">
       <DependentUpon>MatrimonialEntries.xaml</DependentUpon>
     </Compile>
@@ -216,6 +225,7 @@
     <Compile Include="UIComponents\DirectoryResultsItem.xaml.cs">
       <DependentUpon>DirectoryResultsItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\Priest.cs" />
     <Compile Include="UIComponents\RecordEntryBaptismal.cs" />
     <Compile Include="UIComponents\RecordEntryBurial.cs" />
     <Compile Include="UIComponents\RecordEntryConfirmation.cs" />
@@ -229,6 +239,7 @@
     <Compile Include="UIComponents\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\TimeSlot.cs" />
     <Compile Include="UIComponents\TransactionItem.xaml.cs">
       <DependentUpon>TransactionItem.xaml</DependentUpon>
     </Compile>
@@ -241,6 +252,45 @@
     </Compile>
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditEventTypeWindow.xaml.cs">
+      <DependentUpon>EditEventTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddEventTypeWindow.xaml.cs">
+      <DependentUpon>AddEventTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditDirectoryWindow.xaml.cs">
+      <DependentUpon>EditDirectoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ViewInfoWindow.xaml.cs">
+      <DependentUpon>ViewInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditAccountWindow.xaml.cs">
+      <DependentUpon>EditAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditPriestWindow.xaml.cs">
+      <DependentUpon>EditPriestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditTimeSlotWindow.xaml.cs">
+      <DependentUpon>EditTimeSlotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddTimeSlotWindow.xaml.cs">
+      <DependentUpon>AddTimeSlotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddPriestWindow.xaml.cs">
+      <DependentUpon>AddPriestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\DeceasedDirectory.xaml.cs">
+      <DependentUpon>DeceasedDirectory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\EventTypes.xaml.cs">
+      <DependentUpon>EventTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\TimeSlots.xaml.cs">
+      <DependentUpon>TimeSlots.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\Priests.xaml.cs">
+      <DependentUpon>Priests.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\Accounts.xaml.cs">
       <DependentUpon>Accounts.xaml</DependentUpon>
@@ -325,7 +375,6 @@
       <DependentUpon>AddAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\Registers.xaml.cs" />
-    <Compile Include="UIManager\Views\DirectoryOfTheDeceased.cs" />
     <Compile Include="UIManager\Views\Transactions.xaml.cs" />
     <Page Include="UIComponents\AccountsItem.xaml">
       <SubType>Designer</SubType>
@@ -382,6 +431,58 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditEventTypeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddEventTypeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditDirectoryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ViewInfoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditAccountWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditPriestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditTimeSlotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddTimeSlotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddPriestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\DeceasedDirectory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\EventTypes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\TimeSlots.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\Priests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\Accounts.xaml">
       <SubType>Designer</SubType>
@@ -499,10 +600,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIManager\Views\DirectoryOfTheDeceased.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIManager\Views\Transactions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -530,6 +627,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Fonts\Roboto-Thin.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\grave-default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Content Include="Data\temp_baptismal.docx">
@@ -562,9 +662,9 @@
     <Resource Include="Assets\st_raphael_logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\st_raphael_logo_dark.png">
+    <EmbeddedResource Include="Assets\st_raphael_logo_dark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\grid2bg.jpg">
