@@ -63,14 +63,16 @@
                     <Label x:Name="ReportLabel" Content="Showing This Year's Monthly Transactions" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="30" Width="322" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
                     <ScrollViewer Margin="0,45,0,0">
                         <Grid Margin="0,0,0,45">
-                            <lvc:CartesianChart x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Top" Margin="28,0,10,0" >
-                                <lvc:CartesianChart.AxisY>
-                                    <lvc:Axis x:Name="YLabel" Title="Transactions" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-                                </lvc:CartesianChart.AxisY>
-                                <lvc:CartesianChart.AxisX>
-                                    <lvc:Axis Title="Month" Labels="{Binding Labels}"></lvc:Axis>
-                                </lvc:CartesianChart.AxisX>
-                            </lvc:CartesianChart>
+                            <Grid Margin="0,0,0,579">
+                                <lvc:CartesianChart x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Background="#FFE8E4E4" Foreground="#FF323232" >
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis x:Name="YLabel" Foreground="#FF575757" FontSize="14" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Title="Transactions" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                                    </lvc:CartesianChart.AxisY>
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis x:Name="XLabel" Title="Month" Foreground="#FF575757" FontSize="14" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Labels="{Binding Labels}"></lvc:Axis>
+                                    </lvc:CartesianChart.AxisX>
+                                </lvc:CartesianChart>
+                            </Grid>
                             <Label x:Name="ReportLabel_Copy" Content="Summary" HorizontalAlignment="Left" Margin="74,406,0,0" VerticalAlignment="Top" Height="50" Width="212" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747" FontWeight="Bold"/>
                             <Label Content="Total Transactions:" HorizontalAlignment="Left" Margin="126,461,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy2" Content="Amount:" HorizontalAlignment="Left" Margin="533,461,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
@@ -81,7 +83,8 @@
                             <Label x:Name="ReportLabel_Copy7" Content="Amount:" HorizontalAlignment="Left" Margin="533,531,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy8" Content="Amount:" HorizontalAlignment="Left" Margin="533,566,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy9" Content="Transactions Breakdown" HorizontalAlignment="Left" Margin="74,630,0,0" VerticalAlignment="Top" Height="50" Width="306" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747"/>
-                            <lvc:PieChart LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Margin="28,680,458,10">
+                            <Grid x:Name="xxx" Margin="0,685,458,0">
+                            <lvc:PieChart x:Name="PieChart" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
                                 <lvc:PieChart.Series>
                                     <lvc:PieSeries x:Name="BaptismalVal" Title="Baptismal" Values="3" DataLabels="True"
                                LabelPoint="{Binding PointLabel}"/>
@@ -95,6 +98,7 @@
                                LabelPoint="{Binding PointLabel}"/>
                                 </lvc:PieChart.Series>
                             </lvc:PieChart>
+                            </Grid>
                             <Label x:Name="ReportLabel_Copy10" Content="Certificate Retrieval:" HorizontalAlignment="Left" Margin="466,714,0,0" VerticalAlignment="Top" Height="30" Width="161" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy11" Content="Baptismal:" HorizontalAlignment="Left" Margin="533,749,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy12" Content="Confirmation:" HorizontalAlignment="Left" Margin="511,784,0,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
@@ -116,7 +120,7 @@
                             <Label x:Name="Amount3" HorizontalAlignment="Left" Margin="627,531,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="Amount4" HorizontalAlignment="Left" Margin="627,566,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <ComboBox x:Name="PieRerortType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,641,30,0" VerticalAlignment="Top" Width="152" Height="30" DropDownClosed="UpdatePieChart">
-                                <ComboBoxItem Content="Tranasction Count"/>
+                                <ComboBoxItem Content="Transaction Count"/>
                                 <ComboBoxItem Content="Transaction Amount"/>
                             </ComboBox>
                             <Label Content="Report Type: " HorizontalAlignment="Left" Margin="642,641,0,0" VerticalAlignment="Top" Height="30" Width="95" FontFamily="Segoe UI Symbol" FontSize="14"/>
@@ -133,7 +137,8 @@
                         Foreground="#FF474747" 
                         HorizontalAlignment="Right" 
                         BorderBrush="#FFE9E9E9" 
-                        BorderThickness="1" Click="GenReport1">
+                        BorderThickness="1" 
+                        Click="GenReport1">
                         <StackPanel 
                             Orientation="Horizontal">
                             <Rectangle 

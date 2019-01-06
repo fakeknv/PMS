@@ -237,18 +237,12 @@ namespace PMS.UIManager.Views
 			table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[3].Width = width * 0.24f * width;
 			table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
-			//table.Columns[4].Width = width * 0.24f * width;
-			//table.Columns[4].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[5].Width = width * 0.24f * width;
-			//table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[6].Width = width * 0.24f * width;
-			//table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 120));
 
 			//save
-			pdfDoc.SaveToFile(@"..\..\sample.pdf");
+			pdfDoc.SaveToFile(@"..\..\daily_list.pdf");
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\sample.pdf");
+			System.Diagnostics.Process.Start(@"..\..\daily_list.pdf");
 		}
 		private DataTable GenerateList()
 		{
@@ -258,56 +252,66 @@ namespace PMS.UIManager.Views
 			dtNames.Columns.Add("Sponsor", typeof(string));
 			dtNames.Columns.Add("Additional Info", typeof(string));
 
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-			dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					//Year
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @date AND status = 1 GROUP BY appointment_time ASC;";
+						cmd.Parameters.AddWithValue("@date", "2019-01-04");
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								//Year.Content = "This Year: " + db_reader.GetInt32("COUNT(*)");
+								dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+							}
+						}
+					}
+				}
+			}
+
+			//dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
 
 			return dtNames;
+		}
+		private string GetAType(string tid)
+		{
+			string ret = "";
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT appointment_type FROM appointment_types WHERE type_id = @tid;";
+				cmd.Parameters.AddWithValue("@tid", tid);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = db_reader.GetString("appointment_type");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = "";
+			}
+			return ret;
 		}
 	}
 }

@@ -13,6 +13,11 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Media;
 using LiveCharts.Defaults;
+using MahApps.Metro.Controls.Dialogs;
+using System.Reflection;
+using MahApps.Metro.Controls;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace PMS.UIManager.Views
 {
@@ -45,8 +50,6 @@ namespace PMS.UIManager.Views
 		private void SyncCharts() {
 			PointLabel = chartPoint =>
 				string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-			
-
 
 			SeriesCollection = new SeriesCollection
 			{
@@ -478,10 +481,10 @@ namespace PMS.UIManager.Views
 			}
 			return Convert.ToDouble(string.Format("{0:N3}", ret));
 		}
-		private void SyncChanges(object sender, SelectionChangedEventArgs e)
-		{
+		//private void SyncChanges(object sender, SelectionChangedEventArgs e)
+		//{
 			
-		}
+		//}
 		private void UpdateChart(object sender, EventArgs e)
 		{
 			if (ReportType.SelectedIndex == 0) {
@@ -612,82 +615,281 @@ namespace PMS.UIManager.Views
 			var selectedSeries = (PieSeries)chartpoint.SeriesView;
 			selectedSeries.PushOut = 8;
 		}
-		private void GenReport1(object sender, RoutedEventArgs e)
+		private async void GenReport1(object sender, RoutedEventArgs e)
 		{
-			////create a new pdf document
-			//PdfDocument pdfDoc = new PdfDocument();
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			var controller = await metroWindow.ShowProgressAsync("Generating...", "Please wait while the system is generating the report.");
+			controller.SetIndeterminate();
+			GenReport1Phase2();
+			// Close...
+			await controller.CloseAsync();
+		}
+		private void GenReport1Phase2() {
+			string[] dt = pmsutil.GetServerDateTime().Split(null);
+			DateTime cDate = Convert.ToDateTime(dt[0]);
+			DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
 
-			//PdfPageBase page = pdfDoc.Pages.Add();
-			//page.Canvas.DrawString("St. Raphael Parish of Legazpi City",
-			//new PdfFont(PdfFontFamily.Helvetica, 13f),
-			//new PdfSolidBrush(Color.Black),
-			//160, 10);
+			//create a new pdf document
+			PdfDocument pdfDoc = new PdfDocument();
 
-			//page.Canvas.DrawString("Monthly Transactions Report",
-			//new PdfFont(PdfFontFamily.Helvetica, 12f),
-			//new PdfSolidBrush(Color.Black),
-			//180, 28);
+			PdfPageBase page = pdfDoc.Pages.Add();
 
-			//page.Canvas.DrawString("Generated On: " + DateTime.Now.ToString("MMM dd, yyyy hh:mm tt"),
-			//new PdfFont(PdfFontFamily.Helvetica, 12f),
-			//new PdfSolidBrush(Color.Black),
-			//155, 45);
+			var stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream("PMS.Assets.st_raphael_logo_dark.png");
+			PdfImage logo = PdfImage.FromStream(stream);
+			float _width = 200;
+			float height = 80;
+			float x = (page.Canvas.ClientSize.Width - _width) / 2;
+			page.Canvas.DrawImage(logo, 0, -25, _width, height);
 
-			//page.Canvas.DrawString("Total Transactions: 1234",
-			//new PdfFont(PdfFontFamily.Helvetica, 12f),
-			//new PdfSolidBrush(Color.Black),
-			//10, 80);
+			page.Canvas.DrawString("Peñaranda St, Legazpi Port District",
+			new PdfFont(PdfFontFamily.TimesRoman, 13f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			245, 0);
 
-			//page.Canvas.DrawString("Total Amount: 123456",
-			//new PdfFont(PdfFontFamily.Helvetica, 12f),
-			//new PdfSolidBrush(Color.Black),
-			//10, 100);
+			page.Canvas.DrawString("Legazpi City, Albay",
+			new PdfFont(PdfFontFamily.TimesRoman, 13f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			280, 20);
 
-			//PdfTable table = new PdfTable();
-			//table.Style.CellPadding = 2;
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 49), new PointF(530, 49));
+
+			page.Canvas.DrawString("PMS Transactions Report",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			350, 52);
+
+			page.Canvas.DrawString("Generated on: " + DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt"),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 52);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 70), new PointF(530, 70));
+
+			page.Canvas.DrawString("Overview",
+			new PdfFont(PdfFontFamily.TimesRoman, 16f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			230, 80);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(229, 97), new PointF(295, 97));
+
+			//YLabel.FontWeight = FontWeights.Bold;
+			//XLabel.FontWeight = FontWeights.Bold;
+			//Save Charts
+			SaveToPng(ChartEx, "chart1.png");
+			SaveToPng(PieChart, "chart2.png");
+			//YLabel.FontWeight = FontWeights.Normal;
+			//XLabel.FontWeight = FontWeights.Normal;
+
+			logo = PdfImage.FromFile(@"chart2.png");
+			_width = 400;
+			height = 185;
+			x = (page.Canvas.ClientSize.Width - _width) / 2;
+			page.Canvas.DrawImage(logo, -30, 120, _width, height);
+
+			page.Canvas.DrawString("Total Transactions: " + TotalTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 125);
+
+			page.Canvas.DrawString("This Week: " + ThisWeeksTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 145);
+
+			page.Canvas.DrawString("This Month: " + ThisMonthsTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 165);
+
+			page.Canvas.DrawString("This Year: " + ThisYearsTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 185);
+
+			page.Canvas.DrawString("Total Cost: PHP " + Amount1.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 220);
+
+			page.Canvas.DrawString("This Week: PHP " + Amount2.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 240);
+
+			page.Canvas.DrawString("This Month: PHP " + Amount3.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 260);
+
+			page.Canvas.DrawString("This Year: PHP " + Amount4.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 280);
+
+			page.Canvas.DrawString("Transactions Per Month Chart",
+			new PdfFont(PdfFontFamily.TimesRoman, 16f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			165, 360);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(159, 380), new PointF(365, 380));
+
+			logo = PdfImage.FromFile(@"chart1.png");
+			_width = 490;
+			height = 230;
+			x = (page.Canvas.ClientSize.Width - _width) / 2;
+			page.Canvas.DrawImage(logo, 20, 390, _width, height);
+
+			DataTable dtNames = new DataTable();
+			dtNames.Columns.Add("Month", typeof(string));
+			dtNames.Columns.Add("Baptismal", typeof(string));
+			dtNames.Columns.Add("Confirmation", typeof(string));
+			dtNames.Columns.Add("Matrimonial", typeof(string));
+			dtNames.Columns.Add("Burial", typeof(string));
+			dtNames.Columns.Add("Other Services", typeof(string));
+			dtNames.Columns.Add("Amount", typeof(string));
+
+			for (int i = 1; i < 12; i++) {
+				dtNames.Rows.Add(DateTime.Parse("2019-" + i + "-01").ToString("MMM"), CountT(i, "Baptismal"), CountT(i, "Confirmation"), CountT(i, "Matrimonial"), CountT(i, "Burial"), CountT(i, "Others"), "PHP " + CountA(i));
+			}
+
+			PdfTable table = new PdfTable();
+			table.Style.CellPadding = 2;
 			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
-			//table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Arial", 10f));
+			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
-			//table.Style.AlternateStyle = new PdfCellStyle();
+			table.Style.AlternateStyle = new PdfCellStyle();
 			//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
-			//table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Arial", 10f));
+			table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
-			//table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
+			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
 			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;
-			//table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.Helvetica, 13f);
-			//table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+			table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.TimesRoman, 13f);
+			table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
 
-			//table.Style.ShowHeader = true;
+			table.Style.ShowHeader = true;
 
-			//table.DataSourceType = PdfTableDataSourceType.TableDirect;
+			table.DataSourceType = PdfTableDataSourceType.TableDirect;
+			table.DataSource = dtNames;
+			//Set the width of column  
+			float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
+			table.Columns[0].Width = width * 0.24f * width;
+			table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[1].Width = width * 0.21f * width;
+			table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[2].Width = width * 0.24f * width;
+			table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[3].Width = width * 0.24f * width;
+			table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[4].Width = width * 0.24f * width;
+			table.Columns[4].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[5].Width = width * 0.24f * width;
+			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[6].Width = width * 0.24f * width;
+			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Draw(page, new PointF(10, 635));
 
-			//table.DataSource = GenerateList();
+			//save
+			pdfDoc.SaveToFile(@"..\..\transactions_report.pdf");
+			//launch the pdf document
+			System.Diagnostics.Process.Start(@"..\..\transactions_report.pdf");
+		}
+		private int CountT(int month, string type) {
+			int ret = 0;
 
-			////Set the width of column  
-			//float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
-			//table.Columns[0].Width = width * 0.24f * width;
-			//table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[1].Width = width * 0.21f * width;
-			//table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[2].Width = width * 0.24f * width;
-			//table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[3].Width = width * 0.24f * width;
-			//table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[4].Width = width * 0.24f * width;
-			//table.Columns[4].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[5].Width = width * 0.24f * width;
-			//table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Columns[6].Width = width * 0.24f * width;
-			//table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			//table.Draw(page, new PointF(0, 120));
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					//This Month
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
 
-			////save
-			//pdfDoc.SaveToFile(@"..\..\sample.pdf");
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (type == "Others") {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE tran_date > @min AND tran_date < @max AND type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.';";
+						}
+						else {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE tran_date > @min AND tran_date < @max AND type = @type;";
+							cmd.Parameters.AddWithValue("@type", type + " Cert.");
+						}
+						cmd.Parameters.AddWithValue("@min", cDate.ToString("yyyy-"+ month +"-01"));
+						cmd.Parameters.AddWithValue("@max", cDate.ToString("yyyy-"+ month+1 +"-01"));
+						
+						cmd.Prepare();
 
-			////launch the pdf document
-			//System.Diagnostics.Process.Start(@"..\..\sample.pdf");
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								ret = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+				}
+			}
+
+			return ret;
+		}
+		private double CountA(int month)
+		{
+			double ret = 0;
+
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					//This Month
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT fee FROM transactions WHERE tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", cDate.ToString("yyyy-" + month + "-01"));
+						cmd.Parameters.AddWithValue("@max", cDate.ToString("yyyy-" + (month+1) + "-01"));
+						//Console.WriteLine(cDate.ToString("yyyy-" + month + "-01") +" | "+ cDate.ToString("yyyy-" + month+1 + "-01"));
+
+						cmd.Prepare();
+
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								Console.WriteLine();
+								ret += db_reader.GetDouble("fee");
+							}
+						}
+					}
+				}
+			}
+
+			return Convert.ToDouble(string.Format("{0:N3}", ret));
+		}
+		private void SaveToPng(FrameworkElement visual, string fileName)
+		{
+			var encoder = new PngBitmapEncoder();
+			EncodeVisual(visual, fileName, encoder);
 		}
 
+		private static void EncodeVisual(FrameworkElement visual, string fileName, BitmapEncoder encoder)
+		{
+			var bitmap = new RenderTargetBitmap((int)visual.ActualWidth+40, (int)visual.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+			bitmap.Render(visual);
+			var frame = BitmapFrame.Create(bitmap);
+			encoder.Frames.Add(frame);
+			using (var stream = File.Create(fileName)) encoder.Save(stream);
+		}
 		private void UpdatePieChart(object sender, EventArgs e)
 		{
 			if (PieRerortType.SelectedIndex == 0) {

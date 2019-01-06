@@ -224,18 +224,24 @@ namespace PMS.UIComponents
 				await metroWindow.ShowChildWindowAsync(new ViewRemarksWindow(record.RecordID), this.ParentGrid);
 			}
 		}
-
 		private async void Print_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
-			if (record == null)
-			{
-				MsgNoItemSelected();
+			if (EntriesHolder.SelectedItems.Count == 1) {
+				RecordEntryBaptismal record = (RecordEntryBaptismal)EntriesHolder.SelectedItem;
+
+				if (record == null)
+				{
+					MsgNoItemSelected();
+				}
+				else
+				{
+					var metroWindow = (Application.Current.MainWindow as MetroWindow);
+					await metroWindow.ShowChildWindowAsync(new PrintBaptismalRecordEntryWindow(record.RecordID));
+				}
 			}
-			else
-			{
+			else {
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new PrintBaptismalRecordEntryWindow(record.RecordID));
+				await metroWindow.ShowChildWindowAsync(new ConfirmBatchPrintWindow(EntriesHolder.SelectedItems));
 			}
 		}
 

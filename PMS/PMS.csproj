@@ -253,6 +253,12 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow.xaml.cs">
+      <DependentUpon>BatchPrintWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmBatchPrintWindow.xaml.cs">
+      <DependentUpon>ConfirmBatchPrintWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\EditEventTypeWindow.xaml.cs">
       <DependentUpon>EditEventTypeWindow.xaml</DependentUpon>
     </Compile>
@@ -431,6 +437,14 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmBatchPrintWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\EditEventTypeWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
