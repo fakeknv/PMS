@@ -19,21 +19,16 @@ namespace PMS.UIManager.Views.ChildWindows
 		private PMSUtil pmsutil;
 
 		private System.Collections.IList _items;
+		private string _type;
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
-		public ConfirmBatchPrintWindow(System.Collections.IList items)
+		public ConfirmBatchPrintWindow(System.Collections.IList items, string type)
 		{
+			_type = type;
 			_items = items;
 			pmsutil = new PMSUtil();
 			InitializeComponent();
-
-
-			//for (int i = 0; i < items.Count; i++)
-			//{
-			//	RecordEntryBaptismal recordx = (RecordEntryBaptismal)items[i];
-			//	Console.WriteLine(recordx.RecordID);
-			//}
 		}
 		/// <summary>
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
@@ -41,8 +36,24 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private async void ConfirmPrint_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new BatchPrintWindow(_items));
+			if (_type == "Baptismal") {
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new BatchPrintWindow(_items));
+			}
+			else if(_type == "Confirmation") {
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new BatchPrintWindow1(_items));
+			}
+			else if (_type == "Matrimonial")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new BatchPrintWindow2(_items));
+			}
+			else if (_type == "Burial")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new BatchPrintWindow3(_items));
+			}
 			this.Close();
 		}
 		/// <summary>

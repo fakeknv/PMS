@@ -241,7 +241,7 @@ namespace PMS.UIComponents
 			}
 			else {
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new ConfirmBatchPrintWindow(EntriesHolder.SelectedItems));
+				await metroWindow.ShowChildWindowAsync(new ConfirmBatchPrintWindow(EntriesHolder.SelectedItems, "Baptismal"));
 			}
 		}
 

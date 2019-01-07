@@ -239,20 +239,24 @@ namespace PMS.UIComponents
 		}
 		private async void Print_Click(object sender, RoutedEventArgs e)
 		{
-			string path = @"\archive.db";
-			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
-			if (record == null)
+			if (EntriesHolder.SelectedItems.Count == 1)
 			{
-				MsgNoItemSelected();
-			}
-			else if (pmsutil.IsArchived(record.RecordID) == true && pmsutil.CheckArchiveDrive(path) == "dc")
-			{
-				MsgArchiveNotConnected();
+				RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
+
+				if (record == null)
+				{
+					MsgNoItemSelected();
+				}
+				else
+				{
+					var metroWindow = (Application.Current.MainWindow as MetroWindow);
+					await metroWindow.ShowChildWindowAsync(new PrintConfirmationRecordEntryWindow(record.RecordID));
+				}
 			}
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new PrintConfirmationRecordEntryWindow(record.RecordID));
+				await metroWindow.ShowChildWindowAsync(new ConfirmBatchPrintWindow(EntriesHolder.SelectedItems, "Confirmation"));
 			}
 		}
 

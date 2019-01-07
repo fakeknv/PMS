@@ -22,6 +22,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private PMSUtil pmsutil;
 
 		private string recordID;
+		private int bookNum;
 		private int pageNum;
 		private int entryNum;
 		private string marriageDate;
@@ -73,6 +74,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
+					bookNum = db_reader.GetInt32("book_number");
 					EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
 					PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
 					MarriageDate.Text = db_reader.GetString("record_date");
@@ -210,7 +212,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("date", bmon + " " + bspl[1] + bsuff + ", " + bspl[2], true, true);
 			doc.Replace("priest", Minister.Text, true, true);
 			doc.Replace("sign", Signatory.Text, true, true);
-			doc.Replace("no", EntryNum.Value.ToString(), true, true);
+			//doc.Replace("no", EntryNum.Value.ToString(), true, true);
+			doc.Replace("no", bookNum.ToString(), true, true);
 			doc.Replace("page", PageNum.Value.ToString(), true, true);
 			string[] date = DateTime.Now.ToStrin­g("MMMM,d,yyyy").Spl­it(',');
 			doc.Replace("month", date[0], true, true);
@@ -228,6 +231,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				WindowStyle = ProcessWindowStyle.H­idden
 			};
 			Process.Start(info);
+			pmsutil.InsertTransaction("Matrimonial Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Matrimonial")));
 			return 1;
 		}
 		private int FetchMatrimonialStipend()

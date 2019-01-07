@@ -253,6 +253,15 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow3.xaml.cs">
+      <DependentUpon>BatchPrintWindow3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow2.xaml.cs">
+      <DependentUpon>BatchPrintWindow2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow1.xaml.cs">
+      <DependentUpon>BatchPrintWindow1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow.xaml.cs">
       <DependentUpon>BatchPrintWindow.xaml</DependentUpon>
     </Compile>
@@ -437,6 +446,18 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

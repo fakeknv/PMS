@@ -266,15 +266,24 @@ namespace PMS.UIComponents
 
 		private async void Print_Click(object sender, RoutedEventArgs e)
 		{
-			RecordEntryMatrimonial record = (RecordEntryMatrimonial)EntriesHolder.SelectedItem;
-			if (record == null)
+			if (EntriesHolder.SelectedItems.Count == 1)
 			{
-				MsgNoItemSelected();
+				RecordEntryMatrimonial record = (RecordEntryMatrimonial)EntriesHolder.SelectedItem;
+
+				if (record == null)
+				{
+					MsgNoItemSelected();
+				}
+				else
+				{
+					var metroWindow = (Application.Current.MainWindow as MetroWindow);
+					await metroWindow.ShowChildWindowAsync(new PrintMatrimonialRecordEntryWindow(record.RecordID));
+				}
 			}
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new PrintMatrimonialRecordEntryWindow(record.RecordID));
+				await metroWindow.ShowChildWindowAsync(new ConfirmBatchPrintWindow(EntriesHolder.SelectedItems, "Matrimonial"));
 			}
 		}
 		private async void Edit_Click(object sender, RoutedEventArgs e)

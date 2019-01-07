@@ -129,7 +129,7 @@
             BorderBrush="{x:Null}" 
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
-        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Single" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
