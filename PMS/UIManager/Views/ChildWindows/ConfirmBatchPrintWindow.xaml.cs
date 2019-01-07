@@ -43,6 +43,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new BatchPrintWindow(_items));
+			this.Close();
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

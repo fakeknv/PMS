@@ -16,7 +16,7 @@
     CloseOnOverlay="True"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
-    mc:Ignorable="d" Width="1104.027" Height="645.59">
+    mc:Ignorable="d" Width="936.027" Height="645.59">
     <simpleChildWindow:ChildWindow.Icon>
         <iconPacks:PackIconFontAwesome 
             Width="22"
@@ -29,13 +29,13 @@
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid Height="636" Width="1094">
+    <Grid Height="636" Width="926">
         <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,590,0,0" RenderTransformOrigin="0.5,0.5">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton" 
                 Content="Close" 
-                Margin="826,8,132,8"
+                Margin="672,9,132,8"
                 FontFamily="Bahnschrift Light" 
                 Click="CancelButton_Click"
                 Background="#FFF0A63A" 
@@ -73,7 +73,7 @@
             <Label Content="CONFIRM BATCH PRINT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CheckCircleSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
-        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="44,100,38,43" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+        <DataGrid AlternatingRowBackground="#EDF6FD" HorizontalScrollBarVisibility="Visible" x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="10,100,10,162" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
@@ -107,33 +107,6 @@
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock TextAlignment="Center" Text="{Binding FullName}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Birthday" Width="*" SortMemberPath="BirthDate" CanUserSort="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding BirthDate}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Legitimacy" Width="*" SortMemberPath="Legitimacy" CanUserSort="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Legitimacy}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Place of Birth" Width="*" SortMemberPath="PlaceOfBirth" CanUserSort="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock TextAlignment="Center" MaxWidth="200" TextWrapping="WrapWithOverflow" Text="{Binding PlaceOfBirth}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -182,5 +155,31 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Label Content="Please review the selected records before printing." Margin="40,45,10,0" VerticalAlignment="Top" Height="26" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <Label 
+            Content="Signatory" 
+            HorizontalAlignment="Left" 
+            Margin="48,490,0,0" 
+            VerticalAlignment="Top" 
+            Width="60" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26" Foreground="Black" Padding="0,5,5,5"/>
+        <Label 
+            Content="Printing Fee" 
+            Margin="48,536,802,0" 
+            VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="Black" Height="26" Padding="0,5,5,5"/>
+        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="126,536,0,0" VerticalAlignment="Top" Width="132" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <ComboBox x:Name="Signatory" SelectedIndex="0" HorizontalAlignment="Left" Margin="126,490,0,0" VerticalAlignment="Top" Width="380" Foreground="#FF474747"/>
+        <ComboBox x:Name="Purpose" SelectedIndex="0" HorizontalAlignment="Left" Margin="344,536,0,0" VerticalAlignment="Top" Width="162" Foreground="#FF474747">
+            <ComboBoxItem Content="For reference"/>
+            <ComboBoxItem Content="For marriage"/>
+        </ComboBox>
+        <Label 
+            Content="Purpose" 
+            HorizontalAlignment="Left" 
+            Margin="282,536,0,0" 
+            VerticalAlignment="Top" 
+            Width="58" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="Black" Height="26" Padding="0,5,5,5"/>
+        <Label x:Name="PLabel" Content="Adding to Print Queue. Please wait..." HorizontalAlignment="Left" Margin="664,490,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="252" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+        <Label x:Name="QueueCounter" Content="1/10" HorizontalAlignment="Left" Margin="710,519,0,0" VerticalAlignment="Top" Width="160" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Visibility="Hidden"/>
+        <ProgressBar x:Name="QueuePBar" HorizontalAlignment="Left" Height="10" Margin="664,548,0,0" VerticalAlignment="Top" Width="252" Visibility="Hidden"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

@@ -283,11 +283,12 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("day1", int.Parse(bspl[1]) + bsuff, true, true);
 			doc.Replace("month1", bmon, true, true);
 			doc.Replace("X1", x1, true, true);
-			doc.Replace("year1", bspl[2], true, true);
+			//doc.Replace("year1", bspl[2], true, true);
+			doc.Replace("year1", DateTime.Parse(birthDate).ToString("yyyy"), true, true);
 			doc.Replace("day2", int.Parse(dspl[1]) + dsuff, true, true);
 			doc.Replace("month2", dmon, true, true);
 			doc.Replace("X2", x2, true, true);
-			doc.Replace("year2", dspl[2], true, true);
+			doc.Replace("year2", DateTime.Parse(baptismDate).ToString("yyyy"), true, true);
 			doc.Replace("church", pmsutil.GetChurchName(), true, true);
 			doc.Replace("by", Signatory.Text, true, true);
 			doc.Replace("sponsor1", sponsor1, true, true);
