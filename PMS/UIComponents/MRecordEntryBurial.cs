@@ -19,5 +19,10 @@
 		public double Stipend { get; set; }
 		public string Minister { get; set; }
 		public string Remarks { get; set; }
+		public string Block { get; set; }
+		public string Lot { get; set; }
+		public string Plot { get; set; }
+		public string RConNum { get; set; }
+		public string ImageURI { get; set; }
 	}
 }

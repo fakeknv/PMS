@@ -88,7 +88,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						cmd.Parameters.AddWithValue("@place_of_baptism", recordx.PlaceOfBaptism);
 						cmd.Parameters.AddWithValue("@sponsor", recordx.Sponsor1);
 						cmd.Parameters.AddWithValue("@sponsor2", recordx.Sponsor2);
-						cmd.Parameters.AddWithValue("@stipend", recordx.Stipend);
+						cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(string.Format("{0:N3}", recordx.Stipend)));
 						cmd.Parameters.AddWithValue("@minister", recordx.Minister);
 						cmd.Parameters.AddWithValue("@remarks", recordx.Remarks);
 						stat_code = cmd.ExecuteNonQuery();
@@ -130,14 +130,15 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void SyncEntryNum(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			NumericUpDown nud = (NumericUpDown)sender;
-			nud.Value = RecordItemsHolder.Items.Count - 1;
+			var currentRowIndex = RecordItemsHolder.Items.IndexOf(RecordItemsHolder.CurrentItem);
+			nud.Value = currentRowIndex + 1;
 		}
 
 		private void SyncFee(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			pmsutil = new PMSUtil();
 			NumericUpDown nud = (NumericUpDown)sender;
-			nud.Value = Convert.ToDouble(pmsutil.GetPrintFee("Confirmation"));
+			nud.Value = Convert.ToDouble(string.Format("{0:N3}", pmsutil.GetPrintFee("Confirmation")));
 		}
 	}
 }

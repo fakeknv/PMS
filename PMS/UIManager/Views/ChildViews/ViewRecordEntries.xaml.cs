@@ -175,7 +175,7 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(booknum) == "Burial")
 			{
-				MessageBox.Show("Not yet implemented.");
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBurial(booknum), this.RecordEntriesMainGrid);
 			}
 		}
 	}

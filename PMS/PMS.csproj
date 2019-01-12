@@ -258,6 +258,9 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBurial.xaml.cs">
+      <DependentUpon>MultiAddRecordWindowBurial.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowMatrimonial.xaml.cs">
       <DependentUpon>MultiAddRecordWindowMatrimonial.xaml</DependentUpon>
     </Compile>
@@ -460,6 +463,10 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBurial.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowMatrimonial.xaml">
       <Generator>MSBuild:Compile</Generator>

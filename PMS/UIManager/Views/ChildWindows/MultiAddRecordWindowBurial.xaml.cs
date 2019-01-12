@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
+using Microsoft.Win32;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,24 +21,24 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for AddAccountWindow.xaml
 	/// </summary>
-	public partial class MultiAddRecordWindowBaptismal : ChildWindow
+	public partial class MultiAddRecordWindowBurial : ChildWindow
 	{
 		private MySqlConnection conn;
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-		ObservableCollection<MRecordEntryBaptismal> test1;
+		ObservableCollection<MRecordEntryBurial> test1;
 
 		private int _bookNum;
 
-		public MultiAddRecordWindowBaptismal(int bookNum)
+		public MultiAddRecordWindowBurial(int bookNum)
         {
 			
             InitializeComponent();
 			_bookNum = bookNum;
 
 
-			test1 = new ObservableCollection<MRecordEntryBaptismal>();
+			test1 = new ObservableCollection<MRecordEntryBurial>();
 
 			RecordItemsHolder.ItemsSource = test1;
 
@@ -51,8 +53,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			System.Collections.IList items = RecordItemsHolder.Items;
 			for (int i = 0; i < items.Count-1; i++)
 			{
-				MRecordEntryBaptismal recordx = (MRecordEntryBaptismal)items[i];
-				Console.WriteLine(recordx.BaptismalDate);
+				MRecordEntryBurial recordx = (MRecordEntryBurial)items[i];
+				Console.WriteLine(">>" + recordx.RConNum);
 				dbman = new DBConnectionManager();
 				pmsutil = new PMSUtil();
 				using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -70,36 +72,93 @@ namespace PMS.UIManager.Views.ChildWindows
 						cmd.Parameters.AddWithValue("@book_number", _bookNum);
 						cmd.Parameters.AddWithValue("@page_number", PageNum.Value);
 						cmd.Parameters.AddWithValue("@entry_number", recordx.EntryNumber);
-						cmd.Parameters.AddWithValue("@record_date", DateTime.Parse(recordx.BaptismalDate).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@record_date", DateTime.Parse(recordx.DeathDate).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@recordholder_fullname", recordx.FullName);
 						cmd.Parameters.AddWithValue("@parent1_fullname", recordx.Parent1);
 						cmd.Parameters.AddWithValue("@parent2_fullname", recordx.Parent2);
 						int stat_code = cmd.ExecuteNonQuery();
 						dbman.DBClose();
 						//Phase 2
-						cmd = dbman.DBConnect().CreateCommand();
+						cmd = conn.CreateCommand();
 						cmd.CommandText =
-							"INSERT INTO baptismal_records(record_id, birthday, legitimacy, place_of_birth, sponsor1, sponsor2, stipend, minister, remarks)" +
-							"VALUES(@record_id, @birthday, @legitimacy, @place_of_birth, @sponsor1, @sponsor2, @stipend, @minister, @remarks)";
+							"INSERT INTO burial_records(record_id, burial_date, age, status, residence, residence2, sacrament, cause_of_death, place_of_interment, stipend, minister, remarks)" +
+							"VALUES(@record_id, @burial_date, @age, @status, @residence, @residence2, @sacrament, @cause_of_death, @place_of_interment, @stipend, @minister, @remarks)";
 						cmd.Prepare();
 						cmd.Parameters.AddWithValue("@record_id", recID);
-						cmd.Parameters.AddWithValue("@birthday", DateTime.Parse(recordx.BirthDate).ToString("yyyy-MM-dd"));
-						cmd.Parameters.AddWithValue("@legitimacy", recordx.Legitimacy);
-						cmd.Parameters.AddWithValue("@place_of_birth", recordx.PlaceOfBirth);
-						cmd.Parameters.AddWithValue("@sponsor1", recordx.Godparent1);
-						cmd.Parameters.AddWithValue("@sponsor2", recordx.Godparent2);
+						cmd.Parameters.AddWithValue("@burial_date", DateTime.Parse(recordx.DeathDate).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@age", recordx.Age);
+						cmd.Parameters.AddWithValue("@status", recordx.Status);
+						cmd.Parameters.AddWithValue("@residence", recordx.Residence1);
+						cmd.Parameters.AddWithValue("@residence2", recordx.Residence2);
+						cmd.Parameters.AddWithValue("@sacrament", recordx.Sacrament);
+						cmd.Parameters.AddWithValue("@cause_of_death", recordx.CauseOfDeath);
+						cmd.Parameters.AddWithValue("@place_of_interment", recordx.PlaceOfInterment);
 						cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(string.Format("{0:N3}", recordx.Stipend)));
 						cmd.Parameters.AddWithValue("@minister", recordx.Minister);
 						cmd.Parameters.AddWithValue("@remarks", recordx.Remarks);
 						stat_code = cmd.ExecuteNonQuery();
-						dbman.DBClose();
+						conn.Close();
+
+						conn.Open();
+						string dirID = pmsutil.GenDirectoryID();
+						string block = "Not Specified";
+						string lot = "Not Specified";
+						string plot = "Not Specified";
+						string rconnum = "Not Specified";
+						byte[] ImageData;
+						//Phase 3
+						if (!string.IsNullOrWhiteSpace(recordx.Block))
+						{
+							block = recordx.Block;
+						}
+						if (!string.IsNullOrWhiteSpace(recordx.Lot))
+						{
+							lot = recordx.Lot;
+						}
+						if (!string.IsNullOrWhiteSpace(recordx.Plot))
+						{
+							plot = recordx.Plot;
+						}
+						if (!string.IsNullOrWhiteSpace(recordx.RConNum))
+						{
+							rconnum = recordx.RConNum;
+						}
+						if (!string.IsNullOrWhiteSpace(recordx.ImageURI))
+						{
+							FileStream fs = new FileStream(recordx.ImageURI, FileMode.Open, FileAccess.Read);
+							BinaryReader br = new BinaryReader(fs);
+							ImageData = br.ReadBytes((int)fs.Length);
+							br.Close();
+							fs.Close();
+						}
+						else
+						{
+							ImageData = null;
+						}
+						cmd = conn.CreateCommand();
+						cmd.CommandText =
+							"INSERT INTO burial_directory(directory_id, record_id, block, lot, plot, gravestone, relative_contact_number)" +
+							"VALUES(@directory_id, @record_id, @block, @lot, @plot, @gravestone, @relative_contact_number)";
+						cmd.Prepare();
+						cmd.Parameters.AddWithValue("@directory_id", dirID);
+						cmd.Parameters.AddWithValue("@record_id", recID);
+						cmd.Parameters.AddWithValue("@block", block);
+						cmd.Parameters.AddWithValue("@lot", lot);
+						cmd.Parameters.AddWithValue("@plot", plot);
+						cmd.Parameters.AddWithValue("@gravestone", ImageData);
+						cmd.Parameters.AddWithValue("@relative_contact_number", rconnum);
+						stat_code = cmd.ExecuteNonQuery();
+						conn.Close();
+
 						string tmp = pmsutil.LogRecord(recID, "LOGC-01");
 						//return stat_code;
-						if (stat_code > 0) {
+						if (stat_code > 0)
+						{
 							MsgSuccess();
 							this.Close();
 						}
-						else {
+						else
+						{
 							MsgFail();
 						}
 					}
@@ -110,6 +169,22 @@ namespace PMS.UIManager.Views.ChildWindows
 				}
 			}
 			//MessageBox.Show(items.Count.ToString());
+		}
+		private void ImagePicker_Click(object sender, RoutedEventArgs e)
+		{
+			Console.WriteLine("asd");
+			OpenFileDialog op = new OpenFileDialog
+			{
+				Title = "Select a picture",
+				Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+			  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+			  "Portable Network Graphic (*.png)|*.png"
+			};
+			if (op.ShowDialog() == true)
+			{
+				TextBox tb = (TextBox)sender;
+				tb.Text = op.FileName;
+			}
 		}
 		private async void MsgSuccess()
 		{
@@ -137,7 +212,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			pmsutil = new PMSUtil();
 			NumericUpDown nud = (NumericUpDown)sender;
-			nud.Value = Convert.ToDouble(string.Format("{0:N3}", pmsutil.GetPrintFee("Baptismal")));
+			nud.Value = Convert.ToDouble(string.Format("{0:N3}", pmsutil.GetPrintFee("Burial")));
 		}
 	}
 }
