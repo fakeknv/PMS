@@ -25,7 +25,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-		ObservableCollection<MRecordEntryConfirmation> test1;
+		ObservableCollection<MRecordEntryMatrimonial> test1;
 
 		private int _bookNum;
 
@@ -35,7 +35,7 @@ namespace PMS.UIManager.Views.ChildWindows
             InitializeComponent();
 			_bookNum = bookNum;
 
-			test1 = new ObservableCollection<MRecordEntryConfirmation>();
+			test1 = new ObservableCollection<MRecordEntryMatrimonial>();
 
 			RecordItemsHolder.ItemsSource = test1;
 
@@ -49,7 +49,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			System.Collections.IList items = RecordItemsHolder.Items;
 			for (int i = 0; i < items.Count-1; i++)
 			{
-				MRecordEntryConfirmation recordx = (MRecordEntryConfirmation)items[i];
+				MRecordEntryMatrimonial recordx = (MRecordEntryMatrimonial)items[i];
 				dbman = new DBConnectionManager();
 				pmsutil = new PMSUtil();
 				using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -67,8 +67,8 @@ namespace PMS.UIManager.Views.ChildWindows
 						cmd.Parameters.AddWithValue("@book_number", _bookNum);
 						cmd.Parameters.AddWithValue("@page_number", PageNum.Value);
 						cmd.Parameters.AddWithValue("@entry_number", recordx.EntryNumber);
-						cmd.Parameters.AddWithValue("@record_date", DateTime.Parse(recordx.ConfirmationDate).ToString("yyyy-MM-dd"));
-						cmd.Parameters.AddWithValue("@recordholder_fullname", recordx.FullName);
+						cmd.Parameters.AddWithValue("@record_date", DateTime.Parse(recordx.MarriageDate).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@recordholder_fullname", recordx.FullName1);
 						cmd.Parameters.AddWithValue("@parent1_fullname", recordx.Parent1);
 						cmd.Parameters.AddWithValue("@parent2_fullname", recordx.Parent2);
 						int stat_code = cmd.ExecuteNonQuery();
@@ -78,16 +78,25 @@ namespace PMS.UIManager.Views.ChildWindows
 						//Phase 2
 						cmd = dbman.DBConnect().CreateCommand();
 						cmd.CommandText =
-							"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
-							"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
+							"INSERT INTO matrimonial_records(record_id, recordholder2_fullname, parent1_fullname2, parent2_fullname2, status1, status2, age1, age2, place_of_origin1, place_of_origin2, residence1, residence2, witness1, witness2, witness1address, witness2address, stipend, minister, remarks)" +
+							"VALUES(@record_id, @recordholder2_fullname, @parent1_fullname2, @parent2_fullname2, @status1, @status2, @age1, @age2, @place_of_origin1, @place_of_origin2, @residence1, @residence2, @witness1, @witness2, @witness1address, @witness2address, @stipend, @minister, @remarks)";
 						cmd.Prepare();
 						cmd.Parameters.AddWithValue("@record_id", recID);
-						cmd.Parameters.AddWithValue("@age", recordx.Age);
-						cmd.Parameters.AddWithValue("@parish", recordx.Parish);
-						cmd.Parameters.AddWithValue("@province", recordx.Province);
-						cmd.Parameters.AddWithValue("@place_of_baptism", recordx.PlaceOfBaptism);
-						cmd.Parameters.AddWithValue("@sponsor", recordx.Sponsor1);
-						cmd.Parameters.AddWithValue("@sponsor2", recordx.Sponsor2);
+						cmd.Parameters.AddWithValue("@recordholder2_fullname", recordx.FullName2);
+						cmd.Parameters.AddWithValue("@parent1_fullname2", recordx.Parent3);
+						cmd.Parameters.AddWithValue("@parent2_fullname2", recordx.Parent4);
+						cmd.Parameters.AddWithValue("@status1", recordx.Status1);
+						cmd.Parameters.AddWithValue("@status2", recordx.Status2);
+						cmd.Parameters.AddWithValue("@age1", recordx.Age1);
+						cmd.Parameters.AddWithValue("@age2", recordx.Age2);
+						cmd.Parameters.AddWithValue("@place_of_origin1", recordx.Hometown1);
+						cmd.Parameters.AddWithValue("@place_of_origin2", recordx.Hometown2);
+						cmd.Parameters.AddWithValue("@residence1", recordx.Residence1);
+						cmd.Parameters.AddWithValue("@residence2", recordx.Residence2);
+						cmd.Parameters.AddWithValue("@witness1", recordx.Witness1);
+						cmd.Parameters.AddWithValue("@witness2", recordx.Witness2);
+						cmd.Parameters.AddWithValue("@witness1address", recordx.W1Residence);
+						cmd.Parameters.AddWithValue("@witness2address", recordx.W2Residence);
 						cmd.Parameters.AddWithValue("@stipend", recordx.Stipend);
 						cmd.Parameters.AddWithValue("@minister", recordx.Minister);
 						cmd.Parameters.AddWithValue("@remarks", recordx.Remarks);
