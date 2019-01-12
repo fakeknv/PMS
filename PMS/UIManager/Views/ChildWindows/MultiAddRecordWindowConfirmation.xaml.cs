@@ -25,6 +25,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
+		ObservableCollection<MRecordEntryConfirmation> test1;
 
 		private int _bookNum;
 
@@ -33,6 +34,10 @@ namespace PMS.UIManager.Views.ChildWindows
 			
             InitializeComponent();
 			_bookNum = bookNum;
+
+			test1 = new ObservableCollection<MRecordEntryConfirmation>();
+
+			RecordItemsHolder.ItemsSource = test1;
 
 		}
 		private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)

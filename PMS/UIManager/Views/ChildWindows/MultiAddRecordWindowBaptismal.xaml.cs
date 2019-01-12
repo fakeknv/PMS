@@ -37,7 +37,6 @@ namespace PMS.UIManager.Views.ChildWindows
 
 
 			test1 = new ObservableCollection<MRecordEntryBaptismal>();
-			//test1.Add( new MultiAddTest() { ID = " ", HolderName = " " });
 
 			RecordItemsHolder.ItemsSource = test1;
 
