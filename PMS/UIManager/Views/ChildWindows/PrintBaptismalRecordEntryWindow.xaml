@@ -41,7 +41,7 @@
             Content="Printing Fee" 
             Margin="65,489,449,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="Black" Height="26" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="142,489,0,0" VerticalAlignment="Top" Width="132" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Minimum="1" Margin="142,489,0,0" VerticalAlignment="Top" Width="132" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <ComboBox x:Name="Signatory" SelectedIndex="0" HorizontalAlignment="Left" Margin="142,443,0,0" VerticalAlignment="Top" Width="380" Foreground="#FF474747"/>
         <ComboBox x:Name="Purpose" SelectedIndex="0" HorizontalAlignment="Left" Margin="361,489,0,0" VerticalAlignment="Top" Width="161" Foreground="#FF474747">
             <ComboBoxItem Content="For reference"/>

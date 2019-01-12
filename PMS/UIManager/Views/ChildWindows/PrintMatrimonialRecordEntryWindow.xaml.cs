@@ -231,7 +231,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				WindowStyle = ProcessWindowStyle.H­idden
 			};
 			Process.Start(info);
-			pmsutil.InsertTransaction("Matrimonial Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Matrimonial")));
+			pmsutil.InsertTransaction("Matrimonial Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
 			return 1;
 		}
 		private int FetchMatrimonialStipend()

@@ -417,6 +417,6 @@
             Content="Printing Fee" 
             Margin="569,494,320,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="Black" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="645,492,0,0" VerticalAlignment="Top" Width="141" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Minimum="1" Margin="645,492,0,0" VerticalAlignment="Top" Width="141" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

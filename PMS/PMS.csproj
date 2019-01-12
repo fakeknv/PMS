@@ -189,6 +189,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DateConverter.cs" />
     <Compile Include="DBConnectionManager.cs" />
     <Compile Include="DriveDetector.cs">
       <SubType>Form</SubType>
@@ -226,8 +227,10 @@
       <DependentUpon>DirectoryResultsItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\Priest.cs" />
+    <Compile Include="UIComponents\MRecordEntryBaptismal.cs" />
     <Compile Include="UIComponents\RecordEntryBaptismal.cs" />
     <Compile Include="UIComponents\RecordEntryBurial.cs" />
+    <Compile Include="UIComponents\MRecordEntryConfirmation.cs" />
     <Compile Include="UIComponents\RecordEntryConfirmation.cs" />
     <Compile Include="UIComponents\RecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RegisterItemArchivesRestore.xaml.cs">
@@ -252,6 +255,12 @@
     </Compile>
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowConfirmation.xaml.cs">
+      <DependentUpon>MultiAddRecordWindowConfirmation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBaptismal.xaml.cs">
+      <DependentUpon>MultiAddRecordWindowBaptismal.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\BatchPrintWindow3.xaml.cs">
       <DependentUpon>BatchPrintWindow3.xaml</DependentUpon>
@@ -446,6 +455,14 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowConfirmation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBaptismal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\BatchPrintWindow3.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -156,5 +156,27 @@ namespace PMS.UIManager.Views.ChildViews
 				await metroWindow.ShowChildWindowAsync(new AddBurialRecordEntryWindow(this, booknum), this.RecordEntriesMainGrid);
 			}
 		}
+
+		private async void MultiAddRecord_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+
+			if (GetRegisterType(booknum) == "Confirmation")
+			{
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowConfirmation(booknum), this.RecordEntriesMainGrid);
+			}
+			else if (GetRegisterType(booknum) == "Baptismal")
+			{
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBaptismal(booknum), this.RecordEntriesMainGrid);
+			}
+			else if (GetRegisterType(booknum) == "Matrimonial")
+			{
+				MessageBox.Show("Not yet implemented.");
+			}
+			else if (GetRegisterType(booknum) == "Burial")
+			{
+				MessageBox.Show("Not yet implemented.");
+			}
+		}
 	}
 }

@@ -327,7 +327,7 @@
             Content="Printing Fee" 
             Margin="59,568,726,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="Black" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="135,566,0,0" VerticalAlignment="Top" Width="264" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="PrintingFee" HorizontalAlignment="Left" Minimum="1" Margin="135,566,0,0" VerticalAlignment="Top" Width="264" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <RadioButton IsChecked="True" GroupName="g1" x:Name="ParentsSwitch" Content="Parents" HorizontalAlignment="Left" Margin="59,303,0,0" VerticalAlignment="Top" Checked="Parents_Checked" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <RadioButton GroupName="g1" x:Name="SpouseSwitch" Content="Spouse" HorizontalAlignment="Left" Margin="192,303,0,0" VerticalAlignment="Top" Checked="Spouse_Checked" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <Label Content="or" HorizontalAlignment="Left" Margin="144,299,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>

@@ -82,6 +82,7 @@ namespace PMS
 			return ret;
 		}
 		internal int InsertTransaction(string type, string status, string targetID, double fee) {
+			Console.WriteLine(fee);
 			string uid = Application.Current.Resources["uid"].ToString();
 			string[] dt = GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);

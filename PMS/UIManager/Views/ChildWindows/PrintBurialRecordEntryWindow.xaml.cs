@@ -140,7 +140,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			Process.Start(info);
 			//Reference
 			string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
-			pmsutil.InsertTransaction("Burial Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Burial")));
+			pmsutil.InsertTransaction("Burial Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
 			return 1;
 		}
 		private void GetResidingPriests()

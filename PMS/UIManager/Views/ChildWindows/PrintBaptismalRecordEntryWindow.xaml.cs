@@ -318,7 +318,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				//Marriage
 				string tmp = pmsutil.LogRecord(recordID, "LOGC-04");
 			}
-			pmsutil.InsertTransaction("Baptismal Cert.", "Paying", recordID, Convert.ToDouble(pmsutil.GetPrintFee("Baptismal")));
+			pmsutil.InsertTransaction("Baptismal Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
 			return 1;
 		}
 		/// <summary>

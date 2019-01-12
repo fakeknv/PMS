@@ -51,6 +51,21 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private int InsertEntry()
 		{
+			//MIGRATE TO using clause
+			//dbman = new DBConnectionManager();
+			//pmsutil = new PMSUtil();
+			//using (conn = new MySqlConnection(dbman.GetConnStr()))
+			//{
+			//	conn.Open();
+			//	if (conn.State == ConnectionState.Open)
+			//	{
+
+			//	}
+			//	else
+			//	{
+
+			//	}
+			//}
 			dbman = new DBConnectionManager();
 			//TODO
 			try
