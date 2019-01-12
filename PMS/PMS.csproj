@@ -229,9 +229,11 @@
     <Compile Include="UIComponents\Priest.cs" />
     <Compile Include="UIComponents\MRecordEntryBaptismal.cs" />
     <Compile Include="UIComponents\RecordEntryBaptismal.cs" />
+    <Compile Include="UIComponents\MRecordEntryBurial.cs" />
     <Compile Include="UIComponents\RecordEntryBurial.cs" />
     <Compile Include="UIComponents\MRecordEntryConfirmation.cs" />
     <Compile Include="UIComponents\RecordEntryConfirmation.cs" />
+    <Compile Include="UIComponents\MRecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RegisterItemArchivesRestore.xaml.cs">
       <DependentUpon>RegisterItemArchivesRestore.xaml</DependentUpon>
@@ -255,6 +257,9 @@
     </Compile>
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowMatrimonial.xaml.cs">
+      <DependentUpon>MultiAddRecordWindowMatrimonial.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowConfirmation.xaml.cs">
       <DependentUpon>MultiAddRecordWindowConfirmation.xaml</DependentUpon>
@@ -455,6 +460,10 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowMatrimonial.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowConfirmation.xaml">
       <Generator>MSBuild:Compile</Generator>

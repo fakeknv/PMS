@@ -171,7 +171,7 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(booknum) == "Matrimonial")
 			{
-				MessageBox.Show("Not yet implemented.");
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowMatrimonial(booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Burial")
 			{

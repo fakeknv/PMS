@@ -1,5 +1,5 @@
 ﻿<simpleChildWindow:ChildWindow 
-    x:Class="PMS.UIManager.Views.ChildWindows.MultiAddRecordWindowConfirmation"
+    x:Class="PMS.UIManager.Views.ChildWindows.MultiAddRecordWindowMatrimonial"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -84,75 +84,103 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Confirmation Date">
+                    <DataGridTemplateColumn Header="Marriage Date">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding ConfirmationDate, Converter={StaticResource converter}}"/>
+                                <TextBlock Text="{Binding MarriageDate, Converter={StaticResource converter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <DatePicker SelectedDate="{Binding ConfirmationDate}"/>
+                                <DatePicker SelectedDate="{Binding MarriageDate}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Name">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding FullName}"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding FullName1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBlock Text="{Binding FullName2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding FullName}"/>
+                                <StackPanel>
+                                    <TextBox Text="{Binding FullName1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBox Text="{Binding FullName2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Age">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Age}"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Age1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBlock Text="{Binding Age2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Age}"/>
+                                <StackPanel>
+                                    <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Age1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Age2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Parish">
+                    <DataGridTemplateColumn Header="Hometown">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Parish}"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Hometown1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBlock Text="{Binding Hometown2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Parish}"/>
+                                <StackPanel>
+                                    <TextBox Text="{Binding Hometown1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBox Text="{Binding Hometown2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Province">
+                    <DataGridTemplateColumn Header="Residence">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Province}"/>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Residence1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBlock Text="{Binding Residence2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Province}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Baptism Place">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding PlaceOfBaptism}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding PlaceOfBaptism}"/>
+                                <StackPanel>
+                                    <TextBox Text="{Binding Residence1}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBox Text="{Binding Residence2}"/>
+                                    </Border>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -163,6 +191,10 @@
                                     <TextBlock Text="{Binding Parent1}"/>
                                     <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
                                         <TextBlock Text="{Binding Parent2}"/>
+                                    </Border>
+                                    <TextBlock Text="{Binding Parent3}"/>
+                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                        <TextBlock Text="{Binding Parent4}"/>
                                     </Border>
                                 </StackPanel>
                             </DataTemplate>
@@ -192,9 +224,9 @@
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBox Text="{Binding Sponsor1}"/>
+                                    <TextBox Text="{Binding Godparent1}"/>
                                     <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding Sponsor2}"/>
+                                        <TextBox Text="{Binding Godparent2}"/>
                                     </Border>
                                 </StackPanel>
                             </DataTemplate>
