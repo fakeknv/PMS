@@ -87,6 +87,7 @@ namespace PMS.UIManager.Views
 						TimeslotsItemContainer.Items.Refresh();
 						TimeslotsItemContainer.ItemsSource = timeslots_final;
 						TimeslotsItemContainer.Items.Refresh();
+						CurrentPage.Maximum = page;
 					}
 				}
 				else

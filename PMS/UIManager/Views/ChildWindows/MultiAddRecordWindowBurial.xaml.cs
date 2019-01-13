@@ -54,7 +54,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			for (int i = 0; i < items.Count-1; i++)
 			{
 				MRecordEntryBurial recordx = (MRecordEntryBurial)items[i];
-				Console.WriteLine(">>" + recordx.RConNum);
 				dbman = new DBConnectionManager();
 				pmsutil = new PMSUtil();
 				using (conn = new MySqlConnection(dbman.GetConnStr()))

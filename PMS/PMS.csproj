@@ -235,6 +235,7 @@
     <Compile Include="UIComponents\RecordEntryConfirmation.cs" />
     <Compile Include="UIComponents\MRecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RecordEntryMatrimonial.cs" />
+    <Compile Include="UIComponents\Register.cs" />
     <Compile Include="UIComponents\RegisterItemArchivesRestore.xaml.cs">
       <DependentUpon>RegisterItemArchivesRestore.xaml</DependentUpon>
     </Compile>
@@ -245,6 +246,7 @@
       <DependentUpon>RegisterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\TimeSlot.cs" />
+    <Compile Include="UIComponents\Transaction.cs" />
     <Compile Include="UIComponents\TransactionItem.xaml.cs">
       <DependentUpon>TransactionItem.xaml</DependentUpon>
     </Compile>

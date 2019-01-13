@@ -435,22 +435,89 @@
                 Background="White">
                 <Grid 
                     Margin="0,50,0,0">
-                    <ListView
-                        x:Name="TransactionsItemContainer" 
-                        Background="White" 
-                        BorderBrush="#E6E6E6" Margin="0,31,0,0" BorderThickness="0">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Padding" Value="0,0,0,0"/>
-                                <Setter Property="Width" Value="Auto"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                    <Label Content="Name &amp; Type" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="193" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="1" BorderBrush="#FFE2E2E2" Foreground="#FF474747" Margin="1,0,0,0"/>
-                    <Label Content="Status" VerticalAlignment="Top" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="194,0,0,0" Foreground="#FF474747" HorizontalAlignment="Left" Width="138"/>
-                    <Label Content="Fee" HorizontalAlignment="Left" VerticalAlignment="Top" Height="31" Width="136" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="332,0,0,0" Foreground="#FF474747"/>
-                    <Label Content="OR #/Date" VerticalAlignment="Top" Height="31" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderThickness="0,1,1,1" BorderBrush="#FFE2E2E2" Margin="468,0,1,0" Foreground="#FF474747"/>
+                    <DataGrid x:Name="TransactionItemsContainer" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,42,1,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Type}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="Name on Record" SortMemberPath="Name" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Name}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="Fee" SortMemberPath="Fee" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Status" SortMemberPath="Status" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="Placed" SortMemberPath="TimePlaced" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <Border BorderBrush="LightGray" BorderThickness="0,1,0,0">
+                                                <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DatePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="Confirmed" SortMemberPath="TimeConfirmed" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimeConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <Border BorderBrush="LightGray" BorderThickness="0,1,0,0">
+                                                <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DateConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="OR Number" SortMemberPath="ORNumber" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding ORNumber}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="61,10,0,0" VerticalAlignment="Top" Width="77"/>
+                    <Label Content="Page:" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="169,10,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+                    <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Width="120">
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="15"/>
+                        <ComboBoxItem Content="20"/>
+                        <ComboBoxItem Content="25"/>
+                        <ComboBoxItem Content="30"/>
+                    </ComboBox>
                 </Grid>
                 <Label 
                     Content="Transactions" 

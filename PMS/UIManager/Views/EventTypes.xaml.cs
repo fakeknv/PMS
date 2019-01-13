@@ -106,6 +106,7 @@ namespace PMS.UIManager.Views
 						EventTypeItemContainer.Items.Refresh();
 						EventTypeItemContainer.ItemsSource = eventtypes_final;
 						EventTypeItemContainer.Items.Refresh();
+						CurrentPage.Maximum = page;
 					}
 				}
 				else

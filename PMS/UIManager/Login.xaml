@@ -63,6 +63,7 @@
 				VerticalAlignment="Top"
 				Margin="65,245,53,0" />
             <Button
+                IsDefault="True"
 				FontSize="16"
 				VerticalContentAlignment="Center"
 				Background="#FF00BBFF"
@@ -76,6 +77,7 @@
 				Margin="66,291,0,0"
 				Click="LoginButton_Click" Content="LOGIN" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="123"/>
             <Button
+                IsCancel="True"
                 FontSize="16"
                 VerticalContentAlignment="Center"
                 Background="#FF00BBFF"

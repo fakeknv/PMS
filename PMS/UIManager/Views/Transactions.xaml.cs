@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Windows.Media;
 using MahApps.Metro.Controls.Dialogs;
+using System.Collections.ObjectModel;
 
 namespace PMS.UIManager.Views
 {
@@ -18,15 +19,22 @@ namespace PMS.UIManager.Views
 	public partial class Transactions : UserControl
 	{
 		//MYSQL Related Stuff
+		private MySqlConnection conn;
+
 		private DBConnectionManager dbman;
-		//MYSQL Related Stuff
 		private DBConnectionManager dbman2;
+
+		private ObservableCollection<Transaction> transactions;
+		private ObservableCollection<Transaction> transactions_final;
 
 		public Transactions()
 		{
 			InitializeComponent();
 
 			SyncTransactions();
+
+			ItemsPerPage.SelectionChanged += Update2;
+			CurrentPage.ValueChanged += Update;
 		}
 		/// <summary>
 		/// Updates Stats
@@ -150,60 +158,100 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		internal void SyncTransactions()
 		{
+			transactions = new ObservableCollection<Transaction>();
+			transactions_final = new ObservableCollection<Transaction>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
 			dbman = new DBConnectionManager();
-
-			TransactionsItemContainer.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions ORDER BY tran_date DESC , tran_time DESC;";
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				//TransactionItemsContainer.Items.Clear();
+				if (conn.State == ConnectionState.Open)
 				{
-					string tID = db_reader.GetString("transaction_id");
-					//Console.WriteLine(db_reader.GetString("request_id"));
-					TransactionItem ti = new TransactionItem();
-					ti.IDLabel.Content = db_reader.GetString("transaction_id");
-					if (db_reader.GetString("target_id").Substring(0, 3) == "PMS") {
-						ti.RecName.Content = GetRecordName(db_reader.GetString("target_id"));
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions ORDER BY tran_date DESC , tran_time DESC;";
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						string recname = "";
+						if (db_reader.GetString("target_id").Substring(0, 3) == "PMS")
+						{
+							recname = GetRecordName(db_reader.GetString("target_id"));
+						}
+						else
+						{
+
+						}
+						string dateFinished = "";
+						string timeFinished = "";
+						if (db_reader.GetString("status") == "Paying")
+						{
+							dateFinished = " ";
+							timeFinished = " ";
+						}
+						else {
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
+						}
+						transactions.Add(new Transaction()
+						{
+							TransactionID = db_reader.GetString("transaction_id"),
+							Type = db_reader.GetString("type"),
+							Name = recname,
+							Fee = Convert.ToDouble(string.Format("{0:N3}", db_reader.GetDouble("fee"))),
+							Status = db_reader.GetString("status"),
+							ORNumber = db_reader.GetString("or_number"),
+							DatePlaced = DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd, yyyy"),
+							TimePlaced = DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt"),
+							DateConfirmed = dateFinished,
+							TimeConfirmed = timeFinished,
+							Page = page
+						});
+						count++;
+						if (count == itemsPerPage)
+						{
+							page++;
+							count = 0;
+						}
 					}
-					else {
-						
+					foreach (var cur in transactions)
+					{
+						if (cur.Page == CurrentPage.Value)
+						{
+							transactions_final.Add(new Transaction()
+							{
+								TransactionID = cur.TransactionID,
+								Type = cur.Type,
+								Name = cur.Name,
+								Fee = cur.Fee,
+								Status = cur.Status,
+								ORNumber = cur.ORNumber,
+								DatePlaced = cur.DatePlaced,
+								TimePlaced = cur.TimePlaced,
+								DateConfirmed = cur.DateConfirmed,
+								TimeConfirmed = cur.TimeConfirmed,
+								Page = cur.Page
+							});
+						}
 					}
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					if (db_reader.GetString("status") == "Paying") {
-						var bc = new BrushConverter();
-						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#46C37B");
-					}
-					else if (db_reader.GetString("status") == "Cancelled") {
-						var bc = new BrushConverter();
-						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#777777");
-					} else if (db_reader.GetString("status") == "Finished") {
-						var bc = new BrushConverter();
-						ti.StatusColor.Background = (Brush)bc.ConvertFrom("#5C90D2");
-					}
-					ti.StatusLabel.Content = db_reader.GetString("status");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.FeeLabel.Content = db_reader.GetString("fee");
-					if (db_reader.GetString("status") == "Finished") {
-						ti.TimeTagLabel.Content = "Finished: " + DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					}
-					else {
-						ti.TimeTagLabel.Content = "Placed: " + DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					}
-					ti.ORNumberLabel.Content = db_reader.GetString("or_number");
-					//ti.TimeTagLabel2.Content = DateTime.Parse(db_reader.GetString("tran_time")).ToString("hh:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					TransactionsItemContainer.Items.Add(ti);
+					//close Connection
+					conn.Close();
+
+					TransactionItemsContainer.Items.Refresh();
+					TransactionItemsContainer.ItemsSource = transactions_final;
+					TransactionItemsContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
-				//close Connection
-				dbman.DBClose();
-				SyncStat();
-			}
-			else
-			{
+				else
+				{
 
+				}
 			}
-
 		}
 		internal string GetRecordName(string rid) {
 			string ret = "";
@@ -243,34 +291,100 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowPaying_Click(object sender, RoutedEventArgs e)
 		{
+			transactions = new ObservableCollection<Transaction>();
+			transactions_final = new ObservableCollection<Transaction>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
 			dbman = new DBConnectionManager();
-
-			TransactionsItemContainer.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Paying");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				//TransactionItemsContainer.Items.Clear();
+				if (conn.State == ConnectionState.Open)
 				{
-					TransactionItem ti = new TransactionItem();
-					ti.IDLabel.Content = db_reader.GetString("transaction_id");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.StatusLabel.Content = db_reader.GetString("status");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.FeeLabel.Content = db_reader.GetString("fee");
-					ti.TimeTagLabel.Content = DateTime.Parse(db_reader.GetString("tran_time")).ToString("hh:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					TransactionsItemContainer.Items.Add(ti);
-				}
-				//close Connection
-				dbman.DBClose();
-				SyncStat();
-			}
-			else
-			{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE status = @status ORDER BY tran_date DESC , tran_time DESC;";
+					cmd.Parameters.AddWithValue("@status", "Paying");
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						string recname = "";
+						if (db_reader.GetString("target_id").Substring(0, 3) == "PMS")
+						{
+							recname = GetRecordName(db_reader.GetString("target_id"));
+						}
+						else
+						{
 
+						}
+						string dateFinished = "";
+						string timeFinished = "";
+						if (db_reader.GetString("status") == "Paying")
+						{
+							dateFinished = " ";
+							timeFinished = " ";
+						}
+						else
+						{
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
+						}
+						transactions.Add(new Transaction()
+						{
+							TransactionID = db_reader.GetString("transaction_id"),
+							Type = db_reader.GetString("type"),
+							Name = recname,
+							Fee = Convert.ToDouble(string.Format("{0:N3}", db_reader.GetDouble("fee"))),
+							Status = db_reader.GetString("status"),
+							ORNumber = db_reader.GetString("or_number"),
+							DatePlaced = DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd, yyyy"),
+							TimePlaced = DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt"),
+							DateConfirmed = dateFinished,
+							TimeConfirmed = timeFinished,
+							Page = page
+						});
+						count++;
+						if (count == itemsPerPage)
+						{
+							page++;
+							count = 0;
+						}
+					}
+					foreach (var cur in transactions)
+					{
+						if (cur.Page == CurrentPage.Value)
+						{
+							transactions_final.Add(new Transaction()
+							{
+								TransactionID = cur.TransactionID,
+								Type = cur.Type,
+								Name = cur.Name,
+								Fee = cur.Fee,
+								Status = cur.Status,
+								ORNumber = cur.ORNumber,
+								DatePlaced = cur.DatePlaced,
+								TimePlaced = cur.TimePlaced,
+								DateConfirmed = cur.DateConfirmed,
+								TimeConfirmed = cur.TimeConfirmed,
+								Page = cur.Page
+							});
+						}
+					}
+					//close Connection
+					conn.Close();
+
+					TransactionItemsContainer.Items.Refresh();
+					TransactionItemsContainer.ItemsSource = transactions_final;
+					TransactionItemsContainer.Items.Refresh();
+				}
+				else
+				{
+
+				}
 			}
 		}
 		/// <summary>
@@ -279,34 +393,100 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowFinished_Click(object sender, RoutedEventArgs e)
 		{
+			transactions = new ObservableCollection<Transaction>();
+			transactions_final = new ObservableCollection<Transaction>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
 			dbman = new DBConnectionManager();
-
-			TransactionsItemContainer.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Finished");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				//TransactionItemsContainer.Items.Clear();
+				if (conn.State == ConnectionState.Open)
 				{
-					TransactionItem ti = new TransactionItem();
-					ti.IDLabel.Content = db_reader.GetString("transaction_id");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.StatusLabel.Content = db_reader.GetString("status");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.FeeLabel.Content = db_reader.GetString("fee");
-					ti.TimeTagLabel.Content = DateTime.Parse(db_reader.GetString("tran_time")).ToString("hh:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					TransactionsItemContainer.Items.Add(ti);
-				}
-				//close Connection
-				dbman.DBClose();
-				SyncStat();
-			}
-			else
-			{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE status = @status ORDER BY tran_date DESC , tran_time DESC;";
+					cmd.Parameters.AddWithValue("@status", "Finished");
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						string recname = "";
+						if (db_reader.GetString("target_id").Substring(0, 3) == "PMS")
+						{
+							recname = GetRecordName(db_reader.GetString("target_id"));
+						}
+						else
+						{
 
+						}
+						string dateFinished = "";
+						string timeFinished = "";
+						if (db_reader.GetString("status") == "Paying")
+						{
+							dateFinished = " ";
+							timeFinished = " ";
+						}
+						else
+						{
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
+						}
+						transactions.Add(new Transaction()
+						{
+							TransactionID = db_reader.GetString("transaction_id"),
+							Type = db_reader.GetString("type"),
+							Name = recname,
+							Fee = Convert.ToDouble(string.Format("{0:N3}", db_reader.GetDouble("fee"))),
+							Status = db_reader.GetString("status"),
+							ORNumber = db_reader.GetString("or_number"),
+							DatePlaced = DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd, yyyy"),
+							TimePlaced = DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt"),
+							DateConfirmed = dateFinished,
+							TimeConfirmed = timeFinished,
+							Page = page
+						});
+						count++;
+						if (count == itemsPerPage)
+						{
+							page++;
+							count = 0;
+						}
+					}
+					foreach (var cur in transactions)
+					{
+						if (cur.Page == CurrentPage.Value)
+						{
+							transactions_final.Add(new Transaction()
+							{
+								TransactionID = cur.TransactionID,
+								Type = cur.Type,
+								Name = cur.Name,
+								Fee = cur.Fee,
+								Status = cur.Status,
+								ORNumber = cur.ORNumber,
+								DatePlaced = cur.DatePlaced,
+								TimePlaced = cur.TimePlaced,
+								DateConfirmed = cur.DateConfirmed,
+								TimeConfirmed = cur.TimeConfirmed,
+								Page = cur.Page
+							});
+						}
+					}
+					//close Connection
+					conn.Close();
+
+					TransactionItemsContainer.Items.Refresh();
+					TransactionItemsContainer.ItemsSource = transactions_final;
+					TransactionItemsContainer.Items.Refresh();
+				}
+				else
+				{
+
+				}
 			}
 		}
 		/// <summary>
@@ -315,34 +495,100 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowCancelled_Click(object sender, RoutedEventArgs e)
 		{
+			transactions = new ObservableCollection<Transaction>();
+			transactions_final = new ObservableCollection<Transaction>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
 			dbman = new DBConnectionManager();
-
-			TransactionsItemContainer.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Cancelled");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				//TransactionItemsContainer.Items.Clear();
+				if (conn.State == ConnectionState.Open)
 				{
-					TransactionItem ti = new TransactionItem();
-					ti.IDLabel.Content = db_reader.GetString("transaction_id");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.StatusLabel.Content = db_reader.GetString("status");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.FeeLabel.Content = db_reader.GetString("fee");
-					ti.TimeTagLabel.Content = DateTime.Parse(db_reader.GetString("tran_time")).ToString("hh:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					TransactionsItemContainer.Items.Add(ti);
-				}
-				//close Connection
-				dbman.DBClose();
-				SyncStat();
-			}
-			else
-			{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE status = @status ORDER BY tran_date DESC , tran_time DESC;";
+					cmd.Parameters.AddWithValue("@status", "Cancelled");
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						string recname = "";
+						if (db_reader.GetString("target_id").Substring(0, 3) == "PMS")
+						{
+							recname = GetRecordName(db_reader.GetString("target_id"));
+						}
+						else
+						{
 
+						}
+						string dateFinished = "";
+						string timeFinished = "";
+						if (db_reader.GetString("status") == "Paying")
+						{
+							dateFinished = " ";
+							timeFinished = " ";
+						}
+						else
+						{
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
+						}
+						transactions.Add(new Transaction()
+						{
+							TransactionID = db_reader.GetString("transaction_id"),
+							Type = db_reader.GetString("type"),
+							Name = recname,
+							Fee = Convert.ToDouble(string.Format("{0:N3}", db_reader.GetDouble("fee"))),
+							Status = db_reader.GetString("status"),
+							ORNumber = db_reader.GetString("or_number"),
+							DatePlaced = DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd, yyyy"),
+							TimePlaced = DateTime.Parse(db_reader.GetString("tran_time")).ToString("h:mm tt"),
+							DateConfirmed = dateFinished,
+							TimeConfirmed = timeFinished,
+							Page = page
+						});
+						count++;
+						if (count == itemsPerPage)
+						{
+							page++;
+							count = 0;
+						}
+					}
+					foreach (var cur in transactions)
+					{
+						if (cur.Page == CurrentPage.Value)
+						{
+							transactions_final.Add(new Transaction()
+							{
+								TransactionID = cur.TransactionID,
+								Type = cur.Type,
+								Name = cur.Name,
+								Fee = cur.Fee,
+								Status = cur.Status,
+								ORNumber = cur.ORNumber,
+								DatePlaced = cur.DatePlaced,
+								TimePlaced = cur.TimePlaced,
+								DateConfirmed = cur.DateConfirmed,
+								TimeConfirmed = cur.TimeConfirmed,
+								Page = cur.Page
+							});
+						}
+					}
+					//close Connection
+					conn.Close();
+
+					TransactionItemsContainer.Items.Refresh();
+					TransactionItemsContainer.ItemsSource = transactions_final;
+					TransactionItemsContainer.Items.Refresh();
+				}
+				else
+				{
+
+				}
 			}
 		}
 		/// <summary>
@@ -372,56 +618,62 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void SearchTransactionBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			dbman = new DBConnectionManager();
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
 
-			TransactionsItemContainer.Items.Clear();
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			ObservableCollection<Transaction> results = new ObservableCollection<Transaction>();
+			System.Collections.IList items = TransactionItemsContainer.Items;
+			for (int i = 0; i < items.Count - 1; i++)
 			{
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM transactions WHERE " +
-					"transaction_id LIKE @query OR " +
-					"type LIKE @query OR " +
-					"status LIKE @query;";
-				cmd.Parameters.AddWithValue("@query", "%" + SearchTransactionBox.Text + "%");
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				Transaction item = (Transaction)items[i];
+				if (item.Name.Contains(SearchTransactionBox.Text) == true || item.ORNumber.Contains(SearchTransactionBox.Text) || item.Status.Contains(SearchTransactionBox.Text) || item.Type.Contains(SearchTransactionBox.Text))
 				{
-					TransactionItem ti = new TransactionItem();
-					ti.IDLabel.Content = db_reader.GetString("transaction_id");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.StatusLabel.Content = db_reader.GetString("status");
-					ti.TypeLabel.Content = db_reader.GetString("type");
-					ti.FeeLabel.Content = db_reader.GetString("fee");
-					ti.TimeTagLabel.Content = DateTime.Parse(db_reader.GetString("tran_time")).ToString("hh:mm tt") + " " + DateTime.Parse(db_reader.GetString("tran_date")).ToString("MMMM dd yyyy");
-					TransactionsItemContainer.Items.Add(ti);
+					results.Add(new Transaction()
+					{
+						TransactionID = item.TransactionID,
+						Type = item.Type,
+						Name = item.Name,
+						Fee = item.Fee,
+						Status = item.Status,
+						ORNumber = item.ORNumber,
+						DatePlaced = item.DatePlaced,
+						TimePlaced = item.TimePlaced,
+						DateConfirmed = item.DateConfirmed,
+						TimeConfirmed = item.TimeConfirmed,
+						Page = page
+					});
+					count++;
+					if (count == itemsPerPage)
+					{
+						page++;
+						count = 0;
+					}
 				}
-				//close Connection
-				dbman.DBClose();
 			}
-			else
-			{
-
-			}
+			TransactionItemsContainer.Items.Refresh();
+			TransactionItemsContainer.ItemsSource = results;
+			TransactionItemsContainer.Items.Refresh();
 		}
 
 		private async void ConfirmPayment_Click(object sender, RoutedEventArgs e)
 		{
-			if (TransactionsItemContainer.SelectedItem == null)
+			if (TransactionItemsContainer.SelectedItem == null)
 			{
 				MsgNoItemSelected();
 			}
 			else
 			{
-				TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
-				Label transactionID = (Label)ti.FindName("IDLabel");
+				Transaction ti = (Transaction)TransactionItemsContainer.SelectedItem;
+				//Label transactionID = (Label)ti.FindName("IDLabel");
 
 				dbman = new DBConnectionManager();
 				if (dbman.DBConnect().State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-					cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
+					cmd.Parameters.AddWithValue("@transaction_id", ti.TransactionID);
 					cmd.Prepare();
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
@@ -438,7 +690,7 @@ namespace PMS.UIManager.Views
 						else
 						{
 							var metroWindow = (Application.Current.MainWindow as MetroWindow);
-							await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, transactionID.Content.ToString()));
+							await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, ti.TransactionID));
 						}
 					}
 				}
@@ -464,23 +716,31 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
 		}
+		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
+		{
+			SyncTransactions();
+		}
+		private void Update2(object sender, SelectionChangedEventArgs e)
+		{
+			SyncTransactions();
+		}
 		private async void CancelTransaction_Click(object sender, RoutedEventArgs e)
 		{
-			if (TransactionsItemContainer.SelectedItem == null)
+			if (TransactionItemsContainer.SelectedItem == null)
 			{
 				MsgNoItemSelected();
 			}
 			else
 			{
-				TransactionItem ti = (TransactionItem)TransactionsItemContainer.SelectedItem;
-				Label transactionID = (Label)ti.FindName("IDLabel");
+				Transaction ti = (Transaction)TransactionItemsContainer.SelectedItem;
+				//Label transactionID = (Label)ti.FindName("IDLabel");
 
 				dbman = new DBConnectionManager();
 				if (dbman.DBConnect().State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-					cmd.Parameters.AddWithValue("@transaction_id", transactionID.Content.ToString());
+					cmd.Parameters.AddWithValue("@transaction_id", ti.TransactionID);
 					cmd.Prepare();
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
@@ -496,7 +756,7 @@ namespace PMS.UIManager.Views
 						else
 						{
 							var metroWindow = (Application.Current.MainWindow as MetroWindow);
-							await metroWindow.ShowChildWindowAsync(new CancelPaymentWindow(this, transactionID.Content.ToString()));
+							await metroWindow.ShowChildWindowAsync(new CancelPaymentWindow(this, ti.TransactionID));
 						}
 					}
 				}

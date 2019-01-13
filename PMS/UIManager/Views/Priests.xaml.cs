@@ -93,6 +93,7 @@ namespace PMS.UIManager.Views
 					PriestsItemContainer.Items.Refresh();
 					PriestsItemContainer.ItemsSource = priests_final;
 					PriestsItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
