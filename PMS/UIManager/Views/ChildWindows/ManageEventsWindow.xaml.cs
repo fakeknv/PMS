@@ -8,6 +8,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using PMS.UIComponents;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -21,20 +22,36 @@ namespace PMS.UIManager.Views.ChildWindows
 		DBConnectionManager dbman;
 
 		private PMSUtil pmsutil;
-			
+
+		private ObservableCollection<EventsItem> _events;
+		private ObservableCollection<EventsItem> _events_final;
+
+		private DateTime _dt;
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
 		public ManageEventsWindow(DateTime dt)
 		{
+			_dt = dt;
 			pmsutil = new PMSUtil();
 			InitializeComponent();
 
 			SelectedDate.Content = "Selected Date: " + dt.ToString("MMM dd, yyyy");
 
 			SyncEvent(dt);
+
+			ItemsPerPage.SelectionChanged += Update2;
+			CurrentPage.ValueChanged += Update;
 		}
 		private void SyncEvent(DateTime dt) {
+			_events = new ObservableCollection<EventsItem>();
+			_events_final = new ObservableCollection<EventsItem>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
 			ObservableCollection<EventsItem> events = new ObservableCollection<EventsItem>();
 
 			dbman = new DBConnectionManager();
@@ -85,14 +102,68 @@ namespace PMS.UIManager.Views.ChildWindows
 									Type = GetAType(db_reader.GetString("appointment_type")),
 									Status = status,
 									Sponsor = db_reader.GetString("requested_by"),
-									Info = db_reader.GetString("remarks")
+									Info = db_reader.GetString("remarks"),
+									Priest = GetPriest(db_reader.GetString("assigned_priest")),
+									Page = page
 								});
+								count++;
+								if (count == itemsPerPage)
+								{
+									page++;
+									count = 0;
+								}
 							}
+							foreach (var cur in _events)
+							{
+								if (cur.Page == CurrentPage.Value)
+								{
+									_events_final.Add(new EventsItem()
+									{
+										Date = cur.Date,
+										Time = cur.Time,
+										Type = cur.Type,
+										Status = cur.Status,
+										Sponsor = cur.Sponsor,
+										Info = cur.Info,
+										Priest = cur.Priest,
+										Page = cur.Page
+									});
+								}
+							}
+							EventsHolder.Items.Refresh();
+							EventsHolder.ItemsSource = _events_final;
+							EventsHolder.Items.Refresh();
+							CurrentPage.Maximum = page;
 						}
 					}
 				}
 			}
 			EventsHolder.ItemsSource = events;
+		}
+		private string GetPriest(string pid)
+		{
+			string ret = "";
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT priest_name FROM residing_priests WHERE priest_id = @pid LIMIT 1;";
+				cmd.Parameters.AddWithValue("@pid", pid);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = db_reader.GetString("priest_name");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = "";
+			}
+			return ret;
 		}
 		private string GetAType(string tid) {
 			string ret = "";
@@ -163,6 +234,14 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void CancelButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
+		}
+		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
+		{
+			SyncEvent(_dt);
+		}
+		private void Update2(object sender, SelectionChangedEventArgs e)
+		{
+			SyncEvent(_dt);
 		}
 	}
 }

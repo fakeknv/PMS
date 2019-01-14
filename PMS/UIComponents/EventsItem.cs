@@ -8,5 +8,7 @@
 		public string Status { get; set; }
 		public string Sponsor { get; set; }
 		public string Info { get; set; }
+		public string Priest { get; set; }
+		public int Page { get; set; }
     }
 }

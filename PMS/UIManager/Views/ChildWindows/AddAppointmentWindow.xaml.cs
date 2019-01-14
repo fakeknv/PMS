@@ -176,6 +176,38 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 			return ret;
 		}
+		private bool IsAvailable(string adate, string atime, string apriest)
+		{
+			bool ret = false;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE assigned_priest = @apriest AND appointment_date = @adate AND appointment_time = @atime;";
+				cmd.Parameters.AddWithValue("apriest", apriest);
+				cmd.Parameters.AddWithValue("adate", adate);
+				cmd.Parameters.AddWithValue("atime", atime);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("COUNT(*)") > 0) {
+						ret = false;
+					}
+					else {
+						ret = true;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
 		private void CreateMassRecord(object sender, RoutedEventArgs e)
 		{
 			if (TabControl1.SelectedIndex == 0)
@@ -230,44 +262,51 @@ namespace PMS.UIManager.Views.ChildWindows
 			else
 			{
 				string selTime = THours.Text +":"+ TMinutes.Text + " " + TimeMode.Text;
-				dbman = new DBConnectionManager();
-				pmsutil = new PMSUtil();
-				//TODO
-				try
-				{
-					string apmID = pmsutil.GenAppointmentID();
-					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-					cmd.CommandText =
-						"INSERT INTO appointments(appointment_id, appointment_date, appointment_time, appointment_type, requested_by, placed_by, remarks, status, assigned_priest)" +
-						"VALUES(@appointment_id, @appointment_date, @appointment_time, @appointment_type, @requested_by, @placed_by, @remarks, @status, @a_priest)";
-					cmd.Parameters.AddWithValue("@appointment_id", apmID);
-					cmd.Parameters.AddWithValue("@appointment_date", DateTime.Parse(SelectedDate2.Text).ToString("yyyy-MM-dd"));
-					cmd.Parameters.AddWithValue("@appointment_time", DateTime.Parse(selTime).ToString("HH:mm:ss"));
-					cmd.Parameters.AddWithValue("@appointment_type", GetATypeID(EventServiceType.Text));
-					cmd.Parameters.AddWithValue("@requested_by", OfferedBy2.Text);
-					cmd.Parameters.AddWithValue("@placed_by", Application.Current.Resources["uid"].ToString());
-					cmd.Parameters.AddWithValue("@remarks", Remarks.Text);
-					cmd.Parameters.AddWithValue("@status", 1);
-					cmd.Parameters.AddWithValue("@a_priest", GetPriest(AssignedPriest.Text));
-					cmd.Prepare();
-					int stat_code = cmd.ExecuteNonQuery();
-					dbman.DBClose();
-					if (stat_code > 0)
-					{
-						MsgSuccess();
-					}
-					else
-					{
-						MsgFail();
-					}
-					string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
-					pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Paying", apmID, Convert.ToDouble(Fee2.Value));
+
+				if (IsAvailable(DateTime.Parse(SelectedDate2.Text).ToString("yyyy-MM-dd"), DateTime.Parse(selTime).ToString("HH:mm:ss"), GetPriest(AssignedPriest.Text)) == false) {
+					MsgNotAvailable(DateTime.Parse(SelectedDate2.Text).ToString("MMM dd, yyyy"), DateTime.Parse(selTime).ToString("HH:mm tt"), AssignedPriest.Text);
+					this.Close();
 				}
-				catch (MySqlException ex)
-				{
-					Console.WriteLine("Error: {0}", ex.ToString());
+				else {
+					dbman = new DBConnectionManager();
+					pmsutil = new PMSUtil();
+					//TODO
+					try
+					{
+						string apmID = pmsutil.GenAppointmentID();
+						MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+						cmd.CommandText =
+							"INSERT INTO appointments(appointment_id, appointment_date, appointment_time, appointment_type, requested_by, placed_by, remarks, status, assigned_priest)" +
+							"VALUES(@appointment_id, @appointment_date, @appointment_time, @appointment_type, @requested_by, @placed_by, @remarks, @status, @a_priest)";
+						cmd.Parameters.AddWithValue("@appointment_id", apmID);
+						cmd.Parameters.AddWithValue("@appointment_date", DateTime.Parse(SelectedDate2.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@appointment_time", DateTime.Parse(selTime).ToString("HH:mm:ss"));
+						cmd.Parameters.AddWithValue("@appointment_type", GetATypeID(EventServiceType.Text));
+						cmd.Parameters.AddWithValue("@requested_by", OfferedBy2.Text);
+						cmd.Parameters.AddWithValue("@placed_by", Application.Current.Resources["uid"].ToString());
+						cmd.Parameters.AddWithValue("@remarks", Remarks.Text);
+						cmd.Parameters.AddWithValue("@status", 1);
+						cmd.Parameters.AddWithValue("@a_priest", GetPriest(AssignedPriest.Text));
+						cmd.Prepare();
+						int stat_code = cmd.ExecuteNonQuery();
+						dbman.DBClose();
+						if (stat_code > 0)
+						{
+							MsgSuccess();
+						}
+						else
+						{
+							MsgFail();
+						}
+						string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
+						pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Paying", apmID, Convert.ToDouble(Fee2.Value));
+					}
+					catch (MySqlException ex)
+					{
+						Console.WriteLine("Error: {0}", ex.ToString());
+					}
+					this.Close();
 				}
-				this.Close();
 			}
 		}
 		private string GetPriest(string name) {
@@ -317,6 +356,11 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				Fee.Value = 0f;
 			}
+		}
+		private async void MsgNotAvailable(string date, string time, string priest)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Not available!", priest + " is not available on the selected date " + date + " " + time +". Please change accordingly and try again.");
 		}
 		private async void MsgSuccess()
 		{
