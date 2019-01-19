@@ -152,6 +152,13 @@
                                 <views:EventTypes />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
+                        <Controls:HamburgerMenuIconItem
+						Icon="{iconPacks:FontAwesome SearchSolid}"
+						Label="Search Record">
+                            <controls:HamburgerMenuIconItem.Tag>
+                                <views:SearchRecords />
+                            </controls:HamburgerMenuIconItem.Tag>
+                        </Controls:HamburgerMenuIconItem>
                     </Controls:HamburgerMenuItemCollection>
                 </Controls:HamburgerMenu.ItemsSource>
                 <Controls:HamburgerMenu.OptionsItemsSource>

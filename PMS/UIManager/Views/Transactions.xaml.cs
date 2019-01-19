@@ -195,7 +195,7 @@ namespace PMS.UIManager.Views
 							timeFinished = " ";
 						}
 						else {
-							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd, yyyy");
 							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
 						}
 						transactions.Add(new Transaction()
@@ -330,7 +330,7 @@ namespace PMS.UIManager.Views
 						}
 						else
 						{
-							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd, yyyy");
 							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
 						}
 						transactions.Add(new Transaction()
@@ -432,7 +432,7 @@ namespace PMS.UIManager.Views
 						}
 						else
 						{
-							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd, yyyy");
 							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
 						}
 						transactions.Add(new Transaction()
@@ -534,7 +534,7 @@ namespace PMS.UIManager.Views
 						}
 						else
 						{
-							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd yyyy");
+							dateFinished = DateTime.Parse(db_reader.GetString("completion_date")).ToString("MMMM dd, yyyy");
 							timeFinished = DateTime.Parse(db_reader.GetString("completion_time")).ToString("h:mm tt");
 						}
 						transactions.Add(new Transaction()
@@ -618,6 +618,9 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void SearchTransactionBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
+			if (string.IsNullOrEmpty(SearchTransactionBox.Text)) {
+				SyncTransactions();
+			}
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
 			int page = 1;

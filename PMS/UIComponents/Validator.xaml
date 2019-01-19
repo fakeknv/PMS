@@ -1,0 +1,11 @@
+﻿<UserControl xmlns:my="http://metro.mahapps.com/winfx/xaml/iconpacks"  x:Class="PMS.UIComponents.Validator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PMS.UIComponents"
+             mc:Ignorable="d" Width="16.534" Height="15.919">
+    <Grid>
+        <my:PackIconFontAwesome Kind="ExclamationTriangleSolid"/>
+    </Grid>
+</UserControl>

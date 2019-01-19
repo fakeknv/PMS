@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -27,42 +28,67 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			this.Close();
 		}
+		private bool CheckInputs()
+		{
+			ETypeValidator.Visibility = Visibility.Hidden;
+			ETypeValidator.Foreground = Brushes.Transparent;
+			EType.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(EType.Text))
+			{
+				ETypeValidator.Visibility = Visibility.Visible;
+				ETypeValidator.ToolTip = "Username cannot be empty!";
+				ETypeValidator.Foreground = Brushes.Red;
+				EType.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
 		private void CreateEventTypeButton_Click(object sender, RoutedEventArgs e)
 		{
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			if (CheckInputs() == true)
 			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
 				{
-					string eid = pmsutil.GenEventTypeID();
-					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText =
-					"INSERT INTO appointment_types(type_id, appointment_type, custom, fee, status)" +
-					"VALUES(@eid, @appointment_type, @custom, @fee, @status)";
-					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@eid", eid);
-					cmd.Parameters.AddWithValue("@appointment_type", EType.Text);
-					cmd.Parameters.AddWithValue("@custom", Status.SelectedIndex + 1);
-					cmd.Parameters.AddWithValue("@fee", Fee.Value);
-					cmd.Parameters.AddWithValue("@status", Active.SelectedIndex + 1);
-					int stat_code = cmd.ExecuteNonQuery();
-					conn.Close();
-					if (stat_code > 0)
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
 					{
-						MsgSuccess();
-						this.Close();
+						string eid = pmsutil.GenEventTypeID();
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText =
+						"INSERT INTO appointment_types(type_id, appointment_type, custom, fee, status)" +
+						"VALUES(@eid, @appointment_type, @custom, @fee, @status)";
+						cmd.Prepare();
+						cmd.Parameters.AddWithValue("@eid", eid);
+						cmd.Parameters.AddWithValue("@appointment_type", EType.Text);
+						cmd.Parameters.AddWithValue("@custom", Status.SelectedIndex + 1);
+						cmd.Parameters.AddWithValue("@fee", Fee.Value);
+						cmd.Parameters.AddWithValue("@status", Active.SelectedIndex + 1);
+						int stat_code = cmd.ExecuteNonQuery();
+						conn.Close();
+						if (stat_code > 0)
+						{
+							MsgSuccess();
+							this.Close();
+						}
+						else
+						{
+							MsgFail();
+						}
 					}
 					else
 					{
-						MsgFail();
+
 					}
 				}
-				else
-				{
+			}
+			else {
 
-				}
 			}
 		}
 		private async void MsgSuccess()

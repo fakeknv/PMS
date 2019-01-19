@@ -7,6 +7,7 @@
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
     x:Class="PMS.UIManager.Views.ChildWindows.AddBaptismalRecordEntryWindow"
     Title="Add Request"
     ShowTitleBar="False"
@@ -60,9 +61,7 @@
             Height="23" 
             Margin="277,152,58,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="LegitimacyLabel" 
             Content="Legitimacy" 
             Margin="58,204,496,0" 
@@ -87,9 +86,7 @@
             Height="23" 
             Margin="57,270,58,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions1" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions1" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="ParentsLabel" 
             Content="Parent/s" 
             HorizontalAlignment="Left" 
@@ -101,17 +98,13 @@
             Height="23" 
             Margin="57,346,336,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Parent2" 
             Height="23" 
             Margin="57,377,336,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="SponsorsLabel" 
             Content="Sponsor/s" 
             HorizontalAlignment="Left" 
@@ -123,17 +116,13 @@
             Height="23" 
             Margin="321,346,58,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Sponsor2" 
             Height="23" 
             Margin="321,377,58,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="MinisterLabel" 
             Content="Minister" 
             HorizontalAlignment="Left" 
@@ -164,9 +153,7 @@
             Height="23" 
             Margin="138,429,58,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions2" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" TextChanged="ShowSuggestions2" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Grid x:Name="Suggestions1" Visibility="Hidden" Height="122" Margin="57,296,0,0" VerticalAlignment="Top" Background="#FFF0F0F0" HorizontalAlignment="Left" Width="334">
             <Label x:Name="SuggestionsLabel" Content="Suggestions:" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Background="White" BorderBrush="#FFCCCCCC" BorderThickness="1"/>
             <ListView x:Name="PlaceOfBirthSuggestionArea" BorderThickness="0" Height="86" Margin="10,26,10,10">
@@ -194,9 +181,9 @@
             Margin="57,152,395,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <ComboBox SelectedValuePath="Content" SelectedIndex="0" x:Name="Legitimacy" HorizontalAlignment="Left" Margin="138,204,0,0" VerticalAlignment="Top" Width="187" Height="26" Foreground="#FF474747">
-            <ComboBoxItem>Legitimate</ComboBoxItem>
-            <ComboBoxItem>Civil</ComboBoxItem>
-            <ComboBoxItem>Illegitimate</ComboBoxItem>
+            <ComboBoxItem Content="Legitimate"/>
+            <ComboBoxItem Content="Civil"/>
+            <ComboBoxItem Content="Illegitimate"/>
         </ComboBox>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="BAPTISMAL - ADD RECORD ENTRY" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
@@ -239,5 +226,17 @@
                 </Button>
             </Grid>
         </Border>
+        <UIComponents:Validator x:Name="BaptismDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,84,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="EntryNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,84,263,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="PageNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,84,428,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="BirthDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,156,374,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="NameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,156,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="StipendValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,208,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="PlaceOfBirthValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,274,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Sponsor1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,350,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Sponsor2Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,381,37,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Parent1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,350,315,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="LegitimacyValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,208,284,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="MinisterValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,433,37,0" VerticalAlignment="Top" Width="16"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents"
     x:Class="PMS.UIManager.Views.ChildWindows.EditBurialRecordEntryWindow"
     Title="Add Request"
     ShowTitleBar="False"
@@ -311,5 +312,17 @@
                 </Button>
             </Grid>
         </Border>
+        <UIComponents:Validator x:Name="PageNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,85,661,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="EntryNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,85,493,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="DeathDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,85,260,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="BurialDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,85,23,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="NameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,153,567,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="StipendValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,153,23,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="SacramentValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,204,477,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="CauseOfDeathValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,204,23,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="PlaceOfIntermentValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,253,23,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Parent1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,332,426,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Residence1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,332,23,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="MinisterValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,361,23,0" VerticalAlignment="Top" Width="16"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

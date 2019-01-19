@@ -104,6 +104,6 @@
 
         </Grid>
         <Label Content="Page:" HorizontalAlignment="Left" Margin="15,62,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="27" FontSize="14" Foreground="#FF474747"/>
-        <mah:NumericUpDown x:Name="Page" Maximum="200" Minimum="1" HorizontalAlignment="Left" Margin="65,60,0,0" VerticalAlignment="Top" Width="84" ValueChanged="UpdatePageContent1" Height="31"/>
+        <mah:NumericUpDown x:Name="Page" Value="1" Maximum="200" Minimum="1" HorizontalAlignment="Left" Margin="65,60,0,0" VerticalAlignment="Top" Width="84" ValueChanged="UpdatePageContent1" Height="31"/>
     </Grid>
 </UserControl>

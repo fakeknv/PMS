@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.SQLite;
 using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -177,37 +178,37 @@ namespace PMS.UIManager.Views.ChildWindows
 									{
 										conn3.Open();
 										MySqlCommand cmd2 = conn3.CreateCommand();
-										cmd2.CommandText = "SELECT * FROM records, baptismal_records WHERE records.record_id = @rid AND records.record_id = confirmation_records.record_id ORDER BY records.entry_number ASC;";
+										cmd2.CommandText = "SELECT * FROM records, matrimonial_records WHERE records.record_id = @rid AND records.record_id = matrimonial_records.record_id ORDER BY records.entry_number ASC;";
 										cmd2.Parameters.AddWithValue("@rid", recordID);
 										cmd2.Prepare();
 										using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
 										{
 											while (db_reader2.Read())
 											{
-												EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
-												PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
-												MarriageDate.Text = db_reader.GetString("record_date");
-												Age1.Value = Convert.ToDouble(db_reader.GetString("age1"));
-												Age2.Value = Convert.ToDouble(db_reader.GetString("age2"));
-												Status1.Text = db_reader.GetString("status1");
-												Status2.Text = db_reader.GetString("status2");
-												FullName1.Text = db_reader.GetString("recordholder_fullname");
-												FullName2.Text = db_reader.GetString("recordholder2_fullname");
-												Hometown1.Text = db_reader.GetString("place_of_origin1");
-												Hometown2.Text = db_reader.GetString("place_of_origin2");
-												Residence1.Text = db_reader.GetString("residence1");
-												Residence2.Text = db_reader.GetString("residence2");
-												Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
-												Parent1.Text = db_reader.GetString("parent1_fullname");
-												Parent2.Text = db_reader.GetString("parent2_fullname");
-												Parent3.Text = db_reader.GetString("parent1_fullname2");
-												Parent4.Text = db_reader.GetString("parent2_fullname2");
-												Sponsor1.Text = db_reader.GetString("witness1");
-												Sponsor2.Text = db_reader.GetString("witness2");
-												Residence3.Text = db_reader.GetString("witness1address");
-												Residence4.Text = db_reader.GetString("witness2address");
-												Minister.Text = db_reader.GetString("minister");
-												Remarks.Text = db_reader.GetString("remarks");
+												EntryNum.Value = Convert.ToDouble(db_reader2.GetString("entry_number"));
+												PageNum.Value = Convert.ToDouble(db_reader2.GetString("page_number"));
+												MarriageDate.Text = db_reader2.GetString("record_date");
+												Age1.Value = Convert.ToDouble(db_reader2.GetString("age1"));
+												Age2.Value = Convert.ToDouble(db_reader2.GetString("age2"));
+												Status1.Text = db_reader2.GetString("status1");
+												Status2.Text = db_reader2.GetString("status2");
+												FullName1.Text = db_reader2.GetString("recordholder_fullname");
+												FullName2.Text = db_reader2.GetString("recordholder2_fullname");
+												Hometown1.Text = db_reader2.GetString("place_of_origin1");
+												Hometown2.Text = db_reader2.GetString("place_of_origin2");
+												Residence1.Text = db_reader2.GetString("residence1");
+												Residence2.Text = db_reader2.GetString("residence2");
+												Stipend.Value = Convert.ToDouble(db_reader2.GetString("stipend"));
+												Parent1.Text = db_reader2.GetString("parent1_fullname");
+												Parent2.Text = db_reader2.GetString("parent2_fullname");
+												Parent3.Text = db_reader2.GetString("parent1_fullname2");
+												Parent4.Text = db_reader2.GetString("parent2_fullname2");
+												Sponsor1.Text = db_reader2.GetString("witness1");
+												Sponsor2.Text = db_reader2.GetString("witness2");
+												Residence3.Text = db_reader2.GetString("witness1address");
+												Residence4.Text = db_reader2.GetString("witness2address");
+												Minister.Text = db_reader2.GetString("minister");
+												Remarks.Text = db_reader2.GetString("remarks");
 											}
 										}
 									}
@@ -435,90 +436,311 @@ namespace PMS.UIManager.Views.ChildWindows
 				return targ;
 			}
 		}
+		private bool CheckInputs()
+		{
+			MarriageDateValidator.Visibility = Visibility.Hidden;
+			MarriageDateValidator.Foreground = Brushes.Transparent;
+			MarriageDate.BorderBrush = Brushes.Transparent;
+
+			HusbandValidator.Visibility = Visibility.Hidden;
+			HusbandValidator.Foreground = Brushes.Transparent;
+			FullName1.BorderBrush = Brushes.Transparent;
+
+			WifeValidator.Visibility = Visibility.Hidden;
+			WifeValidator.Foreground = Brushes.Transparent;
+			FullName2.BorderBrush = Brushes.Transparent;
+
+			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.Foreground = Brushes.Transparent;
+			Minister.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(MarriageDate.Text))
+			{
+				MarriageDateValidator.Visibility = Visibility.Visible;
+				MarriageDateValidator.ToolTip = "This field is required.";
+				MarriageDateValidator.Foreground = Brushes.Red;
+				MarriageDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (EntryNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (PageNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (Stipend.Value == 0)
+			{
+				StipendValidator.Visibility = Visibility.Visible;
+				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
+				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.BorderBrush = Brushes.Orange;
+				MsgStipend();
+				ret = true;
+			}
+			if (string.IsNullOrWhiteSpace(FullName1.Text))
+			{
+				HusbandValidator.Visibility = Visibility.Visible;
+				HusbandValidator.ToolTip = "This field is required.";
+				HusbandValidator.Foreground = Brushes.Red;
+				FullName1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(FullName2.Text))
+			{
+				WifeValidator.Visibility = Visibility.Visible;
+				WifeValidator.ToolTip = "This field is required.";
+				WifeValidator.Foreground = Brushes.Red;
+				FullName2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent1.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Parent1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent3.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Parent3.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent2.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Parent2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent4.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Parent4.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Hometown1.Text))
+			{
+				Hometown1Validator.Visibility = Visibility.Visible;
+				Hometown1Validator.ToolTip = "This field is required.";
+				Hometown1Validator.Foreground = Brushes.Red;
+				Hometown1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Hometown2.Text))
+			{
+				Hometown2Validator.Visibility = Visibility.Visible;
+				Hometown2Validator.ToolTip = "This field is required.";
+				Hometown2Validator.Foreground = Brushes.Red;
+				Hometown2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence1.Text))
+			{
+				Residence1Validator.Visibility = Visibility.Visible;
+				Residence1Validator.ToolTip = "This field is required.";
+				Residence1Validator.Foreground = Brushes.Red;
+				Residence1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence2.Text))
+			{
+				Residence2Validator.Visibility = Visibility.Visible;
+				Residence2Validator.ToolTip = "This field is required.";
+				Residence2Validator.Foreground = Brushes.Red;
+				Residence2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence3.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Residence3.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence4.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Residence4.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor1.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Sponsor1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor2.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Sponsor2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Minister.Text))
+			{
+				MinisterValidator.Visibility = Visibility.Visible;
+				MinisterValidator.ToolTip = "This field is required.";
+				MinisterValidator.Foreground = Brushes.Red;
+				Minister.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Age1.Value.ToString()))
+			{
+				Age1Validator.Visibility = Visibility.Visible;
+				Age1Validator.ToolTip = "This field is required.";
+				Age1Validator.Foreground = Brushes.Red;
+				Age1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Age2.Value.ToString()))
+			{
+				Age2Validator.Visibility = Visibility.Visible;
+				Age2Validator.ToolTip = "This field is required.";
+				Age2Validator.Foreground = Brushes.Red;
+				Age2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
+		private async void MsgStipend()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice", "Stipend is set to zero. Re-check input before proceeding.");
+		}
 		/// <summary>
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
 		private void EditRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			entryNum = Convert.ToInt32(EntryNum.Value);
-			pageNum = Convert.ToInt32(PageNum.Value);
-			marriageDate = Convert.ToDateTime(MarriageDate.Text).ToString("yyyy-MM-dd");
-			age1 = Convert.ToInt32(Age1.Value);
-			age2 = Convert.ToInt32(Age2.Value);
-			fullName1 = ValidateInp(FullName1.Text);
-			fullName2 = ValidateInp(FullName2.Text);
-			switch (Status1.SelectedIndex)
-			{
-				case 0:
-					status1 = "Widow";
-					break;
-				case 1:
-					status1 = "Widower";
-					break;
-				case 2:
-					status1 = "Single";
-					break;
-				case 3:
-					status1 = "Conjugal";
-					break;
-				case 4:
-					status1 = "Adult";
-					break;
-				case 5:
-					status1 = "Infant";
-					break;
-				default:
-					status1 = "----";
-					break;
+			if (CheckInputs() == true) {
+				entryNum = Convert.ToInt32(EntryNum.Value);
+				pageNum = Convert.ToInt32(PageNum.Value);
+				marriageDate = Convert.ToDateTime(MarriageDate.Text).ToString("yyyy-MM-dd");
+				age1 = Convert.ToInt32(Age1.Value);
+				age2 = Convert.ToInt32(Age2.Value);
+				fullName1 = ValidateInp(FullName1.Text);
+				fullName2 = ValidateInp(FullName2.Text);
+				switch (Status1.SelectedIndex)
+				{
+					case 0:
+						status1 = "Widow";
+						break;
+					case 1:
+						status1 = "Widower";
+						break;
+					case 2:
+						status1 = "Single";
+						break;
+					case 3:
+						status1 = "Conjugal";
+						break;
+					case 4:
+						status1 = "Adult";
+						break;
+					case 5:
+						status1 = "Infant";
+						break;
+					default:
+						status1 = "----";
+						break;
+				}
+				switch (Status2.SelectedIndex)
+				{
+					case 0:
+						status2 = "Widow";
+						break;
+					case 1:
+						status2 = "Widower";
+						break;
+					case 2:
+						status2 = "Single";
+						break;
+					case 3:
+						status2 = "Conjugal";
+						break;
+					case 4:
+						status2 = "Adult";
+						break;
+					case 5:
+						status2 = "Infant";
+						break;
+					default:
+						status2 = "----";
+						break;
+				}
+				hometown1 = ValidateInp(Hometown1.Text);
+				hometown2 = ValidateInp(Hometown2.Text);
+				residence1 = ValidateInp(Residence1.Text);
+				residence2 = ValidateInp(Residence2.Text);
+				parent1 = ValidateInp(Parent1.Text);
+				parent2 = ValidateInp(Parent2.Text);
+				parent3 = ValidateInp(Parent3.Text);
+				parent4 = ValidateInp(Parent4.Text);
+				sponsor1 = ValidateInp(Sponsor1.Text);
+				sponsor2 = ValidateInp(Sponsor2.Text);
+				residence3 = ValidateInp(Residence3.Text);
+				residence4 = ValidateInp(Residence4.Text);
+				stipend = Convert.ToInt32(Stipend.Value);
+				minister = ValidateInp(Minister.Text);
+				remarks = ValidateInp(Remarks.Text);
+				if (UpdateEntry() > 0)
+				{
+					MsgSuccess();
+					this.Close();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
-			switch (Status2.SelectedIndex)
-			{
-				case 0:
-					status2 = "Widow";
-					break;
-				case 1:
-					status2 = "Widower";
-					break;
-				case 2:
-					status2 = "Single";
-					break;
-				case 3:
-					status2 = "Conjugal";
-					break;
-				case 4:
-					status2 = "Adult";
-					break;
-				case 5:
-					status2 = "Infant";
-					break;
-				default:
-					status2 = "----";
-					break;
-			}
-			hometown1 = ValidateInp(Hometown1.Text);
-			hometown2 = ValidateInp(Hometown2.Text);
-			residence1 = ValidateInp(Residence1.Text);
-			residence2 = ValidateInp(Residence2.Text);
-			parent1 = ValidateInp(Parent1.Text);
-			parent2 = ValidateInp(Parent2.Text);
-			parent3 = ValidateInp(Parent3.Text);
-			parent4 = ValidateInp(Parent4.Text);
-			sponsor1 = ValidateInp(Sponsor1.Text);
-			sponsor2 = ValidateInp(Sponsor2.Text);
-			residence3 = ValidateInp(Residence3.Text);
-			residence4 = ValidateInp(Residence4.Text);
-			stipend = Convert.ToInt32(Stipend.Value);
-			minister = ValidateInp(Minister.Text);
-			remarks = ValidateInp(Remarks.Text);
-			if (UpdateEntry() > 0)
-			{
-				MsgSuccess();
-				this.Close();
-			}
-			else
-			{
-				MsgFail();
+			else {
+
 			}
 		}
 		private async void MsgSuccess()

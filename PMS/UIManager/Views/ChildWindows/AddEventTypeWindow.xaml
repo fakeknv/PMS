@@ -1,5 +1,4 @@
-﻿<simpleChildWindow:ChildWindow 
-    x:Class="PMS.UIManager.Views.ChildWindows.AddEventTypeWindow"
+﻿<simpleChildWindow:ChildWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
+    x:Class="PMS.UIManager.Views.ChildWindows.AddEventTypeWindow"
     ShowTitleBar="False"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
@@ -98,6 +99,7 @@
                 <ComboBoxItem Content="Active"/>
                 <ComboBoxItem Content="Inactive"/>
             </ComboBox>
+            <UIComponents:Validator x:Name="ETypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,36,60,0" VerticalAlignment="Top" Width="16"/>
         </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

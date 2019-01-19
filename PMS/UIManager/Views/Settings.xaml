@@ -55,89 +55,31 @@
             </Grid>
         </Grid>
         <mah:MetroAnimatedTabControl Margin="7,144,7,7">
-            <TabItem Header="Accounts" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid>
-                    <ListView x:Name="AccountsListHolder" Margin="0,78,0,0" BorderThickness="0">
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}">
-                                <Setter Property="Padding" Value="0,0,0,0"/>
-                                <Setter Property="Width" Value="Auto"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                    <Button
-                        x:Name="CreateRequestButton" 
-                        Margin="0,7,10,0" 
-                        VerticalAlignment="Top" 
-                        Width="135" 
-                        Height="31" 
-                        Background="#FF3C7AC9" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                        Foreground="White" 
-                        HorizontalAlignment="Right">
-                        <StackPanel 
-                            Orientation="Horizontal">
-                            <Rectangle 
-                                Width="16"
-                                Height="16">
-                                <Rectangle.Fill>
-                                    <VisualBrush 
-                                        Stretch="Fill"
-                                        Visual="{iconPacks:FontAwesome UserPlusSolid}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock 
-                                Text="  Add Account" 
-                                FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                        </StackPanel>
-                    </Button>
-                    <Label Content="Username" BorderThickness="1,1,0,1" HorizontalAlignment="Left" Margin="0,52,0,0" VerticalAlignment="Top" Width="230" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label Content="Account Type" BorderThickness="1,1,0,1" HorizontalAlignment="Left" Margin="230,52,0,0" VerticalAlignment="Top" Width="220" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label Content="Name" BorderThickness="1,1,0,1" HorizontalAlignment="Left" Margin="450,52,0,0" VerticalAlignment="Top" Width="252" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label Content="Actions" BorderThickness="1,1,1,1" Margin="702,52,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" BorderBrush="#FFE6E6E6" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="Billing" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+            <TabItem Header="Billing">
                 <ScrollViewer>
                     <Grid Height="585">
-                        <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CERTIFICATE PRINTING FEES" Margin="24,23,517,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" Height="28" VerticalAlignment="Top"/>
-                        <Label Content="Baptismal" HorizontalAlignment="Left" Margin="38,66,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="BaptismalPrintFee" HorizontalAlignment="Left" Margin="254,67,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Confirmation" HorizontalAlignment="Left" Margin="38,108,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="ConfirmationPrintFee" HorizontalAlignment="Left" Margin="254,109,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Burial" HorizontalAlignment="Left" Margin="38,150,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="BurialPrintFee" HorizontalAlignment="Left" Margin="254,151,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Matrimonial" HorizontalAlignment="Left" Margin="38,190,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="MatrimonialPrintFee" HorizontalAlignment="Left" Margin="254,191,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="MASS INTENTION FEES" Margin="24,240,517,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" Height="28" VerticalAlignment="Top"/>
-                        <Label Content="Thanksgiving Mass" HorizontalAlignment="Left" Margin="38,283,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="Thanksgiving" HorizontalAlignment="Left" Margin="254,284,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Petition Mass" HorizontalAlignment="Left" Margin="38,323,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="PetitionMass" HorizontalAlignment="Left" Margin="254,324,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Special Intention Mass" HorizontalAlignment="Left" Margin="38,364,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="SpecialIntentionMass" HorizontalAlignment="Left" Margin="254,365,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="All Souls" HorizontalAlignment="Left" Margin="38,403,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="AllSouls" HorizontalAlignment="Left" Margin="254,404,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Soul/s" HorizontalAlignment="Left" Margin="38,446,0,-43" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="Souls" HorizontalAlignment="Left" Margin="254,447,0,-43" VerticalAlignment="Top" Width="148"/>
-                        <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="STIPEND" Margin="513,23,28,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" Height="28" VerticalAlignment="Top"/>
-                        <Label Content="Baptismal Stipend" HorizontalAlignment="Left" Margin="527,66,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="BaptismalStipend" HorizontalAlignment="Left" Margin="743,67,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Confirmation Stipend" HorizontalAlignment="Left" Margin="527,108,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="ConfirmationStipend" HorizontalAlignment="Left" Margin="743,109,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Matrimonial Stipend" HorizontalAlignment="Left" Margin="527,150,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="MatrimonialStipend" HorizontalAlignment="Left" Margin="743,151,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Label Content="Burial Stipend" HorizontalAlignment="Left" Margin="527,190,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                        <mah:NumericUpDown x:Name="BurialStipend" HorizontalAlignment="Left" Margin="743,191,0,0" VerticalAlignment="Top" Width="148"/>
-                        <Button Content="Reset" Margin="774,536,0,0" Background="#FFF0A63A" Foreground="White" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Click="ResetButton_Click"/>
-                        <Button Content="Save Changes" Margin="652,536,0,0" Background="#FF3C7AC9" Foreground="White" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Click="SaveButton_Click"/>
+                        <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CERTIFICATE PRINTING FEES" Margin="24,10,517,0" FontFamily="Segoe UI Semibold" FontSize="18" Height="41" VerticalAlignment="Top"/>
+                        <Label Content="Baptismal" HorizontalAlignment="Left" Margin="38,66,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="BaptismalPrintFee" HorizontalAlignment="Left" Margin="254,67,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Confirmation" HorizontalAlignment="Left" Margin="38,108,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="ConfirmationPrintFee" HorizontalAlignment="Left" Margin="254,109,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Burial" HorizontalAlignment="Left" Margin="38,150,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="BurialPrintFee" HorizontalAlignment="Left" Margin="254,151,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Matrimonial" HorizontalAlignment="Left" Margin="38,190,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="MatrimonialPrintFee" HorizontalAlignment="Left" Margin="254,191,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="STIPEND" Margin="513,10,28,0" FontFamily="Segoe UI Semibold" FontSize="18" Height="41" VerticalAlignment="Top"/>
+                        <Label Content="Baptismal Stipend" HorizontalAlignment="Left" Margin="527,66,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="BaptismalStipend" HorizontalAlignment="Left" Margin="743,67,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Confirmation Stipend" HorizontalAlignment="Left" Margin="527,108,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="ConfirmationStipend" HorizontalAlignment="Left" Margin="743,109,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Matrimonial Stipend" HorizontalAlignment="Left" Margin="527,150,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="MatrimonialStipend" HorizontalAlignment="Left" Margin="743,151,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Label Content="Burial Stipend" HorizontalAlignment="Left" Margin="527,190,0,0" VerticalAlignment="Top" Width="211" FontFamily="Segoe UI" FontSize="14"/>
+                        <mah:NumericUpDown x:Name="BurialStipend" HorizontalAlignment="Left" Margin="743,191,0,0" VerticalAlignment="Top" Width="148" FontFamily="Segoe UI"/>
+                        <Button Content="Reset" Margin="774,330,0,0" Background="#FFF0A63A" Foreground="White" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Click="ResetButton_Click"/>
+                        <Button Content="Save Changes" Margin="652,330,0,0" Background="#FF3C7AC9" Foreground="White" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="117" Click="SaveButton_Click"/>
                     </Grid>
                 </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Residing Priests" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid/>
             </TabItem>
             <mah:NumericUpDown Height="100" Width="100"/>
         </mah:MetroAnimatedTabControl>

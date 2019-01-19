@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -27,51 +28,74 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			this.Close();
 		}
+		private bool CheckInputs()
+		{
+			NameValidator.Visibility = Visibility.Hidden;
+			NameValidator.Foreground = Brushes.Transparent;
+			PriestName.BorderBrush = Brushes.Transparent;
 
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(PriestName.Text))
+			{
+				NameValidator.Visibility = Visibility.Visible;
+				NameValidator.ToolTip = "Username cannot be empty!";
+				NameValidator.Foreground = Brushes.Red;
+				PriestName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
+			if (CheckInputs() == true) {
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
 				{
-					string uid = Application.Current.Resources["uid"].ToString();
-					string[] dt = pmsutil.GetServerDateTime().Split(null);
-					DateTime cDate = Convert.ToDateTime(dt[0]);
-					DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-					string curDate = cDate.ToString("yyyy-MM-dd");
-					string curTime = cTime.ToString("HH:mm:ss");
-
-					string pid = pmsutil.GenPriestID();
-					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText =
-					"INSERT INTO residing_priests(priest_id, priest_name, priest_status, created_by, date_created, time_created)" +
-					"VALUES(@priest_id, @priest_name, @priest_status, @created_by, @date_created, @time_created)";
-					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@priest_id", pid);
-					cmd.Parameters.AddWithValue("@priest_name", PriestName.Text);
-					cmd.Parameters.AddWithValue("@priest_status", Status.Text);
-					cmd.Parameters.AddWithValue("@created_by", uid);
-					cmd.Parameters.AddWithValue("@date_created", curDate);
-					cmd.Parameters.AddWithValue("@time_created", curTime);
-					int stat_code = cmd.ExecuteNonQuery();
-					conn.Close();
-					if (stat_code > 0)
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
 					{
-						MsgSuccess();
-						this.Close();
+						string uid = Application.Current.Resources["uid"].ToString();
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+						string curDate = cDate.ToString("yyyy-MM-dd");
+						string curTime = cTime.ToString("HH:mm:ss");
+
+						string pid = pmsutil.GenPriestID();
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText =
+						"INSERT INTO residing_priests(priest_id, priest_name, priest_status, created_by, date_created, time_created)" +
+						"VALUES(@priest_id, @priest_name, @priest_status, @created_by, @date_created, @time_created)";
+						cmd.Prepare();
+						cmd.Parameters.AddWithValue("@priest_id", pid);
+						cmd.Parameters.AddWithValue("@priest_name", PriestName.Text);
+						cmd.Parameters.AddWithValue("@priest_status", Status.Text);
+						cmd.Parameters.AddWithValue("@created_by", uid);
+						cmd.Parameters.AddWithValue("@date_created", curDate);
+						cmd.Parameters.AddWithValue("@time_created", curTime);
+						int stat_code = cmd.ExecuteNonQuery();
+						conn.Close();
+						if (stat_code > 0)
+						{
+							MsgSuccess();
+							this.Close();
+						}
+						else
+						{
+							MsgFail();
+						}
 					}
 					else
 					{
-						MsgFail();
+
 					}
 				}
-				else
-				{
+			}
+			else {
 
-				}
 			}
 		}
 		private async void MsgSuccess()

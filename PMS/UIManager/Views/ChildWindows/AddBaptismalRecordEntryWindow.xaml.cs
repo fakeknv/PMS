@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using PMS.UIManager.Views.ChildViews;
 using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -45,6 +46,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			InitializeComponent();
 			bookNum = targBook;
 			Stipend.Value = FetchBaptismalStipend();
+			FetchBookEntryNum();
 		}
 		/// <summary>
 		/// Inserts the request to the database.
@@ -112,6 +114,32 @@ namespace PMS.UIManager.Views.ChildWindows
 				return 0;
 			}
 		}
+		private void FetchBookEntryNum() {
+			int ret = 0;
+			PageNum.Value = vre.Page.Value;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT entry_number FROM records WHERE book_number = @bnum AND page_number = @pnum;";
+				cmd.Parameters.AddWithValue("@bnum", bookNum);
+				cmd.Parameters.AddWithValue("@pnum", vre.Page.Value);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = Convert.ToInt32(db_reader.GetString("entry_number"));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = 0;
+			}
+			EntryNum.Value = ret+1;
+		}
 		/// <summary>
 		/// Fetches default confirmation stipend value.
 		/// </summary>
@@ -151,48 +179,195 @@ namespace PMS.UIManager.Views.ChildWindows
 				return targ;
 			}
 		}
+		private bool CheckInputs()
+		{
+			BaptismDateValidator.Visibility = Visibility.Hidden;
+			BaptismDateValidator.Foreground = Brushes.Transparent;
+			BaptismDate.BorderBrush = Brushes.Transparent;
+
+			BirthDateValidator.Visibility = Visibility.Hidden;
+			BirthDateValidator.Foreground = Brushes.Transparent;
+			Birthdate.BorderBrush = Brushes.Transparent;
+
+			NameValidator.Visibility = Visibility.Hidden;
+			NameValidator.Foreground = Brushes.Transparent;
+			FullName.BorderBrush = Brushes.Transparent;
+
+			PlaceOfBirthValidator.Visibility = Visibility.Hidden;
+			PlaceOfBirthValidator.Foreground = Brushes.Transparent;
+			PlaceOfBirth.BorderBrush = Brushes.Transparent;
+
+			Sponsor1Validator.Visibility = Visibility.Hidden;
+			Sponsor1Validator.Foreground = Brushes.Transparent;
+			Sponsor1.BorderBrush = Brushes.Transparent;
+
+			Sponsor2Validator.Visibility = Visibility.Hidden;
+			Sponsor2Validator.Foreground = Brushes.Transparent;
+			Sponsor2.BorderBrush = Brushes.Transparent;
+
+			Parent1Validator.Visibility = Visibility.Hidden;
+			Parent1Validator.Foreground = Brushes.Transparent;
+			Parent1.BorderBrush = Brushes.Transparent;
+
+			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.Foreground = Brushes.Transparent;
+			Minister.BorderBrush = Brushes.Transparent;
+
+			LegitimacyValidator.Visibility = Visibility.Hidden;
+			LegitimacyValidator.Foreground = Brushes.Transparent;
+			Legitimacy.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(BaptismDate.Text))
+			{
+				BaptismDateValidator.Visibility = Visibility.Visible;
+				BaptismDateValidator.ToolTip = "This field is required.";
+				BaptismDateValidator.Foreground = Brushes.Red;
+				BaptismDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (EntryNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (PageNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Birthdate.Text))
+			{
+				BirthDateValidator.Visibility = Visibility.Visible;
+				BirthDateValidator.ToolTip = "This field is required.";
+				BirthDateValidator.Foreground = Brushes.Red;
+				Birthdate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(FullName.Text))
+			{
+				NameValidator.Visibility = Visibility.Visible;
+				NameValidator.ToolTip = "This field is required.";
+				NameValidator.Foreground = Brushes.Red;
+				FullName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (Stipend.Value == 0)
+			{
+				StipendValidator.Visibility = Visibility.Visible;
+				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
+				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.BorderBrush = Brushes.Orange;
+				MsgStipend();
+				ret = true;
+			}
+			if (string.IsNullOrWhiteSpace(PlaceOfBirth.Text))
+			{
+				PlaceOfBirthValidator.Visibility = Visibility.Visible;
+				PlaceOfBirthValidator.ToolTip = "This field is required. Type unknown if its not applicable.";
+				PlaceOfBirthValidator.Foreground = Brushes.Red;
+				PlaceOfBirth.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor1.Text))
+			{
+				Sponsor1Validator.Visibility = Visibility.Visible;
+				Sponsor1Validator.ToolTip = "This field is required.";
+				Sponsor1Validator.Foreground = Brushes.Red;
+				Sponsor1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor2.Text))
+			{
+				Sponsor2Validator.Visibility = Visibility.Visible;
+				Sponsor2Validator.ToolTip = "This field is required.";
+				Sponsor2Validator.Foreground = Brushes.Red;
+				Sponsor2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent1.Text))
+			{
+				Parent1Validator.Visibility = Visibility.Visible;
+				Parent1Validator.ToolTip = "This field is required.";
+				Parent1Validator.Foreground = Brushes.Red;
+				Parent1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Minister.Text))
+			{
+				MinisterValidator.Visibility = Visibility.Visible;
+				MinisterValidator.ToolTip = "This field is required.";
+				MinisterValidator.Foreground = Brushes.Red;
+				Minister.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Legitimacy.Text))
+			{
+				LegitimacyValidator.Visibility = Visibility.Visible;
+				LegitimacyValidator.ToolTip = "This field is required.";
+				LegitimacyValidator.Foreground = Brushes.Red;
+				Legitimacy.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
+		private async void MsgStipend()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice", "Stipend is set to zero. Re-check input before proceeding.");
+		}
 		/// <summary>
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
 		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			switch (Legitimacy.SelectedIndex)
-			{
-				case 0:
-					legitimacy = "Legitimate";
-					break;
-				case 1:
-					legitimacy = "Civil";
-					break;
-				case 2:
-					legitimacy = "Illegitimate";
-					break;
-				default:
-					legitimacy = "----";
-					break;
-			}
-			entryNum = Convert.ToInt32(EntryNum.Value);
-			pageNum = Convert.ToInt32(PageNum.Value);
-			baptismDate = Convert.ToDateTime(BaptismDate.Text).ToString("yyyy-MM-dd");
-			birthDate = Convert.ToDateTime(Birthdate.Text).ToString("yyyy-MM-dd");
-			fullName = ValidateInp(FullName.Text);
-			birthPlace = PlaceOfBirth.Text;
-			parent1 = ValidateInp(Parent1.Text);
-			parent2 = ValidateInp(Parent2.Text);
-			sponsor1 = ValidateInp(Sponsor1.Text);
-			sponsor2 = ValidateInp(Sponsor2.Text);
-			stipend = Convert.ToInt32(Stipend.Value);
-			minister = ValidateInp(Minister.Text);
-			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0)
-			{
-				MsgSuccess();
-				vre.Sync(bookNum);
-				this.Close();
+			if (CheckInputs() == true) {
+				legitimacy = Legitimacy.Text;
+				entryNum = Convert.ToInt32(EntryNum.Value);
+				pageNum = Convert.ToInt32(PageNum.Value);
+				baptismDate = Convert.ToDateTime(BaptismDate.Text).ToString("yyyy-MM-dd");
+				birthDate = Convert.ToDateTime(Birthdate.Text).ToString("yyyy-MM-dd");
+				fullName = ValidateInp(FullName.Text);
+				birthPlace = PlaceOfBirth.Text;
+				parent1 = ValidateInp(Parent1.Text);
+				parent2 = ValidateInp(Parent2.Text);
+				sponsor1 = ValidateInp(Sponsor1.Text);
+				sponsor2 = ValidateInp(Sponsor2.Text);
+				stipend = Convert.ToInt32(Stipend.Value);
+				minister = ValidateInp(Minister.Text);
+				remarks = ValidateInp(Remarks.Text);
+				if (InsertEntry() > 0)
+				{
+					MsgSuccess();
+					vre.Sync(bookNum);
+					this.Close();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
 			else {
-				MsgFail();
+
 			}
 		}
 		private async void MsgSuccess()

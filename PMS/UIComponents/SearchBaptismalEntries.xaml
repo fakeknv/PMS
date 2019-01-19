@@ -1,0 +1,227 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PMS.UIComponents"
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="PMS.UIComponents.SearchBaptismalEntries"
+             mc:Ignorable="d" d:DesignWidth="1199"
+             VerticalAlignment="Stretch" d:DesignHeight="655">
+    <Grid Margin="0,52,0,0" x:Name="ParentGrid">
+        <Button 
+            Margin="0,-43,18,0" 
+            VerticalAlignment="Top" 
+            Width="82" 
+            Height="31" 
+            Background="White" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF474747" 
+            HorizontalAlignment="Right" Click="Print_Click" BorderBrush="#FFE9E9E9" BorderThickness="1">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{Custom:FontAwesome PrintSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="52" Text="  Print" />
+            </StackPanel>
+        </Button>
+        <Button 
+                Margin="0,-43,114,0" 
+                VerticalAlignment="Top" 
+                Width="82" 
+                Height="31" 
+                Background="White" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="#FF474747" 
+                HorizontalAlignment="Right" Click="Edit_Click" BorderBrush="#FFE9E9E9" BorderThickness="1">
+            <StackPanel 
+                    Orientation="Horizontal">
+                <Rectangle 
+                        Width="16"
+                        Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{Custom:FontAwesome EditSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="52" Text="  Edit" />
+            </StackPanel>
+        </Button>
+        <Button 
+            Margin="0,-43,209,0" 
+            VerticalAlignment="Top" 
+            Width="103" 
+            Height="31" 
+            Background="White" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF474747" 
+            HorizontalAlignment="Right" Click="Remarks_Click" BorderBrush="#FFE9E9E9" BorderThickness="1">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{Custom:FontAwesome ReadmeBrands}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  Remarks" />
+            </StackPanel>
+        </Button>
+        <Button 
+            Margin="0,-43,327,0" 
+            VerticalAlignment="Top" 
+            Width="103" 
+            Height="31" 
+            Background="White" 
+            FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+            Foreground="#FF474747" 
+            HorizontalAlignment="Right" Click="History_Click" BorderBrush="#FFE9E9E9" BorderThickness="1">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="16"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{Custom:FontAwesome HistorySolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="64" Text="  History" />
+            </StackPanel>
+        </Button>
+        <DataGrid AlternatingRowBackground="#EDF6FD" x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="10" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding EntryNumber}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Year" SortMemberPath="BaptismalYear" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding BaptismalYear}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Date" SortMemberPath="BaptismalDate" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding BaptismalDate}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Name" SortMemberPath="FullName" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding FullName}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Birthday" SortMemberPath="BirthDate" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding BirthDate}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Legitimacy" SortMemberPath="Legitimacy" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Legitimacy}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Place of Birth" SortMemberPath="PlaceOfBirth" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" MaxWidth="200" TextWrapping="WrapWithOverflow" Text="{Binding PlaceOfBirth}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Parents" SortMemberPath="Parent1" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent2}"/>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Godparents" SortMemberPath="Godparent1" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Godparent1}"/>
+                                <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
+                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Godparent2}"/>
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Stipend" SortMemberPath="Stipend" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Stipend}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Minister" SortMemberPath="Minister" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" Text="{Binding Minister}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="136,-41,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI"/>
+        <Label Content="Page:" HorizontalAlignment="Left" Margin="84,-41,0,0" VerticalAlignment="Top" Width="52" FontSize="14"/>
+        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="244,-41,0,0" VerticalAlignment="Top" Width="122" FontSize="14"/>
+        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="366,-41,0,0" VerticalAlignment="Top" Width="120" FontFamily="Segoe UI">
+            <ComboBoxItem Content="10"/>
+            <ComboBoxItem Content="15"/>
+            <ComboBoxItem Content="20"/>
+            <ComboBoxItem Content="25"/>
+            <ComboBoxItem Content="30"/>
+        </ComboBox>
+    </Grid>
+</UserControl>

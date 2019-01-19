@@ -7,6 +7,7 @@
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
     x:Class="PMS.UIManager.Views.ChildWindows.AddMatrimonialRecordEntryWindow"
     Title="Add Request"
     ShowTitleBar="False"
@@ -31,17 +32,16 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid Width="964" Height="588">
-        <Border BorderThickness="10" CornerRadius="10" LostKeyboardFocus="Hide">
-            <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="-10,532,-10,-10">
-                <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
-                    <Button x:Name="CancelButton1" 
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,540,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom">
+                <Button x:Name="CancelButton1" 
                         Content="Close" 
                         Margin="0,8,132,8"
                         FontFamily="Bahnschrift Light" 
                         Click="AddRecCancel"
                         Background="#FFF0A63A" 
                         Foreground="White" HorizontalAlignment="Right" Width="114"/>
-                    <Button
+                <Button
                         Margin="0,8,10,0" 
                         VerticalAlignment="Top" 
                         Width="117" 
@@ -51,24 +51,23 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                         Foreground="White" 
                         HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
-                        <StackPanel 
+                    <StackPanel 
                             Orientation="Horizontal">
-                            <Rectangle 
+                        <Rectangle 
                                 Width="16"
                                 Height="16">
-                                <Rectangle.Fill>
-                                    <VisualBrush 
+                            <Rectangle.Fill>
+                                <VisualBrush 
                                         Stretch="Fill"
                                         Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                            <TextBlock 
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
                                 Text=" Confirm" 
                                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-            </Border>
+                    </StackPanel>
+                </Button>
+            </Grid>
         </Border>
         <Label x:Name="PageNumLabel" 
             Content="Page No." 
@@ -91,9 +90,9 @@
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="AgeLabel" 
             Content="Age" 
-            Margin="264,124,610,0" 
+            Margin="254,124,620,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="Age1" HorizontalAlignment="Left" Minimum="0" Margin="264,148,0,0" VerticalAlignment="Top" Width="90" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="Age1" HorizontalAlignment="Left" Minimum="0" Margin="254,148,0,0" VerticalAlignment="Top" Width="90" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="NameLabel" 
             Content="Husband's Name" 
             HorizontalAlignment="Left" 
@@ -102,11 +101,9 @@
             Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox x:Name="FullName1" 
             Height="23" 
-            Margin="30,148,725,0" 
+            Margin="30,148,742,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label 
             Content="Husband's Parents" 
             HorizontalAlignment="Left" 
@@ -118,17 +115,13 @@
             Height="23" 
             Margin="29,294,715,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Parent2" 
             Height="23" 
             Margin="29,325,715,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="SponsorsLabel" 
             Content="Witnesses" 
             HorizontalAlignment="Left" 
@@ -153,21 +146,19 @@
             Height="23" 
             Margin="110,375,36,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions7" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" LostKeyboardFocus="Hide" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions7" Foreground="#FF474747"/>
         <Label x:Name="StipendLabel" 
             Content="Stipend" 
             Margin="754,51,58,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <mah:NumericUpDown x:Name="Stipend" HorizontalAlignment="Left" Minimum="0" Margin="754,75,0,0" VerticalAlignment="Top" Width="174" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-        <ComboBox x:Name="Status1" SelectedIndex="2" HorizontalAlignment="Left" Margin="372,148,0,0" VerticalAlignment="Top" Width="132" Foreground="#FF474747">
-            <ComboBoxItem>Widow</ComboBoxItem>
-            <ComboBoxItem>Widower</ComboBoxItem>
-            <ComboBoxItem>Single</ComboBoxItem>
-            <ComboBoxItem>Conjugal</ComboBoxItem>
-            <ComboBoxItem>Adult</ComboBoxItem>
-            <ComboBoxItem>Infant</ComboBoxItem>
+        <ComboBox x:Name="Status1" SelectedIndex="2" HorizontalAlignment="Left" Margin="372,148,0,0" VerticalAlignment="Top" Width="116" Foreground="#FF474747">
+            <ComboBoxItem Content="Widow"/>
+            <ComboBoxItem Content="Widower"/>
+            <ComboBoxItem Content="Single"/>
+            <ComboBoxItem Content="Conjugal"/>
+            <ComboBoxItem Content="Adult"/>
+            <ComboBoxItem Content="Infant"/>
         </ComboBox>
         <Label 
             Content="Status" 
@@ -177,18 +168,14 @@
             Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox x:Name="Hometown1" 
             Height="23" 
-            Margin="523,148,248,0" 
+            Margin="523,148,270,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions1" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions1" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <TextBox x:Name="Residence1" 
             Height="23" 
             Margin="735,148,36,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions3" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions3" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <Label 
             Content="Hometown" 
             HorizontalAlignment="Left" 
@@ -203,9 +190,9 @@
             Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <Label 
             Content="Age" 
-            Margin="264,199,610,0" 
+            Margin="254,199,620,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="Age2" HorizontalAlignment="Left" Minimum="0" Margin="264,223,0,0" VerticalAlignment="Top" Width="90" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="Age2" HorizontalAlignment="Left" Minimum="0" Margin="254,223,0,0" VerticalAlignment="Top" Width="90" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label 
             Content="Wife's Name" 
             HorizontalAlignment="Left" 
@@ -214,18 +201,16 @@
             Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox x:Name="FullName2" 
             Height="23" 
-            Margin="30,223,725,0" 
+            Margin="30,223,742,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
-        <ComboBox x:Name="Status2" SelectedIndex="2" HorizontalAlignment="Left" Margin="372,223,0,0" VerticalAlignment="Top" Width="132" Foreground="#FF474747">
-            <ComboBoxItem>Widow</ComboBoxItem>
-            <ComboBoxItem>Widower</ComboBoxItem>
-            <ComboBoxItem>Single</ComboBoxItem>
-            <ComboBoxItem>Conjugal</ComboBoxItem>
-            <ComboBoxItem>Adult</ComboBoxItem>
-            <ComboBoxItem>Infant</ComboBoxItem>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <ComboBox x:Name="Status2" SelectedIndex="2" HorizontalAlignment="Left" Margin="372,223,0,0" VerticalAlignment="Top" Width="116" Foreground="#FF474747">
+            <ComboBoxItem Content="Widow"/>
+            <ComboBoxItem Content="Widower"/>
+            <ComboBoxItem Content="Single"/>
+            <ComboBoxItem Content="Conjugal"/>
+            <ComboBoxItem Content="Adult"/>
+            <ComboBoxItem Content="Infant"/>
         </ComboBox>
         <Label 
             Content="Status" 
@@ -235,18 +220,14 @@
             Width="116" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <TextBox x:Name="Hometown2" 
             Height="23" 
-            Margin="523,223,248,0" 
+            Margin="523,223,270,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions2" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions2" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <TextBox x:Name="Residence2" 
             Height="23" 
             Margin="735,223,36,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions4" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions4" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <Label 
             Content="Hometown" 
             HorizontalAlignment="Left" 
@@ -264,49 +245,37 @@
             Height="23" 
             Margin="254,295,490,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Parent4" 
             Height="23" 
             Margin="254,325,490,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Sponsor1" 
             Height="23" 
             Margin="483,294,261,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Sponsor2" 
             Height="23" 
             Margin="483,325,261,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Residence3" 
             Height="23" 
             Margin="708,295,36,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions5" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions5" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <TextBox 
             x:Name="Residence4" 
             Height="23" 
             Margin="708,325,36,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions6" LostKeyboardFocus="Hide" Foreground="#FF474747">
-
-        </TextBox>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" TextChanged="ShowSuggestions6" LostKeyboardFocus="Hide" Foreground="#FF474747"/>
         <Label 
             Content="Residence" 
             HorizontalAlignment="Left" 
@@ -407,5 +376,22 @@
             Margin="254,271,0,0" 
             VerticalAlignment="Top" 
             Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <UIComponents:Validator x:Name="PageNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,80,761,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="EntryNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,80,530,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="MarriageDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,80,264,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="StipendValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,80,15,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Residence1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,153,15,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Hometown1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,153,249,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Status1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,153,455,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="HusbandValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,153,721,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="WifeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,228,721,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Age2Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,228,599,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Age1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,153,599,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Status2Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,228,455,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Hometown2Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,228,249,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Residence2Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,228,15,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="GroupValidator1" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,300,15,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="GroupValidator2" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,331,15,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="MinisterValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,380,15,0" VerticalAlignment="Top" Width="16"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

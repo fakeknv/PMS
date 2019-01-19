@@ -10,6 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -52,7 +53,191 @@ namespace PMS.UIManager.Views.ChildWindows
 			pmsutil = new PMSUtil();
 			InitializeComponent();
 			bookNum = targBook;
+			FetchBookEntryNum();
 			Stipend.Value = FetchBurialStipend();
+		}
+		private void FetchBookEntryNum()
+		{
+			int ret = 0;
+			PageNum.Value = vre.Page.Value;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT entry_number FROM records WHERE book_number = @bnum AND page_number = @pnum;";
+				cmd.Parameters.AddWithValue("@bnum", bookNum);
+				cmd.Parameters.AddWithValue("@pnum", vre.Page.Value);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = Convert.ToInt32(db_reader.GetString("entry_number"));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = 0;
+			}
+			EntryNum.Value = ret + 1;
+		}
+		private bool CheckInputs()
+		{
+			DeathDateValidator.Visibility = Visibility.Hidden;
+			DeathDateValidator.Foreground = Brushes.Transparent;
+			DeathDate.BorderBrush = Brushes.Transparent;
+
+			BurialDateValidator.Visibility = Visibility.Hidden;
+			BurialDateValidator.Foreground = Brushes.Transparent;
+			BurialDate.BorderBrush = Brushes.Transparent;
+
+			NameValidator.Visibility = Visibility.Hidden;
+			NameValidator.Foreground = Brushes.Transparent;
+			FullName.BorderBrush = Brushes.Transparent;
+
+			PlaceOfIntermentValidator.Visibility = Visibility.Hidden;
+			PlaceOfIntermentValidator.Foreground = Brushes.Transparent;
+			PlaceOfInterment.BorderBrush = Brushes.Transparent;
+
+			Parent1Validator.Visibility = Visibility.Hidden;
+			Parent1Validator.Foreground = Brushes.Transparent;
+			Parent1.BorderBrush = Brushes.Transparent;
+
+			Residence1Validator.Visibility = Visibility.Hidden;
+			Residence1Validator.Foreground = Brushes.Transparent;
+			Residence1.BorderBrush = Brushes.Transparent;
+
+			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.Foreground = Brushes.Transparent;
+			Minister.BorderBrush = Brushes.Transparent;
+
+			SacramentValidator.Visibility = Visibility.Hidden;
+			SacramentValidator.Foreground = Brushes.Transparent;
+			Sacrament.BorderBrush = Brushes.Transparent;
+
+			CauseOfDeathValidator.Visibility = Visibility.Hidden;
+			CauseOfDeathValidator.Foreground = Brushes.Transparent;
+			CauseOfDeath.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(DeathDate.Text))
+			{
+				DeathDateValidator.Visibility = Visibility.Visible;
+				DeathDateValidator.ToolTip = "This field is required.";
+				DeathDateValidator.Foreground = Brushes.Red;
+				DeathDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (EntryNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (PageNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(BurialDate.Text))
+			{
+				BurialDateValidator.Visibility = Visibility.Visible;
+				BurialDateValidator.ToolTip = "This field is required.";
+				BurialDateValidator.Foreground = Brushes.Red;
+				BurialDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(FullName.Text))
+			{
+				NameValidator.Visibility = Visibility.Visible;
+				NameValidator.ToolTip = "This field is required.";
+				NameValidator.Foreground = Brushes.Red;
+				FullName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (Stipend.Value == 0)
+			{
+				StipendValidator.Visibility = Visibility.Visible;
+				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
+				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.BorderBrush = Brushes.Orange;
+				MsgStipend();
+				ret = true;
+			}
+			if (string.IsNullOrWhiteSpace(PlaceOfInterment.Text))
+			{
+				PlaceOfIntermentValidator.Visibility = Visibility.Visible;
+				PlaceOfIntermentValidator.ToolTip = "This field is required.";
+				PlaceOfIntermentValidator.Foreground = Brushes.Red;
+				PlaceOfInterment.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent1.Text))
+			{
+				Parent1Validator.Visibility = Visibility.Visible;
+				Parent1Validator.ToolTip = "This field is required.";
+				Parent1Validator.Foreground = Brushes.Red;
+				Parent1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Minister.Text))
+			{
+				MinisterValidator.Visibility = Visibility.Visible;
+				MinisterValidator.ToolTip = "This field is required.";
+				MinisterValidator.Foreground = Brushes.Red;
+				Minister.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sacrament.Text))
+			{
+				SacramentValidator.Visibility = Visibility.Visible;
+				SacramentValidator.ToolTip = "This field is required.";
+				SacramentValidator.Foreground = Brushes.Red;
+				Sacrament.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(CauseOfDeath.Text))
+			{
+				CauseOfDeathValidator.Visibility = Visibility.Visible;
+				CauseOfDeathValidator.ToolTip = "This field is required.";
+				CauseOfDeathValidator.Foreground = Brushes.Red;
+				CauseOfDeath.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence1.Text))
+			{
+				Residence1Validator.Visibility = Visibility.Visible;
+				Residence1Validator.ToolTip = "This field is required.";
+				Residence1Validator.Foreground = Brushes.Red;
+				Residence1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+
+			return ret;
+		}
+		private async void MsgStipend()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice", "Stipend is set to zero. Re-check input before proceeding.");
 		}
 		/// <summary>
 		/// Inserts the request to the database.
@@ -212,55 +397,62 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			entryNum = Convert.ToInt32(EntryNum.Value);
-			pageNum = Convert.ToInt32(PageNum.Value);
-			deathDate = Convert.ToDateTime(DeathDate.Text).ToString("yyyy-MM-dd");
-			burialDate = Convert.ToDateTime(BurialDate.Text).ToString("yyyy-MM-dd");
-			age = Convert.ToInt32(Age.Value);
-			switch (Status.SelectedIndex)
+			if (CheckInputs() == true)
 			{
-				case 0:
-					status = "Widow";
-					break;
-				case 1:
-					status = "Widower";
-					break;
-				case 2:
-					status = "Single";
-					break;
-				case 3:
-					status = "Conjugal";
-					break;
-				case 4:
-					status = "Adult";
-					break;
-				case 5:
-					status = "Infant";
-					break;
-				default:
-					status = "----";
-					break;
-			}
-			fullName = ValidateInp(FullName.Text);
-			sacrament = ValidateInp(Sacrament.Text);
-			causeOfDeath = ValidateInp(CauseOfDeath.Text);
-			intermentPlace = ValidateInp(PlaceOfInterment.Text);
-			parent1 = ValidateInp(Parent1.Text);
-			parent2 = ValidateInp(Parent2.Text);
-			residence1 = ValidateInp(Residence1.Text);
-			residence2 = ValidateInp(Residence2.Text);
-			stipend = Convert.ToInt32(Stipend.Value);
-			minister = ValidateInp(Minister.Text);
-			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0)
-			{
-				MsgSuccess();
-				vre.Sync(bookNum);
-				this.Close();
+				entryNum = Convert.ToInt32(EntryNum.Value);
+				pageNum = Convert.ToInt32(PageNum.Value);
+				deathDate = Convert.ToDateTime(DeathDate.Text).ToString("yyyy-MM-dd");
+				burialDate = Convert.ToDateTime(BurialDate.Text).ToString("yyyy-MM-dd");
+				age = Convert.ToInt32(Age.Value);
+				switch (Status.SelectedIndex)
+				{
+					case 0:
+						status = "Widow";
+						break;
+					case 1:
+						status = "Widower";
+						break;
+					case 2:
+						status = "Single";
+						break;
+					case 3:
+						status = "Conjugal";
+						break;
+					case 4:
+						status = "Adult";
+						break;
+					case 5:
+						status = "Infant";
+						break;
+					default:
+						status = "----";
+						break;
+				}
+				fullName = ValidateInp(FullName.Text);
+				sacrament = ValidateInp(Sacrament.Text);
+				causeOfDeath = ValidateInp(CauseOfDeath.Text);
+				intermentPlace = ValidateInp(PlaceOfInterment.Text);
+				parent1 = ValidateInp(Parent1.Text);
+				parent2 = ValidateInp(Parent2.Text);
+				residence1 = ValidateInp(Residence1.Text);
+				residence2 = ValidateInp(Residence2.Text);
+				stipend = Convert.ToInt32(Stipend.Value);
+				minister = ValidateInp(Minister.Text);
+				remarks = ValidateInp(Remarks.Text);
+				if (InsertEntry() > 0)
+				{
+					MsgSuccess();
+					vre.Sync(bookNum);
+					this.Close();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
 			else
 			{
-				MsgFail();
+
 			}
 		}
 		private async void MsgSuccess()

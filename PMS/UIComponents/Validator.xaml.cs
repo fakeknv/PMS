@@ -16,12 +16,11 @@ using System.Windows.Shapes;
 namespace PMS.UIComponents
 {
 	/// <summary>
-	/// Interaction logic for RegisterItem.xaml
+	/// Interaction logic for Validator.xaml
 	/// </summary>
-	public partial class RegisterItem : UserControl
+	public partial class Validator : UserControl
 	{
-
-		public RegisterItem()
+		public Validator()
 		{
 			InitializeComponent();
 		}

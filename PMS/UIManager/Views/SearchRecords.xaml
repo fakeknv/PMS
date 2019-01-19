@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UserControl 
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
+    x:Class="PMS.UIManager.Views.SearchRecords"
+    Margin="0" 
+    Padding="0" 
+    d:DesignHeight="837.513" 
+    d:DesignWidth="947.25">
+    <Grid 
+        x:Name="PriestsMainGrid" 
+        Background="#FFF1F1F3">
+        <Grid Background="White" Height="46" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="839*"/>
+                <ColumnDefinition Width="108*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch">
+                <TextBox
+                x:Name="SearchRequestBox" 
+                TextWrapping="Wrap" 
+                Margin="10,10,332,0"
+                BorderThickness="0,0,0,1" 
+                Height="28" 
+                VerticalAlignment="Top" 
+                mah:TextBoxHelper.Watermark="Search record on all registers"
+                RenderTransformOrigin="0,0.5" 
+                FontFamily="Segoe UI" 
+                FontSize="14"
+                VerticalContentAlignment="Center" BorderBrush="#FF8D8D8D" />
+                <Button
+                    HorizontalAlignment="Right"
+                    x:Name="SearchRequestButton" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" 
+                    Content="{iconPacks:FontAwesome SearchSolid}" 
+                    Margin="0,10,341,0" 
+                    VerticalAlignment="Top" 
+                    Height="26" 
+                    Background="White" 
+                    BorderBrush="{x:Null}" 
+                    RenderTransformOrigin="0.824,0.294" 
+                    Foreground="#FF717171"/>
+                <ComboBox Width="160" x:Name="RegType" HorizontalAlignment="Right" SelectedIndex="0" Margin="0,3,167,0" VerticalAlignment="Top" Height="38" BorderBrush="White" FontSize="20">
+                    <ComboBoxItem Content="Baptismal"/>
+                    <ComboBoxItem Content="Confirmation"/>
+                    <ComboBoxItem Content="Matrimonial"/>
+                    <ComboBoxItem Content="Burial"/>
+                </ComboBox>
+                <Button
+                    Width="160"
+                    x:Name="CreateRequestButton" 
+                    Margin="0,3,2,0" 
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Height="38" 
+                    Background="WhiteSmoke" 
+                    Foreground="#FF474747" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="SearchRecord_Click" FontSize="18">
+                    <StackPanel 
+                    Orientation="Horizontal">
+                        <Rectangle 
+                        Width="12"
+                        Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome FileInvoiceSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                        Text=" Start Search" FontFamily="Segoe UI Semilight" FontSize="18" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Margin="0,51,0,0">
+            <Grid Margin="10" x:Name="EntriesHolderGrid" Background="White"/>
+        </Grid>
+    </Grid>
+</UserControl>

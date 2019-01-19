@@ -11,8 +11,8 @@
     <Grid Background="WhiteSmoke" x:Name="RegisterMainGrid">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="438*"/>
-                <ColumnDefinition Width="509*"/>
+                <ColumnDefinition Width="540"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <TextBox 
@@ -32,19 +32,18 @@
                     x:Name="SearchRequestButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
                     Content="{iconPacks:FontAwesome SearchSolid}" 
-                    Margin="0,2,10,0" 
+                    Margin="0,4,10,0" 
                     VerticalAlignment="Top" 
                     Height="34" 
-                    Background="White" 
+                    Background="{x:Null}" 
                     BorderBrush="{x:Null}" 
                     RenderTransformOrigin="0.824,0.294" 
-                    Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
+                    Foreground="#FF535353" Width="34" HorizontalAlignment="Right"/>
             </Grid>
-            <Grid 
-                Grid.Column="1" HorizontalAlignment="Right" Width="509">
+            <Grid Grid.Column="1" Margin="5,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="338*"/>
-                    <ColumnDefinition Width="171*"/>
+                    <ColumnDefinition Width="210"/>
+                    <ColumnDefinition Width="299*"/>
                 </Grid.ColumnDefinitions>
                 <Button
                 x:Name="CreateRequestButton_Copy" 
@@ -81,16 +80,16 @@
             Margin="0,46,0,0" Background="#FFF3F3F3">
             <Grid Background="#FFF3F3F3" Height="58" MinHeight="58" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="152*"/>
-                    <ColumnDefinition Width="111*"/>
-                    <ColumnDefinition Width="124*"/>
-                    <ColumnDefinition Width="127*"/>
-                    <ColumnDefinition Width="89*"/>
-                    <ColumnDefinition Width="341*"/>
+                    <ColumnDefinition Width="103*"/>
+                    <ColumnDefinition Width="116*"/>
+                    <ColumnDefinition Width="133*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="92*"/>
+                    <ColumnDefinition Width="370*"/>
                 </Grid.ColumnDefinitions>
                 <Button
                     x:Name="AllFilterButton" 
-                    Margin="0,17,0,0" 
+                    Margin="-5,17,0,0" 
                     VerticalAlignment="Top" 
                     Width="108" 
                     Height="31" 
@@ -125,7 +124,7 @@
                     Background="{x:Null}" 
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     Foreground="#FF5C90D2" 
-                    HorizontalAlignment="Right" Grid.ColumnSpan="2">
+                    HorizontalAlignment="Right" Grid.Column="1">
                     <StackPanel 
                         Orientation="Horizontal">
                         <Rectangle 
@@ -239,14 +238,25 @@
                     Width="34" 
                     HorizontalAlignment="Right" 
                     Click="ManualSyncButton_Click" Grid.Column="5"/>
+                <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="57,17,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI" Grid.Column="5" Height="26"/>
+                <Label Content="Page:" HorizontalAlignment="Left" Margin="5,14,0,0" VerticalAlignment="Top" Width="52" FontSize="14" Grid.Column="5" Height="29"/>
+                <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="138,15,0,0" VerticalAlignment="Top" Width="122" FontSize="14" Grid.Column="5" Height="29"/>
+                <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Width="61" FontFamily="Segoe UI" Grid.Column="5" Height="26">
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="15"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="25"/>
+                    <ComboBoxItem Content="30"/>
+                </ComboBox>
             </Grid>
             <Grid Margin="0,58,0,0" Background="WhiteSmoke">
                 <ListView x:Name="RegistersItemContainer"  ItemsSource="{Binding Items}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
                             <Setter Property="Padding" Value="0,0,0,0"/>
+                            <Setter Property="Margin" Value="0,20,0,0"/>
                             <Setter Property="Width" Value="209.979"/>
-                            <Setter Property="Height" Value="236.575"/>
+                            <Setter Property="Height" Value="242"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.Template>

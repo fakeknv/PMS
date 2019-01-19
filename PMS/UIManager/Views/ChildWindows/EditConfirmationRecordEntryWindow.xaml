@@ -6,7 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents"
     x:Class="PMS.UIManager.Views.ChildWindows.EditConfirmationRecordEntryWindow"
     Title="Add Request"
     ShowTitleBar="False"
@@ -35,7 +36,7 @@
             Content="Page No." 
             Margin="69,48,437,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="PageNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="69,74,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="PageNum" HorizontalAlignment="Left" Maximum="200" Minimum="1" Margin="69,74,0,0" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="EntryNumLabel" 
             Content="Entry No." 
             Margin="231,48,271,0" 
@@ -54,7 +55,7 @@
             Content="Age" 
             Margin="69,117,486,0" 
             VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
-        <mah:NumericUpDown x:Name="Age" HorizontalAlignment="Left" Minimum="0" Margin="69,143,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+        <mah:NumericUpDown x:Name="Age" HorizontalAlignment="Left" Minimum="0" Margin="69,143,0,0" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
         <Label x:Name="NameLabel" 
             Content="Fullname" 
             HorizontalAlignment="Left" 
@@ -99,7 +100,7 @@
         <TextBox 
             x:Name="Parent1" 
             Height="23" 
-            Margin="69,341,306,0" 
+            Margin="69,341,312,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
 
@@ -107,7 +108,7 @@
         <TextBox 
             x:Name="Parent2" 
             Height="23" 
-            Margin="69,371,306,0" 
+            Margin="69,371,312,0" 
             TextWrapping="Wrap" 
             VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747">
 
@@ -263,5 +264,17 @@
                 </Button>
             </Grid>
         </Border>
+        <UIComponents:Validator x:Name="ConfirmationDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,78,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="EntryNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,78,228,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="PageNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,78,404,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="AgeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,148,404,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="NameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,148,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="ProvinceValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,201,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="StipendValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,277,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Sponsor1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,346,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="MinisterValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,424,43,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="Parent1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,346,291,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="PlaceOfBaptismValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,277,206,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="ParishValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,201,303,0" VerticalAlignment="Top" Width="16"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

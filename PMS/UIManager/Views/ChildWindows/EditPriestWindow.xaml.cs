@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -61,38 +62,58 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			this.Close();
 		}
+		private bool CheckInputs()
+		{
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(PriestName.Text))
+			{
+				PriestNameValidator.Visibility = Visibility.Visible;
+				PriestNameValidator.ToolTip = "Username cannot be empty!";
+				PriestNameValidator.Foreground = Brushes.Red;
+				PriestName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
 		private void EditPriestButton_Click(object sender, RoutedEventArgs e)
 		{
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
+			if (CheckInputs() == true) {
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
 				{
-					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText =
-					"UPDATE residing_priests SET priest_name = @priest_name, priest_status = @priest_status WHERE priest_id = @pid";
-					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@pid", pid);
-					cmd.Parameters.AddWithValue("@priest_name", PriestName.Text);
-					cmd.Parameters.AddWithValue("@priest_status", Status.Text);
-					int stat_code = cmd.ExecuteNonQuery();
-					conn.Close();
-					if (stat_code > 0)
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
 					{
-						MsgSuccess();
-						this.Close();
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText =
+						"UPDATE residing_priests SET priest_name = @priest_name, priest_status = @priest_status WHERE priest_id = @pid";
+						cmd.Prepare();
+						cmd.Parameters.AddWithValue("@pid", pid);
+						cmd.Parameters.AddWithValue("@priest_name", PriestName.Text);
+						cmd.Parameters.AddWithValue("@priest_status", Status.Text);
+						int stat_code = cmd.ExecuteNonQuery();
+						conn.Close();
+						if (stat_code > 0)
+						{
+							MsgSuccess();
+							this.Close();
+						}
+						else
+						{
+							MsgFail();
+						}
 					}
 					else
 					{
-						MsgFail();
+
 					}
 				}
-				else
-				{
+			}
+			else {
 
-				}
 			}
 		}
 		private async void MsgSuccess()

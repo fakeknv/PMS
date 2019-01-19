@@ -108,13 +108,13 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <DataGrid x:Name="TimeslotsItemContainer" Height="746" Margin="0,82,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+        <DataGrid BorderBrush="LightGray" GridLinesVisibility="All" x:Name="TimeslotsItemContainer" Height="746" Margin="55,82,61,0" VerticalAlignment="Top" AutoGenerateColumns="False" FontFamily="Segoe UI Historic">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="*" Header="Time Slot" SortMemberPath="Timeslot" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Timeslot}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Timeslot}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -123,17 +123,17 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="55,51,0,0" VerticalAlignment="Top" Width="77"/>
-        <Label Content="Page:" HorizontalAlignment="Left" Margin="3,51,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="163,51,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="285,51,0,0" VerticalAlignment="Top" Width="120">
+        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="108,51,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label Content="Page:" HorizontalAlignment="Left" Margin="56,51,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="216,51,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="338,51,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem>10</ComboBoxItem>
             <ComboBoxItem>15</ComboBoxItem>
             <ComboBoxItem>20</ComboBoxItem>

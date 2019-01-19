@@ -16,5 +16,6 @@
 		public string Godparent2 { get; set; }
 		public double Stipend { get; set; }
 		public string Minister { get; set; }
+		public int Page { get; set; }
 	}
 }

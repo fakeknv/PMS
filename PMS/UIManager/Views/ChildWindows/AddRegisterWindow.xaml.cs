@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -67,50 +68,127 @@ namespace PMS.UIManager.Views.ChildWindows
 				return 0;
 			}
 		}
+		private bool CheckInputs()
+		{
+			RegTypeValidator.Visibility = Visibility.Hidden;
+			RegTypeValidator.Foreground = Brushes.Transparent;
+			RegisterType.BorderBrush = Brushes.Transparent;
+
+			BookNumValidator.Visibility = Visibility.Hidden;
+			BookNumValidator.Foreground = Brushes.Transparent;
+			BookNo.BorderBrush = Brushes.Transparent;
+
+			RegNumValidator.Visibility = Visibility.Hidden;
+			RegNumValidator.Foreground = Brushes.Transparent;
+			RegisterNo.BorderBrush = Brushes.Transparent;
+
+			BookNameValidator.Visibility = Visibility.Hidden;
+			BookNameValidator.Foreground = Brushes.Transparent;
+			Book.BorderBrush = Brushes.Transparent;
+
+			CreationDateValidator.Visibility = Visibility.Hidden;
+			CreationDateValidator.Foreground = Brushes.Transparent;
+			CreationDate.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(RegisterType.Text))
+			{
+				RegTypeValidator.Visibility = Visibility.Visible;
+				RegTypeValidator.ToolTip = "This field is requried.";
+				RegTypeValidator.Foreground = Brushes.Red;
+				RegisterType.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(BookNo.Text))
+			{
+				BookNumValidator.Visibility = Visibility.Visible;
+				BookNumValidator.ToolTip = "This field is requried.";
+				BookNumValidator.Foreground = Brushes.Red;
+				BookNo.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(RegisterNo.Value.ToString()))
+			{
+				RegNumValidator.Visibility = Visibility.Visible;
+				RegNumValidator.ToolTip = "This field is requried.";
+				RegNumValidator.Foreground = Brushes.Red;
+				RegisterNo.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Book.Text))
+			{
+				BookNameValidator.Visibility = Visibility.Visible;
+				BookNameValidator.ToolTip = "This field is requried.";
+				BookNameValidator.Foreground = Brushes.Red;
+				Book.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(CreationDate.Text))
+			{
+				CreationDateValidator.Visibility = Visibility.Visible;
+				CreationDateValidator.ToolTip = "This field is requried.";
+				CreationDateValidator.Foreground = Brushes.Red;
+				CreationDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
 		/// <summary>
 		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
 		/// for database insertion.
 		/// </summary>
 		private void AddRegConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			switch (RegisterType.SelectedIndex)
-			{
-				case 0:
-					regType = "Baptismal";
-					break;
-				case 1:
-					regType = "Matrimonial";
-					break;
-				case 2:
-					regType = "Confirmation";
-					break;
-				case 3:
-					regType = "Burial";
-					break;
-				default:
-					regType = "NULL";
-					break;
-			}
-			bookNum = Convert.ToInt32(BookNo.Text);
-			registerNum = Convert.ToInt32(RegisterNo.Text);
-			book = Book.Text;
-			creationDate = Convert.ToDateTime(CreationDate.Text).ToString("yyyy-MM-dd");
+			if (CheckInputs() == true) {
+				switch (RegisterType.SelectedIndex)
+				{
+					case 0:
+						regType = "Baptismal";
+						break;
+					case 1:
+						regType = "Matrimonial";
+						break;
+					case 2:
+						regType = "Confirmation";
+						break;
+					case 3:
+						regType = "Burial";
+						break;
+					default:
+						regType = "NULL";
+						break;
+				}
+				bookNum = Convert.ToInt32(BookNo.Text);
+				registerNum = Convert.ToInt32(RegisterNo.Value);
+				book = Book.Text;
+				creationDate = Convert.ToDateTime(CreationDate.Text).ToString("yyyy-MM-dd");
 
-			string[] dt = pmsutil.GetServerDateTime().Split(null);
-			cDate = Convert.ToDateTime(dt[0]);
-			cTime = DateTime.Parse(dt[1]+" "+dt[2]);
-			curDate = cDate.ToString("yyyy-MM-dd");
-			curTime = cTime.ToString("HH:mm:ss");
+				string[] dt = pmsutil.GetServerDateTime().Split(null);
+				cDate = Convert.ToDateTime(dt[0]);
+				cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+				curDate = cDate.ToString("yyyy-MM-dd");
+				curTime = cTime.ToString("HH:mm:ss");
 
-			if (InsertRegister() > 0)
-			{
-				reg1.SyncRegisters();
-				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				MsgSuccess();
-				this.Close();
+				if (InsertRegister() > 0)
+				{
+					reg1.SyncRegisters();
+					var metroWindow = (Application.Current.MainWindow as MetroWindow);
+					MsgSuccess();
+					this.Close();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
 			else {
-				MsgFail();
+
 			}
 		}
 		private async void MsgSuccess()

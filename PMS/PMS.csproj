@@ -201,8 +201,20 @@
       <DependentUpon>AccountsItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\AppointmentItem.cs" />
+    <Compile Include="UIComponents\SearchBurialEntries.xaml.cs">
+      <DependentUpon>SearchBurialEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\SearchMatrimonialEntries.xaml.cs">
+      <DependentUpon>SearchMatrimonialEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\SearchBaptismalEntries.xaml.cs">
+      <DependentUpon>SearchBaptismalEntries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\BurialEntries.xaml.cs">
       <DependentUpon>BurialEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\SearchConfirmationEntries.xaml.cs">
+      <DependentUpon>SearchConfirmationEntries.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirectoryItem.cs" />
     <Compile Include="UIComponents\DirectoryPreviewItem.cs" />
@@ -249,6 +261,9 @@
     <Compile Include="UIComponents\Transaction.cs" />
     <Compile Include="UIComponents\TransactionItem.xaml.cs">
       <DependentUpon>TransactionItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\Validator.xaml.cs">
+      <DependentUpon>Validator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -319,6 +334,9 @@
     </Compile>
     <Compile Include="UIManager\Views\EventTypes.xaml.cs">
       <DependentUpon>EventTypes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\SearchRecords.xaml.cs">
+      <DependentUpon>SearchRecords.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\TimeSlots.xaml.cs">
       <DependentUpon>TimeSlots.xaml</DependentUpon>
@@ -414,7 +432,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIComponents\SearchBurialEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\SearchMatrimonialEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\SearchBaptismalEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\BurialEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIComponents\SearchConfirmationEntries.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -455,6 +489,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIComponents\TransactionItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIComponents\Validator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -543,6 +581,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UIManager\Views\EventTypes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\SearchRecords.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

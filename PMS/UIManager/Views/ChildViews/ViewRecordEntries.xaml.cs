@@ -163,19 +163,19 @@ namespace PMS.UIManager.Views.ChildViews
 
 			if (GetRegisterType(booknum) == "Confirmation")
 			{
-				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowConfirmation(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowConfirmation(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Baptismal")
 			{
-				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBaptismal(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBaptismal(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Matrimonial")
 			{
-				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowMatrimonial(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowMatrimonial(this, booknum), this.RecordEntriesMainGrid);
 			}
 			else if (GetRegisterType(booknum) == "Burial")
 			{
-				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBurial(booknum), this.RecordEntriesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBurial(this, booknum), this.RecordEntriesMainGrid);
 			}
 		}
 	}

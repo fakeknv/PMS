@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using PMS.UIManager.Views.ChildViews;
 using MahApps.Metro.Controls.Dialogs;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -55,6 +56,250 @@ namespace PMS.UIManager.Views.ChildWindows
 			InitializeComponent();
 			bookNum = targBook;
 			Stipend.Value = FetchMatrimonialStipend();
+			FetchBookEntryNum();
+		}
+		private void FetchBookEntryNum()
+		{
+			int ret = 0;
+			PageNum.Value = vre.Page.Value;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT entry_number FROM records WHERE book_number = @bnum AND page_number = @pnum;";
+				cmd.Parameters.AddWithValue("@bnum", bookNum);
+				cmd.Parameters.AddWithValue("@pnum", vre.Page.Value);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = Convert.ToInt32(db_reader.GetString("entry_number"));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = 0;
+			}
+			EntryNum.Value = ret + 1;
+		}
+		private bool CheckInputs()
+		{
+			MarriageDateValidator.Visibility = Visibility.Hidden;
+			MarriageDateValidator.Foreground = Brushes.Transparent;
+			MarriageDate.BorderBrush = Brushes.Transparent;
+
+			HusbandValidator.Visibility = Visibility.Hidden;
+			HusbandValidator.Foreground = Brushes.Transparent;
+			FullName1.BorderBrush = Brushes.Transparent;
+
+			WifeValidator.Visibility = Visibility.Hidden;
+			WifeValidator.Foreground = Brushes.Transparent;
+			FullName2.BorderBrush = Brushes.Transparent;
+
+			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.Foreground = Brushes.Transparent;
+			Minister.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(MarriageDate.Text))
+			{
+				MarriageDateValidator.Visibility = Visibility.Visible;
+				MarriageDateValidator.ToolTip = "This field is required.";
+				MarriageDateValidator.Foreground = Brushes.Red;
+				MarriageDate.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (EntryNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (PageNum.Value < 0)
+			{
+				EntryNumValidator.Visibility = Visibility.Visible;
+				EntryNumValidator.ToolTip = "Must be greater than zero.";
+				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (Stipend.Value == 0)
+			{
+				StipendValidator.Visibility = Visibility.Visible;
+				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
+				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.BorderBrush = Brushes.Orange;
+				MsgStipend();
+				ret = true;
+			}
+			if (string.IsNullOrWhiteSpace(FullName1.Text))
+			{
+				HusbandValidator.Visibility = Visibility.Visible;
+				HusbandValidator.ToolTip = "This field is required.";
+				HusbandValidator.Foreground = Brushes.Red;
+				FullName1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(FullName2.Text))
+			{
+				WifeValidator.Visibility = Visibility.Visible;
+				WifeValidator.ToolTip = "This field is required.";
+				WifeValidator.Foreground = Brushes.Red;
+				FullName2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent1.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Parent1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent3.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Parent3.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent2.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Parent2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Parent4.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Parent4.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Hometown1.Text))
+			{
+				Hometown1Validator.Visibility = Visibility.Visible;
+				Hometown1Validator.ToolTip = "This field is required.";
+				Hometown1Validator.Foreground = Brushes.Red;
+				Hometown1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Hometown2.Text))
+			{
+				Hometown2Validator.Visibility = Visibility.Visible;
+				Hometown2Validator.ToolTip = "This field is required.";
+				Hometown2Validator.Foreground = Brushes.Red;
+				Hometown2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence1.Text))
+			{
+				Residence1Validator.Visibility = Visibility.Visible;
+				Residence1Validator.ToolTip = "This field is required.";
+				Residence1Validator.Foreground = Brushes.Red;
+				Residence1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence2.Text))
+			{
+				Residence2Validator.Visibility = Visibility.Visible;
+				Residence2Validator.ToolTip = "This field is required.";
+				Residence2Validator.Foreground = Brushes.Red;
+				Residence2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence3.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Residence3.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Residence4.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Residence4.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor1.Text))
+			{
+				GroupValidator1.Visibility = Visibility.Visible;
+				GroupValidator1.ToolTip = "This field is required.";
+				GroupValidator1.Foreground = Brushes.Red;
+				Sponsor1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Sponsor2.Text))
+			{
+				GroupValidator2.Visibility = Visibility.Visible;
+				GroupValidator2.ToolTip = "This field is required.";
+				GroupValidator2.Foreground = Brushes.Red;
+				Sponsor2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Minister.Text))
+			{
+				MinisterValidator.Visibility = Visibility.Visible;
+				MinisterValidator.ToolTip = "This field is required.";
+				MinisterValidator.Foreground = Brushes.Red;
+				Minister.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Age1.Value.ToString()))
+			{
+				Age1Validator.Visibility = Visibility.Visible;
+				Age1Validator.ToolTip = "This field is required.";
+				Age1Validator.Foreground = Brushes.Red;
+				Age1.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Age2.Value.ToString()))
+			{
+				Age2Validator.Visibility = Visibility.Visible;
+				Age2Validator.ToolTip = "This field is required.";
+				Age2Validator.Foreground = Brushes.Red;
+				Age2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			return ret;
+		}
+		private async void MsgStipend()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice", "Stipend is set to zero. Re-check input before proceeding.");
 		}
 		/// <summary>
 		/// Inserts the request to the database.
@@ -164,85 +409,90 @@ namespace PMS.UIManager.Views.ChildWindows
 		/// </summary>
 		private void AddRecConfirm(object sender, System.Windows.RoutedEventArgs e)
 		{
-			entryNum = Convert.ToInt32(EntryNum.Value);
-			pageNum = Convert.ToInt32(PageNum.Value);
-			marriageDate = Convert.ToDateTime(MarriageDate.Text).ToString("yyyy-MM-dd");
-			age1 = Convert.ToInt32(Age1.Value);
-			age2 = Convert.ToInt32(Age2.Value);
-			fullName1 = ValidateInp(FullName1.Text);
-			fullName2 = ValidateInp(FullName2.Text);
-			switch (Status1.SelectedIndex)
-			{
-				case 0:
-					status1 = "Widow";
-					break;
-				case 1:
-					status1 = "Widower";
-					break;
-				case 2:
-					status1 = "Single";
-					break;
-				case 3:
-					status1 = "Conjugal";
-					break;
-				case 4:
-					status1 = "Adult";
-					break;
-				case 5:
-					status1 = "Infant";
-					break;
-				default:
-					status1 = "----";
-					break;
+			if (CheckInputs() == true) {
+				entryNum = Convert.ToInt32(EntryNum.Value);
+				pageNum = Convert.ToInt32(PageNum.Value);
+				marriageDate = Convert.ToDateTime(MarriageDate.Text).ToString("yyyy-MM-dd");
+				age1 = Convert.ToInt32(Age1.Value);
+				age2 = Convert.ToInt32(Age2.Value);
+				fullName1 = ValidateInp(FullName1.Text);
+				fullName2 = ValidateInp(FullName2.Text);
+				switch (Status1.SelectedIndex)
+				{
+					case 0:
+						status1 = "Widow";
+						break;
+					case 1:
+						status1 = "Widower";
+						break;
+					case 2:
+						status1 = "Single";
+						break;
+					case 3:
+						status1 = "Conjugal";
+						break;
+					case 4:
+						status1 = "Adult";
+						break;
+					case 5:
+						status1 = "Infant";
+						break;
+					default:
+						status1 = "----";
+						break;
+				}
+				switch (Status2.SelectedIndex)
+				{
+					case 0:
+						status2 = "Widow";
+						break;
+					case 1:
+						status2 = "Widower";
+						break;
+					case 2:
+						status2 = "Single";
+						break;
+					case 3:
+						status2 = "Conjugal";
+						break;
+					case 4:
+						status2 = "Adult";
+						break;
+					case 5:
+						status2 = "Infant";
+						break;
+					default:
+						status2 = "----";
+						break;
+				}
+				hometown1 = ValidateInp(Hometown1.Text);
+				hometown2 = ValidateInp(Hometown2.Text);
+				residence1 = ValidateInp(Residence1.Text);
+				residence2 = ValidateInp(Residence2.Text);
+				parent1 = ValidateInp(Parent1.Text);
+				parent2 = ValidateInp(Parent2.Text);
+				parent3 = ValidateInp(Parent3.Text);
+				parent4 = ValidateInp(Parent4.Text);
+				sponsor1 = ValidateInp(Sponsor1.Text);
+				sponsor2 = ValidateInp(Sponsor2.Text);
+				residence3 = ValidateInp(Residence3.Text);
+				residence4 = ValidateInp(Residence4.Text);
+				stipend = Convert.ToInt32(Stipend.Value);
+				minister = ValidateInp(Minister.Text);
+				remarks = ValidateInp(Remarks.Text);
+				if (InsertEntry() > 0)
+				{
+					MsgSuccess();
+					vre.Sync(bookNum);
+					this.Close();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
-			switch (Status2.SelectedIndex)
-			{
-				case 0:
-					status2 = "Widow";
-					break;
-				case 1:
-					status2 = "Widower";
-					break;
-				case 2:
-					status2 = "Single";
-					break;
-				case 3:
-					status2 = "Conjugal";
-					break;
-				case 4:
-					status2 = "Adult";
-					break;
-				case 5:
-					status2 = "Infant";
-					break;
-				default:
-					status2 = "----";
-					break;
-			}
-			hometown1 = ValidateInp(Hometown1.Text);
-			hometown2 = ValidateInp(Hometown2.Text);
-			residence1 = ValidateInp(Residence1.Text);
-			residence2 = ValidateInp(Residence2.Text);
-			parent1 = ValidateInp(Parent1.Text);
-			parent2 = ValidateInp(Parent2.Text);
-			parent3 = ValidateInp(Parent3.Text);
-			parent4 = ValidateInp(Parent4.Text);
-			sponsor1 = ValidateInp(Sponsor1.Text);
-			sponsor2 = ValidateInp(Sponsor2.Text);
-			residence3 = ValidateInp(Residence3.Text);
-			residence4 = ValidateInp(Residence4.Text);
-			stipend = Convert.ToInt32(Stipend.Value);
-			minister = ValidateInp(Minister.Text);
-			remarks = ValidateInp(Remarks.Text);
-			if (InsertEntry() > 0)
-			{
-				MsgSuccess();
-				vre.Sync(bookNum);
-				this.Close();
-			}
-			else
-			{
-				MsgFail();
+			else {
+
 			}
 		}
 		private async void MsgSuccess()

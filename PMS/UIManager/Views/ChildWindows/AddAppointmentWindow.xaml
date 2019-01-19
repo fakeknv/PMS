@@ -1,5 +1,4 @@
-﻿<simpleChildWindow:ChildWindow 
-    x:Class="PMS.UIManager.Views.ChildWindows.AddAppointmentWindow"
+﻿<simpleChildWindow:ChildWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
+    x:Class="PMS.UIManager.Views.ChildWindows.AddAppointmentWindow"
     ShowTitleBar="False"
     d:DesignHeight="507.955"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
@@ -66,11 +67,11 @@
         </Border>
         <TabControl x:Name="TabControl1" Margin="0,32,0,46" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
             <TabControl.Resources>
-                <Style TargetType="TabItem">
+                <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="2,2,0,0" Margin="2,0">
+                            <ControlTemplate TargetType="{x:Type TabItem}">
+                                <Border x:Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="2,2,0,0" Margin="2,0">
                                     <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
@@ -104,9 +105,7 @@
                         Height="25" 
                         Margin="52,41,0,0" 
                         VerticalAlignment="Top" 
-                        Width="551" SelectionChanged="EnableDisableSoul" Foreground="#FF474747">
-
-                    </ComboBox>
+                        Width="551" Foreground="#FF474747" DropDownClosed="EnableDisableSoul"/>
                     <Label 
             Content="Offered by" 
             HorizontalAlignment="Left"
@@ -131,17 +130,22 @@
                     <Label 
                         Content="Selected Time" 
                         HorizontalAlignment="Left"
-                        Margin="342,249,0,0" 
+                        Margin="354,249,0,0" 
                         VerticalAlignment="Top" 
-                        Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <mah:NumericUpDown x:Name="Fee" HorizontalAlignment="Left" Margin="100,298,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
+                        Width="100" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
+                    <mah:NumericUpDown x:Name="Fee" HorizontalAlignment="Left" Minimum="0" Margin="100,298,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
                     <Label 
                         Content="Fee" 
                         HorizontalAlignment="Left"
                         Margin="52,298,0,0" 
                         VerticalAlignment="Top" 
                         Width="38" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <DatePicker x:Name="SelectedDate1" HorizontalAlignment="Left" Margin="172,248,0,0" VerticalAlignment="Top" Width="165" Foreground="#FF474747"/>
+                    <DatePicker x:Name="SelectedDate1" HorizontalAlignment="Left" Margin="162,249,0,0" VerticalAlignment="Top" Width="154" Foreground="#FF474747"/>
+                    <UIComponents:Validator x:Name="MassTypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,45,19,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SponsorValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,208,19,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SelDateValidator1" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,254,306,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="FeeValidator1" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,303,335,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SoulsofValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,110,19,0" VerticalAlignment="Top" Width="16"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Other" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
@@ -156,7 +160,7 @@
                         SelectedIndex="0"
                         Height="25" 
                         Margin="52,41,36,0" 
-                        VerticalAlignment="Top" SelectionChanged="UpdateFee" Foreground="#FF474747"/>
+                        VerticalAlignment="Top" Foreground="#FF474747" DropDownClosed="UpdateFee"/>
                     <TextBox x:Name="Remarks" IsEnabled="True" Height="58" Margin="52,110,36,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
                     <Label 
                         Content="Remarks" 
@@ -206,9 +210,11 @@
                     <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="404,274,0,0" VerticalAlignment="Top" Width="64"/>
                     <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="473,274,0,0" VerticalAlignment="Top" Width="63"/>
                     <ComboBox x:Name="TimeMode" SelectedIndex="0" HorizontalAlignment="Left" Margin="541,274,0,0" VerticalAlignment="Top" Width="62">
-                        <ComboBoxItem>AM</ComboBoxItem>
-                        <ComboBoxItem>PM</ComboBoxItem>
+                        <ComboBoxItem Content="AM"/>
+                        <ComboBoxItem Content="PM"/>
                     </ComboBox>
+                    <UIComponents:Validator x:Name="SponsorValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,208,15,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SelDateValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,279,331,0" VerticalAlignment="Top" Width="16"/>
                 </Grid>
             </TabItem>
         </TabControl>

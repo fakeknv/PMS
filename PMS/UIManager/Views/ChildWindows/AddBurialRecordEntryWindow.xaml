@@ -7,6 +7,7 @@
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
     x:Class="PMS.UIManager.Views.ChildWindows.AddBurialRecordEntryWindow"
     Title="Add Request"
     ShowTitleBar="False"
@@ -61,7 +62,7 @@
                     Content="Age" 
                     Margin="366,102,418,0" 
                     VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
-                <mah:NumericUpDown x:Name="Age" HorizontalAlignment="Left" Minimum="0" Margin="366,126,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
+                <mah:NumericUpDown x:Name="Age" Value="0" HorizontalAlignment="Left" Minimum="0" Margin="366,126,0,0" VerticalAlignment="Top" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
                 <Label x:Name="NameLabel" 
                     Content="Fullname" 
                     HorizontalAlignment="Left" 
@@ -126,7 +127,7 @@
                     VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
                 <Label x:Name="ParishLabel_Copy" 
                     Content="Status" 
-                    Margin="521,102,338,0" 
+                    Margin="521,102,320,0" 
                     VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
                 <Label x:Name="NameLabel_Copy" 
                     Content="Sacrament" 
@@ -298,7 +299,7 @@
                 <Label x:Name="RemarksLabel_Copy" 
                     Content="ADDITIONAL BURIAL INFO" 
                     HorizontalAlignment="Left" 
-                    Margin="64,504,0,0" 
+                    Margin="64,487,0,0" 
                     VerticalAlignment="Top" 
                     Width="210" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" FontSize="14" Foreground="#FF3C7AC9"/>
                 <Label x:Name="MinisterLabel_Copy3" 
@@ -352,6 +353,18 @@
                     Margin="145,643,0,0" 
                     VerticalAlignment="Top" 
                     Width="129" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+                <UIComponents:Validator x:Name="PageNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,55,685,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="EntryNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,55,533,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="DeathDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,55,299,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="BurialDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,55,32,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="NameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,130,556,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="StipendValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,130,30,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="SacramentValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,180,459,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="CauseOfDeathValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,180,30,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="PlaceOfIntermentValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,226,30,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="Parent1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,294,459,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="Residence1Validator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,294,32,0" VerticalAlignment="Top" Width="16"/>
+                <UIComponents:Validator x:Name="MinisterValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,370,32,0" VerticalAlignment="Top" Width="16"/>
             </Grid>
         </ScrollViewer>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Height="46" VerticalAlignment="Bottom">

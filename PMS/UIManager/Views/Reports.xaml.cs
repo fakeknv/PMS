@@ -1134,9 +1134,11 @@ namespace PMS.UIManager.Views
 			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
 			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
-			table.Style.AlternateStyle = new PdfCellStyle();
-			//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
-			table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+			table.Style.AlternateStyle = new PdfCellStyle
+			{
+				//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
+				Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f))
+			};
 
 			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
 			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;
@@ -1354,9 +1356,11 @@ namespace PMS.UIManager.Views
 			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
 			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
-			table.Style.AlternateStyle = new PdfCellStyle();
-			//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
-			table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+			table.Style.AlternateStyle = new PdfCellStyle
+			{
+				//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
+				Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f))
+			};
 
 			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
 			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;
@@ -1679,9 +1683,11 @@ namespace PMS.UIManager.Views
 			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
 			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
-			table.Style.AlternateStyle = new PdfCellStyle();
-			//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
-			table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+			table.Style.AlternateStyle = new PdfCellStyle
+			{
+				//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
+				Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f))
+			};
 
 			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
 			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;

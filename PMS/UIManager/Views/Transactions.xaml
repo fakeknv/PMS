@@ -31,7 +31,7 @@
                     VerticalAlignment="Top" 
                     mah:TextBoxHelper.Watermark="Search"
                     RenderTransformOrigin="0,0.5" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    FontFamily="Segoe UI Semilight" 
                     FontSize="14"
                     VerticalContentAlignment="Center" 
                     TextChanged="SearchTransactionBox_TextChanged"/>
@@ -108,10 +108,10 @@
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top" 
                         Width="72" 
-                        Margin="16,10,0,0" 
+                        Margin="10,5,0,0" 
                         Height="32" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                        FontSize="15" 
+                        FontFamily="Segoe UI Semilight" 
+                        FontSize="18" 
                         VerticalContentAlignment="Center" 
                         FontWeight="Bold" 
                         Foreground="#FF545454"/>
@@ -147,7 +147,7 @@
                                 </Rectangle>
                                 <TextBlock 
                                     Text="  Finished" 
-                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                                    FontFamily="Segoe UI" />
                             </StackPanel>
                         </Button>
                     </mah:Badged>
@@ -183,7 +183,7 @@
                                 </Rectangle>
                                 <TextBlock 
                                     Text="  Cancelled" 
-                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                                    FontFamily="Segoe UI" />
                             </StackPanel>
                         </Button>
                     </mah:Badged>
@@ -219,7 +219,7 @@
                                 </Rectangle>
                                 <TextBlock 
                                     Text="  Paying" 
-                                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                                    FontFamily="Segoe UI" />
                             </StackPanel>
                         </Button>
                     </mah:Badged>
@@ -259,7 +259,7 @@
                         Width="90" 
                         Margin="10,10,0,0" 
                         Height="32" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Emoji" 
                         FontSize="15" 
                         VerticalContentAlignment="Center" 
                         FontWeight="Bold" 
@@ -286,7 +286,7 @@
                         Height="31" 
                         Width="116" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Emoji" 
                         FontSize="14" 
                         Foreground="#FF646464" 
                         FontWeight="Bold" Grid.RowSpan="2"/>
@@ -302,7 +302,7 @@
                         Grid.Column="1" 
                         HorizontalContentAlignment="Center" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto"
+                        FontFamily="Segoe UI Emoji"
                         FontSize="14" 
                         Foreground="#FF646464" 
                         FontWeight="Bold" Grid.RowSpan="2"/>
@@ -315,7 +315,7 @@
                         Height="31" 
                         Width="90" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF686868" Grid.RowSpan="2"/>
                     <Label
@@ -330,7 +330,7 @@
                         Grid.Column="1" 
                         HorizontalContentAlignment="Center" 
                         VerticalContentAlignment="Center"
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto"
+                        FontFamily="Segoe UI Semilight"
                         FontSize="14" 
                         Foreground="#FF686868" Grid.RowSpan="2"/>
                     <Label x:Name="ConfirmationLabel" 
@@ -342,7 +342,7 @@
                         Height="31" 
                         Width="90" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D"/>
                     <Label 
@@ -357,7 +357,7 @@
                         Grid.Column="1" 
                         HorizontalContentAlignment="Center" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D"/>
                     <Label x:Name="BurialLabel"
@@ -369,7 +369,7 @@
                         Height="31" 
                         Width="90" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D" Grid.RowSpan="2"/>
                     <Label 
@@ -384,7 +384,7 @@
                         Grid.Column="1" 
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D" Grid.RowSpan="2"/>
                     <Label x:Name="MatrimonialLabel" 
@@ -396,7 +396,7 @@
                         Height="31" 
                         Width="90" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D"/>
                     <Label 
@@ -411,7 +411,7 @@
                         Grid.Column="1" 
                         HorizontalContentAlignment="Center" 
                         VerticalContentAlignment="Center" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                        FontFamily="Segoe UI Semilight" 
                         FontSize="14" 
                         Foreground="#FF6D6D6D"/>
                 </Grid>
@@ -446,7 +446,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="*" Header="Name on Record" SortMemberPath="Name" CanUserSort="True">
+                            <DataGridTemplateColumn Width="*" Header="Name" SortMemberPath="Name" CanUserSort="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
@@ -459,7 +459,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -468,7 +468,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -477,9 +477,9 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                             <Border BorderBrush="LightGray" BorderThickness="0,1,0,0">
-                                                <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DatePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                <TextBlock TextWrapping="WrapWithOverflow" Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DatePlaced}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                             </Border>
                                         </StackPanel>
                                     </DataTemplate>
@@ -489,9 +489,9 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimeConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimeConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                             <Border BorderBrush="LightGray" BorderThickness="0,1,0,0">
-                                                <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DateConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                <TextBlock TextWrapping="WrapWithOverflow" Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DateConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                             </Border>
                                         </StackPanel>
                                     </DataTemplate>
@@ -501,86 +501,80 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding ORNumber}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" Padding="0,5,0,5" TextAlignment="Center" Text="{Binding ORNumber}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="61,10,0,0" VerticalAlignment="Top" Width="77"/>
-                    <Label Content="Page:" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="169,10,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="291,10,0,0" VerticalAlignment="Top" Width="120">
+                    <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="61,5,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI"/>
+                    <Label Content="Page:" HorizontalAlignment="Left" Margin="9,5,0,0" VerticalAlignment="Top" Width="52" FontSize="14"/>
+                    <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="169,5,0,0" VerticalAlignment="Top" Width="122" FontSize="14"/>
+                    <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="291,5,0,0" VerticalAlignment="Top" Width="120" FontFamily="Segoe UI">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="15"/>
                         <ComboBoxItem Content="20"/>
                         <ComboBoxItem Content="25"/>
                         <ComboBoxItem Content="30"/>
                     </ComboBox>
+                    <Button
+                    x:Name="CreateRequestButton_Copy" 
+                    Margin="0,2,147,0" 
+                    VerticalAlignment="Top" 
+                    Width="112" 
+                    Height="31" 
+                    Background="WhiteSmoke" 
+                    Foreground="#FF474747" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="CancelTransaction_Click">
+                        <StackPanel 
+                        Orientation="Horizontal">
+                            <Rectangle 
+                            Width="13"
+                            Height="13">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome TimesCircleRegular}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock ><Run Text=" Cancel"/><LineBreak/><Run/></TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button
+                x:Name="CreateRequestButton" 
+                Margin="0,2,19,0" 
+                VerticalAlignment="Top" 
+                Width="123" 
+                Height="31" 
+                Background="WhiteSmoke" 
+                Foreground="#FF474747" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="ConfirmPayment_Click">
+                        <StackPanel 
+                    Orientation="Horizontal">
+                            <Rectangle 
+                        Width="12"
+                        Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome FileInvoiceSolid}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock 
+                        Text=" Confirm" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
                 <Label 
                     Content="Transactions" 
                     HorizontalAlignment="Left" 
-                    Margin="10,10,0,0" 
+                    Margin="10,4,0,0" 
                     VerticalAlignment="Top" 
                     Width="224" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    FontSize="18" 
+                    FontSize="20" 
                     FontWeight="Bold" 
-                    Foreground="#FF545454"/>
-                <Button
-                x:Name="CreateRequestButton" 
-                Margin="0,10,10,0" 
-                VerticalAlignment="Top" 
-                Width="167" 
-                Height="31" 
-                Background="WhiteSmoke" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="#FF474747" 
-                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="ConfirmPayment_Click">
-                    <StackPanel 
-                    Orientation="Horizontal">
-                        <Rectangle 
-                        Width="12"
-                        Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome FileInvoiceSolid}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock 
-                        Text=" Confirm Payment" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    x:Name="CreateRequestButton_Copy" 
-                    Margin="0,10,182,0" 
-                    VerticalAlignment="Top" 
-                    Width="179" 
-                    Height="31" 
-                    Background="WhiteSmoke" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    Foreground="#FF474747" 
-                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="CancelTransaction_Click">
-                    <StackPanel 
-                        Orientation="Horizontal">
-                        <Rectangle 
-                            Width="13"
-                            Height="13">
-                            <Rectangle.Fill>
-                                <VisualBrush 
-                                    Stretch="Fill"
-                                    Visual="{iconPacks:FontAwesome TimesCircleRegular}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock 
-                            Text=" Cancel Transaction" 
-                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                    </StackPanel>
-                </Button>
+                    Foreground="#FF545454" FontFamily="Segoe UI Semilight"/>
             </Grid>
         </Grid>
     </Grid>

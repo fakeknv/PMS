@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -130,147 +131,241 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 			return ret;
 		}
+		private bool CheckInputs()
+		{
+			AccountTypeValidator.Visibility = Visibility.Hidden;
+			AccountTypeValidator.Foreground = Brushes.Transparent;
+			AccountType.BorderBrush = Brushes.Transparent;
+
+			EmpNameValidator.Visibility = Visibility.Hidden;
+			EmpNameValidator.Foreground = Brushes.Transparent;
+			EmpName.BorderBrush = Brushes.Transparent;
+
+			UsernameValidator.Visibility = Visibility.Hidden;
+			UsernameValidator.Foreground = Brushes.Transparent;
+			Username.BorderBrush = Brushes.Transparent;
+
+			PasswordValidator.Visibility = Visibility.Hidden;
+			PasswordValidator.Foreground = Brushes.Transparent;
+			Password.BorderBrush = Brushes.Transparent;
+
+			bool ret = true;
+
+			if (string.IsNullOrWhiteSpace(AccountType.Text))
+			{
+				AccountTypeValidator.Visibility = Visibility.Visible;
+				AccountTypeValidator.ToolTip = "This field is requried.";
+				AccountTypeValidator.Foreground = Brushes.Red;
+				AccountType.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(EmpName.Text))
+			{
+				EmpNameValidator.Visibility = Visibility.Visible;
+				EmpNameValidator.ToolTip = "This field is requried.";
+				EmpNameValidator.Foreground = Brushes.Red;
+				EmpName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Username.Text))
+			{
+				UsernameValidator.Visibility = Visibility.Visible;
+				UsernameValidator.ToolTip = "This field is requried.";
+				UsernameValidator.Foreground = Brushes.Red;
+				Username.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(Password.Text))
+			{
+				PasswordValidator.Visibility = Visibility.Visible;
+				PasswordValidator.ToolTip = "This field is requried.";
+				PasswordValidator.Foreground = Brushes.Red;
+				Password.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (string.IsNullOrWhiteSpace(VerificationPass.Password))
+			{
+				YourPasswordValidator.Visibility = Visibility.Visible;
+				YourPasswordValidator.ToolTip = "This field is requried.";
+				YourPasswordValidator.Foreground = Brushes.Red;
+				VerificationPass.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			//FIELD LEVEL VALIDATION
+			if (Password.Text.Length < 5)
+			{
+				PasswordValidator.Visibility = Visibility.Visible;
+				PasswordValidator.ToolTip = "Password should be 5 characters long or more.";
+				PasswordValidator.Foreground = Brushes.Red;
+				Password.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (Username.Text.Length < 5)
+			{
+				UsernameValidator.Visibility = Visibility.Visible;
+				UsernameValidator.ToolTip = "Username should be 5 characters long or more.";
+				UsernameValidator.Foreground = Brushes.Red;
+				Username.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+
+			return ret;
+		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
-			string uid = Application.Current.Resources["uid"].ToString();
-			if (VerifyKey(uid) == true)
-			{
-				if (AccountType.SelectedIndex == 5)
+			if (CheckInputs() == true) {
+				string uid = Application.Current.Resources["uid"].ToString();
+				if (VerifyKey(uid) == true)
 				{
-					priv = "6";
-					if (Priv1.IsChecked == true)
+					if (AccountType.SelectedIndex == 5)
 					{
-						priv += "2";
-					}
-					if (Priv2.IsChecked == true)
-					{
-						priv += "3";
-					}
-					if (Priv3.IsChecked == true)
-					{
-						priv += "4";
-					}
-					if (Priv4.IsChecked == true)
-					{
-						priv += "5";
-					}
-					dbman = new DBConnectionManager();
-					pmsutil = new PMSUtil();
-					using (conn = new MySqlConnection(dbman.GetConnStr()))
-					{
-						conn.Open();
-						if (conn.State == ConnectionState.Open)
+						priv = "6";
+						if (Priv1.IsChecked == true)
 						{
-
-							MySqlCommand cmd = conn.CreateCommand();
-							if (string.IsNullOrWhiteSpace(Password.Text))
-							{
-								cmd.CommandText =
-								"UPDATE accounts SET user_name = @user_name, account_type = @account_type WHERE account_id = @aid";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@aid", aid);
-								cmd.Parameters.AddWithValue("@user_name", Username.Text);
-								cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
-							}
-							else {
-								cmd.CommandText =
-								"UPDATE accounts SET user_name = @user_name, pass_key = @pass_key, account_type = @account_type WHERE account_id = @aid";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@aid", aid);
-								cmd.Parameters.AddWithValue("@user_name", Username.Text);
-								cmd.Parameters.AddWithValue("@pass_key", SecurePasswordHasher.Hash(Password.Text));
-								cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
-							}
-							
-							int stat_code = cmd.ExecuteNonQuery();
-							conn.Close();
-
+							priv += "2";
+						}
+						if (Priv2.IsChecked == true)
+						{
+							priv += "3";
+						}
+						if (Priv3.IsChecked == true)
+						{
+							priv += "4";
+						}
+						if (Priv4.IsChecked == true)
+						{
+							priv += "5";
+						}
+						dbman = new DBConnectionManager();
+						pmsutil = new PMSUtil();
+						using (conn = new MySqlConnection(dbman.GetConnStr()))
+						{
 							conn.Open();
-							cmd = conn.CreateCommand();
-							cmd.CommandText =
-							"UPDATE accounts_info SET name = @emp_name WHERE account_id = @aid";
-							cmd.Prepare();
-							cmd.Parameters.AddWithValue("@aid", aid);
-							cmd.Parameters.AddWithValue("@emp_name", Username.Text);
-							stat_code = cmd.ExecuteNonQuery();
-							conn.Close();
-							if (stat_code > 0)
+							if (conn.State == ConnectionState.Open)
 							{
-								MsgSuccess();
-								this.Close();
+
+								MySqlCommand cmd = conn.CreateCommand();
+								if (string.IsNullOrWhiteSpace(Password.Text))
+								{
+									cmd.CommandText =
+									"UPDATE accounts SET user_name = @user_name, account_type = @account_type WHERE account_id = @aid";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@aid", aid);
+									cmd.Parameters.AddWithValue("@user_name", Username.Text);
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+								}
+								else
+								{
+									cmd.CommandText =
+									"UPDATE accounts SET user_name = @user_name, pass_key = @pass_key, account_type = @account_type WHERE account_id = @aid";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@aid", aid);
+									cmd.Parameters.AddWithValue("@user_name", Username.Text);
+									cmd.Parameters.AddWithValue("@pass_key", SecurePasswordHasher.Hash(Password.Text));
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+								}
+
+								int stat_code = cmd.ExecuteNonQuery();
+								conn.Close();
+
+								conn.Open();
+								cmd = conn.CreateCommand();
+								cmd.CommandText =
+								"UPDATE accounts_info SET name = @emp_name WHERE account_id = @aid";
+								cmd.Prepare();
+								cmd.Parameters.AddWithValue("@aid", aid);
+								cmd.Parameters.AddWithValue("@emp_name", Username.Text);
+								stat_code = cmd.ExecuteNonQuery();
+								conn.Close();
+								if (stat_code > 0)
+								{
+									MsgSuccess();
+									this.Close();
+								}
+								else
+								{
+									MsgFail();
+								}
 							}
 							else
 							{
-								MsgFail();
+
 							}
 						}
-						else
+					}
+					else
+					{
+						dbman = new DBConnectionManager();
+						pmsutil = new PMSUtil();
+						using (conn = new MySqlConnection(dbman.GetConnStr()))
 						{
+							conn.Open();
+							if (conn.State == ConnectionState.Open)
+							{
+								MySqlCommand cmd = conn.CreateCommand();
+								if (string.IsNullOrWhiteSpace(Password.Text))
+								{
+									cmd.CommandText =
+									"UPDATE accounts SET user_name = @user_name, account_type = @account_type WHERE account_id = @aid";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@aid", aid);
+									cmd.Parameters.AddWithValue("@user_name", Username.Text);
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+								}
+								else
+								{
+									cmd.CommandText =
+									"UPDATE accounts SET user_name = @user_name, pass_key = @pass_key, account_type = @account_type WHERE account_id = @aid";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@aid", aid);
+									cmd.Parameters.AddWithValue("@user_name", Username.Text);
+									cmd.Parameters.AddWithValue("@pass_key", SecurePasswordHasher.Hash(Password.Text));
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+								}
 
+								int stat_code = cmd.ExecuteNonQuery();
+								conn.Close();
+
+								conn.Open();
+								cmd = conn.CreateCommand();
+								cmd.CommandText =
+								"UPDATE accounts_info SET name = @emp_name WHERE account_id = @aid";
+								cmd.Prepare();
+								cmd.Parameters.AddWithValue("@aid", aid);
+								cmd.Parameters.AddWithValue("@emp_name", Username.Text);
+								stat_code = cmd.ExecuteNonQuery();
+								conn.Close();
+								if (stat_code > 0)
+								{
+									MsgSuccess();
+									this.Close();
+								}
+								else
+								{
+									MsgFail();
+								}
+							}
+							else
+							{
+
+							}
 						}
 					}
 				}
 				else
 				{
-					dbman = new DBConnectionManager();
-					pmsutil = new PMSUtil();
-					using (conn = new MySqlConnection(dbman.GetConnStr()))
-					{
-						conn.Open();
-						if (conn.State == ConnectionState.Open)
-						{
-							MySqlCommand cmd = conn.CreateCommand();
-							if (string.IsNullOrWhiteSpace(Password.Text))
-							{
-								cmd.CommandText =
-								"UPDATE accounts SET user_name = @user_name, account_type = @account_type WHERE account_id = @aid";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@aid", aid);
-								cmd.Parameters.AddWithValue("@user_name", Username.Text);
-								cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
-							}
-							else
-							{
-								cmd.CommandText =
-								"UPDATE accounts SET user_name = @user_name, pass_key = @pass_key, account_type = @account_type WHERE account_id = @aid";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@aid", aid);
-								cmd.Parameters.AddWithValue("@user_name", Username.Text);
-								cmd.Parameters.AddWithValue("@pass_key", SecurePasswordHasher.Hash(Password.Text));
-								cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
-							}
-
-							int stat_code = cmd.ExecuteNonQuery();
-							conn.Close();
-
-							conn.Open();
-							cmd = conn.CreateCommand();
-							cmd.CommandText =
-							"UPDATE accounts_info SET name = @emp_name WHERE account_id = @aid";
-							cmd.Prepare();
-							cmd.Parameters.AddWithValue("@aid", aid);
-							cmd.Parameters.AddWithValue("@emp_name", Username.Text);
-							stat_code = cmd.ExecuteNonQuery();
-							conn.Close();
-							if (stat_code > 0)
-							{
-								MsgSuccess();
-								this.Close();
-							}
-							else
-							{
-								MsgFail();
-							}
-						}
-						else
-						{
-
-						}
-					}
+					MsgWrongKey();
 				}
 			}
 			else {
-				MsgWrongKey();
+
 			}
 		}
 		private async void MsgWrongKey()

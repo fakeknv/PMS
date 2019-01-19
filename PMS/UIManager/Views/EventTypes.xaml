@@ -106,13 +106,13 @@
                 </StackPanel>
             </Button>
         </Grid>
-        <DataGrid x:Name="EventTypeItemContainer" Height="746" Margin="0,82,0,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+        <DataGrid x:Name="EventTypeItemContainer" BorderBrush="LightGray" GridLinesVisibility="All" Height="746" Margin="32,82,33,0" VerticalAlignment="Top" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="*" Header="Appointment Type" SortMemberPath="AppointmentType" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding AppointmentType}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock Padding="0,10,0,10" TextAlignment="Center" Text="{Binding AppointmentType}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -146,10 +146,10 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="55,51,0,0" VerticalAlignment="Top" Width="77"/>
-        <Label Content="Page:" HorizontalAlignment="Left" Margin="3,51,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="163,51,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="285,51,0,0" VerticalAlignment="Top" Width="120">
+        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="86,51,0,0" VerticalAlignment="Top" Width="77"/>
+        <Label Content="Page:" HorizontalAlignment="Left" Margin="34,51,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="194,51,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="316,51,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem>10</ComboBoxItem>
             <ComboBoxItem>15</ComboBoxItem>
             <ComboBoxItem>20</ComboBoxItem>
