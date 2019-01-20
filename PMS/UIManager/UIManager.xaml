@@ -112,9 +112,9 @@
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome DatabaseSolid}"
-						Label="Archive">
+						Label="Archives">
                             <controls:HamburgerMenuIconItem.Tag>
-                                <views:Archive />
+                                <views:Archives />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem

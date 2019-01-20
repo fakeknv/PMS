@@ -1,0 +1,136 @@
+﻿<simpleChildWindow:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
+    x:Class="PMS.UIManager.Views.ChildWindows.EditRegisterWindow"
+    Title="Add Request"
+    ShowTitleBar="False"
+    d:DesignHeight="427.5" 
+    d:DesignWidth="431"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsModal="False"
+    IsOpen="True"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d">
+    <simpleChildWindow:ChildWindow.Icon>
+        <iconPacks:PackIconFontAwesome 
+            Width="22"
+            Height="22"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="{DynamicResource IdealForegroundColorBrush}"
+            Kind="PlusSquareSolid" />
+    </simpleChildWindow:ChildWindow.Icon>
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid>
+        <Label x:Name="RegisterTypeLabel" 
+            Content="Register Type" 
+            HorizontalAlignment="Left" 
+            Margin="40,55,0,0" 
+            VerticalAlignment="Top" 
+            Width="112" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <ComboBox
+            IsEnabled="False"
+            x:Name="RegisterType" 
+            Height="25"
+            Margin="40,79,42,0" 
+            VerticalAlignment="Top">
+            <ComboBoxItem Content="Baptismal"/>
+            <ComboBoxItem Content="Matrimonial"/>
+            <ComboBoxItem Content="Confirmation"/>
+            <ComboBoxItem Content="Burial"/>
+        </ComboBox>
+        <Label x:Name="BookNoLabel" 
+            Content="Book No." 
+            Margin="40,118,323,0" 
+            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <Label x:Name="RegisterNoLabel" 
+            Content="Register No." 
+            Margin="221,118,136,0" 
+            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <mah:NumericUpDown 
+            Minimum="1"
+            x:Name="RegisterNo" 
+            Height="23" 
+            Margin="221,142,42,0" 
+            VerticalAlignment="Top"/>
+        <Label x:Name="BookLabel" 
+            Content="Book" 
+            HorizontalAlignment="Left" 
+            Margin="40,184,0,0" 
+            VerticalAlignment="Top" 
+            Width="68" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+        <TextBox 
+            x:Name="Book" 
+            Height="23" 
+            Margin="40,213,42,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513"/>
+        <Label x:Name="CreationDateLabel" 
+            Content="Creation Date" 
+            HorizontalAlignment="Left" 
+            Margin="40,256,0,0" 
+            VerticalAlignment="Top" 
+            Width="84" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <DatePicker x:Name="CreationDate" 
+            Margin="40,280,42,0" 
+            VerticalAlignment="Top"/>
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="EDIT REGISTER" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="BookSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,379,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="AddRegCancel"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="AddRegConfirm"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <UIComponents:Validator x:Name="RegTypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,83,21,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="RegNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,146,21,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="BookNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,146,221,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="BookNameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,217,21,0" VerticalAlignment="Top" Width="16"/>
+        <UIComponents:Validator x:Name="CreationDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,284,21,0" VerticalAlignment="Top" Width="16"/>
+        <mah:NumericUpDown x:Name="BookNo" Minimum="1" HorizontalAlignment="Left" Margin="40,142,0,0" VerticalAlignment="Top" Width="150"/>
+    </Grid>
+</simpleChildWindow:ChildWindow>

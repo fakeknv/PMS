@@ -30,11 +30,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string curDate;
 		private string curTime;
 
-		private Archive arc;
+		private Archives arc;
 		private string arcDrivePath;
 		private string path;
 
-		public ConfirmArchivalWindow(Archive a, int book_Num, string archiveDrive)
+		public ConfirmArchivalWindow(Archives a, int book_Num, string archiveDrive)
 		{
 			arc = a;
 			arcDrivePath = archiveDrive;

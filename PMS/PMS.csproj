@@ -201,6 +201,9 @@
       <DependentUpon>AccountsItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\AppointmentItem.cs" />
+    <Compile Include="UIComponents\RegisterItemArchive.xaml.cs">
+      <DependentUpon>RegisterItemArchive.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\SearchBurialEntries.xaml.cs">
       <DependentUpon>SearchBurialEntries.xaml</DependentUpon>
     </Compile>
@@ -248,12 +251,6 @@
     <Compile Include="UIComponents\MRecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\RecordEntryMatrimonial.cs" />
     <Compile Include="UIComponents\Register.cs" />
-    <Compile Include="UIComponents\RegisterItemArchivesRestore.xaml.cs">
-      <DependentUpon>RegisterItemArchivesRestore.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIComponents\RegisterItemArchives.xaml.cs">
-      <DependentUpon>RegisterItemArchives.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIComponents\RegisterItem.xaml.cs">
       <DependentUpon>RegisterItem.xaml</DependentUpon>
     </Compile>
@@ -274,6 +271,12 @@
     </Compile>
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml.cs">
+      <DependentUpon>ConfirmRestoreWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditRegisterWindow.xaml.cs">
+      <DependentUpon>EditRegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBurial.xaml.cs">
       <DependentUpon>MultiAddRecordWindowBurial.xaml</DependentUpon>
@@ -335,6 +338,7 @@
     <Compile Include="UIManager\Views\EventTypes.xaml.cs">
       <DependentUpon>EventTypes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\Archives.xaml.cs" />
     <Compile Include="UIManager\Views\SearchRecords.xaml.cs">
       <DependentUpon>SearchRecords.xaml</DependentUpon>
     </Compile>
@@ -346,9 +350,6 @@
     </Compile>
     <Compile Include="UIManager\Views\Accounts.xaml.cs">
       <DependentUpon>Accounts.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UIManager\Views\Archive.xaml.cs">
-      <DependentUpon>Archive.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddAccountWindow.xaml.cs">
       <DependentUpon>AddAccountWindow.xaml</DependentUpon>
@@ -432,6 +433,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIComponents\RegisterItemArchive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\SearchBurialEntries.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -476,14 +481,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIComponents\RegisterItemArchivesRestore.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIComponents\RegisterItemArchives.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIComponents\RegisterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -503,6 +500,14 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditRegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\MultiAddRecordWindowBurial.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -584,6 +589,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIManager\Views\Archives.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIManager\Views\SearchRecords.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -599,10 +608,6 @@
     <Page Include="UIManager\Views\Accounts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UIManager\Views\Archive.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\AddAccountWindow.xaml">
       <SubType>Designer</SubType>

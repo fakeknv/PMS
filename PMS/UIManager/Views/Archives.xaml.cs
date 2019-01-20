@@ -8,6 +8,9 @@ using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -17,22 +20,39 @@ namespace PMS.UIManager.Views
 	/// <summary>
 	/// Interaction logic for Registers.xaml
 	/// </summary>
-	public partial class Registers : UserControl
+	public partial class Archives : UserControl
 	{
 		//MYSQL
 		private MySqlConnection conn;
 		DBConnectionManager dbman;
 
-		private ObservableCollection<RegisterItem> registers;
-		private ObservableCollection<RegisterItem> registers_final;
+		private ObservableCollection<RegisterItemArchive> registers;
+		private ObservableCollection<RegisterItemArchive> registers_final;
+		private PMSUtil pmsutil;
 
-		public Registers()
+		private string archiveDrive = "init";
+
+		private string path;
+
+		public Archives()
 		{
 			InitializeComponent();
 			SyncRegisters();
 
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
+
+			path = @"\archive.db";
+
+			Task task = new Task(() =>
+			{
+				while (true)
+				{
+					CheckArchiveDrive();
+					Thread.Sleep(1000);
+				}
+			});
+			task.Start();
 		}
 		private string CountEntries(int bookNum)
 		{
@@ -53,6 +73,58 @@ namespace PMS.UIManager.Views
 				dbman.DBClose();
 			}
 			return ret;
+		}
+		internal int CheckIfArchived(int bookNum)
+		{
+
+			int returnVal = 0;
+
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(book_number) FROM archives WHERE book_number = @book_number;";
+				cmd.Parameters.AddWithValue("@book_number", bookNum);
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("COUNT(book_number)") > 0)
+					{
+						//Archived
+						returnVal = 1;
+					}
+					else
+					{
+						//Not Archived
+						returnVal = 2;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			return returnVal;
+		}
+		internal void CheckArchiveDrive()
+		{
+			DriveInfo[] allDrives = DriveInfo.GetDrives();
+			pmsutil = new PMSUtil();
+			if (pmsutil.CheckArchiveDrive(path) != "dc")
+			{
+				this.Dispatcher.Invoke(() =>
+				{
+					ArchiveStatus.Content = "Archive Status: Connected";
+					archiveDrive = pmsutil.CheckArchiveDrive(path);
+				});
+			}
+			else
+			{
+				this.Dispatcher.Invoke(() =>
+				{
+					ArchiveStatus.Content = "Archive Status: Disconnected";
+					archiveDrive = "init";
+				});
+			}
+			Thread.Sleep(5000); // 5sec
 		}
 		private string CheckFrequency(int bookNum)
 		{
@@ -154,8 +226,8 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		internal void SyncRegisters()
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -174,12 +246,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
-						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -233,8 +310,8 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowBaptismal_Click(object senderx, RoutedEventArgs ex)
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -253,12 +330,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
-						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -312,8 +394,8 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowConfirmation_Click(object senderx, RoutedEventArgs ex)
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -332,12 +414,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
-						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -391,8 +478,8 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowMatrimonial_Click(object senderx, RoutedEventArgs ex)
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -411,12 +498,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
-						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -470,8 +562,8 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowBurial_Click(object senderx, RoutedEventArgs ex)
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -490,12 +582,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
-						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -552,32 +649,45 @@ namespace PMS.UIManager.Views
 			SyncRegisters();
 		}
 		/// <summary>
-		/// Onclick event for the AddRegisterWindow. Shows the AddRegisterWindow that allows 
-		/// the user to add a register.
-		/// </summary>
-		private async void CreateRegisterButton_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddRegisterWindow(this), this.RegisterMainGrid);
-		}
-		/// <summary>
 		/// Onclick event for the ViewRegisterButton. Shows the ViewRegisterWindow that allows 
 		/// the user to add a register.
 		/// </summary>
-		private void ViewRegister_Click(object sender, EventArgs e, int bookNum)
+		private async void ArchiveRegister_Click(object sender, EventArgs e, int bookNum)
 		{
-			// set the content
-			this.Content = new ViewRecordEntries(bookNum);
+			if (archiveDrive == "init")
+			{
+				MsgDriveNotFound();
+			}
+			else if (CheckIfArchived(bookNum) == 1)
+			{
+				MsgAlreadyArchived();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmArchivalWindow(this, bookNum, archiveDrive));
+			}
 		}
-		private async void EditRegister_Click(object sender, EventArgs e, int bookNum)
+		private async void RestoreRegister_Click(object sender, EventArgs e, int bookNum)
 		{
-			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new EditRegisterWindow(this, bookNum), this.RegisterMainGrid);
+			if (archiveDrive == "init")
+			{
+				MsgDriveNotFound();
+			}
+			else if (CheckIfArchived(bookNum) == 1)
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmRestoreWindow(this, bookNum, archiveDrive));
+			}
+			else
+			{
+				//MsgAlreadyArchived();
+			}
 		}
 		private void UpdateContent(object senderx, TextChangedEventArgs ex)
 		{
-			registers = new ObservableCollection<RegisterItem>();
-			registers_final = new ObservableCollection<RegisterItem>();
+			registers = new ObservableCollection<RegisterItemArchive>();
+			registers_final = new ObservableCollection<RegisterItemArchive>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -603,11 +713,17 @@ namespace PMS.UIManager.Views
 					while (db_reader.Read())
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
-						RegisterItem ri = new RegisterItem();
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
-						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
 						if (CheckFrequency(bookNum) == "Never")
 						{
@@ -654,6 +770,16 @@ namespace PMS.UIManager.Views
 
 				}
 			}
+		}
+		private async void MsgDriveNotFound()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "The Archive Drive is not detected. Please connect or reconnect the drive and try the action again.");
+		}
+		private async void MsgAlreadyArchived()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "The selected register is already archived.");
 		}
 		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{

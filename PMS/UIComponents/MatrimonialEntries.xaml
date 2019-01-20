@@ -10,6 +10,7 @@
              VerticalAlignment="Stretch" d:DesignHeight="533">
     <Grid Margin="0,52,0,0" x:Name="ParentGrid">
         <Button 
+            x:Name="PrintRegButton"
             Margin="0,-43,18,0" 
             VerticalAlignment="Top" 
             Width="82" 
@@ -34,6 +35,7 @@
             </StackPanel>
         </Button>
         <Button 
+            x:Name="EditRegButton"
                 Margin="0,-43,114,0" 
                 VerticalAlignment="Top" 
                 Width="82" 

@@ -39,7 +39,6 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private string recordID;
 
-
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
 		/// </summary>
@@ -127,20 +126,20 @@ namespace PMS.UIManager.Views.ChildWindows
 												else
 												{
 													archiveDrive = "init";
-													EntryNum.Value = Convert.ToDouble(db_reader.GetString("entry_number"));
-													PageNum.Value = Convert.ToDouble(db_reader.GetString("page_number"));
-													BaptismDate.Text = db_reader.GetString("record_date");
-													Birthdate.Text = db_reader.GetString("birthday");
-													FullName.Text = db_reader.GetString("recordholder_fullname");
-													Legitimacy.Text = db_reader.GetString("legitimacy");
-													Stipend.Value = Convert.ToDouble(db_reader.GetString("stipend"));
-													PlaceOfBirth.Text = db_reader.GetString("place_of_birth");
-													Parent1.Text = db_reader.GetString("parent1_fullname");
-													Parent2.Text = db_reader.GetString("parent2_fullname");
-													Sponsor1.Text = db_reader.GetString("sponsor1");
-													Sponsor2.Text = db_reader.GetString("sponsor2");
-													Minister.Text = db_reader.GetString("minister");
-													Remarks.Text = db_reader.GetString("remarks");
+													//EntryNum.Value = Convert.ToDouble(db_reader2.GetString("entry_number"));
+													//PageNum.Value = Convert.ToDouble(db_reader2.GetString("page_number"));
+													//BaptismDate.Text = db_reader2.GetString("record_date");
+													//Birthdate.IsEnabled = false;
+													//FullName.Text = db_reader2.GetString("recordholder_fullname");
+													//Legitimacy.IsEnabled = false;
+													//Stipend.Value = 0;
+													//PlaceOfBirth.IsEnabled = false;
+													//Parent1.Text = db_reader2.GetString("parent1_fullname");
+													//Parent2.Text = db_reader2.GetString("parent2_fullname");
+													//Sponsor1.IsEnabled = false;
+													//Sponsor2.IsEnabled = false;
+													//Minister.IsEnabled = false;
+													//Remarks.IsEnabled = false;
 												}
 											}
 										}

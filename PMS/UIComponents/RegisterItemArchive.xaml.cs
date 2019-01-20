@@ -18,9 +18,10 @@ namespace PMS.UIComponents
 	/// <summary>
 	/// Interaction logic for RegisterItem.xaml
 	/// </summary>
-	public partial class RegisterItemArchivesRestore : UserControl
+	public partial class RegisterItemArchive : UserControl
 	{
-		public RegisterItemArchivesRestore()
+
+		public RegisterItemArchive()
 		{
 			InitializeComponent();
 		}

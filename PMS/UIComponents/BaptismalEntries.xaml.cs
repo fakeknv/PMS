@@ -61,6 +61,9 @@ namespace PMS.UIComponents
 							{
 								if (db_reader.GetString("status") == "Archived")
 								{
+									MsgArchived();
+									EditRegButton.IsEnabled = false;
+									PrintRegButton.IsEnabled = false;
 									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
 									{
 										conn3.Open();
@@ -97,6 +100,8 @@ namespace PMS.UIComponents
 														{
 															using (SQLiteDataReader rdr = cmdx.ExecuteReader())
 															{
+																EditRegButton.IsEnabled = true;
+																PrintRegButton.IsEnabled = true;
 																while (rdr.Read())
 																{
 																	DateTime dateOfBirth = Convert.ToDateTime(rdr["birthday"].ToString());
@@ -205,6 +210,11 @@ namespace PMS.UIComponents
 				//close Connection
 				conn.Close();
 			}
+		}
+		private async void MsgArchived()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice!", "This register is already archived. Editing is disabled unless archive drive is connected.");
 		}
 		private async void MsgNoItemSelected()
 		{
