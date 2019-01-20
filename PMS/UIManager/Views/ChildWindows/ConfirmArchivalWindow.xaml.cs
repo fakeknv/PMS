@@ -34,6 +34,8 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string arcDrivePath;
 		private string path;
 
+		private int stat_code2 = 0;
+
 		public ConfirmArchivalWindow(Archives a, int book_Num, string archiveDrive)
 		{
 			arc = a;
@@ -251,14 +253,6 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			ArchivalProgBar.IsIndeterminate = true;
 			path = @"\archive.db";
-			if (pmsutil.CheckArchiveDrive(path) != "dc")
-			{
-				MsgSuccess();
-			}
-			else
-			{
-				MsgFail();
-			}
 			BackgroundWorker worker = new BackgroundWorker
 			{
 				WorkerReportsProgress = true
@@ -279,7 +273,14 @@ namespace PMS.UIManager.Views.ChildWindows
 			ArchivalProgBar.IsIndeterminate = false;
 			if (pmsutil.CheckArchiveDrive(path) != "dc")
 			{
-				MsgSuccess();
+				if (stat_code2 > 0)
+				{
+					MsgSuccess();
+				}
+				else
+				{
+					MsgFail();
+				}
 			}
 			else
 			{
@@ -339,6 +340,7 @@ namespace PMS.UIManager.Views.ChildWindows
 					Console.WriteLine("Error: {0}", ex.ToString());
 					//return 0;
 				}
+				stat_code2 = stat_code;
 				dbman.DBClose();
 				Phase2();
 				//return stat_code;
