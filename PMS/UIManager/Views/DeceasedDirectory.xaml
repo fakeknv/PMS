@@ -50,112 +50,63 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <Button
-                Margin="0,7,24,0" 
-                VerticalAlignment="Top" 
-                Width="109" 
-                Height="31" 
-                Background="#FF3C7AC9" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="White" 
-                Click="ViewInfoButton_Click"
-                HorizontalAlignment="Right" Grid.Column="1">
-                <StackPanel 
-                    Orientation="Horizontal">
-                    <Rectangle 
-                        Width="16"
-                        Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome EyeSolid}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock 
-                        Text="  View Info" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                </StackPanel>
-            </Button>
         </Grid>
-        <Grid Height="100" Margin="0,51,0,0" VerticalAlignment="Top">
-            <TextBox 
-                    x:Name="SearchRequestBox_Copy" 
-                    TextWrapping="Wrap" 
-                    Margin="22,22,24,0"
-                    BorderThickness="1,1,1,1" 
-                    Height="52" 
-                    VerticalAlignment="Top" 
-                    mah:TextBoxHelper.Watermark="Search directory"
-                    RenderTransformOrigin="0,0.5" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    FontSize="18"
-                    VerticalContentAlignment="Center" Padding="0" BorderBrush="#FFEEEEEE"/>
-            <Button 
-                    x:Name="SearchRequestButton_Copy" 
+        <Grid 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            Margin="0,46,0,0" Background="#FFF3F3F3">
+            <Grid Background="#FFF3F3F3" Height="58" MinHeight="58" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="103*"/>
+                    <ColumnDefinition Width="116*"/>
+                    <ColumnDefinition Width="133*"/>
+                    <ColumnDefinition Width="130*"/>
+                    <ColumnDefinition Width="92*"/>
+                    <ColumnDefinition Width="370*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="ManualSyncButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
-                    Content="{iconPacks:FontAwesome SearchSolid}" 
-                    Margin="0,22,24,0" 
+                    Content="{iconPacks:FontAwesome SyncSolid}" 
+                    Margin="0,14,10,0" 
                     VerticalAlignment="Top" 
-                    Height="52" 
-                    Background="{x:Null}" 
+                    Height="34" 
+                    Background="White" 
                     BorderBrush="{x:Null}" 
                     RenderTransformOrigin="0.824,0.294" 
                     Foreground="#FF717171" 
-                    Width="54" 
-                    HorizontalAlignment="Right"/>
-        </Grid>
-        <Grid Margin="25,156,25,10">
-            <Label Content="0 records found." BorderBrush="#FFE6E6E6" BorderThickness="0,0,0,1" Margin="620,5,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="18" Foreground="#FF717171" Background="White"/>
-            <DataGrid x:Name="DirectoryItemContainer" Margin="0,43,0,0" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="*" Header="Name" SortMemberPath="RName" CanUserSort="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextAlignment="Center" Text="{Binding RName}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Date of Death" SortMemberPath="DeathDate" CanUserSort="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextAlignment="Center" Text="{Binding DateOfDeath}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Date of Burial" SortMemberPath="DateOfBurial" CanUserSort="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextAlignment="Center" Text="{Binding DateOfBurial}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Place of Iternment" SortMemberPath="PlaceOfIternment" CanUserSort="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextAlignment="Center" Text="{Binding PlaceOfIternment}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="52,9,0,0" VerticalAlignment="Top" Width="77"/>
-            <Label Content="Page:" HorizontalAlignment="Left" Margin="0,9,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-            <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="160,9,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-            <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="282,9,0,0" VerticalAlignment="Top" Width="120">
-                <ComboBoxItem>10</ComboBoxItem>
-                <ComboBoxItem>15</ComboBoxItem>
-                <ComboBoxItem>20</ComboBoxItem>
-                <ComboBoxItem>25</ComboBoxItem>
-                <ComboBoxItem>30</ComboBoxItem>
-            </ComboBox>
+                    Width="34" 
+                    HorizontalAlignment="Right" 
+                    Click="ManualSyncButton_Click" Grid.Column="5"/>
+                <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="57,17,0,0" VerticalAlignment="Top" Width="77" FontFamily="Segoe UI" Grid.Column="5" Height="26"/>
+                <Label Content="Page:" HorizontalAlignment="Left" Margin="5,14,0,0" VerticalAlignment="Top" Width="52" FontSize="14" Grid.Column="5" Height="29"/>
+                <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="138,15,0,0" VerticalAlignment="Top" Width="122" FontSize="14" Grid.Column="5" Height="29"/>
+                <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="260,17,0,0" VerticalAlignment="Top" Width="61" FontFamily="Segoe UI" Grid.Column="5" Height="26">
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="15"/>
+                    <ComboBoxItem Content="20"/>
+                    <ComboBoxItem Content="25"/>
+                    <ComboBoxItem Content="30"/>
+                </ComboBox>
+            </Grid>
+            <Grid Margin="0,58,0,0" Background="WhiteSmoke">
+                <ListView x:Name="DirectoryItemContainer"  ItemsSource="{Binding Items}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Padding" Value="0,0,0,0"/>
+                            <Setter Property="Margin" Value="0,20,0,0"/>
+                            <Setter Property="Width" Value="209.979"/>
+                            <Setter Property="Height" Value="242"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
+                                <UniformGrid Columns="4" IsItemsHost="True"/>
+                            </ScrollViewer>
+                        </ControlTemplate>
+                    </ListView.Template>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

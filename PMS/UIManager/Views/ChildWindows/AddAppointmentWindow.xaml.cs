@@ -209,29 +209,31 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			MassTypeValidator.Visibility = Visibility.Hidden;
 			MassTypeValidator.Foreground = Brushes.Transparent;
-			MassType.BorderBrush = Brushes.Transparent;
+			MassType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			SponsorValidator.Visibility = Visibility.Hidden;
 			SponsorValidator.Foreground = Brushes.Transparent;
-			OfferedBy1.BorderBrush = Brushes.Transparent;
+			OfferedBy1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			SelDateValidator1.Visibility = Visibility.Hidden;
 			SelDateValidator1.Foreground = Brushes.Transparent;
-			SelectedDate1.BorderBrush = Brushes.Transparent;
+			SelectedDate1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			//FeeValidator1.Visibility = Visibility.Hidden;
-			//FeeValidator1.Foreground = Brushes.Transparent;
-			//Fee.BorderBrush = Brushes.Transparent;
+			FeeValidator1.Visibility = Visibility.Hidden;
+			FeeValidator1.Foreground = Brushes.Transparent;
+			Fee.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			//SoulsofValidator.Visibility = Visibility.Hidden;
-			//SoulsofValidator.Foreground = Brushes.Transparent;
-			//SoulsOf.BorderBrush = Brushes.Transparent;
+			SoulsofValidator.Visibility = Visibility.Hidden;
+			SoulsofValidator.Foreground = Brushes.Transparent;
+			SoulsOf.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			//SponsorValidator2.Visibility = Visibility.Hidden;
-			//SponsorValidator2.Foreground = Brushes.Transparent;
-			//OfferedBy2.BorderBrush = Brushes.Transparent;
+			SponsorValidator2.Visibility = Visibility.Hidden;
+			SponsorValidator2.Foreground = Brushes.Transparent;
+			OfferedBy2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 

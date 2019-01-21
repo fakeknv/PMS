@@ -3,6 +3,7 @@ using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
+using PMS.UIManager.Views.ChildViews;
 using PMS.UIManager.Views.ChildWindows;
 using System;
 using System.Collections.Generic;
@@ -31,10 +32,13 @@ namespace PMS.UIManager.Views
 		private MySqlConnection conn;
 		private DBConnectionManager dbman;
 
-		private ObservableCollection<DirectoryPreviewItem> directories;
-		private ObservableCollection<DirectoryPreviewItem> directories_final;
+		private ObservableCollection<DirectoryItem2> directories;
+		private ObservableCollection<DirectoryItem2> directories_final;
 
 		private int items;
+		#pragma warning disable 0169
+		private string block;
+		#pragma warning restore 0169
 
 		public DeceasedDirectory()
 		{
@@ -45,9 +49,33 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
+		private int CountEntries(string did) {
+			int ret = 0;
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM burial_directory WHERE directory_id = @did;";
+						cmd.Parameters.AddWithValue("@did", did);
+						MySqlDataReader db_reader = cmd.ExecuteReader();
+						while (db_reader.Read())
+						{
+							ret = db_reader.GetInt32("COUNT(*)");
+						}
+					}
+				}
+			}
+			return ret;
+		}
 		private void SyncDirectory() {
-			directories = new ObservableCollection<DirectoryPreviewItem>();
-			directories_final = new ObservableCollection<DirectoryPreviewItem>();
+			directories = new ObservableCollection<DirectoryItem2>();
+			directories_final = new ObservableCollection<DirectoryItem2>();
 
 			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
 			int itemsPerPage = Convert.ToInt32(ci.Content);
@@ -64,20 +92,18 @@ namespace PMS.UIManager.Views
 					{
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT * FROM records, burial_records WHERE records.record_id = burial_records.record_id;";
+						cmd.CommandText = "SELECT * FROM burial_directory ORDER BY block ASC;";
 						MySqlDataReader db_reader = cmd.ExecuteReader();
 						while (db_reader.Read())
 						{
+							string block = db_reader.GetString("block");
+							DirectoryItem2 di = new DirectoryItem2();
+							di.BlockHolder.Text = "Block: " + db_reader.GetString("block");
+							di.BlockContentStatHolder.Content = "Entries: " + CountEntries(db_reader.GetString("directory_id"));
+							di.ViewDirectoryButton.Click += (sender, e) => { ViewDirectory_Click(sender, e, block); };
+							di.Page.Content = page;
+							directories.Add(di);
 
-							directories.Add(new DirectoryPreviewItem()
-							{
-								RecordID = db_reader.GetString("record_id"),
-								RName = db_reader.GetString("recordholder_fullname"),
-								DateOfDeath = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMM dd, yyyy"),
-								DateOfBurial = DateTime.Parse(db_reader.GetString("burial_date")).ToString("MMM dd, yyyy"),
-								PlaceOfIternment = db_reader.GetString("place_of_interment"),
-								Page = page
-							});
 							count++;
 							if (count == itemsPerPage)
 							{
@@ -87,17 +113,9 @@ namespace PMS.UIManager.Views
 						}
 						foreach (var cur in directories)
 						{
-							if (cur.Page == CurrentPage.Value)
+							if (Convert.ToInt32(cur.Page.Content) == CurrentPage.Value)
 							{
-								directories_final.Add(new DirectoryPreviewItem()
-								{
-									RecordID = cur.RecordID,
-									RName = cur.RName,
-									DateOfDeath = cur.DateOfDeath,
-									DateOfBurial = cur.DateOfBurial,
-									PlaceOfIternment = cur.PlaceOfIternment,
-									Page = cur.Page
-								});
+								directories_final.Add(cur);
 							}
 						}
 						//close Connection
@@ -106,6 +124,7 @@ namespace PMS.UIManager.Views
 						DirectoryItemContainer.Items.Refresh();
 						DirectoryItemContainer.ItemsSource = directories_final;
 						DirectoryItemContainer.Items.Refresh();
+						CurrentPage.Maximum = page;
 					}
 				}
 				else
@@ -128,18 +147,14 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
 		}
-		private async void ViewInfoButton_Click(object sender, RoutedEventArgs e)
+		private void ViewDirectory_Click(object sender, EventArgs e, string block)
 		{
-			DirectoryPreviewItem dpi = (DirectoryPreviewItem)DirectoryItemContainer.SelectedItem;
-			if (dpi == null)
-			{
-				MsgNoItemSelected();
-			}
-			else
-			{
-				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new ViewInfoWindow(dpi.RecordID), this.DirectoryMainGrid);
-			}
+			// set the content
+			this.Content = new ViewDirectoryEntries(block);
+		}
+		private void ManualSyncButton_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

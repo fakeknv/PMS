@@ -25,7 +25,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private PMSUtil pmsutil;
 
 		private int bookNum;
-
+		#pragma warning disable 0169
 		private DateTime cDate;
 		private DateTime cTime;
 		private string curDate;
@@ -36,6 +36,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private string path;
 
 		private int stat_code2 = 0;
+		#pragma warning restore 0169
 
 		public ConfirmRestoreWindow(Archives a, int book_Num, string archiveDrive)
 		{

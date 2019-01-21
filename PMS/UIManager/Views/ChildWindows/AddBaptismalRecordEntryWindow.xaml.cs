@@ -181,41 +181,43 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			BaptismDateValidator.Visibility = Visibility.Hidden;
 			BaptismDateValidator.Foreground = Brushes.Transparent;
-			BaptismDate.BorderBrush = Brushes.Transparent;
+			BaptismDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			BirthDateValidator.Visibility = Visibility.Hidden;
 			BirthDateValidator.Foreground = Brushes.Transparent;
-			Birthdate.BorderBrush = Brushes.Transparent;
+			Birthdate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			NameValidator.Visibility = Visibility.Hidden;
 			NameValidator.Foreground = Brushes.Transparent;
-			FullName.BorderBrush = Brushes.Transparent;
+			FullName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			PlaceOfBirthValidator.Visibility = Visibility.Hidden;
 			PlaceOfBirthValidator.Foreground = Brushes.Transparent;
-			PlaceOfBirth.BorderBrush = Brushes.Transparent;
+			PlaceOfBirth.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			Sponsor1Validator.Visibility = Visibility.Hidden;
 			Sponsor1Validator.Foreground = Brushes.Transparent;
-			Sponsor1.BorderBrush = Brushes.Transparent;
+			Sponsor1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			Sponsor2Validator.Visibility = Visibility.Hidden;
 			Sponsor2Validator.Foreground = Brushes.Transparent;
-			Sponsor2.BorderBrush = Brushes.Transparent;
+			Sponsor2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			Parent1Validator.Visibility = Visibility.Hidden;
 			Parent1Validator.Foreground = Brushes.Transparent;
-			Parent1.BorderBrush = Brushes.Transparent;
+			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			MinisterValidator.Visibility = Visibility.Hidden;
 			MinisterValidator.Foreground = Brushes.Transparent;
-			Minister.BorderBrush = Brushes.Transparent;
+			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			LegitimacyValidator.Visibility = Visibility.Hidden;
 			LegitimacyValidator.Foreground = Brushes.Transparent;
-			Legitimacy.BorderBrush = Brushes.Transparent;
+			Legitimacy.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 

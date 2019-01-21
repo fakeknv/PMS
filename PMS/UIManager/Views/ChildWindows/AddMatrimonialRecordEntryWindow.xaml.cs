@@ -87,21 +87,23 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			MarriageDateValidator.Visibility = Visibility.Hidden;
 			MarriageDateValidator.Foreground = Brushes.Transparent;
-			MarriageDate.BorderBrush = Brushes.Transparent;
+			MarriageDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			HusbandValidator.Visibility = Visibility.Hidden;
 			HusbandValidator.Foreground = Brushes.Transparent;
-			FullName1.BorderBrush = Brushes.Transparent;
+			FullName1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			WifeValidator.Visibility = Visibility.Hidden;
 			WifeValidator.Foreground = Brushes.Transparent;
-			FullName2.BorderBrush = Brushes.Transparent;
+			FullName2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			MinisterValidator.Visibility = Visibility.Hidden;
 			MinisterValidator.Foreground = Brushes.Transparent;
-			Minister.BorderBrush = Brushes.Transparent;
+			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 

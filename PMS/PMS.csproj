@@ -201,6 +201,10 @@
       <DependentUpon>AccountsItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\AppointmentItem.cs" />
+    <Compile Include="UIComponents\DirectoryItem2.xaml.cs">
+      <DependentUpon>DirectoryItem2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\DirEntry.cs" />
     <Compile Include="UIComponents\RegisterItemArchive.xaml.cs">
       <DependentUpon>RegisterItemArchive.xaml</DependentUpon>
     </Compile>
@@ -220,7 +224,6 @@
       <DependentUpon>SearchConfirmationEntries.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirectoryItem.cs" />
-    <Compile Include="UIComponents\DirectoryPreviewItem.cs" />
     <Compile Include="UIComponents\EventsItem.cs" />
     <Compile Include="UIComponents\EventType.cs" />
     <Compile Include="UIComponents\MatrimonialEntries.xaml.cs">
@@ -271,6 +274,9 @@
     </Compile>
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml.cs">
+      <DependentUpon>ViewDirectoryEntries.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml.cs">
       <DependentUpon>ConfirmRestoreWindow.xaml</DependentUpon>
@@ -433,6 +439,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UIComponents\DirectoryItem2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UIComponents\RegisterItemArchive.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -500,6 +510,10 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -128,7 +128,7 @@ namespace PMS.UIManager.Views
 		}
 		private string CheckFrequency(int bookNum)
 		{
-			string ret = "Never";
+			string ret = "Very Low";
 			dbman = new DBConnectionManager();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
@@ -258,7 +258,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -342,7 +342,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -426,7 +426,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -510,7 +510,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -594,7 +594,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -725,7 +725,7 @@ namespace PMS.UIManager.Views
 						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
 						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}

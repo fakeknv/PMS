@@ -33,21 +33,23 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			AccountTypeValidator.Visibility = Visibility.Hidden;
 			AccountTypeValidator.Foreground = Brushes.Transparent;
-			AccountType.BorderBrush = Brushes.Transparent;
+			AccountType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			EmpNameValidator.Visibility = Visibility.Hidden;
 			EmpNameValidator.Foreground = Brushes.Transparent;
-			EmpName.BorderBrush = Brushes.Transparent;
+			EmpName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			UsernameValidator.Visibility = Visibility.Hidden;
 			UsernameValidator.Foreground = Brushes.Transparent;
-			Username.BorderBrush = Brushes.Transparent;
+			Username.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			PasswordValidator.Visibility = Visibility.Hidden;
 			PasswordValidator.Foreground = Brushes.Transparent;
-			Password.BorderBrush = Brushes.Transparent;
+			Password.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 
@@ -107,8 +109,46 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
-
+			if (CheckDupli() == true)
+			{
+				ret = false;
+			}
 			return ret;
+		}
+		internal bool CheckDupli()
+		{
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM accounts WHERE user_name = @username;";
+					cmd.Prepare();
+					cmd.Parameters.AddWithValue("@username", Username.Text);
+					using (MySqlDataReader db_reader = cmd.ExecuteReader())
+					{
+						while (db_reader.Read())
+						{
+							if (db_reader.GetInt32("COUNT(*)") > 0)
+							{
+								UsernameValidator.Visibility = Visibility.Visible;
+								UsernameValidator.ToolTip = "Username already exists.";
+								UsernameValidator.Foreground = Brushes.Red;
+								Username.BorderBrush = Brushes.Red;
+
+								return true;
+							}
+							else {
+								return false;
+							}
+						}
+					}
+				}
+			}
+			return true;
 		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{

@@ -30,9 +30,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			NameValidator.Visibility = Visibility.Hidden;
 			NameValidator.Foreground = Brushes.Transparent;
-			PriestName.BorderBrush = Brushes.Transparent;
+			PriestName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 
@@ -45,7 +47,43 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
+			if (CheckDupli() == true)
+			{
+				NameValidator.Visibility = Visibility.Visible;
+				NameValidator.ToolTip = "Username cannot be empty!";
+				NameValidator.Foreground = Brushes.Red;
+				PriestName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
 			return ret;
+		}
+		internal bool CheckDupli()
+		{
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) residing_priests WHERE priest_name = @pname";
+					cmd.Prepare();
+					cmd.Parameters.AddWithValue("@pname", PriestName.Text);
+					using (MySqlDataReader db_reader = cmd.ExecuteReader())
+					{
+						while (db_reader.Read())
+						{
+							if (db_reader.GetInt32("COUNT(*)") > 0)
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
 		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{

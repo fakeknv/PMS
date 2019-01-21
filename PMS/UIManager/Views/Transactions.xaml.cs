@@ -22,6 +22,7 @@ namespace PMS.UIManager.Views
 		private MySqlConnection conn;
 
 		private DBConnectionManager dbman;
+		private PMSUtil pmsutil;
 		private DBConnectionManager dbman2;
 
 		private ObservableCollection<Transaction> transactions;
@@ -42,115 +43,115 @@ namespace PMS.UIManager.Views
 		private void SyncStat()
 		{
 			dbman = new DBConnectionManager();
-
-			if (dbman.DBConnect().State == ConnectionState.Open)
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
-				//Counts Total
-				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions;";
-				cmd.Prepare();
-				MySqlDataReader db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
 				{
-					TotalRequestsHolder.Content = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Total
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions;";
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						TotalRequestsHolder.Content = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Baptismal
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
-				cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					StatBaptismalHolder.Content = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Baptismal
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+					cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						StatBaptismalHolder.Content = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Confirmation
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
-				cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					StatConfirmationHolder.Content = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Confirmation
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+					cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						StatConfirmationHolder.Content = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Burial
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
-				cmd.Parameters.AddWithValue("@type", "Burial Cert.");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					StatBurialHolder.Content = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Burial
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+					cmd.Parameters.AddWithValue("@type", "Burial Cert.");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						StatBurialHolder.Content = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Marriage
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
-				cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					StatMatrimonialHolder.Content = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Marriage
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+					cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						StatMatrimonialHolder.Content = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Paying
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Paying");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					BadgePaying.Badge = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Paying
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
+					cmd.Parameters.AddWithValue("@status", "Paying");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						BadgePaying.Badge = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Finished
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Finished");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					BadgeFinished.Badge = db_reader.GetString("COUNT(*)");
-				}
-				//close Connection
-				dbman.DBClose();
+					//Counts Finished
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
+					cmd.Parameters.AddWithValue("@status", "Finished");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						BadgeFinished.Badge = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 
-				//Counts Cancelled
-				cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
-				cmd.Parameters.AddWithValue("@status", "Cancelled");
-				cmd.Prepare();
-				db_reader = cmd.ExecuteReader();
-				while (db_reader.Read())
-				{
-					BadgeCancelled.Badge = db_reader.GetString("COUNT(*)");
+					//Counts Cancelled
+					cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
+					cmd.Parameters.AddWithValue("@status", "Cancelled");
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						BadgeCancelled.Badge = db_reader.GetString("COUNT(*)");
+					}
+					//close Connection
+					conn.Close();
 				}
-				//close Connection
-				dbman.DBClose();
-			}
-			else
-			{
-
 			}
 		}
 		/// <summary>
@@ -672,36 +673,36 @@ namespace PMS.UIManager.Views
 				//Label transactionID = (Label)ti.FindName("IDLabel");
 
 				dbman = new DBConnectionManager();
-				if (dbman.DBConnect().State == ConnectionState.Open)
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
 				{
-					MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-					cmd.Parameters.AddWithValue("@transaction_id", ti.TransactionID);
-					cmd.Prepare();
-					MySqlDataReader db_reader = cmd.ExecuteReader();
-					while (db_reader.Read())
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
 					{
-						if (db_reader.GetString("status") == "Finished")
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+						cmd.Parameters.AddWithValue("@transaction_id", ti.TransactionID);
+						cmd.Prepare();
+						MySqlDataReader db_reader = cmd.ExecuteReader();
+						while (db_reader.Read())
 						{
-							MsgAlreadyPaid();
-						}
-						else if (db_reader.GetString("status") == "Cancelled")
-						{
-							//MessageBox.Show("Already cancelled!");
-							MsgCancelled();
-						}
-						else
-						{
-							var metroWindow = (Application.Current.MainWindow as MetroWindow);
-							await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, ti.TransactionID));
+							if (db_reader.GetString("status") == "Finished")
+							{
+								MsgAlreadyPaid();
+							}
+							else if (db_reader.GetString("status") == "Cancelled")
+							{
+								//MessageBox.Show("Already cancelled!");
+								MsgCancelled();
+							}
+							else
+							{
+								var metroWindow = (Application.Current.MainWindow as MetroWindow);
+								await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, ti.TransactionID));
+							}
 						}
 					}
 				}
-				else
-				{
-
-				}
-				dbman.DBClose();
 			}
 		}
 		private async void MsgCancelled()

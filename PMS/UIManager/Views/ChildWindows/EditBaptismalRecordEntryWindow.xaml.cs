@@ -126,20 +126,6 @@ namespace PMS.UIManager.Views.ChildWindows
 												else
 												{
 													archiveDrive = "init";
-													//EntryNum.Value = Convert.ToDouble(db_reader2.GetString("entry_number"));
-													//PageNum.Value = Convert.ToDouble(db_reader2.GetString("page_number"));
-													//BaptismDate.Text = db_reader2.GetString("record_date");
-													//Birthdate.IsEnabled = false;
-													//FullName.Text = db_reader2.GetString("recordholder_fullname");
-													//Legitimacy.IsEnabled = false;
-													//Stipend.Value = 0;
-													//PlaceOfBirth.IsEnabled = false;
-													//Parent1.Text = db_reader2.GetString("parent1_fullname");
-													//Parent2.Text = db_reader2.GetString("parent2_fullname");
-													//Sponsor1.IsEnabled = false;
-													//Sponsor2.IsEnabled = false;
-													//Minister.IsEnabled = false;
-													//Remarks.IsEnabled = false;
 												}
 											}
 										}
@@ -371,6 +357,61 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
+			BaptismDateValidator.Visibility = Visibility.Hidden;
+			BaptismDateValidator.Foreground = Brushes.Transparent;
+			BaptismDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			EntryNumValidator.Visibility = Visibility.Hidden;
+			EntryNumValidator.Foreground = Brushes.Transparent;
+			EntryNum.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			EntryNumValidator.Visibility = Visibility.Hidden;
+			EntryNumValidator.Foreground = Brushes.Transparent;
+			PageNum.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			PageNumValidator.Visibility = Visibility.Hidden;
+			PageNumValidator.Foreground = Brushes.Transparent;
+			PageNum.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			BirthDateValidator.Visibility = Visibility.Hidden;
+			BirthDateValidator.Foreground = Brushes.Transparent;
+			Birthdate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			NameValidator.Visibility = Visibility.Hidden;
+			NameValidator.Foreground = Brushes.Transparent;
+			FullName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			StipendValidator.Visibility = Visibility.Hidden;
+			StipendValidator.Foreground = Brushes.Transparent;
+			Stipend.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			PlaceOfBirthValidator.Visibility = Visibility.Hidden;
+			PlaceOfBirthValidator.Foreground = Brushes.Transparent;
+			PlaceOfBirth.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Sponsor1Validator.Visibility = Visibility.Hidden;
+			Sponsor1Validator.Foreground = Brushes.Transparent;
+			Sponsor1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Sponsor2Validator.Visibility = Visibility.Hidden;
+			Sponsor2Validator.Foreground = Brushes.Transparent;
+			Sponsor2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Parent1Validator.Visibility = Visibility.Hidden;
+			Parent1Validator.Foreground = Brushes.Transparent;
+			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.Foreground = Brushes.Transparent;
+			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			LegitimacyValidator.Visibility = Visibility.Hidden;
+			LegitimacyValidator.Foreground = Brushes.Transparent;
+			Legitimacy.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(BaptismDate.Text))
@@ -393,9 +434,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 			if (PageNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				PageNumValidator.Visibility = Visibility.Visible;
+				PageNumValidator.ToolTip = "Must be greater than zero.";
+				PageNumValidator.Foreground = Brushes.Red;
 				PageNum.BorderBrush = Brushes.Red;
 
 				ret = false;

@@ -438,21 +438,111 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			MarriageDateValidator.Visibility = Visibility.Hidden;
+			MarriageDateValidator.ToolTip = "This field is required.";
 			MarriageDateValidator.Foreground = Brushes.Transparent;
-			MarriageDate.BorderBrush = Brushes.Transparent;
+			MarriageDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			EntryNumValidator.Visibility = Visibility.Hidden;
+			EntryNumValidator.ToolTip = "Must be greater than zero.";
+			EntryNumValidator.Foreground = Brushes.Transparent;
+			EntryNum.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			EntryNumValidator.Visibility = Visibility.Hidden;
+			EntryNumValidator.ToolTip = "Must be greater than zero.";
+			EntryNumValidator.Foreground = Brushes.Transparent;
+
+			StipendValidator.Visibility = Visibility.Hidden;
+			StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
+			StipendValidator.Foreground = Brushes.Orange;
+			Stipend.BorderBrush = Brushes.Orange;
 
 			HusbandValidator.Visibility = Visibility.Hidden;
+			HusbandValidator.ToolTip = "This field is required.";
 			HusbandValidator.Foreground = Brushes.Transparent;
-			FullName1.BorderBrush = Brushes.Transparent;
+			FullName1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			WifeValidator.Visibility = Visibility.Hidden;
+			WifeValidator.ToolTip = "This field is required.";
 			WifeValidator.Foreground = Brushes.Transparent;
-			FullName2.BorderBrush = Brushes.Transparent;
+			FullName2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator1.Visibility = Visibility.Hidden;
+			GroupValidator1.ToolTip = "This field is required.";
+			GroupValidator1.Foreground = Brushes.Transparent;
+			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator1.Visibility = Visibility.Hidden;
+			GroupValidator1.ToolTip = "This field is required.";
+			GroupValidator1.Foreground = Brushes.Transparent;
+			Parent3.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator2.Visibility = Visibility.Hidden;
+			GroupValidator2.ToolTip = "This field is required.";
+			GroupValidator2.Foreground = Brushes.Transparent;
+			Parent2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator2.Visibility = Visibility.Hidden;
+			GroupValidator2.ToolTip = "This field is required.";
+			GroupValidator2.Foreground = Brushes.Transparent;
+			Parent4.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Hometown1Validator.Visibility = Visibility.Hidden;
+			Hometown1Validator.ToolTip = "This field is required.";
+			Hometown1Validator.Foreground = Brushes.Transparent;
+			Hometown1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Hometown2Validator.Visibility = Visibility.Hidden;
+			Hometown2Validator.ToolTip = "This field is required.";
+			Hometown2Validator.Foreground = Brushes.Transparent;
+			Hometown2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Residence1Validator.Visibility = Visibility.Hidden;
+			Residence1Validator.ToolTip = "This field is required.";
+			Residence1Validator.Foreground = Brushes.Transparent;
+			Residence1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Residence2Validator.Visibility = Visibility.Hidden;
+			Residence2Validator.ToolTip = "This field is required.";
+			Residence2Validator.Foreground = Brushes.Transparent;
+			Residence2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator1.Visibility = Visibility.Hidden;
+			GroupValidator1.ToolTip = "This field is required.";
+			GroupValidator1.Foreground = Brushes.Transparent;
+			Residence3.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator2.Visibility = Visibility.Hidden;
+			GroupValidator2.ToolTip = "This field is required.";
+			GroupValidator2.Foreground = Brushes.Transparent;
+			Residence4.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator1.Visibility = Visibility.Hidden;
+			GroupValidator1.ToolTip = "This field is required.";
+			GroupValidator1.Foreground = Brushes.Transparent;
+			Sponsor1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			GroupValidator2.Visibility = Visibility.Hidden;
+			GroupValidator2.ToolTip = "This field is required.";
+			GroupValidator2.Foreground = Brushes.Transparent;
+			Sponsor2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			MinisterValidator.Visibility = Visibility.Hidden;
+			MinisterValidator.ToolTip = "This field is required.";
 			MinisterValidator.Foreground = Brushes.Transparent;
-			Minister.BorderBrush = Brushes.Transparent;
+			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Age1Validator.Visibility = Visibility.Hidden;
+			Age1Validator.ToolTip = "This field is required.";
+			Age1Validator.Foreground = Brushes.Transparent;
+			Age1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			Age2Validator.Visibility = Visibility.Hidden;
+			Age2Validator.ToolTip = "This field is required.";
+			Age2Validator.Foreground = Brushes.Transparent;
+			Age2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 

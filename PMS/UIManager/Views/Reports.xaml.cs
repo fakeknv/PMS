@@ -145,6 +145,7 @@ namespace PMS.UIManager.Views
 						{
 							cdate = DateTime.Parse(db_reader.GetString("creation_date")).ToString("MMMM dd, yyyy");
 						}
+
 						registers.Add(new Register()
 						{
 							Type = db_reader.GetString("book_type"),

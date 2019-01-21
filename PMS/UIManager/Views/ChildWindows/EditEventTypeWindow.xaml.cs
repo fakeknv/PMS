@@ -58,12 +58,19 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
+			ETypeValidator.Visibility = Visibility.Hidden;
+			ETypeValidator.Foreground = Brushes.Transparent;
+			EType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
+			EType.BorderBrush = Brushes.Red;
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(EType.Text))
 			{
 				ETypeValidator.Visibility = Visibility.Visible;
-				ETypeValidator.ToolTip = "Username cannot be empty!";
+				ETypeValidator.ToolTip = "This field is required.";
 				ETypeValidator.Foreground = Brushes.Red;
 				EType.BorderBrush = Brushes.Red;
 

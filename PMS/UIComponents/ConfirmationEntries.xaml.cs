@@ -227,7 +227,9 @@ namespace PMS.UIComponents
 		}
 		private async void Remarks_Click(object sender, RoutedEventArgs e)
 		{
+			#pragma warning disable 0219
 			string path = @"\archive.db";
+			#pragma warning restore 0219
 			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
 			if (record == null)
 			{
@@ -264,7 +266,9 @@ namespace PMS.UIComponents
 
 		private async void Edit_Click(object sender, RoutedEventArgs e)
 		{
+			#pragma warning disable 0219
 			string path = @"\archive.db";
+			#pragma warning restore 0219
 			RecordEntryConfirmation record = (RecordEntryConfirmation)EntriesHolder.SelectedItem;
 			if (record == null)
 			{

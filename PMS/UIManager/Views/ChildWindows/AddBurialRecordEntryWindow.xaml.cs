@@ -85,41 +85,43 @@ namespace PMS.UIManager.Views.ChildWindows
 		}
 		private bool CheckInputs()
 		{
+			var bc = new BrushConverter();
+
 			DeathDateValidator.Visibility = Visibility.Hidden;
 			DeathDateValidator.Foreground = Brushes.Transparent;
-			DeathDate.BorderBrush = Brushes.Transparent;
+			DeathDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			BurialDateValidator.Visibility = Visibility.Hidden;
 			BurialDateValidator.Foreground = Brushes.Transparent;
-			BurialDate.BorderBrush = Brushes.Transparent;
+			BurialDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			NameValidator.Visibility = Visibility.Hidden;
 			NameValidator.Foreground = Brushes.Transparent;
-			FullName.BorderBrush = Brushes.Transparent;
+			FullName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			PlaceOfIntermentValidator.Visibility = Visibility.Hidden;
 			PlaceOfIntermentValidator.Foreground = Brushes.Transparent;
-			PlaceOfInterment.BorderBrush = Brushes.Transparent;
+			PlaceOfInterment.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			Parent1Validator.Visibility = Visibility.Hidden;
 			Parent1Validator.Foreground = Brushes.Transparent;
-			Parent1.BorderBrush = Brushes.Transparent;
+			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			Residence1Validator.Visibility = Visibility.Hidden;
 			Residence1Validator.Foreground = Brushes.Transparent;
-			Residence1.BorderBrush = Brushes.Transparent;
+			Residence1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			MinisterValidator.Visibility = Visibility.Hidden;
 			MinisterValidator.Foreground = Brushes.Transparent;
-			Minister.BorderBrush = Brushes.Transparent;
+			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			SacramentValidator.Visibility = Visibility.Hidden;
 			SacramentValidator.Foreground = Brushes.Transparent;
-			Sacrament.BorderBrush = Brushes.Transparent;
+			Sacrament.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			CauseOfDeathValidator.Visibility = Visibility.Hidden;
 			CauseOfDeathValidator.Foreground = Brushes.Transparent;
-			CauseOfDeath.BorderBrush = Brushes.Transparent;
+			CauseOfDeath.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 

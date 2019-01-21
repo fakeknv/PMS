@@ -56,7 +56,7 @@ namespace PMS.UIManager.Views
 		}
 		private string CheckFrequency(int bookNum)
 		{
-			string ret = "Never";
+			string ret = "Very Low";
 			dbman = new DBConnectionManager();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
@@ -181,7 +181,7 @@ namespace PMS.UIManager.Views
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -220,6 +220,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
@@ -260,7 +261,7 @@ namespace PMS.UIManager.Views
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -299,6 +300,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
@@ -339,7 +341,7 @@ namespace PMS.UIManager.Views
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -378,6 +380,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
@@ -418,7 +421,7 @@ namespace PMS.UIManager.Views
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -457,6 +460,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
@@ -497,7 +501,7 @@ namespace PMS.UIManager.Views
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.EditRegisterButton.Click += (sender, e) => { EditRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -536,6 +540,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{
@@ -609,7 +614,7 @@ namespace PMS.UIManager.Views
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
 						ri.ViewRegisterButton.Click += (sender, e) => { ViewRegister_Click(sender, e, bookNum); };
 						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
-						if (CheckFrequency(bookNum) == "Never")
+						if (CheckFrequency(bookNum) == "Very Low")
 						{
 							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
 						}
@@ -648,6 +653,7 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+					CurrentPage.Maximum = page;
 				}
 				else
 				{

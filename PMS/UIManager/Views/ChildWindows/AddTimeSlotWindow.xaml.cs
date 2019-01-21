@@ -39,8 +39,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			this.Close();
 		}
-
-		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+		internal bool CheckDupli()
 		{
 			dbman = new DBConnectionManager();
 			pmsutil = new PMSUtil();
@@ -49,40 +48,80 @@ namespace PMS.UIManager.Views.ChildWindows
 				conn.Open();
 				if (conn.State == ConnectionState.Open)
 				{
-					string uid = Application.Current.Resources["uid"].ToString();
-					string[] dt = pmsutil.GetServerDateTime().Split(null);
-					DateTime cDate = Convert.ToDateTime(dt[0]);
-					DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-					string curDate = cDate.ToString("yyyy-MM-dd");
-					string curTime = cTime.ToString("HH:mm:ss");
-
 					string selTime = HourPicker.Text + ":" + MinutePicker.Text + " " + ModePicker.Text;
-					string tid = pmsutil.GenTimeSlotID();
+
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText =
-					"INSERT INTO timeslots(timeslot_id, timeslot, status)" +
-					"VALUES(@timeslot_id, @timeslot, @status)";
+					cmd.CommandText = "SELECT COUNT(*) FROM timeslots WHERE timeslot = @tslot";
 					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@timeslot_id", tid);
-					cmd.Parameters.AddWithValue("@timeslot", DateTime.Parse(selTime).ToString("HH:mm:ss"));
-					cmd.Parameters.AddWithValue("@status", Status.Text);
-					int stat_code = cmd.ExecuteNonQuery();
-					conn.Close();
-					if (stat_code > 0)
+					cmd.Parameters.AddWithValue("@tslot", DateTime.Parse(selTime).ToString("HH:mm:ss"));
+					using (MySqlDataReader db_reader = cmd.ExecuteReader())
 					{
-						MsgSuccess();
-						this.Close();
+						while (db_reader.Read())
+						{
+							if (db_reader.GetInt32("COUNT(*)") > 0)
+							{
+								return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
+		}
+		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (CheckDupli() == true)
+			{
+				MsgDupli();
+			}
+			else {
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
+				{
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
+					{
+						string uid = Application.Current.Resources["uid"].ToString();
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+						string curDate = cDate.ToString("yyyy-MM-dd");
+						string curTime = cTime.ToString("HH:mm:ss");
+
+						string selTime = HourPicker.Text + ":" + MinutePicker.Text + " " + ModePicker.Text;
+						string tid = pmsutil.GenTimeSlotID();
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText =
+						"INSERT INTO timeslots(timeslot_id, timeslot, status)" +
+						"VALUES(@timeslot_id, @timeslot, @status)";
+						cmd.Prepare();
+						cmd.Parameters.AddWithValue("@timeslot_id", tid);
+						cmd.Parameters.AddWithValue("@timeslot", DateTime.Parse(selTime).ToString("HH:mm:ss"));
+						cmd.Parameters.AddWithValue("@status", Status.Text);
+						int stat_code = cmd.ExecuteNonQuery();
+						conn.Close();
+						if (stat_code > 0)
+						{
+							MsgSuccess();
+							this.Close();
+						}
+						else
+						{
+							MsgFail();
+						}
 					}
 					else
 					{
-						MsgFail();
+
 					}
 				}
-				else
-				{
-
-				}
 			}
+		}
+		private async void MsgDupli()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "The timeslot already exists.");
 		}
 		private async void MsgSuccess()
 		{

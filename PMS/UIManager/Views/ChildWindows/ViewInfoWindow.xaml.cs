@@ -2,8 +2,13 @@
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
+using Spire.Pdf;
+using Spire.Pdf.Graphics;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,6 +26,9 @@ namespace PMS.UIManager.Views.ChildWindows
 		private PMSUtil pmsutil;
 
 		private string _rid;
+
+		//Report
+		private string _name, _age, _residence, _parent1, _parent2, _deathDate, _burialDate, _causeOfDeath, _sacrament, _interment, _block, _lot, _plot;
 
         public ViewInfoWindow(string rid)
         {
@@ -40,9 +48,20 @@ namespace PMS.UIManager.Views.ChildWindows
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
+						_name = db_reader.GetString("recordholder_fullname");
+						_age = db_reader.GetString("age");
+						_residence = db_reader.GetString("residence");
+						_parent1 = db_reader.GetString("parent1_fullname");
+						_parent2 = db_reader.GetString("parent2_fullname");
+						_deathDate = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMMM dd, yyyy");
+						_burialDate = DateTime.Parse(db_reader.GetString("burial_date")).ToString("MMMM dd, yyyy");
+						_causeOfDeath = db_reader.GetString("cause_of_death");
+						_sacrament = db_reader.GetString("sacrament");
+						_interment = db_reader.GetString("place_of_interment");
+
 						NameHolder.Content = "Name: " + db_reader.GetString("recordholder_fullname");
 						AgeHolder.Content = "Age: " + db_reader.GetInt32("age");
-						ResidenceHolder.Content = db_reader.GetString("residence");
+						ResidenceHolder.Content = "Residence: " + db_reader.GetString("residence");
 						Parent1Holder.Content = db_reader.GetString("parent1_fullname");
 						Parent2Holder.Content = db_reader.GetString("parent2_fullname");
 						DateOfDeathHolder.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMMM dd, yyyy");
@@ -90,6 +109,10 @@ namespace PMS.UIManager.Views.ChildWindows
 					db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
+						_block = db_reader.GetString("block");
+						_lot = db_reader.GetString("lot");
+						_plot = db_reader.GetString("plot");
+
 						BlockHolder.Content = db_reader.GetString("block");
 						LotHolder.Content = db_reader.GetString("lot");
 						PlotHolder.Content = db_reader.GetString("plot");
@@ -97,19 +120,106 @@ namespace PMS.UIManager.Views.ChildWindows
 					conn.Close();
 				}
 			}
+			GetNearbyGraves();
+		}
+		internal void GetNearbyGraves() {
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM records, burial_records, burial_directory WHERE records.record_id = burial_records.record_id AND burial_records.record_id = burial_directory.record_id AND burial_directory.block = @block AND burial_directory.lot = @lot;";
+					cmd.Parameters.AddWithValue("@block", _block);
+					cmd.Parameters.AddWithValue("@lot", _lot);
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetString("record_id") != _rid) {
+							Nearby.Items.Add(db_reader.GetString("recordholder_fullname"));
+						}
+					}
+				}
+			}
 		}
 		private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
 		}
-		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+		private async void PrintIndexButton_Click(object sender, RoutedEventArgs e)
 		{
-			
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			var controller = await metroWindow.ShowProgressAsync("Generating...", "Please wait while the system is generating the report.");
+			controller.SetIndeterminate();
+			GenReport3Phase2();
+			// Close...
+			await controller.CloseAsync();
 		}
 		private async void UpdateInfo_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new EditDirectoryWindow(_rid));
+		}
+		internal void GenReport3Phase2()
+		{
+			string[] dt = pmsutil.GetServerDateTime().Split(null);
+			DateTime cDate = Convert.ToDateTime(dt[0]);
+			DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+
+			//create a new pdf document
+			PdfDocument pdfDoc = new PdfDocument();
+
+			PdfPageBase page = pdfDoc.Pages.Add();
+
+			var stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream("PMS.Assets.st_raphael_logo_dark.png");
+			PdfImage logo = PdfImage.FromStream(stream);
+			float _width = 200;
+			float height = 80;
+			float x = (page.Canvas.ClientSize.Width - _width) / 2;
+			page.Canvas.DrawImage(logo, 0, -25, _width, height);
+
+			page.Canvas.DrawString("Peñaranda St, Legazpi Port District",
+			new PdfFont(PdfFontFamily.TimesRoman, 13f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			245, 0);
+
+			page.Canvas.DrawString("Legazpi City, Albay",
+			new PdfFont(PdfFontFamily.TimesRoman, 13f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			280, 20);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 49), new PointF(530, 49));
+
+			page.Canvas.DrawString("PMS Index Report",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			350, 52);
+
+			page.Canvas.DrawString("Generated on: " + DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt"),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 52);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 70), new PointF(530, 70));
+
+			page.Canvas.DrawString("Burial Index Report",
+			new PdfFont(PdfFontFamily.TimesRoman, 14f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			210, 80);
+
+			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(200, 97), new PointF(330, 97));
+
+			page.Canvas.DrawString("Name: " + _name,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 110);
+
+
+			//save
+			pdfDoc.SaveToFile(@"..\..\index_report.pdf");
+			//launch the pdf document
+			System.Diagnostics.Process.Start(@"..\..\index_report.pdf");
 		}
 		private async void MsgSuccess()
 		{
