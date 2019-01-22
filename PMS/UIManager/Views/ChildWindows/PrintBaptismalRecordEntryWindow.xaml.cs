@@ -50,6 +50,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			recordID = targRecord;
 			InitializeComponent();
 			GetResidingPriests();
+			CheckAccess(targRecord);
+
 			PrintingFee.Value = Convert.ToDouble(pmsutil.GetPrintFee("Baptismal"));
 			dbman = new DBConnectionManager();
 
@@ -171,6 +173,33 @@ namespace PMS.UIManager.Views.ChildWindows
 			
 			Suggestions1.Visibility = Visibility.Hidden;
 			Suggestions2.Visibility = Visibility.Hidden;
+		}
+		internal void CheckAccess(string record_id)
+		{
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM records_log WHERE record_id = @record_id AND log_code = 'LOGC-03' OR log_code = 'LOGC-04';";
+					cmd.Parameters.AddWithValue("@record_id", record_id);
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetInt32("COUNT(*)") > 0)
+						{
+							MsgNotice();
+						}
+					}
+				}
+			}
+		}
+		private async void MsgNotice()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Notice!", "This record has been printed before. Please check access history for more info.");
 		}
 		private void GetResidingPriests()
 		{

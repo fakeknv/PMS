@@ -138,7 +138,6 @@ namespace PMS.UIManager.Views.ChildWindows
 								UsernameValidator.ToolTip = "Username already exists.";
 								UsernameValidator.Foreground = Brushes.Red;
 								Username.BorderBrush = Brushes.Red;
-
 								return true;
 							}
 							else {
@@ -153,7 +152,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (CheckInputs() == true) {
-				if (AccountType.SelectedIndex == 5)
+				if (AccountType.SelectedIndex == 3)
 				{
 					priv = "6";
 					if (Priv1.IsChecked == true)
@@ -167,10 +166,6 @@ namespace PMS.UIManager.Views.ChildWindows
 					if (Priv3.IsChecked == true)
 					{
 						priv += "4";
-					}
-					if (Priv4.IsChecked == true)
-					{
-						priv += "5";
 					}
 					dbman = new DBConnectionManager();
 					pmsutil = new PMSUtil();
@@ -215,6 +210,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							if (stat_code > 0)
 							{
 								MsgSuccess();
+								pmsutil.LogAccount("Created an account - Username: " + Username.Text + " Type: " + Convert.ToInt32(priv));
 								this.Close();
 							}
 							else
@@ -273,6 +269,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							if (stat_code > 0)
 							{
 								MsgSuccess();
+								pmsutil.LogAccount("Created an account - Username: " + Username.Text + " Type: " + Convert.ToInt32(priv));
 								this.Close();
 							}
 							else
@@ -304,18 +301,16 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void EnableCustom(object sender, SelectionChangedEventArgs e)
 		{
 			e.Handled = true;
-			if (AccountType.SelectedIndex == 5)
+			if (AccountType.SelectedIndex == 3)
 			{
 				Priv1.IsEnabled = true;
 				Priv2.IsEnabled = true;
 				Priv3.IsEnabled = true;
-				Priv4.IsEnabled = true;
 			}
 			else {
 				Priv1.IsEnabled = false;
 				Priv2.IsEnabled = false;
 				Priv3.IsEnabled = false;
-				Priv4.IsEnabled = false;
 			}
 		}
 	}

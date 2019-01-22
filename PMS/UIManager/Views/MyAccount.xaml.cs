@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
+using PMS.UIComponents;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,18 +14,56 @@ namespace PMS.UIManager.Views
 	/// </summary>
 	public partial class MyAccount : UserControl
 	{
+		private MySqlConnection conn;
+
 		private PMSUtil pmsutil;
 		private DBConnectionManager dbman;
+
+		private ObservableCollection<MyLogsEntry> entries;
 
 		public MyAccount()
 		{
 			pmsutil = new PMSUtil();
 			InitializeComponent();
 			NameTextbox.Text = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
+			SyncMyLogs();
 			AccountNameHolder.Content = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
 			AccountRoleHolder.Content = pmsutil.GetAccountType(Application.Current.Resources["uid"].ToString());
 		}
+		internal void SyncMyLogs() {
+			string uid = Application.Current.Resources["uid"].ToString();
 
+			entries = new ObservableCollection<MyLogsEntry>();
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM account_logs WHERE account_id = @aid;";
+						cmd.Parameters.AddWithValue("@aid", uid);
+						MySqlDataReader db_reader = cmd.ExecuteReader();
+						while (db_reader.Read())
+						{
+							entries.Add(new MyLogsEntry()
+							{
+								Details = db_reader.GetString("log_details"),
+								Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
+								Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("hh:mm tt")
+							});
+						}
+					}
+				}
+			}
+			LogHolder.Items.Refresh();
+			LogHolder.ItemsSource = entries;
+			LogHolder.Items.Refresh();
+		}
 		private void SaveButton_Click1(object sender, RoutedEventArgs e)
 		{
 			dbman = new DBConnectionManager();

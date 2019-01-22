@@ -8,7 +8,6 @@
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     ShowTitleBar="False"
-    d:DesignHeight="426"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsModal="False"
@@ -16,35 +15,66 @@
     CloseOnOverlay="True"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
-    mc:Ignorable="d" Width="537">
+    mc:Ignorable="d" Width="537" Height="490.5">
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush 
             Opacity="0.7" 
             Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid Width="527">
-        <Border 
-            BorderThickness="10" 
-            CornerRadius="10"/>
-        <Border Margin="10,42,10,55" BorderBrush="#FF8F8F8F" BorderThickness="1">
-            <ListView x:Name="HistoryContainer" Padding="5" Foreground="#FF595959">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Border>
+    <Grid Width="527" Height="491">
+
+        <Grid>
+            <Button x:Name="CancelButton" 
+            Content="Close" 
+            Margin="208,451,205,0"
+            FontFamily="Bahnschrift Light" 
+            Click="Close_Click"
+            Background="#FFF0A63A" 
+            Foreground="White" Height="30" VerticalAlignment="Top"/>
+            <DataGrid x:Name="HistoryContainer2" Height="409" Margin="10,37,10,0" VerticalAlignment="Top" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="*" Header="Details" SortMemberPath="Details" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Details}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Time" SortMemberPath="Time" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Purpose" SortMemberPath="Purpose" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Purpose}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="RECORD ACCESS LOGS" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="HistorySolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
-        <Button x:Name="CancelButton" 
-            Content="Close" 
-            Margin="208,379,205,15"
-            FontFamily="Bahnschrift Light" 
-            Click="Close_Click"
-            Background="#FFF0A63A" 
-            Foreground="White"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

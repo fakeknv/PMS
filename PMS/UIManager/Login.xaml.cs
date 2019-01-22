@@ -50,6 +50,8 @@ namespace PMS.UIManager
 							if (username == db_reader.GetString("user_name") && SecurePasswordHasher.Verify(password, db_reader.GetString("pass_key")) == true)
 							{
 								Application.Current.Resources["uid"] = db_reader.GetString("account_id");
+								Application.Current.Resources["priv"] = db_reader.GetString("account_type");
+
 								dbman.DBClose();
 								this.Close();
 							}

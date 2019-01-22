@@ -116,6 +116,40 @@ namespace PMS.UIManager.Views
 				conn.Close();
 			}
 		}
+		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(SearchBox.Text))
+			{
+				SyncEventTypes();
+			}
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
+			ObservableCollection<EventType> results = new ObservableCollection<EventType>();
+			System.Collections.IList items = EventTypeItemContainer.Items;
+			for (int i = 0; i < items.Count - 1; i++)
+			{
+				EventType item = (EventType)items[i];
+				if (item.AppointmentType.Contains(SearchBox.Text) == true || item.IsActive.Contains(SearchBox.Text) == true || item.Fee.ToString().Contains(SearchBox.Text) == true)
+				{
+					results.Add(new EventType()
+					{
+						TypeID = item.TypeID,
+						AppointmentType = item.AppointmentType,
+						IsCustom = item.IsCustom,
+						Fee = item.Fee,
+						IsActive = item.IsActive,
+						Page = item.Page
+					});
+				}
+			}
+			EventTypeItemContainer.Items.Refresh();
+			EventTypeItemContainer.ItemsSource = results;
+			EventTypeItemContainer.Items.Refresh();
+			CurrentPage.Maximum = page;
+		}
 		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
 			SyncEventTypes();
@@ -134,7 +168,7 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
 		}
-		private async void EditButtonClick(object sender, RoutedEventArgs e)
+		private async void EditButton_Click(object sender, RoutedEventArgs e)
 		{
 			EventType et = (EventType)EventTypeItemContainer.SelectedItem;
 			if (et == null)

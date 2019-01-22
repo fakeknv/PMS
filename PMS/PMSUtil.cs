@@ -467,6 +467,27 @@ namespace PMS
 			}
 			return ret;
 		}
+		internal string GenALogID()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(log_id) FROM accounts_log;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = "LOG-" + (db_reader.GetInt32("COUNT(log_id)") + 1);
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
 		/// <summary>
 		/// Retrieves Current Date and Time from the Server.
 		/// </summary>
@@ -497,6 +518,32 @@ namespace PMS
 
 				return null;
 			}
+		}
+		internal string LogAccount(string logDetails)
+		{
+			string ret = "";
+
+			string logID = GenRecordLogID();
+			string logger = Application.Current.Resources["uid"].ToString();
+			string[] dt = GetServerDateTime().Split(null);
+			cDate = Convert.ToDateTime(dt[0]);
+			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+			curDate = cDate.ToString("yyyy-MM-dd");
+			curTime = cTime.ToString("HH:mm:ss");
+
+			MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+			cmd.CommandText =
+				"INSERT INTO accounts_log(log_id, account_id, log_details, log_time, log_date)" +
+				"VALUES(@log_id, @log_creator, @log_details, @log_time, @log_date)";
+			cmd.Prepare();
+			cmd.Parameters.AddWithValue("@log_id", logID);
+			cmd.Parameters.AddWithValue("@log_code", logDetails);
+			cmd.Parameters.AddWithValue("@log_date", curDate);
+			cmd.Parameters.AddWithValue("@log_time", curTime);
+			cmd.Parameters.AddWithValue("@log_creator", logger);
+			ret = cmd.ExecuteNonQuery().ToString();
+			dbman.DBClose();
+			return ret;
 		}
 		/// <summary>
 		/// Logs insertion of insertion records.

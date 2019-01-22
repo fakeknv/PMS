@@ -205,6 +205,8 @@
       <DependentUpon>DirectoryItem2.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirEntry.cs" />
+    <Compile Include="UIComponents\HistoryItem.cs" />
+    <Compile Include="UIComponents\MyLogsEntry.cs" />
     <Compile Include="UIComponents\RegisterItemArchive.xaml.cs">
       <DependentUpon>RegisterItemArchive.xaml</DependentUpon>
     </Compile>

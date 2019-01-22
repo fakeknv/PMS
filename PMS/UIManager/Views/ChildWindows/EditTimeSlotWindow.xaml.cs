@@ -115,6 +115,7 @@ namespace PMS.UIManager.Views.ChildWindows
 					conn.Close();
 					if (stat_code > 0)
 					{
+						pmsutil.LogAccount("Edited Timeslot: " + DateTime.Parse(selTime).ToString("HH:mm:ss"));
 						MsgSuccess();
 						this.Close();
 					}

@@ -109,6 +109,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							pmsutil.LogAccount("Added event type - Type: " + EType.Text + " Fee: " + Fee.Value);
 							MsgSuccess();
 							this.Close();
 						}

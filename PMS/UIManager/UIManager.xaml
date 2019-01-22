@@ -83,6 +83,7 @@
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Transactions"
 						Icon="{iconPacks:FontAwesome TasksSolid}"
 						Label="Transactions">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -90,6 +91,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Registers"
 						Icon="{iconPacks:FontAwesome BookSolid}"
 						Label="Parish Registers">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -97,6 +99,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Directory"
 						Icon="{iconPacks:FontAwesome SitemapSolid}"
 						Label="Deceased Directory">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -104,6 +107,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Appointments"
 						Icon="{iconPacks:FontAwesome CalendarAltRegular}"
 						Label="Appointments">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -111,6 +115,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Archives"
 						Icon="{iconPacks:FontAwesome DatabaseSolid}"
 						Label="Archives">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -118,6 +123,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Reports"
 						Icon="{iconPacks:FontAwesome ChartPieSolid}"
 						Label="Reports">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -125,6 +131,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Accounts"
 						Icon="{iconPacks:FontAwesome UserSolid}"
 						Label="Manage Accounts">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -132,6 +139,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Priests"
 						Icon="{iconPacks:FontAwesome UsersCogSolid}"
 						Label="Manage Priests">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -139,6 +147,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Timeslots"
 						Icon="{iconPacks:FontAwesome ClockSolid}"
 						Label="Manage Timeslots">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -146,6 +155,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="AppointmentTypes"
 						Icon="{iconPacks:FontAwesome CalendarSolid}"
 						Label="Manage Appointment Types">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -153,6 +163,7 @@
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Search"
 						Icon="{iconPacks:FontAwesome SearchSolid}"
 						Label="Search Record">
                             <controls:HamburgerMenuIconItem.Tag>
@@ -164,6 +175,7 @@
                 <Controls:HamburgerMenu.OptionsItemsSource>
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
+                            x:Name="Settings"
 						Icon="{iconPacks:FontAwesome SlidersHSolid}"
 						Label="Control Panel">
                             <controls:HamburgerMenuIconItem.Tag>

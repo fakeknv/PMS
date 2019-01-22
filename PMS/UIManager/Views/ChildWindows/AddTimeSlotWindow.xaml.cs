@@ -103,6 +103,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							pmsutil.LogAccount("Added Timeslot: " + DateTime.Parse(selTime).ToString("HH:mm:ss"));
 							MsgSuccess();
 							this.Close();
 						}

@@ -327,6 +327,7 @@ namespace PMS.UIManager.Views.ChildWindows
 								conn.Close();
 								if (stat_code > 0)
 								{
+									pmsutil.LogAccount("Edited account: " + Username.Text);
 									MsgSuccess();
 									this.Close();
 								}

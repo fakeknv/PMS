@@ -25,7 +25,63 @@ namespace PMS.UIManager
 				this.Show();
 			}
 			InitializeComponent();
-        }
+			InitPriv();
+		}
+		private void InitPriv() {
+			HamburgerMenuItemCollection itemCollection = HamburgerMenuControl.ItemsSource as HamburgerMenuItemCollection;
+			
+			if (Convert.ToInt32(Application.Current.Resources["priv"]) == 1) {
+				//Admin
+				itemCollection.Remove(Transactions);
+				itemCollection.Remove(Registers);
+				itemCollection.Remove(Directory);
+				itemCollection.Remove(Appointments);
+				itemCollection.Remove(Search);
+			}
+			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 2)
+			{
+				//Secretary
+				itemCollection.Remove(Transactions);
+				itemCollection.Remove(Registers);
+				itemCollection.Remove(Directory);
+				itemCollection.Remove(Archives);
+				itemCollection.Remove(Reports);
+				itemCollection.Remove(Accounts);
+				itemCollection.Remove(Priests);
+				itemCollection.Remove(Timeslots);
+				itemCollection.Remove(AppointmentTypes);
+				itemCollection.Remove(Search);
+				itemCollection.Remove(Settings);
+			}
+			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 3)
+			{
+				//Cashier
+				itemCollection.Remove(Registers);
+				itemCollection.Remove(Directory);
+				itemCollection.Remove(Archives);
+				itemCollection.Remove(Reports);
+				itemCollection.Remove(Accounts);
+				itemCollection.Remove(Priests);
+				itemCollection.Remove(Timeslots);
+				itemCollection.Remove(AppointmentTypes);
+				itemCollection.Remove(Search);
+				itemCollection.Remove(Settings);
+			}
+			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 4)
+			{
+				//Registrar
+				itemCollection.Remove(Transactions);
+				itemCollection.Remove(Registers);
+				itemCollection.Remove(Directory);
+				itemCollection.Remove(Archives);
+				itemCollection.Remove(Reports);
+				itemCollection.Remove(Accounts);
+				itemCollection.Remove(Priests);
+				itemCollection.Remove(Timeslots);
+				itemCollection.Remove(AppointmentTypes);
+				itemCollection.Remove(Settings);
+			}
+		}
         private void HamburgerMenuControl_OnItemClick(object sender, ItemClickEventArgs e)
         {
             // set the content

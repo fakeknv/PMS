@@ -62,32 +62,151 @@
             <Label x:Name="AccountRoleHolder" Content="Administrator" VerticalAlignment="Top" Margin="126,63,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="18" HorizontalAlignment="Left" Width="221" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" Margin="41,25,0,0" VerticalAlignment="Top" Height="72" Width="80" Foreground="White"/>
         </Grid>
-        <mah:MetroAnimatedTabControl Margin="2,177,2,2">
-            <TabItem Header="Personal" Width="150" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid Width="941" Height="403">
-                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CHANGE PASSWORD" Margin="0,33,530,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
-                    <PasswordBox x:Name="CurrentPassword" HorizontalAlignment="Left" Margin="47,108,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="Current Password" HorizontalAlignment="Left" Margin="47,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <PasswordBox x:Name="NewPassword1" HorizontalAlignment="Left" Margin="47,171,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="New Password" HorizontalAlignment="Left" Margin="47,144,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <PasswordBox x:Name="NewPassword2" HorizontalAlignment="Left" Margin="47,234,0,0" VerticalAlignment="Top" Width="364" Height="31"/>
-                    <Label Content="Confirm New Password" HorizontalAlignment="Left" Margin="47,207,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <Button Content="Reset" Margin="294,294,530,79" Background="#FFF0A63A" Foreground="White" Click="ResetButton_Click1"/>
-                    <Button Content="Save Changes" Margin="172,294,652,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click1"/>
-                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="PERSONAL INFO" Margin="0,33,61,342" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Right" Width="364"/>
-                    <Label Content="Name" HorizontalAlignment="Left" Margin="516,81,0,0" VerticalAlignment="Top" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-                    <TextBox x:Name="NameTextbox" TextWrapping="Wrap" Margin="516,108,61,264"/>
-                    <Button Content="Reset" Margin="762,294,61,79" Foreground="White" Background="#FFF0A63A" Click="ResetButton_Click2"/>
-                    <Button Content="Save Changes" Margin="639,294,184,79" Background="#FF3C7AC9" Foreground="White" Click="SaveButton_Click2"/>
-                    <Label x:Name="InfoArea1" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="47,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                    <Label x:Name="InfoArea2" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="516,342,0,0" Height="30" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-
+        <TabControl Margin="2,177,10,0">
+            <TabItem Header="My Account">
+                <Grid Background="White" Margin="0,0,-6,0">
+                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="CHANGE PASSWORD" Margin="37,33,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Left" Width="364" Height="31" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="CurrentPassword" Margin="47,108,0,0" HorizontalAlignment="Left" Height="31" Width="353" VerticalAlignment="Top"/>
+                    <Label Content="Current Password" Margin="47,81,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalAlignment="Left" Width="200" Height="27" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="NewPassword1" Margin="48,171,0,0" Height="31" HorizontalAlignment="Left" Width="352" VerticalAlignment="Top"/>
+                    <Label Content="New Password" Margin="48,144,0,0" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top"/>
+                    <PasswordBox x:Name="NewPassword2" Margin="47,239,0,0" Height="31" HorizontalAlignment="Left" Width="354" VerticalAlignment="Top"/>
+                    <Label Content="Confirm New Password" Margin="48,207,0,0" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top"/>
+                    <Label BorderBrush="#E9ECEF" BorderThickness="0,0,0,1" Content="PERSONAL INFO" Margin="512,33,0,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" FontSize="14" HorizontalAlignment="Left" Width="364" Height="31" VerticalAlignment="Top"/>
+                    <Label Content="Name" HorizontalAlignment="Left" Margin="523,81,0,0" Width="211" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Height="27" VerticalAlignment="Top"/>
+                    <TextBox x:Name="NameTextbox" TextWrapping="Wrap" Margin="523,108,0,0" Height="31" HorizontalAlignment="Left" Width="364" VerticalAlignment="Top"/>
+                    <Label x:Name="InfoArea1" Content="" HorizontalAlignment="Left" Margin="36,342,0,21" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                    <Label x:Name="InfoArea2" Content="" HorizontalAlignment="Left" Margin="523,342,0,21" Width="364" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                    <Button
+                        Margin="161,294,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="117" 
+                        Height="31" 
+                        Background="WhiteSmoke" 
+                        Foreground="#FF474747" 
+                        HorizontalAlignment="Left" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="SaveButton_Click1">
+                        <StackPanel 
+                            Orientation="Horizontal">
+                            <Rectangle 
+                                Width="18"
+                                Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                        Stretch="Fill"
+                                        Visual="{iconPacks:FontAwesome UserEditSolid}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock 
+                                Text=" Save" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Margin="283,294,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="117" 
+                        Height="31" 
+                        Background="WhiteSmoke" 
+                        Foreground="#FF474747" 
+                        HorizontalAlignment="Left" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="ResetButton_Click1">
+                        <StackPanel 
+                            Orientation="Horizontal">
+                            <Rectangle 
+                                Width="18"
+                                Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                        Stretch="Fill"
+                                        Visual="{iconPacks:FontAwesome SyncSolid}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock 
+                                Text=" Reset" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Margin="648,294,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="117" 
+                        Height="31" 
+                        Background="WhiteSmoke" 
+                        Foreground="#FF474747" 
+                        HorizontalAlignment="Left" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="SaveButton_Click2">
+                        <StackPanel 
+                            Orientation="Horizontal">
+                            <Rectangle 
+                                Width="18"
+                                Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                        Stretch="Fill"
+                                        Visual="{iconPacks:FontAwesome UserEditSolid}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock 
+                                Text=" Save" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Margin="770,294,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="117" 
+                        Height="31" 
+                        Background="WhiteSmoke" 
+                        Foreground="#FF474747" 
+                        HorizontalAlignment="Left" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="ResetButton_Click2">
+                        <StackPanel 
+                            Orientation="Horizontal">
+                            <Rectangle 
+                                Width="18"
+                                Height="16">
+                                <Rectangle.Fill>
+                                    <VisualBrush 
+                                        Stretch="Fill"
+                                        Visual="{iconPacks:FontAwesome SyncSolid}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock 
+                                Text=" Reset" />
+                        </StackPanel>
+                    </Button>
                 </Grid>
             </TabItem>
-            <TabItem Header="Account Log" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Account Log">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid x:Name="LogHolder" Margin="1,0,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="*" Header="Details" SortMemberPath="Details" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Padding="0,10,0,10" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Details}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="*" Header="Time" SortMemberPath="Time" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
-            <DatePicker Height="100" Width="100"/>
-        </mah:MetroAnimatedTabControl>
+        </TabControl>
     </Grid>
 </UserControl>

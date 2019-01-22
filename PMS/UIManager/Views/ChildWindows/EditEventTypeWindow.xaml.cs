@@ -102,6 +102,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							pmsutil.LogAccount("Edited Event Type: " + EType.Text);
 							MsgSuccess();
 							this.Close();
 						}

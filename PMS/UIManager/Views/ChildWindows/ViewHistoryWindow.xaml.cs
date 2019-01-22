@@ -1,6 +1,8 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
+using PMS.UIComponents;
 using System;
+using System.Collections.ObjectModel;
 using System.Data;
 
 namespace PMS.UIManager.Views.ChildWindows
@@ -13,6 +15,8 @@ namespace PMS.UIManager.Views.ChildWindows
 		//MYSQL
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
+
+		private ObservableCollection<HistoryItem> history;
 
 		public ViewHistoryWindow(string recordID)
         {
@@ -27,20 +31,46 @@ namespace PMS.UIManager.Views.ChildWindows
 				cmd.Parameters.AddWithValue("@record_id", recordID);
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
+
+				history = new ObservableCollection<HistoryItem>();
 				while (db_reader.Read())
 				{
 					if (db_reader.GetString("log_code") == "LOGC-01") {
-						HistoryContainer.Items.Add("Recorded by " + pmsutil.GetUsername(db_reader.GetString("log_creator")) + " on " + DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy") + " " + DateTime.Parse(db_reader.GetString("log_time")).ToString("HH:mm tt"));
+						history.Add(new HistoryItem()
+						{
+							Details = "Recorded by " + pmsutil.GetUsername(db_reader.GetString("log_creator")),
+							Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
+							Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("hh:mm tt"),
+							Purpose = "NA"
+						});
 					}else if (db_reader.GetString("log_code") == "LOGC-02"){
-						HistoryContainer.Items.Add("Edited by " + pmsutil.GetUsername(db_reader.GetString("log_creator")) + " on " + DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy") + " " + DateTime.Parse(db_reader.GetString("log_time")).ToString("HH:mm tt"));
+						history.Add(new HistoryItem()
+						{
+							Details = "Edited by " + pmsutil.GetUsername(db_reader.GetString("log_creator")),
+							Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
+							Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("hh:mm tt"),
+							Purpose = "NA"
+						});
 					}
 					else if (db_reader.GetString("log_code") == "LOGC-03")
 					{
-						HistoryContainer.Items.Add("Certificate printed by " + pmsutil.GetUsername(db_reader.GetString("log_creator")) + " on " + DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy") + " " + DateTime.Parse(db_reader.GetString("log_time")).ToString("HH:mm tt") + ". Purpose: Reference.");
+						history.Add(new HistoryItem()
+						{
+							Details = "Certificate printed by " + pmsutil.GetUsername(db_reader.GetString("log_creator")),
+							Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
+							Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("hh:mm tt"),
+							Purpose = "For Reference"
+						});
 					}
 					else if (db_reader.GetString("log_code") == "LOGC-04")
 					{
-						HistoryContainer.Items.Add("Certificate printed by " + pmsutil.GetUsername(db_reader.GetString("log_creator")) + " on " + DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy") + " " + DateTime.Parse(db_reader.GetString("log_time")).ToString("HH:mm tt") + ". Purpose: Marriage.");
+						history.Add(new HistoryItem()
+						{
+							Details = "Certificate printed by " + pmsutil.GetUsername(db_reader.GetString("log_creator")),
+							Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
+							Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("HH:mm tt"),
+							Purpose = "For Marriage"
+						});
 					}
 				}
 				//close Connection
@@ -50,6 +80,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 
 			}
+			HistoryContainer2.ItemsSource = history;
 		}
 
 		private void Close_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -27,11 +27,11 @@ namespace PMS.UIManager.Views
         {
             InitializeComponent();
 
-			SyncAccounts();
+			SyncPriest();
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private void SyncAccounts() {
+		private void SyncPriest() {
 
 			priests = new ObservableCollection<Priest>();
 			priests_final = new ObservableCollection<Priest>();
@@ -100,6 +100,41 @@ namespace PMS.UIManager.Views
 
 				}
 			}
+		}
+		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(SearchBox.Text))
+			{
+				SyncPriest();
+			}
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
+			ObservableCollection<Priest> results = new ObservableCollection<Priest>();
+			System.Collections.IList items = PriestsItemContainer.Items;
+			for (int i = 0; i < items.Count - 1; i++)
+			{
+				Priest item = (Priest)items[i];
+				if (item.Name.Contains(SearchBox.Text) == true || item.Status.Contains(SearchBox.Text) == true)
+				{
+					results.Add(new Priest()
+					{
+						PriestID = item.PriestID,
+						Name = item.Name,
+						Status = item.Status,
+						TotalAServices = item.TotalAServices,
+						Finished = item.Unfinished,
+						Unfinished = item.Unfinished,
+						Page = item.Page
+					});
+				}
+			}
+			PriestsItemContainer.Items.Refresh();
+			PriestsItemContainer.ItemsSource = results;
+			PriestsItemContainer.Items.Refresh();
+			CurrentPage.Maximum = page;
 		}
 		private int CountAssignedServicesTotal(string pid) {
 			int ret = 0;
@@ -187,11 +222,11 @@ namespace PMS.UIManager.Views
 		}
 		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
-			SyncAccounts();
+			SyncPriest();
 		}
 		private void Update2(object sender, SelectionChangedEventArgs e)
 		{
-			SyncAccounts();
+			SyncPriest();
 		}
 		private async void CreatePriestButton_Click(object sender, RoutedEventArgs e)
 		{

@@ -98,6 +98,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							pmsutil.LogAccount("Edited Priest: " + PriestName.Text);
 							MsgSuccess();
 							this.Close();
 						}

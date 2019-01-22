@@ -180,6 +180,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				if (UpdateRegister() > 0)
 				{
+					pmsutil.LogAccount("Edited Register No " + RegisterNo.Value + " Type: " + regType);
 					reg1.SyncRegisters();
 					var metroWindow = (Application.Current.MainWindow as MetroWindow);
 					MsgSuccess();

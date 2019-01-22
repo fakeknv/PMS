@@ -220,6 +220,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				{
 					reg1.SyncRegisters();
 					var metroWindow = (Application.Current.MainWindow as MetroWindow);
+					pmsutil.LogAccount("Added Register Number: " + RegisterNo.Value + " Type: " + regType);
 					MsgSuccess();
 					this.Close();
 				}

@@ -22,7 +22,8 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <TextBox 
-                    x:Name="SearchRequestBox" 
+                    x:Name="SearchBox" 
+                    TextChanged="SearchBox_TextChanged"
                     TextWrapping="Wrap" 
                     Margin="10,7,10,0"
                     BorderThickness="0,0,0,1" 
@@ -53,58 +54,6 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <Button
-                Margin="0,7,24,0" 
-                VerticalAlignment="Top" 
-                Width="135" 
-                Height="31" 
-                Background="#FF3C7AC9" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="White" 
-                Click="CreateTypeButton_Click"
-                HorizontalAlignment="Right" Grid.Column="1">
-                <StackPanel 
-                    Orientation="Horizontal">
-                    <Rectangle 
-                        Width="16"
-                        Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome CalendarSolid}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock 
-                        Text="  Add Type" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                </StackPanel>
-            </Button>
-            <Button
-                Margin="0,7,164,0" 
-                VerticalAlignment="Top" 
-                Width="81" 
-                Height="31" 
-                Background="#FF3C7AC9" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="White" 
-                HorizontalAlignment="Right" 
-                Grid.Column="1" Click="EditButtonClick">
-                <StackPanel 
-                    Orientation="Horizontal">
-                    <Rectangle 
-                        Width="16"
-                        Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome UserEditSolid}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock 
-                        Text="  Edit" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                </StackPanel>
-            </Button>
         </Grid>
         <DataGrid x:Name="EventTypeItemContainer" BorderBrush="LightGray" GridLinesVisibility="All" Height="746" Margin="32,82,33,0" VerticalAlignment="Top" AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -156,5 +105,51 @@
             <ComboBoxItem>25</ComboBoxItem>
             <ComboBoxItem>30</ComboBoxItem>
         </ComboBox>
+        <Button
+            Margin="0,7,164,0" 
+            VerticalAlignment="Top" 
+            Width="90" 
+            Height="31" 
+            Background="WhiteSmoke" 
+            Foreground="#FF474747" 
+            HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="EditButton_Click">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="18"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{iconPacks:FontAwesome EditSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    Text=" Edit" />
+            </StackPanel>
+        </Button>
+        <Button
+            Margin="0,7,24,0" 
+            VerticalAlignment="Top" 
+            Width="135" 
+            Height="31" 
+            Background="WhiteSmoke" 
+            Foreground="#FF474747" 
+            HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="CreateTypeButton_Click">
+            <StackPanel 
+                Orientation="Horizontal">
+                <Rectangle 
+                    Width="18"
+                    Height="16">
+                    <Rectangle.Fill>
+                        <VisualBrush 
+                            Stretch="Fill"
+                            Visual="{iconPacks:FontAwesome PlusCircleSolid}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock 
+                    Text=" Add Type" />
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

@@ -97,6 +97,38 @@ namespace PMS.UIManager.Views
 				conn.Close();
 			}
 		}
+		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (string.IsNullOrEmpty(SearchBox.Text))
+			{
+				SyncTimeSlots();
+			}
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
+			ObservableCollection<TimeSlot> results = new ObservableCollection<TimeSlot>();
+			System.Collections.IList items = TimeslotsItemContainer.Items;
+			for (int i = 0; i < items.Count - 1; i++)
+			{
+				TimeSlot item = (TimeSlot)items[i];
+				if (item.Timeslot.Contains(SearchBox.Text) == true || item.Status.Contains(SearchBox.Text) == true)
+				{
+					results.Add(new TimeSlot()
+					{
+						TimeSlotID = item.TimeSlotID,
+						Timeslot = item.Timeslot,
+						Status = item.Status,
+						Page = item.Page
+					});
+				}
+			}
+			TimeslotsItemContainer.Items.Refresh();
+			TimeslotsItemContainer.ItemsSource = results;
+			TimeslotsItemContainer.Items.Refresh();
+			CurrentPage.Maximum = page;
+		}
 		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
 			SyncTimeSlots();
@@ -105,7 +137,7 @@ namespace PMS.UIManager.Views
 		{
 			SyncTimeSlots();
 		}
-		private async void CreateAccountButton_Click(object sender, RoutedEventArgs e)
+		private async void CreateButton_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new AddTimeSlotWindow());
@@ -115,7 +147,7 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
 		}
-		private async void EditButtonClick(object sender, RoutedEventArgs e)
+		private async void EditButton_Click(object sender, RoutedEventArgs e)
 		{
 			TimeSlot ts = (TimeSlot)TimeslotsItemContainer.SelectedItem;
 			if (ts == null)
