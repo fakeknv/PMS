@@ -414,7 +414,16 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                        </DataGrid.Columns>
+                                <DataGridTemplateColumn Width="*" Header="Access Fequency" SortMemberPath="Frequency" CanUserSort="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Frequency}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
                     </DataGrid>
                     <mah:NumericUpDown x:Name="CurrentPage2" Minimum="1" Value="1" HorizontalAlignment="Right" Margin="0,422,247,0" VerticalAlignment="Top" Width="78"/>
                     <Label Content="Page:" HorizontalAlignment="Right" Margin="0,422,330,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Height="26"/>

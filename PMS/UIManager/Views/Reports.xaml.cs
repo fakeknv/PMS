@@ -71,6 +71,77 @@ namespace PMS.UIManager.Views
 			ItemsPerPage2.SelectionChanged += Update4;
 			CurrentPage2.ValueChanged += Update3;
 		}
+		private string CheckFrequency(int bookNum)
+		{
+			string ret = "Very Low";
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					//Yearly
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions, records WHERE transactions.target_id = records.record_id AND records.book_number = @book_number AND transactions.tran_date > @min AND transactions.tran_date < @max;";
+					cmd.Parameters.AddWithValue("@book_number", bookNum);
+					cmd.Parameters.AddWithValue("@min", DateTime.Now.ToString("yyyy-01-01"));
+					cmd.Parameters.AddWithValue("@max", DateTime.Now.ToString("yyyy-12-31"));
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetInt32("COUNT(*)") > 0)
+						{
+							ret = "Access Frequency: Low";
+						}
+					}
+					conn.Close();
+
+					conn.Open();
+					cmd = conn.CreateCommand();
+					//Monthly
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions, records WHERE transactions.target_id = records.record_id AND records.book_number = @book_number AND transactions.tran_date > @min AND transactions.tran_date < @max;";
+					cmd.Parameters.AddWithValue("@book_number", bookNum);
+					cmd.Parameters.AddWithValue("@min", DateTime.Now.ToString("yyyy-MM-01"));
+					cmd.Parameters.AddWithValue("@max", DateTime.Now.AddMonths(1).AddDays(-1).ToString("yyyy-MM-dd"));
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetInt32("COUNT(*)") > 0)
+						{
+							ret = "Moderate";
+						}
+					}
+					conn.Close();
+
+					conn.Open();
+					cmd = conn.CreateCommand();
+					//Weekly
+					DayOfWeek day = DateTime.Now.DayOfWeek;
+					int days = day - DayOfWeek.Monday;
+					DateTime start = DateTime.Now.AddDays(-days);
+					DateTime end = start.AddDays(6);
+
+					cmd.CommandText = "SELECT COUNT(*) FROM transactions, records WHERE transactions.target_id = records.record_id AND records.book_number = @book_number AND transactions.tran_date > @min AND transactions.tran_date < @max;";
+					cmd.Parameters.AddWithValue("@book_number", bookNum);
+					cmd.Parameters.AddWithValue("@min", start.ToString("yyyy-MM-dd"));
+					cmd.Parameters.AddWithValue("@max", end.ToString("yyyy-MM-dd"));
+					cmd.Prepare();
+					db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetInt32("COUNT(*)") > 0)
+						{
+							ret = "High";
+						}
+					}
+					//close Connection
+					conn.Close();
+				}
+			}
+			return ret;
+		}
 		private void Update(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
 			SyncTransactions();
@@ -153,6 +224,7 @@ namespace PMS.UIManager.Views
 							Status = db_reader.GetString("status"),
 							RecordCount = CountRecords(db_reader.GetInt32("book_number")).ToString(),
 							CreationDate = cdate,
+							Frequency = CheckFrequency(db_reader.GetInt32("book_number")),
 							Page = page
 						});
 						count++;
@@ -173,6 +245,7 @@ namespace PMS.UIManager.Views
 								Status = cur.Status,
 								RecordCount = cur.RecordCount,
 								CreationDate = cur.CreationDate,
+								Frequency = cur.Frequency,
 								Page = cur.Page
 							});
 						}
@@ -1621,6 +1694,7 @@ namespace PMS.UIManager.Views
 			dtNames.Columns.Add("Status", typeof(string));
 			dtNames.Columns.Add("Record Count", typeof(string));
 			dtNames.Columns.Add("Date Created", typeof(string));
+			dtNames.Columns.Add("Access Frequency", typeof(string));
 
 			dbman = new DBConnectionManager();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -1668,7 +1742,7 @@ namespace PMS.UIManager.Views
 						{
 							cdate = DateTime.Parse(db_reader.GetString("creation_date")).ToString("MMMM dd, yyyy");
 						}
-						dtNames.Rows.Add(db_reader.GetString("book_type"), db_reader.GetString("book_number"), db_reader.GetString("status"), CountRecords(db_reader.GetInt32("book_number")), cdate);
+						dtNames.Rows.Add(db_reader.GetString("book_type"), db_reader.GetString("book_number"), db_reader.GetString("status"), CountRecords(db_reader.GetInt32("book_number")), cdate, CheckFrequency(db_reader.GetInt32("book_number")));
 					}
 					//close Connection
 					conn.Close();
@@ -1711,6 +1785,8 @@ namespace PMS.UIManager.Views
 			table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[4].Width = width * 0.24f * width;
 			table.Columns[4].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[5].Width = width * 0.24f * width;
+			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 320));
 
 			//save

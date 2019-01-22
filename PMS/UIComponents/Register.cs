@@ -13,6 +13,7 @@ namespace PMS.UIComponents
 		public string Status { get; set; }
 		public string RecordCount { get; set; }
 		public string CreationDate { get; set; }
+		public string Frequency { get; set; }
 		public int Page { get; set; }
 	}
 }
