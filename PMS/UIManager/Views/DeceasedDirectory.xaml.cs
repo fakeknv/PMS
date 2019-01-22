@@ -142,6 +142,11 @@ namespace PMS.UIManager.Views
 		{
 			SyncDirectory();
 		}
+		private async void MsgNoResult()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("No records found.", "The system cannot find any records for the provided search data. Please try again.");
+		}
 		private async void MsgNoItemSelected()
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
@@ -155,6 +160,40 @@ namespace PMS.UIManager.Views
 		private void ManualSyncButton_Click(object sender, RoutedEventArgs e)
 		{
 
+		}
+		internal bool CheckIfExist() {
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT COUNT(*) FROM records, burial_records, burial_directory WHERE burial_records.record_id = records.record_id AND burial_directory.record_id = burial_records.record_id AND (records.recordholder_fullname LIKE @query OR records.parent1_fullname LIKE @query OR records.parent2_fullname LIKE @query OR burial_records.place_of_interment LIKE @query OR burial_records.cause_of_death);";
+					cmd.Parameters.AddWithValue("@query", "%"+ SearchIndexBox.Text + "%");
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetInt32("COUNT(*)") > 0) {
+							return true;
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+			return false;
+		}
+		private void SearchButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (CheckIfExist() == false) {
+				MsgNoResult();
+			}
+			else {
+				// set the content
+				this.Content = new ViewDirectoryEntriesFromSearch(block, SearchIndexBox.Text);
+			}
 		}
 	}
 }

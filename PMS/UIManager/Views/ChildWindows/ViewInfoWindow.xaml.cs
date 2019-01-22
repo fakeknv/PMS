@@ -4,6 +4,7 @@ using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using Spire.Pdf;
 using Spire.Pdf.Graphics;
+using Spire.Pdf.Tables;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -203,18 +204,153 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 70), new PointF(530, 70));
 
-			page.Canvas.DrawString("Burial Index Report",
-			new PdfFont(PdfFontFamily.TimesRoman, 14f),
+			page.Canvas.DrawString(_name.ToUpper(),
+			new PdfFont(PdfFontFamily.TimesRoman, 18f, PdfFontStyle.Bold),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			210, 80);
+			10, 85);
 
-			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(200, 97), new PointF(330, 97));
+			//page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(10, 115), new PointF(330, 115));
 
-			page.Canvas.DrawString("Name: " + _name,
+			page.Canvas.DrawString("Birth Details",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 125);
+
+			page.Canvas.DrawString("Age: " + _age,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			10, 110);
+			10, 150);
 
+			page.Canvas.DrawString("Residence: " + _residence,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 170);
+
+			page.Canvas.DrawString("Residence: " + _residence,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 190);
+
+			page.Canvas.DrawString("Parents: " + _parent1 + " & " + _parent2,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 210);
+
+			page.Canvas.DrawString("Burial Details",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 125);
+
+			page.Canvas.DrawString("Date of Death: " + _deathDate,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 150);
+
+			page.Canvas.DrawString("Burial Date: " + _burialDate,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 170);
+
+			page.Canvas.DrawString("Cause of Death: " + _causeOfDeath,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 190);
+
+			page.Canvas.DrawString("Sacrament: " + _sacrament,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 210);
+
+			page.Canvas.DrawString("Place of Interment: ",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 230);
+
+			page.Canvas.DrawString(_interment,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 250);
+
+			page.Canvas.DrawString("Location: ",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 280);
+
+			page.Canvas.DrawString("Block: " + _block,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 300);
+
+			page.Canvas.DrawString("Lot: " + _lot,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 320);
+
+			page.Canvas.DrawString("Plot: " + _plot,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			300, 340);
+
+			page.Canvas.DrawString("Near the Location",
+			new PdfFont(PdfFontFamily.TimesRoman, 14f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 360);
+
+			DataTable dtNames = new DataTable();
+			dtNames.Columns.Add("Name", typeof(string));
+			dtNames.Columns.Add("Lot", typeof(string));
+			dtNames.Columns.Add("Plot", typeof(string));
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM records, burial_records, burial_directory WHERE records.record_id = burial_records.record_id AND burial_records.record_id = burial_directory.record_id AND burial_directory.block = @block AND burial_directory.lot = @lot;";
+					cmd.Parameters.AddWithValue("@block", _block);
+					cmd.Parameters.AddWithValue("@lot", _lot);
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetString("record_id") != _rid)
+						{
+							dtNames.Rows.Add(db_reader.GetString("recordholder_fullname"), db_reader.GetString("lot"), db_reader.GetString("plot"));
+						}
+					}
+				}
+			}
+
+			PdfTable table = new PdfTable();
+			table.Style.CellPadding = 2;
+			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
+			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+
+			table.Style.AlternateStyle = new PdfCellStyle
+			{
+				//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
+				Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f))
+			};
+
+			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
+			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;
+			table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.TimesRoman, 13f);
+			table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+			table.Style.ShowHeader = true;
+
+			table.DataSourceType = PdfTableDataSourceType.TableDirect;
+			table.DataSource = dtNames;
+			//Set the width of column  
+			float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
+			table.Columns[0].Width = width * 0.24f * width;
+			table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[1].Width = width * 0.21f * width;
+			table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[2].Width = width * 0.24f * width;
+			table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Draw(page, new PointF(10, 380));
 
 			//save
 			pdfDoc.SaveToFile(@"..\..\index_report.pdf");

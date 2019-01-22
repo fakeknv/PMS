@@ -275,6 +275,9 @@
     <Compile Include="UIManager\UIManager.xaml.cs">
       <DependentUpon>UIManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntriesFromSearch.xaml.cs">
+      <DependentUpon>ViewDirectoryEntriesFromSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml.cs">
       <DependentUpon>ViewDirectoryEntries.xaml</DependentUpon>
     </Compile>
@@ -510,6 +513,10 @@
     <Page Include="UIManager\UIManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntriesFromSearch.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml">
       <Generator>MSBuild:Compile</Generator>

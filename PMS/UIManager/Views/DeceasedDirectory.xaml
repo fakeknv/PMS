@@ -12,14 +12,14 @@
     <Grid x:Name="DirectoryMainGrid" Background="WhiteSmoke">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="438*"/>
-                <ColumnDefinition Width="509*"/>
+                <ColumnDefinition Width="261*"/>
+                <ColumnDefinition Width="211*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <TextBox 
-                    x:Name="SearchRequestBox" 
+                    x:Name="SearchIndexBox" 
                     TextWrapping="Wrap" 
-                    Margin="10,7,10,0"
+                    Margin="10,7,124,0"
                     BorderThickness="0,0,0,1" 
                     Height="31" 
                     HorizontalAlignment="Stretch" 
@@ -29,22 +29,31 @@
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     FontSize="14"
                     VerticalContentAlignment="Center"/>
-                <Button 
-                    x:Name="SearchRequestButton" 
-                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                    Content="{iconPacks:FontAwesome SearchSolid}" 
-                    Margin="0,2,10,0" 
+                <Button
+                    Margin="0,7,10,0" 
                     VerticalAlignment="Top" 
-                    Height="34" 
-                    Background="White" 
-                    BorderBrush="{x:Null}" 
-                    RenderTransformOrigin="0.824,0.294" 
-                    Foreground="#FF717171" 
-                    Width="34" 
-                    HorizontalAlignment="Right"/>
+                    Width="109" 
+                    Height="31" 
+                    Background="WhiteSmoke" 
+                    Foreground="#FF474747" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="SearchButton_Click">
+                    <StackPanel 
+                    Orientation="Horizontal">
+                        <Rectangle 
+                        Width="16"
+                        Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome SearchSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                        Text=" Search" />
+                    </StackPanel>
+                </Button>
             </Grid>
-            <Grid 
-                Grid.Column="1" HorizontalAlignment="Right" Width="509">
+            <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="372*"/>
                     <ColumnDefinition Width="137*"/>

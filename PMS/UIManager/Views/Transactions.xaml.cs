@@ -33,6 +33,7 @@ namespace PMS.UIManager.Views
 			InitializeComponent();
 
 			SyncTransactions();
+			SyncStat();
 
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
@@ -61,6 +62,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Baptismal
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
@@ -74,6 +76,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Confirmation
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
@@ -87,6 +90,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Burial
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
@@ -100,6 +104,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Marriage
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
@@ -113,6 +118,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Paying
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
@@ -126,6 +132,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Finished
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
@@ -139,6 +146,7 @@ namespace PMS.UIManager.Views
 					//close Connection
 					conn.Close();
 
+					conn.Open();
 					//Counts Cancelled
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
