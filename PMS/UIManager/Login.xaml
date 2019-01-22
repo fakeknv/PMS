@@ -95,7 +95,7 @@
                 VerticalAlignment="Top"
                 Margin="0,291,53,0"
                 Click="CancelButton_Click" Content="CANCEL" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="125"/>
-            <UIComponents:Validator x:Name="UsernameValidator" Visibility="Visible" HorizontalAlignment="Right" Height="17" Margin="0,206,31,0" VerticalAlignment="Top" Width="16"/>
+            <UIComponents:Validator x:Name="UsernameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,206,31,0" VerticalAlignment="Top" Width="16"/>
             <UIComponents:Validator x:Name="PasswordValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,250,31,0" VerticalAlignment="Top" Width="16"/>
         </Grid>
         <Grid
