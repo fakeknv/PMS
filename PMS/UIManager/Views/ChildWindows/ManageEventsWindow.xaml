@@ -64,7 +64,7 @@
                 <Button
                     Margin="0,8,10,0" 
                     VerticalAlignment="Top" 
-                    Width="117" 
+                    Width="109" 
                     Height="30" 
                     Click="CancelButton_Click"
                     Background="#FFF0A63A" 
@@ -73,20 +73,40 @@
                     HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
                     <StackPanel 
                         Orientation="Horizontal">
+                        <TextBlock 
+                            Text=" Close" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Margin="193,8,529,0" 
+                    VerticalAlignment="Top" 
+                    Height="30" 
+                    Click="GenerateReport_Click"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
                         <Rectangle 
                             Width="16"
                             Height="16">
                             <Rectangle.Fill>
                                 <VisualBrush 
                                     Stretch="Fill"
-                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                                    Visual="{iconPacks:FontAwesome PrintSolid}" />
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBlock 
-                            Text=" Close" 
+                            Text=" Print" 
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
+                <Label Content="Print List: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="64"/>
+                <ComboBox x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Left" Margin="79,10,0,0" VerticalAlignment="Top" Width="109">
+                    <ComboBoxItem>Daily Mass</ComboBoxItem>
+                    <ComboBoxItem>Parish Services</ComboBoxItem>
+                </ComboBox>
             </Grid>
         </Border>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">

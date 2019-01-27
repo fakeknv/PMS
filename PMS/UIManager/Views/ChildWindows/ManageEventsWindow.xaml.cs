@@ -9,6 +9,11 @@ using MahApps.Metro.Controls.Dialogs;
 using PMS.UIComponents;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using Spire.Pdf.Graphics;
+using System.Drawing;
+using Spire.Pdf.Tables;
+using System.Reflection;
+using Spire.Pdf;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -76,11 +81,14 @@ namespace PMS.UIManager.Views.ChildWindows
 							{
 								if (IsCustom(db_reader.GetString("appointment_type")) == true)
 								{
-									if (db_reader.GetInt32("status") == 2)
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
 									{
 										status = "Finished";
 									}
-									else
+									else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now) {
+										status = "Pending";
+									}
+									else 
 									{
 										status = "Unfinished";
 									}
@@ -91,7 +99,12 @@ namespace PMS.UIManager.Views.ChildWindows
 									{
 										status = "Finished";
 									}
-									else {
+									else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
+									{
+										status = "Pending";
+									}
+									else
+									{
 										status = "Unfinished";
 									}
 								}
@@ -242,6 +255,247 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void Update2(object sender, SelectionChangedEventArgs e)
 		{
 			SyncEvent(_dt);
+		}
+
+		private void GenerateReport_Click(object sender, RoutedEventArgs e)
+		{
+			if (ReportType.SelectedIndex == 0) {
+				string[] dt = pmsutil.GetServerDateTime().Split(null);
+				DateTime cDate = Convert.ToDateTime(dt[0]);
+				DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+
+				PdfDocument pdfDoc = new PdfDocument();
+
+				PdfPageBase page = pdfDoc.Pages.Add();
+				var stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream("PMS.Assets.st_raphael_logo_dark.png");
+				PdfImage logo = PdfImage.FromStream(stream);
+				float _width = 200;
+				float height = 80;
+				float x = (page.Canvas.ClientSize.Width - _width) / 2;
+				page.Canvas.DrawImage(logo, 0, -25, _width, height);
+
+				page.Canvas.DrawString("Peñaranda St, Legazpi Port District",
+				new PdfFont(PdfFontFamily.TimesRoman, 13f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				245, 0);
+
+				page.Canvas.DrawString("Legazpi City, Albay",
+				new PdfFont(PdfFontFamily.TimesRoman, 13f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				280, 20);
+
+				page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 49), new PointF(530, 49));
+
+				page.Canvas.DrawString("PMS Scheduling Module Report",
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				350, 52);
+
+				page.Canvas.DrawString("Generated on: " + DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt"),
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				10, 52);
+
+				page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 70), new PointF(530, 70));
+
+				page.Canvas.DrawString(cDate.ToString("MMMM dd, yyyy").ToUpper() + " (" + cDate.ToString("dddd").ToUpper() + ")",
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				10, 90);
+
+				PdfTable table = new PdfTable();
+				table.Style.CellPadding = 2;
+				table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+
+				table.Style.AlternateStyle = new PdfCellStyle();
+				table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+
+				table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
+				table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.TimesRoman, 13f);
+				table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+				table.Style.ShowHeader = true;
+
+				table.DataSourceType = PdfTableDataSourceType.TableDirect;
+				table.DataSource = GenerateList();
+				//Set the width of column  
+				float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
+				table.Columns[0].Width = width * 0.24f * width;
+				table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[1].Width = width * 0.21f * width;
+				table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[2].Width = width * 0.24f * width;
+				table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[3].Width = width * 0.24f * width;
+				table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Draw(page, new PointF(10, 120));
+
+				//save
+				pdfDoc.SaveToFile(@"..\..\gen_list.pdf");
+				//launch the pdf document
+				System.Diagnostics.Process.Start(@"..\..\gen_list.pdf");
+			}
+			else {
+				string[] dt = pmsutil.GetServerDateTime().Split(null);
+				DateTime cDate = Convert.ToDateTime(dt[0]);
+				DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
+
+				PdfDocument pdfDoc = new PdfDocument();
+
+				PdfPageBase page = pdfDoc.Pages.Add();
+				var stream = this.GetType().GetTypeInfo().Assembly.GetManifestResourceStream("PMS.Assets.st_raphael_logo_dark.png");
+				PdfImage logo = PdfImage.FromStream(stream);
+				float _width = 200;
+				float height = 80;
+				float x = (page.Canvas.ClientSize.Width - _width) / 2;
+				page.Canvas.DrawImage(logo, 0, -25, _width, height);
+
+				page.Canvas.DrawString("Peñaranda St, Legazpi Port District",
+				new PdfFont(PdfFontFamily.TimesRoman, 13f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				245, 0);
+
+				page.Canvas.DrawString("Legazpi City, Albay",
+				new PdfFont(PdfFontFamily.TimesRoman, 13f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				280, 20);
+
+				page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 49), new PointF(530, 49));
+
+				page.Canvas.DrawString("PMS Scheduling Module Report",
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				350, 52);
+
+				page.Canvas.DrawString("Generated on: " + DateTime.Now.ToString("MMMM dd, yyyy hh:mm tt"),
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				10, 52);
+
+				page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(1, 70), new PointF(530, 70));
+
+				page.Canvas.DrawString(cDate.ToString("MMMM dd, yyyy").ToUpper() + " (" + cDate.ToString("dddd").ToUpper() + ")",
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(System.Drawing.Color.Black),
+				10, 90);
+
+				PdfTable table = new PdfTable();
+				table.Style.CellPadding = 2;
+				table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+
+				table.Style.AlternateStyle = new PdfCellStyle();
+				table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
+
+				table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
+				table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.TimesRoman, 13f);
+				table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
+
+				table.Style.ShowHeader = true;
+
+				table.DataSourceType = PdfTableDataSourceType.TableDirect;
+				table.DataSource = GenerateList2();
+				//Set the width of column  
+				float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
+				table.Columns[0].Width = width * 0.24f * width;
+				table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[1].Width = width * 0.21f * width;
+				table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[2].Width = width * 0.24f * width;
+				table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Columns[3].Width = width * 0.24f * width;
+				table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+				table.Draw(page, new PointF(10, 120));
+
+				//save
+				pdfDoc.SaveToFile(@"..\..\gen_list.pdf");
+				//launch the pdf document
+				System.Diagnostics.Process.Start(@"..\..\gen_list.pdf");
+			}
+		}
+		private DataTable GenerateList()
+		{
+			DataTable dtNames = new DataTable();
+			dtNames.Columns.Add("Time", typeof(string));
+			dtNames.Columns.Add("Type", typeof(string));
+			dtNames.Columns.Add("Sponsor", typeof(string));
+			dtNames.Columns.Add("Additional Info", typeof(string));
+
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					//Year
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @date ORDER BY appointment_time ASC;";
+						cmd.Parameters.AddWithValue("@date", _dt.ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								if (IsCustom(db_reader.GetString("appointment_type")) == false) {
+									dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+								}
+							}
+						}
+					}
+				}
+			}
+			return dtNames;
+		}
+		private DataTable GenerateList2()
+		{
+			DataTable dtNames = new DataTable();
+			dtNames.Columns.Add("Time", typeof(string));
+			dtNames.Columns.Add("Type", typeof(string));
+			dtNames.Columns.Add("Sponsor", typeof(string));
+			dtNames.Columns.Add("Additional Info", typeof(string));
+
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					//Year
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @date ORDER BY appointment_time ASC;";
+						cmd.Parameters.AddWithValue("@date", _dt.ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								if (IsCustom(db_reader.GetString("appointment_type")) == true)
+								{
+									dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+								}
+							}
+						}
+					}
+				}
+			}
+			return dtNames;
 		}
 	}
 }

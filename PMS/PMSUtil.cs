@@ -473,7 +473,7 @@ namespace PMS
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(log_id) FROM accounts_log;";
+				cmd.CommandText = "SELECT COUNT(log_id) FROM account_logs;";
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
@@ -523,7 +523,7 @@ namespace PMS
 		{
 			string ret = "";
 
-			string logID = GenRecordLogID();
+			string logID = GenALogID();
 			string logger = Application.Current.Resources["uid"].ToString();
 			string[] dt = GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
@@ -533,11 +533,11 @@ namespace PMS
 
 			MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 			cmd.CommandText =
-				"INSERT INTO accounts_log(log_id, account_id, log_details, log_time, log_date)" +
+				"INSERT INTO account_logs (log_id, account_id, log_details, log_time, log_date)" +
 				"VALUES(@log_id, @log_creator, @log_details, @log_time, @log_date)";
 			cmd.Prepare();
 			cmd.Parameters.AddWithValue("@log_id", logID);
-			cmd.Parameters.AddWithValue("@log_code", logDetails);
+			cmd.Parameters.AddWithValue("@log_details", logDetails);
 			cmd.Parameters.AddWithValue("@log_date", curDate);
 			cmd.Parameters.AddWithValue("@log_time", curTime);
 			cmd.Parameters.AddWithValue("@log_creator", logger);

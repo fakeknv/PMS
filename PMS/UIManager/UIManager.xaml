@@ -170,18 +170,18 @@
                                 <views:SearchRecords />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
-                    </Controls:HamburgerMenuItemCollection>
-                </Controls:HamburgerMenu.ItemsSource>
-                <Controls:HamburgerMenu.OptionsItemsSource>
-                    <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
-                            x:Name="Settings"
+                            x:Name="ControlPanel"
 						Icon="{iconPacks:FontAwesome SlidersHSolid}"
 						Label="Control Panel">
                             <controls:HamburgerMenuIconItem.Tag>
                                 <views:Settings />
                             </controls:HamburgerMenuIconItem.Tag>
                         </Controls:HamburgerMenuIconItem>
+                    </Controls:HamburgerMenuItemCollection>
+                </Controls:HamburgerMenu.ItemsSource>
+                <Controls:HamburgerMenu.OptionsItemsSource>
+                    <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem
 						Icon="{iconPacks:FontAwesome UserCircleRegular}"
 						Label="My Account">

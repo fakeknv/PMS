@@ -9,8 +9,11 @@ namespace PMS.UIManager
     /// </summary>
     public partial class UIManager : MetroWindow
     {
+		private PMSUtil pmsutil;
+
         public UIManager()
         {
+			pmsutil = new PMSUtil();
 			Login li = new Login();
 			if (Application.Current.Resources["uid"] == null)
 			{
@@ -22,6 +25,7 @@ namespace PMS.UIManager
 				//WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 				this.Top = 10;
 				this.Left = 80;
+				pmsutil.LogAccount("Account Logged In");
 				this.Show();
 			}
 			InitializeComponent();
@@ -49,9 +53,9 @@ namespace PMS.UIManager
 				itemCollection.Remove(Accounts);
 				itemCollection.Remove(Priests);
 				itemCollection.Remove(Timeslots);
+				itemCollection.Remove(ControlPanel);
 				itemCollection.Remove(AppointmentTypes);
 				itemCollection.Remove(Search);
-				itemCollection.Remove(Settings);
 			}
 			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 3)
 			{
@@ -65,7 +69,7 @@ namespace PMS.UIManager
 				itemCollection.Remove(Timeslots);
 				itemCollection.Remove(AppointmentTypes);
 				itemCollection.Remove(Search);
-				itemCollection.Remove(Settings);
+				itemCollection.Remove(ControlPanel);
 			}
 			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 4)
 			{
@@ -79,7 +83,7 @@ namespace PMS.UIManager
 				itemCollection.Remove(Priests);
 				itemCollection.Remove(Timeslots);
 				itemCollection.Remove(AppointmentTypes);
-				itemCollection.Remove(Settings);
+				itemCollection.Remove(ControlPanel);
 			}
 		}
         private void HamburgerMenuControl_OnItemClick(object sender, ItemClickEventArgs e)

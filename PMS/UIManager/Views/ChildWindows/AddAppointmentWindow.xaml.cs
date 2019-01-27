@@ -246,14 +246,27 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
-			if (string.IsNullOrWhiteSpace(OfferedBy1.Text))
-			{
-				SponsorValidator.Visibility = Visibility.Visible;
-				SponsorValidator.ToolTip = "This field is required.";
-				SponsorValidator.Foreground = Brushes.Red;
-				OfferedBy1.BorderBrush = Brushes.Red;
+			if (TabControl1.SelectedIndex == 0) {
+				if (string.IsNullOrWhiteSpace(OfferedBy1.Text))
+				{
+					SponsorValidator.Visibility = Visibility.Visible;
+					SponsorValidator.ToolTip = "This field is required.";
+					SponsorValidator.Foreground = Brushes.Red;
+					OfferedBy1.BorderBrush = Brushes.Red;
 
-				ret = false;
+					ret = false;
+				}
+			}
+			else {
+				if (string.IsNullOrWhiteSpace(OfferedBy2.Text))
+				{
+					SponsorValidator2.Visibility = Visibility.Visible;
+					SponsorValidator2.ToolTip = "This field is required.";
+					SponsorValidator2.Foreground = Brushes.Red;
+					OfferedBy2.BorderBrush = Brushes.Red;
+
+					ret = false;
+				}
 			}
 			if (string.IsNullOrWhiteSpace(SelectedDate1.Text))
 			{
@@ -261,15 +274,6 @@ namespace PMS.UIManager.Views.ChildWindows
 				SelDateValidator1.ToolTip = "This field is required.";
 				SelDateValidator1.Foreground = Brushes.Red;
 				SelectedDate1.BorderBrush = Brushes.Red;
-
-				ret = false;
-			}
-			if (string.IsNullOrWhiteSpace(OfferedBy2.Text))
-			{
-				SponsorValidator2.Visibility = Visibility.Visible;
-				SponsorValidator2.ToolTip = "This field is required.";
-				SponsorValidator2.Foreground = Brushes.Red;
-				OfferedBy2.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

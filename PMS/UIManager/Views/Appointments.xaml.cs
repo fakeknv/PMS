@@ -160,10 +160,7 @@ namespace PMS.UIManager.Views
 			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			DateTime cDate = Convert.ToDateTime(dt[0]);
 			DateTime cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-			//string curDate = cDate.ToString("yyyy-MM-dd");
-			//curTime = cTime.ToString("HH:mm:ss");
 
-			//create a new pdf document
 			PdfDocument pdfDoc = new PdfDocument();
 
 			PdfPageBase page = pdfDoc.Pages.Add();
@@ -203,23 +200,14 @@ namespace PMS.UIManager.Views
 			new PdfSolidBrush(Color.Black),
 			10, 90);
 
-			//Makeshift spacer >_<
-			//page.Canvas.DrawString(" ",
-			//new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			//new PdfSolidBrush(Color.Black),
-			//10, 115);
-
 			PdfTable table = new PdfTable();
 			table.Style.CellPadding = 2;
-			//table.Style.DefaultStyle.BackgroundBrush = PdfBrushes.SkyBlue;
 			table.Style.DefaultStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
 			table.Style.AlternateStyle = new PdfCellStyle();
-			//table.Style.AlternateStyle.BackgroundBrush = PdfBrushes.LightYellow;
 			table.Style.AlternateStyle.Font = new PdfTrueTypeFont(new Font("Times New Roman", 11f));
 
 			table.Style.HeaderSource = PdfHeaderSource.ColumnCaptions;
-			//table.Style.HeaderStyle.BackgroundBrush = PdfBrushes.CadetBlue;
 			table.Style.HeaderStyle.Font = new PdfFont(PdfFontFamily.TimesRoman, 13f);
 			table.Style.HeaderStyle.StringFormat = new PdfStringFormat(PdfTextAlignment.Center);
 
@@ -264,13 +252,11 @@ namespace PMS.UIManager.Views
 					{
 						string[] dt = pmsutil.GetServerDateTime().Split(null);
 						DateTime cDate = Convert.ToDateTime(dt[0]);
-						var start = new DateTime(cDate.Year, 1, 1);
-						var end = new DateTime(cDate.Year, 12, 31);
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @date AND status = 1 GROUP BY appointment_time ASC;";
-						cmd.Parameters.AddWithValue("@date", "2019-01-04");
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @date ORDER BY appointment_time ASC;";
+						cmd.Parameters.AddWithValue("@date", cDate.ToString("yyyy-MM-dd"));
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
 						{
@@ -283,9 +269,6 @@ namespace PMS.UIManager.Views
 					}
 				}
 			}
-
-			//dtNames.Rows.Add("5:30 AM", "Thanksgiving Mass", "Dela Cruz Family", "----");
-
 			return dtNames;
 		}
 		private string GetAType(string tid)
