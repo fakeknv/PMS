@@ -198,7 +198,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							cmd = conn.CreateCommand();
 							cmd.CommandText =
 							"INSERT INTO accounts_info(account_id, name, date_created, time_created, creator)" +
-							"VALUES(@account_id, @empname, @date_created, @time_created, @creator)";
+							"VALUES(@account_id, @emp_name, @date_created, @time_created, @creator)";
 							cmd.Prepare();
 							cmd.Parameters.AddWithValue("@account_id", accID);
 							cmd.Parameters.AddWithValue("@emp_name", Username.Text);
