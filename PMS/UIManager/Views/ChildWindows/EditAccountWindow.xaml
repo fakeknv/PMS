@@ -113,9 +113,8 @@
             </Label>
             <ComboBox SelectedIndex="0" x:Name="AccountType" HorizontalAlignment="Left" Margin="178,35,0,0" VerticalAlignment="Top" Width="397" Height="26" Foreground="#FF474747">
                 <ComboBoxItem Content="Administrator"/>
-                <ComboBoxItem Content="Cashier"/>
                 <ComboBoxItem Content="Secretary"/>
-                <ComboBoxItem Content="Cemetery Staff"/>
+                <ComboBoxItem Content="Cashier"/>
                 <ComboBoxItem Content="Registrar"/>
                 <ComboBoxItem Content="Custom"/>
             </ComboBox>
@@ -130,7 +129,6 @@
                 Margin="178,235,68,0" 
                 TextWrapping="Wrap" 
                 VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <CheckBox x:Name="Priv4" IsEnabled="False" Content="Cemetery Staff" HorizontalAlignment="Left" Margin="320,104,0,0" VerticalAlignment="Top" Width="137"/>
             <CheckBox x:Name="Priv1" IsEnabled="False" Content="Secretary" HorizontalAlignment="Left" Margin="178,104,0,0" VerticalAlignment="Top" Width="137"/>
             <CheckBox x:Name="Priv3" IsEnabled="False" Content="Cashier" HorizontalAlignment="Left" Margin="178,150,0,0" VerticalAlignment="Top" Width="137"/>
             <CheckBox x:Name="Priv2" IsEnabled="False" Content="Registrar" HorizontalAlignment="Left" Margin="178,127,0,0" VerticalAlignment="Top" Width="137"/>

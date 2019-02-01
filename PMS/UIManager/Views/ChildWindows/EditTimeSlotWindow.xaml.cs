@@ -20,8 +20,11 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private string tid;
 
-        public EditTimeSlotWindow(string t_id)
+		private TimeSlots _caller;
+
+        public EditTimeSlotWindow(TimeSlots caller, string t_id)
         {
+			_caller = caller;
 			tid = t_id;
             InitializeComponent();
 			SyncTimePicker();
@@ -115,6 +118,7 @@ namespace PMS.UIManager.Views.ChildWindows
 					conn.Close();
 					if (stat_code > 0)
 					{
+						_caller.SyncTimeSlots();
 						pmsutil.LogAccount("Edited Timeslot: " + DateTime.Parse(selTime).ToString("HH:mm:ss"));
 						MsgSuccess();
 						this.Close();

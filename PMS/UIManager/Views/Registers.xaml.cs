@@ -75,7 +75,7 @@ namespace PMS.UIManager.Views
 					{
 						if (db_reader.GetInt32("COUNT(*)") > 0)
 						{
-							ret = "Access Frequency: Low";
+							ret = "Low";
 						}
 					}
 					conn.Close();

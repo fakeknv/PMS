@@ -21,8 +21,11 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private string _tid;
 
-        public EditEventTypeWindow(string tid)
+		private EventTypes _caller;
+
+        public EditEventTypeWindow(EventTypes caller, string tid)
         {
+			_caller = caller;
             InitializeComponent();
 			_tid = tid;
 			dbman = new DBConnectionManager();
@@ -102,6 +105,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							_caller.SyncEventTypes();
 							pmsutil.LogAccount("Edited Event Type: " + EType.Text);
 							MsgSuccess();
 							this.Close();

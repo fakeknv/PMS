@@ -92,8 +92,9 @@
             </Label>
             <ComboBox SelectedIndex="0" x:Name="AccountType" HorizontalAlignment="Left" Margin="178,35,0,0" VerticalAlignment="Top" Width="397" Height="26" Foreground="#FF474747">
                 <ComboBoxItem Content="Administrator"/>
-                <ComboBoxItem Content="Cashier"/>
                 <ComboBoxItem Content="Secretary"/>
+                <ComboBoxItem Content="Cashier"/>
+                <ComboBoxItem Content="Registrar"/>
                 <ComboBoxItem Content="Custom"/>
             </ComboBox>
             <Label x:Name="NameLabel_Copy" 

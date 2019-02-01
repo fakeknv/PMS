@@ -283,6 +283,9 @@
     <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml.cs">
       <DependentUpon>ViewDirectoryEntries.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow2.xaml.cs">
+      <DependentUpon>AddAppointmentWindow2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml.cs">
       <DependentUpon>ConfirmRestoreWindow.xaml</DependentUpon>
     </Compile>
@@ -521,6 +524,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindow2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -21,8 +21,11 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private string priv;
 
-        public AddAccountWindow()
+		private Accounts _caller;
+
+        public AddAccountWindow(Accounts caller)
         {
+			_caller = caller;
             InitializeComponent();
 			AccountType.SelectionChanged += EnableCustom;
 
@@ -152,7 +155,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
 			if (CheckInputs() == true) {
-				if (AccountType.SelectedIndex == 3)
+				if (AccountType.SelectedIndex == 4)
 				{
 					priv = "6";
 					if (Priv1.IsChecked == true)
@@ -209,6 +212,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							conn.Close();
 							if (stat_code > 0)
 							{
+								_caller.SyncAccounts();
 								MsgSuccess();
 								pmsutil.LogAccount("Created an account - Username: " + Username.Text + " Type: " + Convert.ToInt32(priv));
 								this.Close();
@@ -301,7 +305,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void EnableCustom(object sender, SelectionChangedEventArgs e)
 		{
 			e.Handled = true;
-			if (AccountType.SelectedIndex == 3)
+			if (AccountType.SelectedIndex == 4)
 			{
 				Priv1.IsEnabled = true;
 				Priv2.IsEnabled = true;

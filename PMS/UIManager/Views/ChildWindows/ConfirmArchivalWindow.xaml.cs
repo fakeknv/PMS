@@ -275,6 +275,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				if (stat_code2 > 0)
 				{
+					arc.SyncRegisters();
 					MsgSuccess();
 				}
 				else

@@ -43,7 +43,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			SelectedDate.Content = "Selected Date: " + dt.ToString("MMM dd, yyyy");
 
-			SyncEvent(dt);
+			SyncEvent2();
 
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
@@ -89,6 +89,114 @@ namespace PMS.UIManager.Views.ChildWindows
 										status = "Pending";
 									}
 									else 
+									{
+										status = "Unfinished";
+									}
+								}
+								else
+								{
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Finished";
+									}
+									else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
+									{
+										status = "Pending";
+									}
+									else
+									{
+										status = "Unfinished";
+									}
+								}
+								events.Add(new EventsItem()
+								{
+									Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
+									Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
+									Type = GetAType(db_reader.GetString("appointment_type")),
+									Status = status,
+									Sponsor = db_reader.GetString("requested_by"),
+									Info = db_reader.GetString("remarks"),
+									Priest = GetPriest(db_reader.GetString("assigned_priest")),
+									Page = page
+								});
+								count++;
+								if (count == itemsPerPage)
+								{
+									page++;
+									count = 0;
+								}
+							}
+							foreach (var cur in _events)
+							{
+								if (cur.Page == CurrentPage.Value)
+								{
+									_events_final.Add(new EventsItem()
+									{
+										Date = cur.Date,
+										Time = cur.Time,
+										Type = cur.Type,
+										Status = cur.Status,
+										Sponsor = cur.Sponsor,
+										Info = cur.Info,
+										Priest = cur.Priest,
+										Page = cur.Page
+									});
+								}
+							}
+							EventsHolder.Items.Refresh();
+							EventsHolder.ItemsSource = _events_final;
+							EventsHolder.Items.Refresh();
+							CurrentPage.Maximum = page;
+						}
+					}
+				}
+			}
+			EventsHolder.ItemsSource = events;
+		}
+		internal void SyncEvent2()
+		{
+			DateTime dt = _dt;
+			_events = new ObservableCollection<EventsItem>();
+			_events_final = new ObservableCollection<EventsItem>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
+			ObservableCollection<EventsItem> events = new ObservableCollection<EventsItem>();
+
+			dbman = new DBConnectionManager();
+
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @sdate;";
+						cmd.Parameters.AddWithValue("@sdate", dt.ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							string status = "null";
+
+							while (db_reader.Read())
+							{
+								if (IsCustom(db_reader.GetString("appointment_type")) == true)
+								{
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Finished";
+									}
+									else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
+									{
+										status = "Pending";
+									}
+									else
 									{
 										status = "Unfinished";
 									}
@@ -239,7 +347,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private async void ConfirmPayment_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddAppointmentWindow());
+			await metroWindow.ShowChildWindowAsync(new AddAppointmentWindow(this));
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.

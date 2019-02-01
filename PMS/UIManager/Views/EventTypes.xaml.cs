@@ -30,7 +30,7 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private void SyncEventTypes() {
+		internal void SyncEventTypes() {
 			eventtypes = new ObservableCollection<EventType>();
 			eventtypes_final = new ObservableCollection<EventType>();
 
@@ -161,7 +161,7 @@ namespace PMS.UIManager.Views
 		private async void CreateTypeButton_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddEventTypeWindow());
+			await metroWindow.ShowChildWindowAsync(new AddEventTypeWindow(this));
 		}
 		private async void MsgNoItemSelected()
 		{
@@ -178,7 +178,7 @@ namespace PMS.UIManager.Views
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new EditEventTypeWindow(et.TypeID), this.EventTypesMainGrid);
+				await metroWindow.ShowChildWindowAsync(new EditEventTypeWindow(this, et.TypeID), this.EventTypesMainGrid);
 			}
 		}
 	}

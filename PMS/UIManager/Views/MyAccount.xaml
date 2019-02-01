@@ -52,6 +52,29 @@
                     <ColumnDefinition Width="372*"/>
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
+                <Button
+                        Margin="10,10,0,0" 
+                        VerticalAlignment="Top" 
+                        Width="117" 
+                        Height="31" 
+                        Background="WhiteSmoke" 
+                        Foreground="#FF474747" 
+                        HorizontalAlignment="Left" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="LogoutButton_Click2" Grid.Column="1">
+                    <StackPanel 
+                            Orientation="Horizontal">
+                        <Rectangle 
+                                Width="18"
+                                Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                        Stretch="Fill"
+                                        Visual="{iconPacks:FontAwesome ReplySolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                                Text=" Logout" />
+                    </StackPanel>
+                </Button>
             </Grid>
         </Grid>
         <Grid Height="121" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="2,51,2,0">

@@ -63,13 +63,9 @@ namespace PMS.UIManager.Views.ChildWindows
 								{
 									AccountType.SelectedIndex = 3;
 								}
-								else if (db_reader.GetInt32("account_type") == 5)
-								{
-									AccountType.SelectedIndex = 4;
-								}
 								else
 								{
-									AccountType.SelectedIndex = 5;
+									AccountType.SelectedIndex = 4;
 									foreach (char c in db_reader.GetInt32("account_type").ToString()) {
 										if (c == '2') {
 											Priv1.IsChecked = true;
@@ -81,10 +77,6 @@ namespace PMS.UIManager.Views.ChildWindows
 										if (c == '4')
 										{
 											Priv3.IsChecked = true;
-										}
-										if (c == '5')
-										{
-											Priv4.IsChecked = true;
 										}
 									}
 								}
@@ -180,15 +172,15 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
-			if (string.IsNullOrWhiteSpace(Password.Text))
-			{
-				PasswordValidator.Visibility = Visibility.Visible;
-				PasswordValidator.ToolTip = "This field is requried.";
-				PasswordValidator.Foreground = Brushes.Red;
-				Password.BorderBrush = Brushes.Red;
+			//if (string.IsNullOrWhiteSpace(Password.Text))
+			//{
+			//	PasswordValidator.Visibility = Visibility.Visible;
+			//	PasswordValidator.ToolTip = "This field is requried.";
+			//	PasswordValidator.Foreground = Brushes.Red;
+			//	Password.BorderBrush = Brushes.Red;
 
-				ret = false;
-			}
+			//	ret = false;
+			//}
 			if (string.IsNullOrWhiteSpace(VerificationPass.Password))
 			{
 				YourPasswordValidator.Visibility = Visibility.Visible;
@@ -217,47 +209,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
-			if (CheckDupli() == true)
-			{
-				ret = false;
-			}
 			return ret;
-		}
-		internal bool CheckDupli()
-		{
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
-				{
-					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT COUNT(*) FROM accounts WHERE user_name = @username;";
-					cmd.Prepare();
-					cmd.Parameters.AddWithValue("@username", Username.Text);
-					using (MySqlDataReader db_reader = cmd.ExecuteReader())
-					{
-						while (db_reader.Read())
-						{
-							if (db_reader.GetInt32("COUNT(*)") > 0)
-							{
-								UsernameValidator.Visibility = Visibility.Visible;
-								UsernameValidator.ToolTip = "Username already exists.";
-								UsernameValidator.Foreground = Brushes.Red;
-								Username.BorderBrush = Brushes.Red;
-
-								return true;
-							}
-							else
-							{
-								return false;
-							}
-						}
-					}
-				}
-			}
-			return true;
 		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -265,7 +217,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				string uid = Application.Current.Resources["uid"].ToString();
 				if (VerifyKey(uid) == true)
 				{
-					if (AccountType.SelectedIndex == 5)
+					if (AccountType.SelectedIndex == 4)
 					{
 						priv = "6";
 						if (Priv1.IsChecked == true)
@@ -279,10 +231,6 @@ namespace PMS.UIManager.Views.ChildWindows
 						if (Priv3.IsChecked == true)
 						{
 							priv += "4";
-						}
-						if (Priv4.IsChecked == true)
-						{
-							priv += "5";
 						}
 						dbman = new DBConnectionManager();
 						pmsutil = new PMSUtil();
@@ -359,7 +307,7 @@ namespace PMS.UIManager.Views.ChildWindows
 									cmd.Prepare();
 									cmd.Parameters.AddWithValue("@aid", aid);
 									cmd.Parameters.AddWithValue("@user_name", Username.Text);
-									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(AccountType.SelectedIndex + 1));
 								}
 								else
 								{
@@ -369,7 +317,7 @@ namespace PMS.UIManager.Views.ChildWindows
 									cmd.Parameters.AddWithValue("@aid", aid);
 									cmd.Parameters.AddWithValue("@user_name", Username.Text);
 									cmd.Parameters.AddWithValue("@pass_key", SecurePasswordHasher.Hash(Password.Text));
-									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(priv));
+									cmd.Parameters.AddWithValue("@account_type", Convert.ToInt32(AccountType.SelectedIndex + 1));
 								}
 
 								int stat_code = cmd.ExecuteNonQuery();
@@ -428,18 +376,16 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void EnableCustom(object sender, SelectionChangedEventArgs e)
 		{
 			e.Handled = true;
-			if (AccountType.SelectedIndex == 5)
+			if (AccountType.SelectedIndex == 4)
 			{
 				Priv1.IsEnabled = true;
 				Priv2.IsEnabled = true;
 				Priv3.IsEnabled = true;
-				Priv4.IsEnabled = true;
 			}
 			else {
 				Priv1.IsEnabled = false;
 				Priv2.IsEnabled = false;
 				Priv3.IsEnabled = false;
-				Priv4.IsEnabled = false;
 			}
 		}
 	}

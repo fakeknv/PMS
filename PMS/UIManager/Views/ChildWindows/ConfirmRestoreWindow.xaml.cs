@@ -157,7 +157,7 @@ namespace PMS.UIManager.Views.ChildWindows
 														"VALUES(@record_id, @birthday, @legitimacy, @place_of_birth, @sponsor1, @sponsor2, @stipend, @minister, @remarks)";
 													cmd2.Prepare();
 													cmd2.Parameters.AddWithValue("@record_id", db_reader.GetString("record_id"));
-													cmd2.Parameters.AddWithValue("@birthday", dateOfBirth.ToString("MMM dd, yyyy"));
+													cmd2.Parameters.AddWithValue("@birthday", dateOfBirth.ToString("yyyy-MM-dd"));
 													cmd2.Parameters.AddWithValue("@legitimacy", rdr["legitimacy"].ToString());
 													cmd2.Parameters.AddWithValue("@place_of_birth", rdr["place_of_birth"].ToString());
 													cmd2.Parameters.AddWithValue("@sponsor1", rdr["sponsor1"].ToString());
@@ -325,6 +325,7 @@ namespace PMS.UIManager.Views.ChildWindows
 									{
 										while (rdr.Read())
 										{
+											DateTime dateOfBurial = Convert.ToDateTime(rdr["burial_date"].ToString());
 											using (conn2 = new MySqlConnection(dbman.GetConnStr()))
 											{
 												conn2.Open();
@@ -336,7 +337,7 @@ namespace PMS.UIManager.Views.ChildWindows
 													"VALUES(@record_id, @burial_date, @age, @status, @residence, @residence2, @sacrament, @cause_of_death, @place_of_interment, @stipend, @minister, @remarks)";
 													cmd2.Prepare();
 													cmd2.Parameters.AddWithValue("@record_id", db_reader.GetString("record_id"));
-													cmd2.Parameters.AddWithValue("@burial_date", rdr["burial_date"]);
+													cmd2.Parameters.AddWithValue("@burial_date", dateOfBurial.ToString("yyyy-MM-dd"));
 													cmd2.Parameters.AddWithValue("@age", rdr["age"]);
 													cmd2.Parameters.AddWithValue("@status", rdr["status"]);
 													cmd2.Parameters.AddWithValue("@residence", rdr["residence"]);

@@ -59,8 +59,8 @@ namespace PMS.UIManager.Views
 			DateTime date = DateTime.Now;
 			var min = new DateTime(date.Year, date.Month, 1);
 			var max = min.AddMonths(1).AddDays(-1);
-			MinDate.Text = min.ToString("MM/dd/yyyy");
-			MaxDate.Text = max.ToString("MM/dd/yyyy");
+			MinDate.SelectedDate = min;
+			MaxDate.SelectedDate = max;
 
 			SyncTransactions();
 			SyncRegisters();

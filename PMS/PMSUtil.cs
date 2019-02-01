@@ -142,17 +142,12 @@ namespace PMS
 					}
 					else if (db_reader.GetInt32("account_type") == 3)
 					{
-						ret = "Registrar";
+						ret = "Cashier";
 					}
 					else if (db_reader.GetInt32("account_type") == 4)
 					{
-						ret = "Cashier";
-					}
-					else if (db_reader.GetInt32("account_type") == 5)
-					{
-						ret = "Cemetery Personnel";
-					}
-					else {
+						ret = "Registrar";
+					} else {
 						ret = "Custom";
 					}
 				}

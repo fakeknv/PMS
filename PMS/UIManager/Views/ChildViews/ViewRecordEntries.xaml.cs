@@ -96,7 +96,6 @@ namespace PMS.UIManager.Views.ChildViews
 		{
 			this.Content = new Registers();
 		}
-
 		internal void UpdatePageContent1(object sender, RoutedPropertyChangedEventArgs<double?> e)
 		{
 			if (Convert.ToInt32(Page.Value) < 1)

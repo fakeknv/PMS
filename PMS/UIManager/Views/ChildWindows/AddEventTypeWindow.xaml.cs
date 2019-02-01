@@ -19,8 +19,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-        public AddEventTypeWindow()
+		private EventTypes _caller;
+
+		public AddEventTypeWindow(EventTypes caller)
         {
+			_caller = caller;
             InitializeComponent();
 
 		}
@@ -109,6 +112,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							_caller.SyncEventTypes();
 							pmsutil.LogAccount("Added event type - Type: " + EType.Text + " Fee: " + Fee.Value);
 							MsgSuccess();
 							this.Close();

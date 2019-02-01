@@ -19,8 +19,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-        public AddPriestWindow()
+		private Priests _caller;
+
+        public AddPriestWindow(Priests caller)
         {
+			_caller = caller;
             InitializeComponent();
 
 		}
@@ -118,6 +121,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							_caller.SyncPriest();
 							pmsutil.LogAccount("Added priest - Name: " + PriestName.Text);
 							MsgSuccess();
 							this.Close();

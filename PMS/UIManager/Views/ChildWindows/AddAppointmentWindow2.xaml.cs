@@ -4,7 +4,9 @@ using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Web.UI.WebControls;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
@@ -12,16 +14,13 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for DummyWindow.xaml
 	/// </summary>
-	public partial class AddAppointmentWindow : ChildWindow
+	public partial class AddAppointmentWindow2 : ChildWindow
 	{
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-		private ManageEventsWindow _caller;
-
-		public AddAppointmentWindow(ManageEventsWindow caller)
+		public AddAppointmentWindow2()
 		{
-			_caller = caller;
 			InitializeComponent();
 			MassType.SelectedIndex = 0;
 			SelectedDate1.Text = Appointments.app.Current_Date;
@@ -339,9 +338,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						dbman.DBClose();
 						if (stat_code > 0)
 						{
-							_caller.SyncEvent2();
 							MsgSuccess();
-							this.Close();
 						}
 						else
 						{
@@ -397,9 +394,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							dbman.DBClose();
 							if (stat_code > 0)
 							{
-								_caller.SyncEvent2();
 								MsgSuccess();
-								this.Close();
 							}
 							else
 							{

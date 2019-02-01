@@ -183,7 +183,13 @@ namespace PMS.UIManager.Views
 				if (conn.State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT * FROM transactions ORDER BY tran_date DESC , tran_time DESC;";
+					if (TransacType.SelectedIndex == 0)
+					{
+						cmd.CommandText = "SELECT * FROM transactions WHERE type LIKE '%Cert.%' ORDER BY tran_date DESC , tran_time DESC;";
+					}
+					else {
+						cmd.CommandText = "SELECT * FROM transactions WHERE type LIKE '%Serv.%' ORDER BY tran_date DESC , tran_time DESC;";
+					}
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
@@ -778,6 +784,11 @@ namespace PMS.UIManager.Views
 				}
 				dbman.DBClose();
 			}
+		}
+
+		private void TransacType_DropDownClosed(object sender, EventArgs e)
+		{
+			SyncTransactions();
 		}
 	}
 }

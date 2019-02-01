@@ -31,7 +31,7 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private void SyncAccounts() {
+		internal void SyncAccounts() {
 
 			accounts = new ObservableCollection<Account>();
 			accounts_final = new ObservableCollection<Account>();
@@ -108,7 +108,7 @@ namespace PMS.UIManager.Views
 		private async void CreateAccountButton_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddAccountWindow());
+			await metroWindow.ShowChildWindowAsync(new AddAccountWindow(this));
 		}
 		private async void MsgNoItemSelected()
 		{

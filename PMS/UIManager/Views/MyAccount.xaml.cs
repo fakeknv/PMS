@@ -168,5 +168,14 @@ namespace PMS.UIManager.Views
 		{
 			NameTextbox.Text = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
 		}
+
+		private void LogoutButton_Click2(object sender, RoutedEventArgs e)
+		{
+			Application.Current.Resources["uid"] = "";
+			Application.Current.Resources["priv"] = "";
+
+			System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+			Application.Current.Shutdown();
+		}
 	}
 }

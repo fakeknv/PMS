@@ -18,8 +18,11 @@ namespace PMS.UIManager.Views.ChildWindows
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
-        public AddTimeSlotWindow()
+		private TimeSlots _caller;
+
+        public AddTimeSlotWindow(TimeSlots caller)
         {
+			_caller = caller;
             InitializeComponent();
 			SyncTimePicker();
 
@@ -103,6 +106,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							_caller.SyncTimeSlots();
 							pmsutil.LogAccount("Added Timeslot: " + DateTime.Parse(selTime).ToString("HH:mm:ss"));
 							MsgSuccess();
 							this.Close();

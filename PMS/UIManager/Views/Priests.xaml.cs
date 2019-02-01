@@ -31,7 +31,7 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private void SyncPriest() {
+		internal void SyncPriest() {
 
 			priests = new ObservableCollection<Priest>();
 			priests_final = new ObservableCollection<Priest>();
@@ -231,7 +231,7 @@ namespace PMS.UIManager.Views
 		private async void CreatePriestButton_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddPriestWindow());
+			await metroWindow.ShowChildWindowAsync(new AddPriestWindow(this));
 		}
 		private async void MsgNoItemSelected()
 		{
@@ -248,7 +248,7 @@ namespace PMS.UIManager.Views
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new EditPriestWindow(priest.PriestID), this.PriestsMainGrid);
+				await metroWindow.ShowChildWindowAsync(new EditPriestWindow(this, priest.PriestID), this.PriestsMainGrid);
 			}
 		}
 	}

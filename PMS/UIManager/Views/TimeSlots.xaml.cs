@@ -30,7 +30,7 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private void SyncTimeSlots() {
+		internal void SyncTimeSlots() {
 			timeslots = new ObservableCollection<TimeSlot>();
 			timeslots_final = new ObservableCollection<TimeSlot>();
 
@@ -140,7 +140,7 @@ namespace PMS.UIManager.Views
 		private async void CreateButton_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddTimeSlotWindow());
+			await metroWindow.ShowChildWindowAsync(new AddTimeSlotWindow(this));
 		}
 		private async void MsgNoItemSelected()
 		{
@@ -157,7 +157,7 @@ namespace PMS.UIManager.Views
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new EditTimeSlotWindow(ts.TimeSlotID), this.TimeSlotsMainGrid);
+				await metroWindow.ShowChildWindowAsync(new EditTimeSlotWindow(this, ts.TimeSlotID), this.TimeSlotsMainGrid);
 			}
 		}
 	}

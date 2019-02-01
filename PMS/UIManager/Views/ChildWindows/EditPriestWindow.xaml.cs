@@ -21,8 +21,11 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private string pid;
 
-        public EditPriestWindow(string p_id)
+		private Priests _caller;
+
+        public EditPriestWindow(Priests caller, string p_id)
         {
+			_caller = caller;
 			pid = p_id;
             InitializeComponent();
 
@@ -98,6 +101,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Close();
 						if (stat_code > 0)
 						{
+							_caller.SyncPriest();
 							pmsutil.LogAccount("Edited Priest: " + PriestName.Text);
 							MsgSuccess();
 							this.Close();

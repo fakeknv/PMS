@@ -570,10 +570,15 @@
                     HorizontalAlignment="Left" 
                     Margin="10,4,0,0" 
                     VerticalAlignment="Top" 
-                    Width="224" 
+                    Width="125" 
                     FontSize="20" 
                     FontWeight="Bold" 
                     Foreground="#FF545454" FontFamily="Segoe UI Semilight"/>
+                <ComboBox x:Name="TransacType" DropDownClosed="TransacType_DropDownClosed" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,10,20,0" VerticalAlignment="Top" Width="122" FontFamily="Segoe UI">
+                    <ComboBoxItem Content="Certificates"/>
+                    <ComboBoxItem Content="Scheduling"/>
+                </ComboBox>
+                <Label Content="Transaction Type:" HorizontalAlignment="Right" Margin="0,10,147,0" VerticalAlignment="Top" Width="102"/>
             </Grid>
         </Grid>
     </Grid>

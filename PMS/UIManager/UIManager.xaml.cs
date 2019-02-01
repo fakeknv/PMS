@@ -60,6 +60,7 @@ namespace PMS.UIManager
 			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 3)
 			{
 				//Cashier
+				itemCollection.Remove(Appointments);
 				itemCollection.Remove(Registers);
 				itemCollection.Remove(Directory);
 				itemCollection.Remove(Archives);
@@ -74,9 +75,8 @@ namespace PMS.UIManager
 			else if (Convert.ToInt32(Application.Current.Resources["priv"]) == 4)
 			{
 				//Registrar
+				itemCollection.Remove(Appointments);
 				itemCollection.Remove(Transactions);
-				itemCollection.Remove(Registers);
-				itemCollection.Remove(Directory);
 				itemCollection.Remove(Archives);
 				itemCollection.Remove(Reports);
 				itemCollection.Remove(Accounts);
