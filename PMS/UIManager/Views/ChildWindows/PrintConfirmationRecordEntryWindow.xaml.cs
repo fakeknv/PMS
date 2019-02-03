@@ -310,15 +310,15 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("date", DateTime.Now.ToString("MMMM d, yyyy"), true, true);
 			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
 
-			string fpath = "Data\\print.docx";
+			//Load Document
+			Document document = new Document();
+			document.LoadFromFile(@"Data\\print.docx");
 
-			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim())
-			{
-				Verb = "Print",
-				CreateNoWindow = true,
-				WindowStyle = ProcessWindowStyle.Hidden
-			};
-			Process.Start(info);
+			//Convert Word to PDF
+			document.SaveToFile("Output\\print_file.pdf", FileFormat.PDF);
+
+			System.Diagnostics.Process.Start("Output\\print_file.pdf");
+
 			if (Purpose.SelectedIndex == 0)
 			{
 				//Reference

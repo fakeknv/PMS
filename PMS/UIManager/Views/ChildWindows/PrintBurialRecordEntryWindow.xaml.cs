@@ -159,15 +159,15 @@ namespace PMS.UIManager.Views.ChildWindows
 			doc.Replace("YY", date[2].Remove(0, 2), true, true);
 			doc.SaveToFile("Data\\print.docx", FileFormat.Docx);
 
-			string fpath = "Data\\print.docx";
+			//Load Document
+			Document document = new Document();
+			document.LoadFromFile(@"Data\\print.docx");
 
-			ProcessStartInfo info = new ProcessStartInfo(fpath.Trim())
-			{
-				Verb = "Print",
-				CreateNoWindow = true,
-				WindowStyle = ProcessWindowStyle.Hidden
-			};
-			Process.Start(info);
+			//Convert Word to PDF
+			document.SaveToFile("Output\\print_file.pdf", FileFormat.PDF);
+
+			System.Diagnostics.Process.Start("Output\\print_file.pdf");
+
 			//Reference
 			string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
 			pmsutil.InsertTransaction("Burial Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
