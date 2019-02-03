@@ -1123,13 +1123,8 @@ namespace PMS.UIManager.Views
 
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(229, 97), new PointF(295, 97));
 
-			//YLabel.FontWeight = FontWeights.Bold;
-			//XLabel.FontWeight = FontWeights.Bold;
-			//Save Charts
 			SaveToPng(ChartEx, "chart1.png");
 			SaveToPng(PieChart, "chart2.png");
-			//YLabel.FontWeight = FontWeights.Normal;
-			//XLabel.FontWeight = FontWeights.Normal;
 
 			logo = PdfImage.FromFile(@"chart2.png");
 			_width = 400;
@@ -1241,10 +1236,11 @@ namespace PMS.UIManager.Views
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 635));
 
+			string fname = "Transactions_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\transactions_report.pdf");
+			pdfDoc.SaveToFile(@"..\..\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\transactions_report.pdf");
+			System.Diagnostics.Process.Start(@"..\..\" + fname);
 		}
 		private async void GenReport2(object sender, RoutedEventArgs e)
 		{
@@ -1463,10 +1459,11 @@ namespace PMS.UIManager.Views
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 110));
 
+			string fname = "Transactions_Report-" + DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd") + "_to_" + DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\transactions_report_for" + DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd") + "_to_" + DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd") + ".pdf");
+			pdfDoc.SaveToFile(@"..\..\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\transactions_report_for" + DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd") + "_to_" + DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd") + ".pdf");
+			System.Diagnostics.Process.Start(@"..\..\" + fname);
 		}
 		private void SyncRegisterSummary() {
 			dbman = new DBConnectionManager();
@@ -1789,10 +1786,11 @@ namespace PMS.UIManager.Views
 			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 320));
 
+			string fname = "Registers_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\registers_report_for_"+ DateTime.Now.ToString("MMM_dd_yyyy") +".pdf");
+			pdfDoc.SaveToFile(@"..\..\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\registers_report_for_" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf");
+			System.Diagnostics.Process.Start(@"..\..\" + fname);
 		}
 		private int CountT(int month, string type) {
 			int ret = 0;

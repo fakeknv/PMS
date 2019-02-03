@@ -14,19 +14,24 @@ namespace PMS.UIManager
         public UIManager()
         {
 			pmsutil = new PMSUtil();
+			
 			Login li = new Login();
 			if (Application.Current.Resources["uid"] == null)
 			{
-				this.Hide();
+				//this.Hide();
 				li.ShowDialog();
 			}
 			if (Application.Current.Resources["uid"] != null)
 			{
+				SplashScreen splashScreen = new SplashScreen("assets/splash.png");
+				splashScreen.Show(true);
+
 				//WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
 				this.Top = 10;
 				this.Left = 80;
 				pmsutil.LogAccount("Account Logged In");
-				this.Show();
+				//this.Show();
+				
 			}
 			InitializeComponent();
 			InitPriv();
@@ -122,7 +127,13 @@ namespace PMS.UIManager
             // set the content
             this.HamburgerMenuControl.Content = e.ClickedItem;
             // close the pane
-            this.HamburgerMenuControl.IsPaneOpen = false;
+			//Commented this one out to keep panel open even after click.
+           // this.HamburgerMenuControl.IsPaneOpen = false;
         }
-    }
+
+		private void MetroWindow_ContentRendered(object sender, EventArgs e)
+		{
+			
+		}
+	}
 }

@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PMS.UIManager.Views.ChildWindows
@@ -106,6 +107,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 		}
 		private void FetchPriests() {
+			AssignedPriest.Items.Clear();
+
 			dbman = new DBConnectionManager();
 
 			if (dbman.DBConnect().State == ConnectionState.Open)
@@ -116,7 +119,21 @@ namespace PMS.UIManager.Views.ChildWindows
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					AssignedPriest.Items.Add(db_reader.GetString("priest_name"));
+					string selTime = THours.Text + ":" + TMinutes.Text + " " + TimeMode.Text;
+
+					if (IsAvailable(DateTime.Parse(SelectedDate2.Text).ToString("yyyy-MM-dd"), DateTime.Parse(selTime).ToString("HH:mm:ss"), db_reader.GetString("priest_id")) == false)
+					{
+						ComboBoxItem ci = new ComboBoxItem();
+						ci.IsEnabled = false;
+						ci.Content = db_reader.GetString("priest_name");
+						AssignedPriest.Items.Add(ci);
+					}
+					else {
+						ComboBoxItem ci = new ComboBoxItem();
+						ci.IsEnabled = true;
+						ci.Content = db_reader.GetString("priest_name");
+						AssignedPriest.Items.Add(ci);
+					}
 				}
 				//close Connection
 				dbman.DBClose();
@@ -497,6 +514,11 @@ namespace PMS.UIManager.Views.ChildWindows
 				SoulsOf.IsEnabled = false;
 			}
 			FetchMassFee();
+		}
+
+		private void SyncAvailablePriest(object sender, EventArgs e)
+		{
+			FetchPriests();
 		}
 	}
 }

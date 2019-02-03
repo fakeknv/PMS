@@ -50,6 +50,7 @@
               BorderThickness="5"
               CornerRadius="50" Margin="65,13,68,0" Grid.Row="1" Height="72" VerticalAlignment="Top">
             <Custom:PackIconFontAwesome 
+                x:Name="RegIcon"
                 Kind="BookOpenSolid"
                 HorizontalAlignment="Left" 
                 Margin="14,15,0,0" 

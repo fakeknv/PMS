@@ -151,5 +151,7 @@
                     Text=" Add Type" />
             </StackPanel>
         </Button>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Appointment Types" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="415" FontSize="14" Height="30"/>
+        <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

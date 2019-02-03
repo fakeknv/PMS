@@ -1,4 +1,5 @@
 ﻿<Controls:MetroWindow
+    ContentRendered="MetroWindow_ContentRendered"
 	x:Class="PMS.UIManager.UIManager" 
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
@@ -22,7 +23,8 @@
     MinWidth="500"
 	ShowTitleBar="False"
 	WindowStyle="ThreeDBorderWindow"
-	Title="Registrar">
+	Title="Registrar"
+    WindowState="Maximized">
     <Grid>
         <DockPanel>
             <DockPanel.Resources>
@@ -79,7 +81,8 @@
 			PaneForeground="White"
 			PaneBackground="#FF2C343F"
 			PanePlacement="Left"
-			Background="{x:Null}">
+			Background="{x:Null}"
+            IsPaneOpen="True">
                 <Controls:HamburgerMenu.ItemsSource>
                     <Controls:HamburgerMenuItemCollection>
                         <Controls:HamburgerMenuIconItem

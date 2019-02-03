@@ -175,6 +175,11 @@ namespace PMS.UIManager.Views
 					{
 						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
 						RegisterItem ri = new RegisterItem();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
 						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";

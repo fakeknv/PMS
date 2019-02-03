@@ -104,6 +104,7 @@
                 </Button>
                 <Label Content="Print List: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="64"/>
                 <ComboBox x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Left" Margin="79,10,0,0" VerticalAlignment="Top" Width="109">
+                    <ComboBoxItem>All</ComboBoxItem>
                     <ComboBoxItem>Daily Mass</ComboBoxItem>
                     <ComboBoxItem>Parish Services</ComboBoxItem>
                 </ComboBox>
@@ -120,7 +121,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -129,7 +130,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -138,7 +139,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Type}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Type}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -147,7 +148,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -156,7 +157,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Sponsor}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Sponsor}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -165,7 +166,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Priest}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Priest}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -174,7 +175,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Left" Text="{Binding Info}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Info}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

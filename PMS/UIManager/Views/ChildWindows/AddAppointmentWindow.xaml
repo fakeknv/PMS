@@ -207,8 +207,8 @@
                         Margin="325,322,0,0" 
                         VerticalAlignment="Top" 
                         Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="404,274,0,0" VerticalAlignment="Top" Width="64"/>
-                    <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="473,274,0,0" VerticalAlignment="Top" Width="63"/>
+                    <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="404,274,0,0" VerticalAlignment="Top" Width="64" DropDownClosed="SyncAvailablePriest"/>
+                    <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="473,274,0,0" VerticalAlignment="Top" Width="63" DropDownClosed="SyncAvailablePriest"/>
                     <ComboBox x:Name="TimeMode" SelectedIndex="0" HorizontalAlignment="Left" Margin="541,274,0,0" VerticalAlignment="Top" Width="62">
                         <ComboBoxItem Content="AM"/>
                         <ComboBoxItem Content="PM"/>

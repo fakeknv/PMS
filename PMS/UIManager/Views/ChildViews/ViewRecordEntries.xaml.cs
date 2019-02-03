@@ -40,7 +40,7 @@ namespace PMS.UIManager.Views.ChildViews
 		internal void Sync(int bookNum) {
 			if (GetRegisterType(bookNum) == "Confirmation")
 			{
-				RegisterType.Content = "Confirmation - Book #" + bookNum;
+				RegisterType.Content = "| Confirmation - Book #" + bookNum;
 				ConfirmationEntries ce = new ConfirmationEntries(bookNum, 1);
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);
@@ -48,7 +48,7 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(bookNum) == "Baptismal")
 			{
-				RegisterType.Content = "Baptismal - Book #" + bookNum;
+				RegisterType.Content = "| Baptismal - Book #" + bookNum;
 				BaptismalEntries be = new BaptismalEntries(bookNum, 1);
 				EntriesHolderGrid.Children.Add(be);
 				Grid.SetRow(be, 0);
@@ -56,7 +56,7 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(bookNum) == "Matrimonial")
 			{
-				RegisterType.Content = "Matrimonial - Book #" + bookNum;
+				RegisterType.Content = "| Matrimonial - Book #" + bookNum;
 				MatrimonialEntries me = new MatrimonialEntries(bookNum, 1);
 				EntriesHolderGrid.Children.Add(me);
 				Grid.SetRow(me, 0);
@@ -64,7 +64,7 @@ namespace PMS.UIManager.Views.ChildViews
 			}
 			else if (GetRegisterType(bookNum) == "Burial")
 			{
-				RegisterType.Content = "Burial - Book #" + bookNum;
+				RegisterType.Content = "| Burial - Book #" + bookNum;
 				BurialEntries be = new BurialEntries(bookNum, 1);
 				EntriesHolderGrid.Children.Add(be);
 				Grid.SetRow(be, 0);
@@ -176,6 +176,11 @@ namespace PMS.UIManager.Views.ChildViews
 			{
 				await metroWindow.ShowChildWindowAsync(new MultiAddRecordWindowBurial(this, booknum), this.RecordEntriesMainGrid);
 			}
+		}
+
+		private void BackToMainView(object sender, MouseButtonEventArgs e)
+		{
+			this.Content = new Registers();
 		}
 	}
 }

@@ -26,13 +26,13 @@
                     x:Name="BackButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
                     Content="{iconPacks:FontAwesome ChevronLeftSolid}" 
-                    Margin="24,8,0,0" 
+                    Margin="24,6,0,0" 
                     VerticalAlignment="Top" 
                     Height="30" 
                     Background="White" 
                     BorderBrush="{x:Null}" 
                     RenderTransformOrigin="0.824,0.294" 
-                    Foreground="#FF717171" 
+                    Foreground="#FF009BE4" 
                     Width="30" 
                     HorizontalAlignment="Left" Click="BackButton_Click"/>
             </Grid>
@@ -69,7 +69,7 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
-            <Label x:Name="RegisterType" Content="Label" HorizontalAlignment="Left" Margin="90,7,0,0" VerticalAlignment="Top" Height="29" Width="302" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+            <Label x:Name="RegisterType" Content="Label" HorizontalAlignment="Left" Margin="184,7,0,0" VerticalAlignment="Top" Height="29" Width="244" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF009BE4"/>
             <Button
                 Margin="0,7,150,0" 
                 VerticalAlignment="Top" 
@@ -99,6 +99,7 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
+            <Label Content="Parish Registers" HorizontalAlignment="Left" Margin="58,7,0,0" VerticalAlignment="Top" Height="29" Width="126" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF009BE4" MouseLeftButtonDown="BackToMainView"/>
         </Grid>
         <Grid Margin="10,51,10,10" x:Name="EntriesHolderGrid">
 

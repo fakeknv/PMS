@@ -779,6 +779,7 @@
     <Resource Include="Assets\grave-default.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\splash.png" />
     <Content Include="Data\temp_baptismal.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
