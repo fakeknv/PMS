@@ -3,13 +3,11 @@ using System;
 using MySql.Data.MySqlClient;
 using System.Windows;
 using System.Data;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using PMS.UIComponents;
 using System.Collections.ObjectModel;
 using Spire.Doc;
-using System.Diagnostics;
 using System.ComponentModel;
 
 namespace PMS.UIManager.Views.ChildWindows
@@ -302,18 +300,25 @@ namespace PMS.UIManager.Views.ChildWindows
 				doc.Replace("date", DateTime.Now.ToString("MMMM d, yyyy"), true, true);
 				doc.SaveToFile("Data\\print-" + i + ".docx", FileFormat.Docx);
 
-				string fpath = "Data\\print-" + i + ".docx";
+				//Load Document
+				Document document = new Document();
+				document.LoadFromFile(@"Data\\print-" + i + ".docx");
 
-				ProcessStartInfo info = new ProcessStartInfo(fpath.Trim())
-				{
-					Verb = "Print",
-					CreateNoWindow = true,
-					WindowStyle = ProcessWindowStyle.Hidden
-				};
+				//Convert Word to PDF
+				document.SaveToFile("Output\\print_file-" + i + ".pdf", FileFormat.PDF);
 
-				Process.Start(info);
 				App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
 				{
+					if (SkipPreview.IsChecked == true) {
+						Spire.Pdf.PdfDocument docx = new Spire.Pdf.PdfDocument();
+						docx.LoadFromFile(@"Output\\print_file-" + i + ".pdf");
+						docx.PrintDocument.Print();
+					}
+					else {
+						System.Diagnostics.Process.Start("Output\\print_file-" + i + ".pdf");
+					}
+
+				
 					if (Purpose.SelectedIndex == 0)
 					{
 						//Reference

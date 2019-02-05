@@ -289,22 +289,32 @@ namespace PMS.UIManager.Views.ChildWindows
 				string[] date = DateTime.Now.ToString("MMMM,d,yyyy").Split(','); ;
 				doc.Replace("month", date[0], true, true);
 				doc.Replace("day", date[1], true, true);
-				doc.Replace("YY", date[2].Remove(0, 2), true, true);
-
 				doc.SaveToFile("Data\\print-" + i + ".docx", FileFormat.Docx);
 
-				string fpath = "Data\\print-" + i + ".docx";
+				//Load Document
+				Document document = new Document();
+				document.LoadFromFile(@"Data\\print-" + i + ".docx");
 
-				ProcessStartInfo info = new ProcessStartInfo(fpa­th.Trim())
+				//Convert Word to PDF
+				document.SaveToFile("Output\\print_file-" + i + ".pdf", FileFormat.PDF);
+
+				App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
 				{
-					Verb = "Print",
-					CreateNoWindow = true,
-					WindowStyle = ProcessWindowStyle.H­idden
-				};
-				Process.Start(info);
+					if (SkipPreview.IsChecked == true)
+					{
+						Spire.Pdf.PdfDocument docx = new Spire.Pdf.PdfDocument();
+						docx.LoadFromFile(@"Output\\print_file-" + i + ".pdf");
+						docx.PrintDocument.Print();
+					}
+					else
+					{
+						System.Diagnostics.Process.Start("Output\\print_file-" + i + ".pdf");
+					}
 
-				//Reference
-				string tmp = pmsutil.LogRecord(recordx.RecordID, "LOGC-03");
+
+					//Reference
+					string tmp = pmsutil.LogRecord(recordx.RecordID, "LOGC-03");
+				});
 				pmsutil.InsertTransaction("Burial Cert.", "Paying", recordx.RecordID, Convert.ToDouble(pmsutil.GetPrintFee("Burial")));
 
 				tick++;

@@ -53,7 +53,7 @@ namespace PMS.UIManager.Views
 			InitializeComponent();
 			SyncCharts();
 			SyncSummary();
-			SyncPieTransactions();
+			
 			SyncRegisterSummary();
 
 			DateTime date = DateTime.Now;
@@ -62,6 +62,7 @@ namespace PMS.UIManager.Views
 			MinDate.SelectedDate = min;
 			MaxDate.SelectedDate = max;
 
+			SyncPieTransactions();
 			SyncTransactions();
 			SyncRegisters();
 
@@ -70,6 +71,12 @@ namespace PMS.UIManager.Views
 
 			ItemsPerPage2.SelectionChanged += Update4;
 			CurrentPage2.ValueChanged += Update3;
+
+			RepStatus.DropDownClosed += UpdateX;
+			RepType.DropDownClosed += UpdateX;
+
+			MinDate.CalendarClosed += UpdateZ;
+			MaxDate.CalendarClosed += UpdateZ;
 		}
 		private string CheckFrequency(int bookNum)
 		{
@@ -1124,66 +1131,12 @@ namespace PMS.UIManager.Views
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(229, 97), new PointF(295, 97));
 
 			SaveToPng(ChartEx, "chart1.png");
-			SaveToPng(PieChart, "chart2.png");
-
-			logo = PdfImage.FromFile(@"chart2.png");
-			_width = 400;
-			height = 185;
-			x = (page.Canvas.ClientSize.Width - _width) / 2;
-			page.Canvas.DrawImage(logo, -30, 120, _width, height);
-
-			page.Canvas.DrawString("Total Transactions: " + TotalTransactions.Content,
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 125);
-
-			page.Canvas.DrawString("This Week: " + ThisWeeksTransactions.Content,
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 145);
-
-			page.Canvas.DrawString("This Month: " + ThisMonthsTransactions.Content,
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 165);
-
-			page.Canvas.DrawString("This Year: " + ThisYearsTransactions.Content,
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 185);
-
-			page.Canvas.DrawString("Total Cost: PHP " + Amount1.Content.ToString().Substring(1),
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 220);
-
-			page.Canvas.DrawString("This Week: PHP " + Amount2.Content.ToString().Substring(1),
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 240);
-
-			page.Canvas.DrawString("This Month: PHP " + Amount3.Content.ToString().Substring(1),
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 260);
-
-			page.Canvas.DrawString("This Year: PHP " + Amount4.Content.ToString().Substring(1),
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			310, 280);
-
-			page.Canvas.DrawString("Transactions Per Month Chart",
-			new PdfFont(PdfFontFamily.TimesRoman, 16f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			165, 360);
-
-			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(159, 380), new PointF(365, 380));
 
 			logo = PdfImage.FromFile(@"chart1.png");
 			_width = 490;
 			height = 230;
 			x = (page.Canvas.ClientSize.Width - _width) / 2;
-			page.Canvas.DrawImage(logo, 20, 390, _width, height);
+			page.Canvas.DrawImage(logo, 20, 120, _width, height);
 
 			DataTable dtNames = new DataTable();
 			dtNames.Columns.Add("Month", typeof(string));
@@ -1234,7 +1187,7 @@ namespace PMS.UIManager.Views
 			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[6].Width = width * 0.24f * width;
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
-			table.Draw(page, new PointF(10, 635));
+			table.Draw(page, new PointF(10, 200));
 
 			string fname = "Transactions_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
@@ -1300,7 +1253,54 @@ namespace PMS.UIManager.Views
 
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(115, 97), new PointF(410, 97));
 
-			
+			SaveToPng(PieChart, "chart2.png");
+
+			logo = PdfImage.FromFile(@"chart2.png");
+			_width = 400;
+			height = 185;
+			x = (page.Canvas.ClientSize.Width - _width) / 2;
+			page.Canvas.DrawImage(logo, -30, 120, _width, height);
+
+			page.Canvas.DrawString("Total Transactions: " + TotalTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 125);
+
+			page.Canvas.DrawString("This Week: " + ThisWeeksTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 145);
+
+			page.Canvas.DrawString("This Month: " + ThisMonthsTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 165);
+
+			page.Canvas.DrawString("This Year: " + ThisYearsTransactions.Content,
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 185);
+
+			page.Canvas.DrawString("Total Cost: PHP " + Amount1.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 220);
+
+			page.Canvas.DrawString("This Week: PHP " + Amount2.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 240);
+
+			page.Canvas.DrawString("This Month: PHP " + Amount3.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 260);
+
+			page.Canvas.DrawString("This Year: PHP " + Amount4.Content.ToString().Substring(1),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			310, 280);
+
 			DataTable dtNames = new DataTable();
 			dtNames.Columns.Add("Type", typeof(string));
 			dtNames.Columns.Add("Name on Record", typeof(string));
@@ -1457,7 +1457,7 @@ namespace PMS.UIManager.Views
 			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[6].Width = width * 0.24f * width;
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
-			table.Draw(page, new PointF(10, 110));
+			table.Draw(page, new PointF(10, 360));
 
 			string fname = "Transactions_Report-" + DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd") + "_to_" + DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd") + ".pdf";
 			//save
@@ -1915,7 +1915,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -1934,7 +1936,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -1953,7 +1957,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -1972,7 +1978,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Burial Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -1991,13 +1999,149 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.';";
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
 						{
 							while (db_reader.Read())
 							{
 								OthersVal.Values = new ChartValues<ObservableValue> { new ObservableValue(db_reader.GetInt32("COUNT(*)")) };
+							}
+						}
+					}
+
+
+					//Certificate Retrieval
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								TotalCertificateRetrieval.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Others
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								OtherCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Baptismal
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								BaptismalCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Confirmation
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								ConfirmationCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Matrimonial
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								MatrimonialCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Burial
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								BurialCount.Content = db_reader.GetInt32("COUNT(*)");
 							}
 						}
 					}
@@ -2021,7 +2165,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -2042,7 +2188,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -2063,7 +2211,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -2084,7 +2234,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type;";
+						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Burial Cert.");
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
@@ -2105,7 +2257,9 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.';";
+						cmd.CommandText = "SELECT fee FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
 						{
@@ -2124,6 +2278,15 @@ namespace PMS.UIManager.Views
 		private void UpdateX(object sender, EventArgs e)
 		{
 			SyncTransactions();
+
+			if (PieRerortType.SelectedIndex == 0)
+			{
+				SyncPieTransactions();
+			}
+			else
+			{
+				SyncPieAmounts();
+			}
 		}
 
 		private void UpdateXX(object sender, EventArgs e)
@@ -2134,6 +2297,15 @@ namespace PMS.UIManager.Views
 		private void UpdateZ(object sender, RoutedEventArgs e)
 		{
 			SyncTransactions();
+
+			if (PieRerortType.SelectedIndex == 0)
+			{
+				SyncPieTransactions();
+			}
+			else
+			{
+				SyncPieAmounts();
+			}
 		}
 	}
 }

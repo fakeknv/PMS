@@ -131,7 +131,16 @@
             BorderBrush="{x:Null}" 
             RenderTransformOrigin="0.824,0.294" 
             Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
-        <DataGrid AlternatingRowBackground="#EDF6FD" CanUserSortColumns="True"  x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+        <DataGrid CanUserAddRows="False" HeadersVisibility="All" AlternatingRowBackground="#EDF6FD" CanUserSortColumns="True"  x:Name="EntriesHolder" SelectionMode="Extended" GridLinesVisibility="All" Margin="10,10,10,0" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <CheckBox Margin="7,0,0,0" IsChecked="{Binding Path=IsSelected, Mode=TwoWay,
+                  RelativeSource={RelativeSource FindAncestor,
+                  AncestorType={x:Type DataGridRow}}}"/>
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="No." SortMemberPath="EntryNumber" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>

@@ -66,6 +66,7 @@
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
+                <CheckBox Content="Direct Print (Skip Preview)" x:Name="SkipPreview" HorizontalAlignment="Left" Margin="49,14,0,0" VerticalAlignment="Top" Width="186"/>
             </Grid>
         </Border>
         <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>

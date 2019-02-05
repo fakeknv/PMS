@@ -312,6 +312,12 @@ namespace PMS.UIComponents
 		{
 			SyncChanges();
 		}
+
+		private void Select(object sender, RoutedEventArgs e)
+		{
+
+		}
+
 		private void AddItems(object sender, DoWorkEventArgs e)
 		{
 			records = new ObservableCollection<RecordEntryBaptismal>();
