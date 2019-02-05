@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MySql.Data.MySqlClient;
 using PMS.UIComponents;
 using System;
 using System.Collections.Generic;
@@ -177,6 +179,11 @@ namespace PMS.UIManager.Views
 		private void ResetButton_Click(object sender, RoutedEventArgs e)
 		{
 			SyncValues();
+		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can edit the fees of the transactions in this menu.");
 		}
 	}
 }

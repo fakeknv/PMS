@@ -59,5 +59,11 @@ namespace PMS.UIManager.Views
 				Grid.SetColumn(ce, 0);
 			}
 		}
+
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "This menu lets you search multiple parish registers at once. You can use different parameters for the Search Coverage and the Baptismal Type.");
+		}
 	}
 }

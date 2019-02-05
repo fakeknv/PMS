@@ -48,6 +48,18 @@
                 <Label x:Name="ArchiveStatus" Content="Archive Status: Disconnected" Margin="0,10,6,10" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" HorizontalAlignment="Right" Width="173" Grid.Column="1"/>
                 <iconPacks:PackIconFontAwesome Kind="DatabaseSolid" HorizontalAlignment="Right" VerticalAlignment="Top" Height="17" Width="16" Foreground="#FF474747" Margin="0,15,180,0" Grid.Column="1"/>
             </Grid>
+            <Button
+                Style="{DynamicResource MetroCircleButtonStyle}" 
+                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                Margin="10,6,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Background="White" 
+                BorderBrush="{x:Null}" 
+                RenderTransformOrigin="0.824,0.294" 
+                Foreground="#FF717171" 
+                Width="30" 
+                HorizontalAlignment="Left" Click="ActionsHelp_Click" Grid.Column="1"/>
         </Grid>
         <Grid 
             HorizontalAlignment="Stretch" 

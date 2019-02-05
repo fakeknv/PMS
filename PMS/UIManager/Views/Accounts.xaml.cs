@@ -128,5 +128,10 @@ namespace PMS.UIManager.Views
 				await metroWindow.ShowChildWindowAsync(new EditAccountWindow(ac.AccountID), this.AccountsMainGrid);
 			}
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can add or edit accounts in this menu. Accounts are used to login to the system. Custom privileged accounts are also supported.");
+		}
 	}
 }

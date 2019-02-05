@@ -88,6 +88,7 @@
             <ComboBoxItem>30</ComboBoxItem>
         </ComboBox>
         <Button
+            ToolTip="Lets you edit an account."
             Margin="0,7,164,0" 
             VerticalAlignment="Top" 
             Width="90" 
@@ -111,6 +112,7 @@
             </StackPanel>
         </Button>
         <Button
+            ToolTip="Lets you add a new account."
             Margin="0,7,24,0" 
             VerticalAlignment="Top" 
             Width="135" 
@@ -135,5 +137,17 @@
         </Button>
         <Label Foreground="#FF545454" Content="Parish Management System | Manage Timeslots" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
+        <Button
+            Style="{DynamicResource MetroCircleButtonStyle}" 
+            Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+            Margin="0,48,36,0" 
+            VerticalAlignment="Top" 
+            Height="30" 
+            Background="White" 
+            BorderBrush="{x:Null}" 
+            RenderTransformOrigin="0.824,0.294" 
+            Foreground="#FF717171" 
+            Width="30" 
+            HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
     </Grid>
 </UserControl>

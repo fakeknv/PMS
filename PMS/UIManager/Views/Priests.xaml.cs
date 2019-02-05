@@ -251,5 +251,10 @@ namespace PMS.UIManager.Views
 				await metroWindow.ShowChildWindowAsync(new EditPriestWindow(this, priest.PriestID), this.PriestsMainGrid);
 			}
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can add or edit priests in this menu. Priests are used for the signatory of certificates and the scheduling of appointments.");
+		}
 	}
 }

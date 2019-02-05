@@ -160,5 +160,10 @@ namespace PMS.UIManager.Views
 				await metroWindow.ShowChildWindowAsync(new EditTimeSlotWindow(this, ts.TimeSlotID), this.TimeSlotsMainGrid);
 			}
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can add timeslots here. Timeslots will be used as a preset in the scheduling module.");
+		}
 	}
 }

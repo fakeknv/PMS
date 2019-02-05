@@ -789,5 +789,10 @@ namespace PMS.UIManager.Views
 		{
 			SyncRegisters();
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can move less frequently used parish registers to the archive database through this menu. You can also restore archived registers back to the main database in here. It is recommended to archive parish registers that is not frequently used to reduce load on the main database.");
+		}
 	}
 }

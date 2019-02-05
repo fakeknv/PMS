@@ -84,7 +84,20 @@
             </Grid>
         </Grid>
         <Grid Margin="0,51,0,0">
-            <Grid Margin="10" x:Name="EntriesHolderGrid" Background="White"/>
+            <Grid Margin="10,34,10,10" x:Name="EntriesHolderGrid" Background="White"/>
+            <Button
+                x:Name="FiltersInfoButton_Copy" 
+                Style="{DynamicResource MetroCircleButtonStyle}" 
+                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                Margin="0,0,10,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Background="White" 
+                BorderBrush="{x:Null}" 
+                RenderTransformOrigin="0.824,0.294" 
+                Foreground="#FF717171" 
+                Width="30" 
+                HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
         </Grid>
         <Label Foreground="#FF545454" Content="Parish Management System | Global Record Search" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>

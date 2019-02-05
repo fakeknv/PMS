@@ -588,5 +588,10 @@ namespace PMS.UIManager.Views
 		{
 			SyncEvent2();
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can add appointments and schedule mass in this menu. The system will list available priests on the given date and time.");
+		}
 	}
 }

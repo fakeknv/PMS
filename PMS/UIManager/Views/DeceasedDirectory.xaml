@@ -59,6 +59,18 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+            <Button
+                Style="{DynamicResource MetroCircleButtonStyle}" 
+                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                Margin="0,6,10,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Background="White" 
+                BorderBrush="{x:Null}" 
+                RenderTransformOrigin="0.824,0.294" 
+                Foreground="#FF717171" 
+                Width="30" 
+                HorizontalAlignment="Right" Click="ActionsHelp_Click" Grid.Column="1"/>
         </Grid>
         <Grid 
             HorizontalAlignment="Stretch" 

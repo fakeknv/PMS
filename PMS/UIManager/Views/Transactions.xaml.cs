@@ -306,6 +306,16 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowPaying_Click(object sender, RoutedEventArgs e)
 		{
+			var bc = new BrushConverter();
+			PayingFilterLabel1.Foreground = (Brush)bc.ConvertFrom("#FFFFFFFF");
+			PayingFilterLabel1.Background = (Brush)bc.ConvertFrom("#FF119EDA");
+
+			CancelledFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			CancelledFilterLabel.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
+			FinishedFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			FinishedFilterLabel.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
 			transactions = new ObservableCollection<Transaction>();
 			transactions_final = new ObservableCollection<Transaction>();
 
@@ -408,6 +418,16 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowFinished_Click(object sender, RoutedEventArgs e)
 		{
+			var bc = new BrushConverter();
+			FinishedFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FFFFFFFF");
+			FinishedFilterLabel.Background = (Brush)bc.ConvertFrom("#FF119EDA");
+
+			PayingFilterLabel1.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			PayingFilterLabel1.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
+			CancelledFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			CancelledFilterLabel.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
 			transactions = new ObservableCollection<Transaction>();
 			transactions_final = new ObservableCollection<Transaction>();
 
@@ -510,6 +530,16 @@ namespace PMS.UIManager.Views
 		/// </summary>
 		private void ShowCancelled_Click(object sender, RoutedEventArgs e)
 		{
+			var bc = new BrushConverter();
+			CancelledFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FFFFFFFF");
+			CancelledFilterLabel.Background = (Brush)bc.ConvertFrom("#FF119EDA");
+
+			PayingFilterLabel1.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			PayingFilterLabel1.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
+			FinishedFilterLabel.Foreground = (Brush)bc.ConvertFrom("#FF545454");
+			FinishedFilterLabel.Background = (Brush)bc.ConvertFrom("#FFFFFFFF");
+
 			transactions = new ObservableCollection<Transaction>();
 			transactions_final = new ObservableCollection<Transaction>();
 
@@ -789,6 +819,23 @@ namespace PMS.UIManager.Views
 		private void TransacType_DropDownClosed(object sender, EventArgs e)
 		{
 			SyncTransactions();
+		}
+
+		private async void FilterHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Filters Help", "The buttons below the 'Filters' tab filters out transactions depending on their status. For example, clicking the 'Paying Button' will show transactions that are still pending/unpaid.");
+		}
+		private async void TransTypeHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Transaction Type Help", "This filters out transactions depending on their type. Selecting 'Certificates' will list certificate retrieval related transactions, while selecting 'Scheduling' will list transactions related to the scheduling module.");
+		}
+
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "The 'Confirm Button' confirms the selected transaction. The 'Cancel Button' on the other hand, cancels the selected transaction.");
 		}
 	}
 }

@@ -195,5 +195,10 @@ namespace PMS.UIManager.Views
 				this.Content = new ViewDirectoryEntriesFromSearch(block, SearchIndexBox.Text);
 			}
 		}
+		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Actions Help", "You can search the burial details of a deceased person in this menu. Burial indexes are organized by block, then by lot, and finally by plot. Entries here are generated when adding burial records.");
+		}
 	}
 }
