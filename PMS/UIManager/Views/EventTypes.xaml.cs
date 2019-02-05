@@ -168,12 +168,19 @@ namespace PMS.UIManager.Views
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Oops!", "There is no item selected. Please try again.");
 		}
+		private async void MsgDefault()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "This item is part of the default event types. It cannot be edited.");
+		}
 		private async void EditButton_Click(object sender, RoutedEventArgs e)
 		{
 			EventType et = (EventType)EventTypeItemContainer.SelectedItem;
 			if (et == null)
 			{
 				MsgNoItemSelected();
+			} else if (et.AppointmentType == "Thanksgiving Mass" || et.AppointmentType == "Petition Mass" || et.AppointmentType == "Special Intention" || et.AppointmentType == "All Souls" || et.AppointmentType == "Soul/s of" || et.AppointmentType == "Funeral Mass") {
+				MsgDefault();
 			}
 			else
 			{

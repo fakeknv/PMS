@@ -505,9 +505,18 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private void EnableDisableSoul(object sender, EventArgs e)
 		{
-			if (MassType.SelectedIndex == 3 || MassType.SelectedIndex == 4)
+			SoulsOf.Text = "";
+			if (MassType.Text == "Soul/s of" || MassType.Text == "All Souls")
 			{
+				LabelLabel.Content = "Soul/s of";
 				SoulsOf.IsEnabled = true;
+
+			} else if (MassType.Text == "Funeral Mass") {
+				LabelLabel.Content = "Remarks";
+				SoulsOf.IsEnabled = true;
+				SoulsOf.AppendText("Name of Deceased: ");
+				SoulsOf.AppendText(Environment.NewLine);
+				SoulsOf.AppendText("Venue of Mass: ");
 			}
 			else
 			{

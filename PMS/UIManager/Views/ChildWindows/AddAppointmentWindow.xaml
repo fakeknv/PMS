@@ -121,6 +121,7 @@
                 Width="551" Foreground="#FF474747"/>
                     <TextBox x:Name="SoulsOf" IsEnabled="False" Height="58" Margin="52,110,40,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
                     <Label 
+                        x:Name="LabelLabel"
                         Content="Soul/s of" 
                         HorizontalAlignment="Left"
                         Margin="52,85,0,0" 
