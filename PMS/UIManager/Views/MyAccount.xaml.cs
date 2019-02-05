@@ -3,6 +3,7 @@ using PMS.UIComponents;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -173,6 +174,13 @@ namespace PMS.UIManager.Views
 		{
 			Application.Current.Resources["uid"] = "";
 			Application.Current.Resources["priv"] = "";
+
+			string root = @"Output";
+			// If directory does not exist, don't even try   
+			if (Directory.Exists(root))
+			{
+				Directory.Delete(root, true);
+			}
 
 			System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
 			Application.Current.Shutdown();
