@@ -34,16 +34,18 @@ namespace PMS.UIComponents
 		private DBConnectionManager dbman;
 
 		private string _query, _type;
+		private int _coverage;
 
 		private PMSUtil pmsutil;
 
 		private ObservableCollection<RecordEntryMatrimonial> records;
 		private ObservableCollection<RecordEntryMatrimonial> records_final;
 
-		public SearchMatrimonialEntries(string query, string type)
+		public SearchMatrimonialEntries(string query, string type, int coverage)
         {
 			_query = query;
 			_type = type;
+			_coverage = coverage;
 			InitializeComponent();
 			SyncMatrimonialEntries(query, type);
 

@@ -17,14 +17,14 @@
         Background="#FFF1F1F3">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="839*"/>
-                <ColumnDefinition Width="108*"/>
+                <ColumnDefinition Width="939*"/>
+                <ColumnDefinition Width="8*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <TextBox
                 x:Name="SearchRequestBox" 
                 TextWrapping="Wrap" 
-                Margin="10,10,332,0"
+                Margin="10,10,529,0"
                 BorderThickness="0,0,0,1" 
                 Height="28" 
                 VerticalAlignment="Top" 
@@ -38,14 +38,14 @@
                     x:Name="SearchRequestButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
                     Content="{iconPacks:FontAwesome SearchSolid}" 
-                    Margin="0,10,341,0" 
+                    Margin="0,10,529,0" 
                     VerticalAlignment="Top" 
                     Height="26" 
                     Background="White" 
                     BorderBrush="{x:Null}" 
                     RenderTransformOrigin="0.824,0.294" 
                     Foreground="#FF717171"/>
-                <ComboBox Width="160" x:Name="RegType" HorizontalAlignment="Right" SelectedIndex="0" Margin="0,3,167,0" VerticalAlignment="Top" Height="38" BorderBrush="White" FontSize="20">
+                <ComboBox Width="160" x:Name="RegType" HorizontalAlignment="Right" SelectedIndex="0" Margin="0,7,182,0" VerticalAlignment="Top" Height="31" BorderBrush="#FFD6D6D6" FontSize="16">
                     <ComboBoxItem Content="Baptismal"/>
                     <ComboBoxItem Content="Confirmation"/>
                     <ComboBoxItem Content="Matrimonial"/>
@@ -53,7 +53,7 @@
                 </ComboBox>
                 <Button
                     Width="160"
-                    x:Name="CreateRequestButton" 
+                    x:Name="SearchButton" 
                     Margin="0,3,2,0" 
                     VerticalAlignment="Top"
                     HorizontalAlignment="Right"
@@ -75,6 +75,12 @@
                         Text=" Start Search" FontFamily="Segoe UI Semilight" FontSize="18" />
                     </StackPanel>
                 </Button>
+                <ComboBox Width="160" x:Name="SearchCoverage" HorizontalAlignment="Right" SelectedIndex="0" Margin="0,7,359,0" VerticalAlignment="Top" Height="31" BorderBrush="#FFD6D6D6" FontSize="16">
+                    <ComboBoxItem Content="All"/>
+                    <ComboBoxItem Content="Name"/>
+                    <ComboBoxItem Content="Date"/>
+                    <ComboBoxItem Content="Parents"/>
+                </ComboBox>
             </Grid>
         </Grid>
         <Grid Margin="0,51,0,0">

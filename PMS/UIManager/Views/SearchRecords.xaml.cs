@@ -28,7 +28,7 @@ namespace PMS.UIManager.Views
 
 			if (RegType.Text == "Baptismal")
 			{
-				SearchBaptismalEntries ce = new SearchBaptismalEntries(SearchRequestBox.Text, RegType.Text);
+				SearchBaptismalEntries ce = new SearchBaptismalEntries(SearchRequestBox.Text, RegType.Text, SearchCoverage.SelectedIndex);
 
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);
@@ -36,7 +36,7 @@ namespace PMS.UIManager.Views
 			}
 			else if (RegType.Text == "Confirmation")
 			{
-				SearchConfirmationEntries ce = new SearchConfirmationEntries(SearchRequestBox.Text, RegType.Text);
+				SearchConfirmationEntries ce = new SearchConfirmationEntries(SearchRequestBox.Text, RegType.Text, SearchCoverage.SelectedIndex);
 
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);
@@ -44,7 +44,7 @@ namespace PMS.UIManager.Views
 			}
 			else if (RegType.Text == "Matrimonial")
 			{
-				SearchMatrimonialEntries ce = new SearchMatrimonialEntries(SearchRequestBox.Text, RegType.Text);
+				SearchMatrimonialEntries ce = new SearchMatrimonialEntries(SearchRequestBox.Text, RegType.Text, SearchCoverage.SelectedIndex);
 
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);
@@ -52,7 +52,7 @@ namespace PMS.UIManager.Views
 			}
 			else if (RegType.Text == "Burial")
 			{
-				SearchBurialEntries ce = new SearchBurialEntries(SearchRequestBox.Text, RegType.Text);
+				SearchBurialEntries ce = new SearchBurialEntries(SearchRequestBox.Text, RegType.Text, SearchCoverage.SelectedIndex);
 
 				EntriesHolderGrid.Children.Add(ce);
 				Grid.SetRow(ce, 0);

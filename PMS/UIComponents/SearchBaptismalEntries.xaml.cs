@@ -23,16 +23,18 @@ namespace PMS.UIComponents
 		private DBConnectionManager dbman;
 
 		private string _query, _type;
+		private int _coverage;
 
 		private PMSUtil pmsutil;
 
 		private ObservableCollection<RecordEntryBaptismal> records;
 		private ObservableCollection<RecordEntryBaptismal> records_final;
 
-		public SearchBaptismalEntries(string query, string type)
+		public SearchBaptismalEntries(string query, string type, int coverage)
         {
 			_query = query;
 			_type = type;
+			_coverage = coverage;
             InitializeComponent();
 			SyncBaptismalEntries(query, type);
 
@@ -60,12 +62,52 @@ namespace PMS.UIComponents
 					{
 						conn2.Open();
 						MySqlCommand cmd2 = conn2.CreateCommand();
-						cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
-						"(records.recordholder_fullname LIKE @query OR " +
-						"records.parent1_fullname LIKE @query OR " +
-						"records.parent2_fullname LIKE @query) ORDER BY records.entry_number ASC;";
-						cmd2.Parameters.AddWithValue("@book_type", type);
-						cmd2.Parameters.AddWithValue("@query", "%" + query + "%");
+						if (_coverage == 0) {
+							//All
+							cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
+							"(records.recordholder_fullname LIKE @query OR " +
+							"records.parent1_fullname LIKE @query OR " +
+							"records.parent2_fullname LIKE @query) ORDER BY records.entry_number ASC;";
+							cmd2.Parameters.AddWithValue("@book_type", type);
+							cmd2.Parameters.AddWithValue("@query", "%" + query + "%");
+						}
+						else if (_coverage == 1)
+						{
+							//Name
+							cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
+							"(records.recordholder_fullname LIKE @query) ORDER BY records.entry_number ASC;";
+							cmd2.Parameters.AddWithValue("@book_type", type);
+							cmd2.Parameters.AddWithValue("@query", "%" + query + "%");
+						}
+						else if (_coverage == 2)
+						{
+							DateTime dateValue;
+
+							if (DateTime.TryParse(query, out dateValue)) {
+								//Date
+								cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
+								"(records.record_date LIKE @query) ORDER BY records.entry_number ASC;";
+								cmd2.Parameters.AddWithValue("@book_type", type);
+								cmd2.Parameters.AddWithValue("@query", "%" + DateTime.Parse(query).ToString("yyyy-MM-dd") + "%");
+							}
+							else {
+								MsgNotDate();
+								//Date
+								cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
+								"(records.record_date LIKE @query) ORDER BY records.entry_number ASC;";
+								cmd2.Parameters.AddWithValue("@book_type", type);
+								cmd2.Parameters.AddWithValue("@query", "%" + query + "%");
+							}
+						}
+						else if (_coverage == 3)
+						{
+							//Parents
+							cmd2.CommandText = "SELECT DISTINCT * FROM records, registers WHERE registers.book_type = @book_type AND records.book_number = registers.book_number AND " +
+							"(records.parent1_fullname LIKE @query OR " +
+							"records.parent2_fullname LIKE @query) ORDER BY records.entry_number ASC;";
+							cmd2.Parameters.AddWithValue("@book_type", type);
+							cmd2.Parameters.AddWithValue("@query", "%" + query + "%");
+						}
 						cmd2.Prepare();
 
 						using (MySqlDataReader db_reader2 = cmd2.ExecuteReader())
@@ -236,6 +278,11 @@ namespace PMS.UIComponents
 
 				}
 			}
+		}
+		private async void MsgNotDate()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Oops!", "The date you provided is not valid. Please try again.");
 		}
 		private async void MsgNoItemSelected()
 		{
