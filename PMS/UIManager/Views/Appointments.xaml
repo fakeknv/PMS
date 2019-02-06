@@ -8,12 +8,16 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:UIComponents="clr-namespace:PMS.UIComponents"
+    xmlns:local="clr-namespace:PMS"
     x:Class="PMS.UIManager.Views.Appointments"
     mc:Ignorable="d" 
     Margin="0" 
     Padding="0" 
     d:DesignHeight="450" 
     d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:StatusConverter x:Key="StatusConverter" />
+    </UserControl.Resources>
     <Grid 
         x:Name="AppointmentMainGrid" 
         Background="#FFF1F1F3">
@@ -115,7 +119,7 @@
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                <TextBlock TextAlignment="Center" Foreground="{Binding Path=Status, Converter={StaticResource StatusConverter}}" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>

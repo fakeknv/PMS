@@ -362,7 +362,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							MsgFail();
 						}
 						string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
-						pmsutil.InsertTransaction("Regular Serv. - " + MassType.Text, "Paying", apmID, Convert.ToDouble(Fee.Value));
+						pmsutil.InsertTransaction("Regular Serv. - " + MassType.Text, "Unpaid", apmID, Convert.ToDouble(Fee.Value));
 					}
 					catch (MySqlException ex)
 					{
@@ -418,7 +418,7 @@ namespace PMS.UIManager.Views.ChildWindows
 								MsgFail();
 							}
 							string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
-							pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Paying", apmID, Convert.ToDouble(Fee2.Value));
+							pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Unpaid", apmID, Convert.ToDouble(Fee2.Value));
 						}
 						catch (MySqlException ex)
 						{

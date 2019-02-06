@@ -189,6 +189,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="StatusConverter.cs" />
     <Compile Include="DateConverter.cs" />
     <Compile Include="DBConnectionManager.cs" />
     <Compile Include="DriveDetector.cs">
@@ -285,6 +286,9 @@
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow2.xaml.cs">
       <DependentUpon>AddAppointmentWindow2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\CancelAppointmentWindow.xaml.cs">
+      <DependentUpon>CancelAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmRestoreWindow.xaml.cs">
       <DependentUpon>ConfirmRestoreWindow.xaml</DependentUpon>
@@ -528,6 +532,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindow2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\CancelAppointmentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

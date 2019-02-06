@@ -91,7 +91,7 @@ namespace PMS.UIManager.Views.ChildWindows
 					cmd.CommandText =
 						"UPDATE transactions SET or_number = @or_number, status = @status, completion_date = @completion_date, completion_time = @completion_time, completed_by = @completed_by WHERE transaction_id = @transaction_id;";
 					cmd.Parameters.AddWithValue("@transaction_id", tid);
-					cmd.Parameters.AddWithValue("@status", "Finished");
+					cmd.Parameters.AddWithValue("@status", "Paid");
 					cmd.Parameters.AddWithValue("@completion_date", cDate);
 					cmd.Parameters.AddWithValue("@completion_time", cTime);
 					cmd.Parameters.AddWithValue("@completed_by", uid);
@@ -99,16 +99,11 @@ namespace PMS.UIManager.Views.ChildWindows
 					cmd.Prepare();
 					int stat_code = cmd.ExecuteNonQuery();
 					conn.Close();
-					//string tmp = pmsutil.LogRecord(recordID, "LOGC-02");
 					return stat_code;
 				}
 			}
 			return 0;
 		}
-		/// <summary>
-		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
-		/// for database insertion.
-		/// </summary>
 		private void ConfirmPayment_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			dbman = new DBConnectionManager();

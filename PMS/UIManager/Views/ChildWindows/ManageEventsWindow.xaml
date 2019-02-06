@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:local="clr-namespace:PMS"
     Title="Add Request"
     ShowTitleBar="False"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
@@ -29,9 +30,11 @@
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
+    <simpleChildWindow:ChildWindow.Resources>
+        <local:StatusConverter x:Key="StatusConverter" />
+    </simpleChildWindow:ChildWindow.Resources>
     <Grid Height="534" Width="816">
         <Grid HorizontalAlignment="Left" Height="37" Margin="0,32,0,0" VerticalAlignment="Top" Width="816" Background="#FFE6E6E6">
-            <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="4,5,0,0" VerticalAlignment="Top" Height="27" Width="234" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
             <Button
                 Margin="0,3,3,0" 
                 VerticalAlignment="Top" 
@@ -55,6 +58,32 @@
                     </Rectangle>
                     <TextBlock 
                         Text=" Add Event" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                </StackPanel>
+            </Button>
+            <Button
+                Margin="0,3,124,0" 
+                VerticalAlignment="Top" 
+                Width="130" 
+                Height="30" 
+                Click="CancelEvent_Click"
+                Background="#FFC94F3C" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome BanSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Cancel Event" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
@@ -113,6 +142,7 @@
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="MANAGE EVENTS" Margin="44,3,553,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+            <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="582,2,0,0" VerticalAlignment="Top" Height="27" Width="234" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
         </Grid>
         <Grid Margin="0,69,0,46">
             <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False">
@@ -148,7 +178,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" Foreground="{Binding Path=Status, Converter={StaticResource StatusConverter}}" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -183,10 +213,10 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="338,38,0,0" VerticalAlignment="Top" Width="78"/>
-        <Label Content="Page:" HorizontalAlignment="Left" Margin="286,38,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="446,38,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
-        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="568,38,0,0" VerticalAlignment="Top" Width="120">
+        <mah:NumericUpDown x:Name="CurrentPage" Minimum="1" Value="1" HorizontalAlignment="Left" Margin="62,37,0,0" VerticalAlignment="Top" Width="78"/>
+        <Label Content="Page:" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="52" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <Label Content="Entries Per Page:" HorizontalAlignment="Left" Margin="170,37,0,0" VerticalAlignment="Top" Width="122" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14"/>
+        <ComboBox x:Name="ItemsPerPage" SelectedIndex="0" HorizontalAlignment="Left" Margin="292,37,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="10"/>
             <ComboBoxItem Content="15"/>
             <ComboBoxItem Content="20"/>

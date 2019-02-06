@@ -389,7 +389,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";
@@ -487,28 +487,28 @@ namespace PMS.UIManager.Views
 				new LineSeries
 				{
 					Title = "Baptismal",
-					Values = new ChartValues<double> { CountTransactions("Baptismal Cert.", "Paying", 1), CountTransactions("Baptismal Cert.", "Paying", 2), CountTransactions("Baptismal Cert.", "Paying", 3), CountTransactions("Baptismal Cert.", "Paying", 4), CountTransactions("Baptismal Cert.", "Paying", 5), CountTransactions("Baptismal Cert.", "Paying", 6), CountTransactions("Baptismal Cert.", "Paying", 7), CountTransactions("Baptismal Cert.", "Paying", 8), CountTransactions("Baptismal Cert.", "Paying", 9), CountTransactions("Baptismal Cert.", "Paying", 10), CountTransactions("Baptismal Cert.", "Paying", 11), CountTransactions("Baptismal Cert.", "Paying", 12) },
+					Values = new ChartValues<double> { CountTransactions("Baptismal Cert.", "Unpaid", 1), CountTransactions("Baptismal Cert.", "Unpaid", 2), CountTransactions("Baptismal Cert.", "Unpaid", 3), CountTransactions("Baptismal Cert.", "Unpaid", 4), CountTransactions("Baptismal Cert.", "Unpaid", 5), CountTransactions("Baptismal Cert.", "Unpaid", 6), CountTransactions("Baptismal Cert.", "Unpaid", 7), CountTransactions("Baptismal Cert.", "Unpaid", 8), CountTransactions("Baptismal Cert.", "Unpaid", 9), CountTransactions("Baptismal Cert.", "Unpaid", 10), CountTransactions("Baptismal Cert.", "Unpaid", 11), CountTransactions("Baptismal Cert.", "Unpaid", 12) },
 					PointGeometry = DefaultGeometries.Circle,
 					PointGeometrySize = 15
 				},
 				new LineSeries
 				{
 					Title = "Confirmation",
-					Values = new ChartValues<double> { CountTransactions("Confirmation Cert.", "Paying", 1), CountTransactions("Confirmation Cert.", "Paying", 2), CountTransactions("Confirmation Cert.", "Paying", 3), CountTransactions("Confirmation Cert.", "Paying", 4), CountTransactions("Confirmation Cert.", "Paying", 5), CountTransactions("Confirmation Cert.", "Paying", 6), CountTransactions("Confirmation Cert.", "Paying", 7), CountTransactions("Confirmation Cert.", "Paying", 8), CountTransactions("Confirmation Cert.", "Paying", 9), CountTransactions("Confirmation Cert.", "Paying", 10), CountTransactions("Confirmation Cert.", "Paying", 11), CountTransactions("Confirmation Cert.", "Paying", 12) },
+					Values = new ChartValues<double> { CountTransactions("Confirmation Cert.", "Unpaid", 1), CountTransactions("Confirmation Cert.", "Unpaid", 2), CountTransactions("Confirmation Cert.", "Unpaid", 3), CountTransactions("Confirmation Cert.", "Unpaid", 4), CountTransactions("Confirmation Cert.", "Unpaid", 5), CountTransactions("Confirmation Cert.", "Unpaid", 6), CountTransactions("Confirmation Cert.", "Unpaid", 7), CountTransactions("Confirmation Cert.", "Unpaid", 8), CountTransactions("Confirmation Cert.", "Unpaid", 9), CountTransactions("Confirmation Cert.", "Unpaid", 10), CountTransactions("Confirmation Cert.", "Unpaid", 11), CountTransactions("Confirmation Cert.", "Unpaid", 12) },
 					PointGeometry = DefaultGeometries.Circle,
 					PointGeometrySize = 15
 				},
 				new LineSeries
 				{
 					Title = "Matrimonial",
-					Values = new ChartValues<double> { CountTransactions("Matrimonial Cert.", "Paying", 1), CountTransactions("Matrimonial Cert.", "Paying", 2), CountTransactions("Matrimonial Cert.", "Paying", 3), CountTransactions("Matrimonial Cert.", "Paying", 4), CountTransactions("Matrimonial Cert.", "Paying", 5), CountTransactions("Matrimonial Cert.", "Paying", 6), CountTransactions("Matrimonial Cert.", "Paying", 7), CountTransactions("Matrimonial Cert.", "Paying", 8), CountTransactions("Matrimonial Cert.", "Paying", 9), CountTransactions("Matrimonial Cert.", "Paying", 10), CountTransactions("Matrimonial Cert.", "Paying", 11), CountTransactions("Matrimonial Cert.", "Paying", 12) },
+					Values = new ChartValues<double> { CountTransactions("Matrimonial Cert.", "Unpaid", 1), CountTransactions("Matrimonial Cert.", "Unpaid", 2), CountTransactions("Matrimonial Cert.", "Unpaid", 3), CountTransactions("Matrimonial Cert.", "Unpaid", 4), CountTransactions("Matrimonial Cert.", "Unpaid", 5), CountTransactions("Matrimonial Cert.", "Unpaid", 6), CountTransactions("Matrimonial Cert.", "Unpaid", 7), CountTransactions("Matrimonial Cert.", "Unpaid", 8), CountTransactions("Matrimonial Cert.", "Unpaid", 9), CountTransactions("Matrimonial Cert.", "Unpaid", 10), CountTransactions("Matrimonial Cert.", "Unpaid", 11), CountTransactions("Matrimonial Cert.", "Unpaid", 12) },
 					PointGeometry = DefaultGeometries.Circle,
 					PointGeometrySize = 15
 				},
 				new LineSeries
 				{
 					Title = "Burial",
-					Values = new ChartValues<double> { CountTransactions("Burial Cert.", "Paying", 1), CountTransactions("Burial Cert.", "Paying", 2), CountTransactions("Burial Cert.", "Paying", 3), CountTransactions("Burial Cert.", "Paying", 4), CountTransactions("Burial Cert.", "Paying", 5), CountTransactions("Burial Cert.", "Paying", 6), CountTransactions("Burial Cert.", "Paying", 7), CountTransactions("Burial Cert.", "Paying", 8), CountTransactions("Burial Cert.", "Paying", 9), CountTransactions("Burial Cert.", "Paying", 10), CountTransactions("Burial Cert.", "Paying", 11), CountTransactions("Burial Cert.", "Paying", 12) },
+					Values = new ChartValues<double> { CountTransactions("Burial Cert.", "Unpaid", 1), CountTransactions("Burial Cert.", "Unpaid", 2), CountTransactions("Burial Cert.", "Unpaid", 3), CountTransactions("Burial Cert.", "Unpaid", 4), CountTransactions("Burial Cert.", "Unpaid", 5), CountTransactions("Burial Cert.", "Unpaid", 6), CountTransactions("Burial Cert.", "Unpaid", 7), CountTransactions("Burial Cert.", "Unpaid", 8), CountTransactions("Burial Cert.", "Unpaid", 9), CountTransactions("Burial Cert.", "Unpaid", 10), CountTransactions("Burial Cert.", "Unpaid", 11), CountTransactions("Burial Cert.", "Unpaid", 12) },
 					PointGeometry = DefaultGeometries.Circle,
 					PointGeometrySize = 15
 				}
@@ -1399,7 +1399,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";

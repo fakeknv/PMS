@@ -122,7 +122,7 @@ namespace PMS.UIManager.Views
 					//Counts Paying
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
-					cmd.Parameters.AddWithValue("@status", "Paying");
+					cmd.Parameters.AddWithValue("@status", "Unpaid");
 					cmd.Prepare();
 					db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
@@ -136,7 +136,7 @@ namespace PMS.UIManager.Views
 					//Counts Finished
 					cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status;";
-					cmd.Parameters.AddWithValue("@status", "Finished");
+					cmd.Parameters.AddWithValue("@status", "Paid");
 					cmd.Prepare();
 					db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
@@ -204,7 +204,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";
@@ -333,7 +333,7 @@ namespace PMS.UIManager.Views
 				{
 					MySqlCommand cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT * FROM transactions WHERE status = @status ORDER BY tran_date DESC , tran_time DESC;";
-					cmd.Parameters.AddWithValue("@status", "Paying");
+					cmd.Parameters.AddWithValue("@status", "Unpaid");
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
@@ -348,7 +348,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";
@@ -445,7 +445,7 @@ namespace PMS.UIManager.Views
 				{
 					MySqlCommand cmd = conn.CreateCommand();
 					cmd.CommandText = "SELECT * FROM transactions WHERE status = @status ORDER BY tran_date DESC , tran_time DESC;";
-					cmd.Parameters.AddWithValue("@status", "Finished");
+					cmd.Parameters.AddWithValue("@status", "Paid");
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
@@ -460,7 +460,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";
@@ -572,7 +572,7 @@ namespace PMS.UIManager.Views
 						}
 						string dateFinished = "";
 						string timeFinished = "";
-						if (db_reader.GetString("status") == "Paying")
+						if (db_reader.GetString("status") == "Unpaid")
 						{
 							dateFinished = " ";
 							timeFinished = " ";
@@ -730,7 +730,7 @@ namespace PMS.UIManager.Views
 						MySqlDataReader db_reader = cmd.ExecuteReader();
 						while (db_reader.Read())
 						{
-							if (db_reader.GetString("status") == "Finished")
+							if (db_reader.GetString("status") == "Paid")
 							{
 								MsgAlreadyPaid();
 							}
@@ -757,7 +757,7 @@ namespace PMS.UIManager.Views
 		private async void MsgAlreadyPaid()
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowMessageAsync("Oops!", "The selected transaction has already been finished.");
+			await metroWindow.ShowMessageAsync("Oops!", "The selected transaction has already been paid.");
 		}
 		private async void MsgNoItemSelected()
 		{
@@ -793,7 +793,7 @@ namespace PMS.UIManager.Views
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
-						if (db_reader.GetString("status") == "Finished")
+						if (db_reader.GetString("status") == "Paid")
 						{
 							MsgAlreadyPaid();
 						}
@@ -812,7 +812,6 @@ namespace PMS.UIManager.Views
 				{
 
 				}
-				dbman.DBClose();
 			}
 		}
 
@@ -824,7 +823,7 @@ namespace PMS.UIManager.Views
 		private async void FilterHelp_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowMessageAsync("Filters Help", "The buttons below the 'Filters' tab filters out transactions depending on their status. For example, clicking the 'Paying Button' will show transactions that are still pending/unpaid.");
+			await metroWindow.ShowMessageAsync("Filters Help", "The buttons below the 'Filters' tab filters out transactions depending on their status. For example, clicking the 'Unpaid Button' will show transactions that are still pending/unpaid.");
 		}
 		private async void TransTypeHelp_Click(object sender, RoutedEventArgs e)
 		{

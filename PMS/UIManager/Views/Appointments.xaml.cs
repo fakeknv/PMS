@@ -180,20 +180,10 @@ namespace PMS.UIManager.Views
 								{
 									if (IsCustom(db_reader.GetString("appointment_type")) == true)
 									{
-										if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
-										{
-											status = "Finished";
-										}
-										else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
-										{
-											status = "Pending";
-										}
-										else
-										{
-											status = "Unfinished";
-										}
+										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
 											Type = GetAType(db_reader.GetString("appointment_type")),
@@ -206,20 +196,10 @@ namespace PMS.UIManager.Views
 									}
 									else
 									{
-										if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
-										{
-											status = "Finished";
-										}
-										else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
-										{
-											status = "Pending";
-										}
-										else
-										{
-											status = "Unfinished";
-										}
+										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
 											Type = GetAType(db_reader.GetString("appointment_type")),
@@ -258,20 +238,10 @@ namespace PMS.UIManager.Views
 									}
 									else
 									{
-										if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
-										{
-											status = "Finished";
-										}
-										else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
-										{
-											status = "Pending";
-										}
-										else
-										{
-											status = "Unfinished";
-										}
+										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
 											Type = GetAType(db_reader.GetString("appointment_type")),
@@ -306,20 +276,10 @@ namespace PMS.UIManager.Views
 								{
 									if (IsCustom(db_reader.GetString("appointment_type")) == true)
 									{
-										if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
-										{
-											status = "Finished";
-										}
-										else if (DateTime.Parse(db_reader.GetString("appointment_date")) == DateTime.Now)
-										{
-											status = "Pending";
-										}
-										else
-										{
-											status = "Unfinished";
-										}
+										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
 											Type = GetAType(db_reader.GetString("appointment_type")),
@@ -344,6 +304,31 @@ namespace PMS.UIManager.Views
 				}
 			}
 			EventsHolder.ItemsSource = events;
+		}
+		private string GetStatus(string aid)
+		{
+			string ret = "";
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT status FROM transactions WHERE target_id = @aid LIMIT 1;";
+				cmd.Parameters.AddWithValue("@aid", aid);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = db_reader.GetString("status");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = "";
+			}
+			return ret;
 		}
 		private bool IsCustom(string tid)
 		{

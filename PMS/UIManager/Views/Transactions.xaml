@@ -6,12 +6,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:PMS"
     mc:Ignorable="d"
     x:Class="PMS.UIManager.Views.Transactions"
     Margin="0" 
     Padding="0" 
     d:DesignHeight="616.513" 
     d:DesignWidth="947.25">
+    <UserControl.Resources>
+        <local:StatusConverter x:Key="StatusConverter" />
+    </UserControl.Resources>
     <Grid 
         x:Name="RequestMainGrid" 
         Background="#FFF1F1F3">
@@ -148,7 +152,7 @@
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
-                                    Text="  Finished" 
+                                    Text="  Paid" 
                                     FontFamily="Segoe UI" />
                             </StackPanel>
                         </Button>
@@ -220,7 +224,7 @@
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <TextBlock 
-                                    Text="  Paying" 
+                                    Text="  Unpaid" 
                                     FontFamily="Segoe UI" />
                             </StackPanel>
                         </Button>
@@ -457,7 +461,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" Foreground="{Binding Path=Status, Converter={StaticResource StatusConverter}}" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
