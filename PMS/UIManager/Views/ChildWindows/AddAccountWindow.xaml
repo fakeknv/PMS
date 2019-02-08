@@ -136,7 +136,7 @@
                 </Label.RenderTransform>
             </Label>
             <UIComponents:Validator x:Name="AccountTypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,39,47,0" VerticalAlignment="Top" Width="16"/>
-            <UIComponents:Validator x:Name="EmpNameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,196,47,0" VerticalAlignment="Top" Width="16"/>
+            <UIComponents:Validator x:Name="EmpNameValidator" Visibility="Visible" HorizontalAlignment="Right" Height="18" Margin="0,196,47,0" VerticalAlignment="Top" Width="16"/>
             <UIComponents:Validator x:Name="UsernameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,239,47,0" VerticalAlignment="Top" Width="16"/>
             <UIComponents:Validator x:Name="PasswordValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,282,47,0" VerticalAlignment="Top" Width="16"/>
         </Grid>

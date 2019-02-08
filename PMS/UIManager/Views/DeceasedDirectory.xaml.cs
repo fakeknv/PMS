@@ -49,7 +49,7 @@ namespace PMS.UIManager.Views
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
-		private int CountEntries(string did) {
+		private int CountEntries(string block) {
 			int ret = 0;
 			dbman = new DBConnectionManager();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -61,8 +61,8 @@ namespace PMS.UIManager.Views
 					{
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM burial_directory WHERE directory_id = @did;";
-						cmd.Parameters.AddWithValue("@did", did);
+						cmd.CommandText = "SELECT COUNT(*) FROM burial_directory WHERE block = @block;";
+						cmd.Parameters.AddWithValue("@block", block);
 						MySqlDataReader db_reader = cmd.ExecuteReader();
 						while (db_reader.Read())
 						{
@@ -92,14 +92,14 @@ namespace PMS.UIManager.Views
 					{
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT * FROM burial_directory ORDER BY block ASC;";
+						cmd.CommandText = "SELECT * FROM burial_directory GROUP BY block ASC;";
 						MySqlDataReader db_reader = cmd.ExecuteReader();
 						while (db_reader.Read())
 						{
 							string block = db_reader.GetString("block");
 							DirectoryItem2 di = new DirectoryItem2();
 							di.BlockHolder.Text = "Block: " + db_reader.GetString("block");
-							di.BlockContentStatHolder.Content = "Entries: " + CountEntries(db_reader.GetString("directory_id"));
+							di.BlockContentStatHolder.Content = "Entries: " + CountEntries(db_reader.GetString("block"));
 							di.ViewDirectoryButton.Click += (sender, e) => { ViewDirectory_Click(sender, e, block); };
 							di.Page.Content = page;
 							directories.Add(di);

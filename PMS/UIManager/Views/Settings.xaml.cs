@@ -57,7 +57,6 @@ namespace PMS.UIManager.Views
 			dbman.DBClose();
 			return ret;
 		}
-
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
 			dbman = new DBConnectionManager();

@@ -106,8 +106,8 @@
                                 </ComboBox>
                                 <ComboBox x:Name="StatusType" SelectedIndex="1" HorizontalAlignment="Right" Margin="0,17,283,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
                                     <ComboBoxItem Content="All"/>
-                                    <ComboBoxItem Content="Paying"/>
-                                    <ComboBoxItem Content="Finished"/>
+                                    <ComboBoxItem Content="Unpaid"/>
+                                    <ComboBoxItem Content="Paid"/>
                                     <ComboBoxItem Content="Cancelled"/>
                                 </ComboBox>
                                 <Label Content="This Year's Monthly Transaction Graph" HorizontalAlignment="Left" Margin="42,17,0,0" VerticalAlignment="Top" Height="30" Width="320" FontFamily="Segoe UI" FontSize="16"/>
@@ -243,8 +243,8 @@
                             <Label Content="Transactions List" HorizontalAlignment="Left" Margin="10,1198,0,0" VerticalAlignment="Top" Height="34" Width="186" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="20"/>
                             <ComboBox x:Name="RepStatus" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,732,331,0" VerticalAlignment="Top" Width="100" Height="24">
                                 <ComboBoxItem>All</ComboBoxItem>
-                                <ComboBoxItem>Finished</ComboBoxItem>
-                                <ComboBoxItem>Paying</ComboBoxItem>
+                                <ComboBoxItem>Paid</ComboBoxItem>
+                                <ComboBoxItem>Unpaid</ComboBoxItem>
                                 <ComboBoxItem>Cancelled</ComboBoxItem>
                             </ComboBox>
                             <Label Content="Status" HorizontalAlignment="Right" Margin="0,732,435,0" VerticalAlignment="Top" Height="24" Width="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>

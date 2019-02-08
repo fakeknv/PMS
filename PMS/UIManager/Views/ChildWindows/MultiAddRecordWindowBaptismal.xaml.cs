@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
+using Microsoft.Win32;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
 using PMS.UIManager.Views.ChildViews;
@@ -8,7 +9,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
 using System.Globalization;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,8 +32,6 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		private int _statcode;
 
-		ObservableCollection<MRecordEntryBaptismal> test1;
-
 		private int _bookNum;
 		private ViewRecordEntries _vre;
 
@@ -41,11 +42,30 @@ namespace PMS.UIManager.Views.ChildWindows
 			_bookNum = bookNum;
 			PageNum.Value = _vre.Page.Value;
 
-			test1 = new ObservableCollection<MRecordEntryBaptismal>();
-
-			RecordItemsHolder.ItemsSource = test1;
-
 			this.DataContext = this;
+		}
+		private void ImportButton_Click(object sender, RoutedEventArgs e)
+		{
+			String file_path = "";
+			OpenFileDialog opfile = new OpenFileDialog();
+			opfile.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+			if (opfile.ShowDialog() == true)
+			{
+				file_path = opfile.FileName;
+			}
+			try
+			{
+				String Path = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + file_path + ";Extended Properties = \"Excel 12.0 Xml;HDR=YES\"; ";
+				OleDbConnection conn = new OleDbConnection(Path);
+				String s = "Sheet1";
+				OleDbDataAdapter connAd = new OleDbDataAdapter("Select * from [" + s + "$]", conn);
+				DataTable dt = new DataTable();
+				connAd.Fill(dt);
+				databap.ItemsSource = dt.AsDataView();
+				//MessageBox.Show(dt.Rows[0][0].ToString());
+			}
+			catch { }
+
 		}
 		private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
@@ -63,6 +83,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			ConfirmBtn.IsEnabled = true;
 			if (_statcode > 0)
 			{
+				_vre.Sync(_bookNum);
 				MsgSuccess();
 				this.Close();
 			}
@@ -71,77 +92,21 @@ namespace PMS.UIManager.Views.ChildWindows
 				MsgFail();
 			}
 		}
+		private void DownloadButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			SaveFileDialog saveFileDialog = new SaveFileDialog();
+			saveFileDialog.Filter = "Excel |*.xlsx";
+			if (saveFileDialog.ShowDialog() == true)
+				File.Copy(@"Data/test_bap.xlsx", saveFileDialog.FileName);
+		}
 		private void DoWork(object sender, DoWorkEventArgs e) {
-			System.Collections.IList items = RecordItemsHolder.Items;
-			for (int i = 0; i < items.Count - 1; i++)
+			try
 			{
-				MRecordEntryBaptismal recordx = (MRecordEntryBaptismal)items[i];
+				DataTable dt = new DataTable();
+				dt = ((DataView)databap.ItemsSource).ToTable();
+				//MessageBox.Show(dt.Rows[0][0].ToString());
 
-				bool proceed = true;
-				App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
-				{
-					if (string.IsNullOrWhiteSpace(recordx.EntryNumber.ToString()) || recordx.EntryNumber < 1)
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.FullName))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.Legitimacy))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.BaptismalDate))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.BirthDate))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.PlaceOfBirth))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.Parent1) || string.IsNullOrWhiteSpace(recordx.Parent1))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.Godparent1) || string.IsNullOrWhiteSpace(recordx.Godparent2))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.Stipend.ToString()))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-					if (string.IsNullOrWhiteSpace(recordx.Minister))
-					{
-						ValidatorMsg.Visibility = Visibility.Visible;
-						ValidatorIcon.Visibility = Visibility.Visible;
-						proceed = false;
-					}
-				});
-				if (proceed == true)
+				for (int i = 0; i < dt.Rows.Count; i++)
 				{
 					dbman = new DBConnectionManager();
 					pmsutil = new PMSUtil();
@@ -161,28 +126,28 @@ namespace PMS.UIManager.Views.ChildWindows
 								cmd.Parameters.AddWithValue("@record_id", recID);
 								cmd.Parameters.AddWithValue("@book_number", _bookNum);
 								cmd.Parameters.AddWithValue("@page_number", PageNum.Value);
-								cmd.Parameters.AddWithValue("@entry_number", recordx.EntryNumber);
-								cmd.Parameters.AddWithValue("@record_date", DateTime.Parse(recordx.BaptismalDate).ToString("yyyy-MM-dd"));
-								cmd.Parameters.AddWithValue("@recordholder_fullname", recordx.FullName);
-								cmd.Parameters.AddWithValue("@parent1_fullname", recordx.Parent1);
-								cmd.Parameters.AddWithValue("@parent2_fullname", recordx.Parent2);
+								cmd.Parameters.AddWithValue("@entry_number", Convert.ToInt32(dt.Rows[i][0].ToString()));
+								cmd.Parameters.AddWithValue("@record_date", dt.Rows[i][1].ToString());
+								cmd.Parameters.AddWithValue("@recordholder_fullname", dt.Rows[i][2].ToString());
+								cmd.Parameters.AddWithValue("@parent1_fullname", dt.Rows[i][6].ToString());
+								cmd.Parameters.AddWithValue("@parent2_fullname", dt.Rows[i][7].ToString());
 								int stat_code = cmd.ExecuteNonQuery();
 								dbman.DBClose();
-								//Phase 2
+
 								cmd = dbman.DBConnect().CreateCommand();
 								cmd.CommandText =
 									"INSERT INTO baptismal_records(record_id, birthday, legitimacy, place_of_birth, sponsor1, sponsor2, stipend, minister, remarks)" +
 									"VALUES(@record_id, @birthday, @legitimacy, @place_of_birth, @sponsor1, @sponsor2, @stipend, @minister, @remarks)";
 								cmd.Prepare();
 								cmd.Parameters.AddWithValue("@record_id", recID);
-								cmd.Parameters.AddWithValue("@birthday", DateTime.Parse(recordx.BirthDate).ToString("yyyy-MM-dd"));
-								cmd.Parameters.AddWithValue("@legitimacy", recordx.Legitimacy);
-								cmd.Parameters.AddWithValue("@place_of_birth", recordx.PlaceOfBirth);
-								cmd.Parameters.AddWithValue("@sponsor1", recordx.Godparent1);
-								cmd.Parameters.AddWithValue("@sponsor2", recordx.Godparent2);
-								cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(string.Format("{0:N3}", recordx.Stipend)));
-								cmd.Parameters.AddWithValue("@minister", recordx.Minister);
-								cmd.Parameters.AddWithValue("@remarks", recordx.Remarks);
+								cmd.Parameters.AddWithValue("@birthday", dt.Rows[i][3].ToString());
+								cmd.Parameters.AddWithValue("@legitimacy", dt.Rows[i][4].ToString());
+								cmd.Parameters.AddWithValue("@place_of_birth", dt.Rows[i][5].ToString());
+								cmd.Parameters.AddWithValue("@sponsor1", dt.Rows[i][8].ToString());
+								cmd.Parameters.AddWithValue("@sponsor2", dt.Rows[i][9].ToString());
+								cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(dt.Rows[i][10].ToString()));
+								cmd.Parameters.AddWithValue("@minister", dt.Rows[i][11].ToString());
+								cmd.Parameters.AddWithValue("@remarks", dt.Rows[i][12].ToString());
 								stat_code = cmd.ExecuteNonQuery();
 								dbman.DBClose();
 								string tmp = pmsutil.LogRecord(recID, "LOGC-01");
@@ -196,9 +161,11 @@ namespace PMS.UIManager.Views.ChildWindows
 						}
 					}
 				}
-				else {
-
-				}
+				this.Close();
+			}
+			catch
+			{
+				
 			}
 		}
 		private void CreateAccountButton_Click(object sender, RoutedEventArgs e)
@@ -226,18 +193,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Failed!", "The requested action failed. Please check your input and try again.");
 		}
-		private void EnableCustom(object sender, SelectionChangedEventArgs e)
-		{
-			
-		}
-
-		private void SyncEntryNum(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			NumericUpDown nud = (NumericUpDown)sender;
-			var currentRowIndex = RecordItemsHolder.Items.IndexOf(RecordItemsHolder.CurrentItem);
-			nud.Value = currentRowIndex + 1;
-		}
-
 		private void SyncFee(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			pmsutil = new PMSUtil();

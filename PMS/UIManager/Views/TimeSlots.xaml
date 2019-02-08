@@ -104,7 +104,7 @@
                     <Rectangle.Fill>
                         <VisualBrush 
                             Stretch="Fill"
-                            Visual="{iconPacks:FontAwesome UserEditSolid}" />
+                            Visual="{iconPacks:FontAwesome ClockRegular}" />
                     </Rectangle.Fill>
                 </Rectangle>
                 <TextBlock 
@@ -128,11 +128,11 @@
                     <Rectangle.Fill>
                         <VisualBrush 
                             Stretch="Fill"
-                            Visual="{iconPacks:FontAwesome UserPlusSolid}" />
+                            Visual="{iconPacks:FontAwesome ClockSolid}" />
                     </Rectangle.Fill>
                 </Rectangle>
                 <TextBlock 
-                    Text=" Add Account" />
+                    Text=" Add Timeslot" />
             </StackPanel>
         </Button>
         <Label Foreground="#FF545454" Content="Parish Management System | Manage Timeslots" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>

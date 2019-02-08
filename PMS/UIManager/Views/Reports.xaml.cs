@@ -1915,7 +1915,13 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0) {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = @type AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
@@ -1936,7 +1942,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = @type AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
@@ -1957,7 +1971,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = @type AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
@@ -1978,7 +2000,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = @type AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Burial Cert.");
@@ -1999,7 +2029,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2023,7 +2061,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2045,7 +2091,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2067,7 +2121,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2089,7 +2151,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2111,7 +2181,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2133,7 +2211,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Prepare();
@@ -2165,10 +2251,19 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND status = @status AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Baptismal Cert.");
+						
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
 						{
@@ -2188,7 +2283,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND status = @status AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Confirmation Cert.");
@@ -2211,7 +2314,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND status = @status AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Matrimonial Cert.");
@@ -2234,7 +2345,15 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type = @type AND status = @status AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@type", "Burial Cert.");
@@ -2257,6 +2376,17 @@ namespace PMS.UIManager.Views
 
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT fee FROM transactions WHERE status = @status AND type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
 						cmd.CommandText = "SELECT fee FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
 						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
@@ -2269,6 +2399,186 @@ namespace PMS.UIManager.Views
 								_fee += db_reader.GetDouble("fee");
 							}
 							OthersVal.Values = new ChartValues<ObservableValue> { new ObservableValue(Convert.ToDouble(string.Format("{0:N3}", _fee))) };
+						}
+					}
+
+					//Certificate Retrieval
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0) {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+						}
+						else {
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND (type = 'Baptismal Cert.' OR type = 'Confirmation Cert.' OR type = 'Matrimonial Cert.' OR type = 'Burial Cert.') AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								TotalCertificateRetrieval.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Others
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type != 'Baptismal Cert.' AND type != 'Confirmation Cert.' AND type != 'Matrimonial Cert.' AND type != 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								OtherCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Baptismal
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Baptismal Cert.' AND tran_date > @min AND tran_date < @max;"; ;
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								BaptismalCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Confirmation
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Confirmation Cert.' AND tran_date > @min AND tran_date < @max;"; ;
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								ConfirmationCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Matrimonial
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Matrimonial Cert.' AND tran_date > @min AND tran_date < @max;"; ;
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								MatrimonialCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
+						}
+					}
+					//Certificate Retrieval Burial
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						string[] dt = pmsutil.GetServerDateTime().Split(null);
+						DateTime cDate = Convert.ToDateTime(dt[0]);
+						var start = new DateTime(cDate.Year, 1, 1);
+						var end = new DateTime(cDate.Year, 12, 31);
+
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						if (RepStatus.SelectedIndex == 0)
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;";
+						}
+						else
+						{
+							cmd.CommandText = "SELECT COUNT(*) FROM transactions WHERE status = @status AND type = 'Burial Cert.' AND tran_date > @min AND tran_date < @max;"; ;
+							cmd.Parameters.AddWithValue("@status", RepStatus.Text);
+						}
+						cmd.Parameters.AddWithValue("@min", DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@max", DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								BurialCount.Content = db_reader.GetInt32("COUNT(*)");
+							}
 						}
 					}
 				}

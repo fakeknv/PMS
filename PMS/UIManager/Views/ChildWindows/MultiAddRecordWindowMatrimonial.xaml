@@ -73,234 +73,61 @@
             </Grid>
         </Border>
         <Grid Margin="0,32,0,46">
-            <DataGrid x:Name="RecordItemsHolder" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" IsReadOnly="False" AutoGenerateColumns="False" Margin="0,41,0,0">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="No.">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding EntryNumber}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <mah:NumericUpDown Minimum="1" HideUpDownButtons="True" Value="{Binding EntryNumber}" MouseLeftButtonUp="SyncEntryNum" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Marriage Date">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding MarriageDate, Converter={StaticResource converter}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding MarriageDate}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Name">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding FullName1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding FullName2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding FullName1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding FullName2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Age">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Age1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding Age2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Age1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Age2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Hometown">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Hometown1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding Hometown2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding Hometown1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding Hometown2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Residence">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Residence1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding Residence2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding Residence1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding Residence2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Parents">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                    <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent3}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                    </Border>
-                                    <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent4}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <StackPanel>
-                                        <TextBox TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                        <TextBox TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                        <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                            <TextBox TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent3}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                        </Border>
-                                        <TextBox TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent4}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Sponsors">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Sponsor1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding Sponsor2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding Sponsor1}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding Sponsor2}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Residence">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding W1Residence}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBlock Text="{Binding W2Residence}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox Text="{Binding W1Residence}"/>
-                                    <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                        <TextBox Text="{Binding W2Residence}"/>
-                                    </Border>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Stipend">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Stipend}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <mah:NumericUpDown HideUpDownButtons="True" Minimum="1" Value="{Binding Stipend}" MouseLeftButtonUp="SyncFee"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Minister">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Minister}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding Minister}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Remarks">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Remarks}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <TextBox Text="{Binding Remarks}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
             <mah:NumericUpDown x:Name="PageNum" Value="1" Minimum="1" Maximum="200" HorizontalAlignment="Left" Margin="112,5,0,0" VerticalAlignment="Top" Width="132"/>
             <Label Content="Insert to Page #" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="97" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            <Button
+                Margin="0,5,4,0" 
+                VerticalAlignment="Top" 
+                Width="106" 
+                Height="30" 
+                Click="ImportButton_Click"
+                Background="#FF3C7AC9" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome FileImportSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text="  Import" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="58" />
+                </StackPanel>
+            </Button>
+            <DataGrid x:Name="datamat" Margin="0,40,0,0"/>
+            <Button
+                Margin="0,5,115,0" 
+                VerticalAlignment="Top" 
+                Width="174" 
+                Height="30" 
+                Click="DownloadButton_Click"
+                Background="#FF3C7AC9" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome DownloadSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text="  Download Template" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="137" />
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

@@ -114,9 +114,9 @@ namespace PMS.UIManager.Views.ChildWindows
 						_lot = db_reader.GetString("lot");
 						_plot = db_reader.GetString("plot");
 
-						BlockHolder.Content = db_reader.GetString("block");
-						LotHolder.Content = db_reader.GetString("lot");
-						PlotHolder.Content = db_reader.GetString("plot");
+						BlockHolder.Content = "Block: " + db_reader.GetString("block");
+						LotHolder.Content = "Lot: " + db_reader.GetString("lot");
+						PlotHolder.Content = "Plot: " + db_reader.GetString("plot");
 					}
 					conn.Close();
 				}

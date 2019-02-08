@@ -67,7 +67,7 @@
         <Grid Margin="0,32,0,0" Height="183" VerticalAlignment="Top">
             <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="251,119,0,0" VerticalAlignment="Top" Width="311" Height="26">
                 <ComboBoxItem Content="Mass"/>
-                <ComboBoxItem Content="Special"/>
+                <ComboBoxItem Content="Other Service"/>
             </ComboBox>
             <Label
                 Content="Type" 
