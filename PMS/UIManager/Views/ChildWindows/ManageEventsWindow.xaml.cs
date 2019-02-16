@@ -57,8 +57,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			int page = 1;
 			int count = 0;
 
-			ObservableCollection<EventsItem> events = new ObservableCollection<EventsItem>();
-
 			dbman = new DBConnectionManager();
 
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -80,7 +78,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							while (db_reader.Read())
 							{
 								status = GetStatus(db_reader.GetString("appointment_id"));
-								events.Add(new EventsItem()
+								_events.Add(new EventsItem()
 								{
 									AppID = db_reader.GetString("appointment_id"),
 									Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
@@ -99,12 +97,14 @@ namespace PMS.UIManager.Views.ChildWindows
 									count = 0;
 								}
 							}
+							int temp = 1;
 							foreach (var cur in _events)
 							{
 								if (cur.Page == CurrentPage.Value)
 								{
 									_events_final.Add(new EventsItem()
 									{
+										No = temp,
 										Date = cur.Date,
 										Time = cur.Time,
 										Type = cur.Type,
@@ -114,6 +114,7 @@ namespace PMS.UIManager.Views.ChildWindows
 										Priest = cur.Priest,
 										Page = cur.Page
 									});
+									temp++;
 								}
 							}
 							EventsHolder.Items.Refresh();
@@ -124,7 +125,6 @@ namespace PMS.UIManager.Views.ChildWindows
 					}
 				}
 			}
-			EventsHolder.ItemsSource = events;
 		}
 		internal void SyncEvent2()
 		{
@@ -137,8 +137,6 @@ namespace PMS.UIManager.Views.ChildWindows
 			int page = 1;
 			int count = 0;
 
-			ObservableCollection<EventsItem> events = new ObservableCollection<EventsItem>();
-
 			dbman = new DBConnectionManager();
 
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
@@ -160,7 +158,7 @@ namespace PMS.UIManager.Views.ChildWindows
 							while (db_reader.Read())
 							{
 								status = GetStatus(db_reader.GetString("appointment_id"));
-								events.Add(new EventsItem()
+								_events.Add(new EventsItem()
 								{
 									AppID = db_reader.GetString("appointment_id"),
 									Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
@@ -179,13 +177,14 @@ namespace PMS.UIManager.Views.ChildWindows
 									count = 0;
 								}
 							}
+							int temp = 1;
 							foreach (var cur in _events)
 							{
 								if (cur.Page == CurrentPage.Value)
 								{
 									_events_final.Add(new EventsItem()
 									{
-										AppID = cur.AppID,
+										No = temp,
 										Date = cur.Date,
 										Time = cur.Time,
 										Type = cur.Type,
@@ -195,6 +194,7 @@ namespace PMS.UIManager.Views.ChildWindows
 										Priest = cur.Priest,
 										Page = cur.Page
 									});
+									temp++;
 								}
 							}
 							EventsHolder.Items.Refresh();
@@ -205,7 +205,6 @@ namespace PMS.UIManager.Views.ChildWindows
 					}
 				}
 			}
-			EventsHolder.ItemsSource = events;
 		}
 		private string GetStatus(string aid)
 		{
@@ -676,6 +675,28 @@ namespace PMS.UIManager.Views.ChildWindows
 			else {
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
 				await metroWindow.ShowChildWindowAsync(new CancelAppointmentWindow(this, ei.AppID));
+			}
+		}
+
+		private async void EditButton_Click(object sender, RoutedEventArgs e)
+		{
+			EventsItem ei = (EventsItem)EventsHolder.SelectedItem;
+			if (ei == null)
+			{
+				MsgNoItemSelected();
+			}
+			else if (GetStatus(ei.AppID) == "Cancelled")
+			{
+				MsgAlreadyCancelled();
+			}
+			else if (GetStatus(ei.AppID) == "Paid")
+			{
+				MsgAlreadyPaid();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new EditAppointmentWindow(this, ei.AppID));
 			}
 		}
 	}

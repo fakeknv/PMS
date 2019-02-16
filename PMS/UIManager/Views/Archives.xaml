@@ -7,7 +7,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" x:Class="PMS.UIManager.Views.Archives"
-	d:DesignHeight="411" d:DesignWidth="944">
+	d:DesignHeight="458.979" d:DesignWidth="944">
+    <UserControl.Resources>
+        <DataTemplate x:Key="xtabHeader">
+            <Grid Background="#FF4396CF">
+                <TextBlock Text="{Binding}" FontWeight="Bold" Padding="15,0,15,0" Foreground="White"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid Background="WhiteSmoke" x:Name="RegisterMainGrid">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -237,26 +244,62 @@
                 </ComboBox>
             </Grid>
             <Grid Margin="0,58,0,0" Background="WhiteSmoke">
-                <ListView x:Name="RegistersItemContainer"  ItemsSource="{Binding Items}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Padding" Value="0,0,0,0"/>
-                            <Setter Property="Margin" Value="0,20,0,0"/>
-                            <Setter Property="Width" Value="209.979"/>
-                            <Setter Property="Height" Value="242"/>
+                <TabControl>
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True" >
+                                    <Setter Property="HeaderTemplate" Value="{StaticResource xtabHeader}"/>
+                                </Trigger>
+                            </Style.Triggers>
                         </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.Template>
-                        <ControlTemplate>
-                            <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
-                                <UniformGrid Columns="4" IsItemsHost="True"/>
-                            </ScrollViewer>
-                        </ControlTemplate>
-                    </ListView.Template>
-                </ListView>
+                    </TabControl.ItemContainerStyle>
+                    <TabItem Header="Active Registers" Padding="0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+                        <Grid Background="#FFE5E5E5">
+                            <ListView x:Name="RegistersItemContainer"  ItemsSource="{Binding Items}" FontFamily="Segoe UI">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Padding" Value="0,0,0,0"/>
+                                        <Setter Property="Margin" Value="0,20,0,0"/>
+                                        <Setter Property="Width" Value="209.979"/>
+                                        <Setter Property="Height" Value="242"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
+                                            <UniformGrid Columns="4" IsItemsHost="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListView.Template>
+                            </ListView>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Archived Registers" Padding="15,0,15,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+                        <Grid Background="#FFE5E5E5">
+                            <ListView x:Name="ArchivedRegistersItemContainer"  ItemsSource="{Binding Items}" FontFamily="Segoe UI">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Padding" Value="0,0,0,0"/>
+                                        <Setter Property="Margin" Value="0,20,0,0"/>
+                                        <Setter Property="Width" Value="209.979"/>
+                                        <Setter Property="Height" Value="242"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.Template>
+                                    <ControlTemplate>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,20">
+                                            <UniformGrid Columns="4" IsItemsHost="True"/>
+                                        </ScrollViewer>
+                                    </ControlTemplate>
+                                </ListView.Template>
+                            </ListView>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Archives" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Archives" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="477" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

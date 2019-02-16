@@ -181,6 +181,28 @@ namespace PMS
 			}
 			return ret;
 		}
+		internal string GetEmpName(string uid)
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM accounts_info WHERE account_id = @uid LIMIT 1;";
+				cmd.Parameters.AddWithValue("@uid", uid);
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = db_reader.GetString("name");
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
 		internal string GetUsername(string uid) {
 			dbman = new DBConnectionManager();
 			if (dbman.DBConnect().State == ConnectionState.Open)
@@ -346,7 +368,7 @@ namespace PMS
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{
-					ret = "PT-" + (db_reader.GetInt32("COUNT(priest_id)") + 1);
+					ret = "PR-" + (db_reader.GetInt32("COUNT(priest_id)") + 1);
 				}
 				//close Connection
 				dbman.DBClose();

@@ -2,6 +2,7 @@
 {
 	class Priest
 	{
+		public int No { get; set; }
 		public string PriestID { get; set; }
 		public string Name { get; set; }
 		public string Status { get; set; }

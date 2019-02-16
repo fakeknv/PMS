@@ -234,12 +234,14 @@ namespace PMS.UIManager.Views
 							count = 0;
 						}
 					}
+					int temp = 1;
 					foreach (var cur in transactions)
 					{
 						if (cur.Page == CurrentPage.Value)
 						{
 							transactions_final.Add(new Transaction()
 							{
+								No = temp,
 								TransactionID = cur.TransactionID,
 								Type = cur.Type,
 								Name = cur.Name,
@@ -252,6 +254,7 @@ namespace PMS.UIManager.Views
 								TimeConfirmed = cur.TimeConfirmed,
 								Page = cur.Page
 							});
+							temp++;
 						}
 					}
 					//close Connection

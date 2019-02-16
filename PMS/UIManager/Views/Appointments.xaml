@@ -17,6 +17,11 @@
     d:DesignWidth="800">
     <UserControl.Resources>
         <local:StatusConverter x:Key="StatusConverter" />
+        <DataTemplate x:Key="xtabHeader">
+            <Grid Background="#FF4396CF">
+                <TextBlock Text="{Binding}" Padding="15,0,15,0" Foreground="White"/>
+            </Grid>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid 
         x:Name="AppointmentMainGrid" 
@@ -75,7 +80,16 @@
         </Grid>
         <Grid Margin="0,46,0,0">
             <TabControl Margin="20,10,270,10">
-                <TabItem Header="Daily">
+                <TabControl.ItemContainerStyle>
+                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True" >
+                                <Setter Property="HeaderTemplate" Value="{StaticResource xtabHeader}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabControl.ItemContainerStyle>
+                <TabItem Header="List" Padding="0">
                     <Grid Background="#FFE5E5E5">
                         <ComboBox x:Name="ListType" DropDownClosed="SyncList" Margin="0,5,5,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="146">
                             <ComboBoxItem>All</ComboBoxItem>
@@ -86,8 +100,17 @@
                         <Label Content="Start:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
                         <DatePicker x:Name="ListMaxDate" HorizontalAlignment="Left" Margin="221,5,0,0" VerticalAlignment="Top" Width="128"/>
                         <Label Content="End:" HorizontalAlignment="Left" Margin="182,5,0,0" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False" Margin="0,36,0,0" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All">
+                        <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False" Margin="0,36,0,0" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All" CanUserAddRows="False">
                             <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -155,7 +178,7 @@
                         </DataGrid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Calendar">
+                <TabItem Header="Calendar" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="15,0,15,0">
                     <Grid Background="#FFE5E5E5">
                         <UIComponents:Calendar Background="White"/>
                     </Grid>
@@ -223,7 +246,7 @@
                 <Label x:Name="Day" Content="This Day: " Margin="10,250,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
             </Grid>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Scheduling" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Scheduling" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="477" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

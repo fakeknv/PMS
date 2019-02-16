@@ -179,12 +179,14 @@ namespace PMS.UIManager.Views.ChildViews
 					}
 				}
 			}
+			int temp = 1;
 			foreach (var cur in items)
 			{
 				if (cur.Page == CurrentPage.Value)
 				{
 					items_final.Add(new DirEntry()
 					{
+						No = temp,
 						DirectoryID = cur.DirectoryID,
 						RecordID = cur.RecordID,
 						Lot = cur.Lot,
@@ -194,6 +196,7 @@ namespace PMS.UIManager.Views.ChildViews
 						BurialDate = cur.BurialDate,
 						Page = cur.Page
 					});
+					temp++;
 				}
 			}
 			DirectoryItemsContainer.Items.Refresh();

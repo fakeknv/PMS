@@ -7,9 +7,9 @@
     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
-    x:Class="PMS.UIManager.Views.ChildWindows.AddAppointmentWindow2"
+    x:Class="PMS.UIManager.Views.ChildWindows.EditAppointmentWindow"
     ShowTitleBar="False"
-    d:DesignHeight="567.955"
+    d:DesignHeight="573.955"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsOpen="True"
@@ -23,12 +23,12 @@
             Opacity="0.7" 
             Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="558">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="564">
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
-            <Label Content="ADD APPOINTMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <Label Content="EDIT APPOINTMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
-        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,512,0,0">
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,518,0,0">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton1" 
                     Content="Close" 
@@ -91,7 +91,7 @@
                     </Setter>
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="Regular Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16">
+            <TabItem x:Name="Tab1" Header="Regular Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16">
                 <Grid Margin="0,0,-4,-2">
                     <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="52,249,0,0" Height="26" FontSize="14"/>
                     <Label 
@@ -149,7 +149,7 @@
                     <UIComponents:Validator x:Name="SoulsofValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,110,19,0" VerticalAlignment="Top" Width="16"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Other Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+            <TabItem x:Name="Tab2" Header="Other Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
                 <Grid>
                     <Label 
                         Content="Event/Service Type" 
@@ -189,11 +189,11 @@
                         Margin="389,302,0,0" 
                         VerticalAlignment="Top" 
                         Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <mah:NumericUpDown x:Name="Fee2" HorizontalAlignment="Left" Margin="85,380,0,-18" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
+                    <mah:NumericUpDown x:Name="Fee2" HorizontalAlignment="Left" Margin="85,380,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
                     <Label 
                         Content="Fee" 
                         HorizontalAlignment="Left"
-                        Margin="37,380,0,-18" 
+                        Margin="37,380,0,0" 
                         VerticalAlignment="Top" 
                         Width="38" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
                     <DatePicker x:Name="SelectedDate2" HorizontalAlignment="Left" Margin="37,332,0,0" VerticalAlignment="Top" Width="235" Foreground="#FF474747"/>

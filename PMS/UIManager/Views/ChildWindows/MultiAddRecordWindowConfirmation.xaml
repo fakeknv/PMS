@@ -67,9 +67,9 @@
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
-                <mah:MetroProgressBar x:Name="PBar" Height="10" Margin="10,0,251,10" VerticalAlignment="Bottom"/>
+                <mah:MetroProgressBar x:Name="PBar" Height="10" Margin="10,0,251,10" VerticalAlignment="Bottom" Value="100" IsIndeterminate="True" Visibility="Hidden"/>
                 <UIComponents:Validator Foreground="Red" x:Name="ValidatorIcon" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,4,794,0" VerticalAlignment="Top" Width="16"/>
-                <Label Content="All fields are required! Please fill out empty fields and try again." Visibility="Hidden" Foreground="Red" x:Name="ValidatorMsg" HorizontalAlignment="Left" Margin="55,4,0,0" VerticalAlignment="Top" Height="17" Padding="0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Width="503"/>
+                <Label Content="Invalid input detected. Please check the file and its content then try again!" Visibility="Hidden" Foreground="Red" x:Name="ValidatorMsg" HorizontalAlignment="Left" Margin="55,4,0,0" VerticalAlignment="Top" Height="17" Padding="0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Width="503"/>
             </Grid>
         </Border>
         <Grid Margin="0,32,0,46">

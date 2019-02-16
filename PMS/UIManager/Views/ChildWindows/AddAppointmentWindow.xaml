@@ -9,7 +9,7 @@
     xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
     x:Class="PMS.UIManager.Views.ChildWindows.AddAppointmentWindow"
     ShowTitleBar="False"
-    d:DesignHeight="507.955"
+    d:DesignHeight="573.955"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsOpen="True"
@@ -23,12 +23,12 @@
             Opacity="0.7" 
             Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="498">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="564">
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="ADD APPOINTMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
-        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,452,0,0">
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,518,0,0">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton1" 
                     Content="Close" 
@@ -149,73 +149,73 @@
                     <UIComponents:Validator x:Name="SoulsofValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,110,19,0" VerticalAlignment="Top" Width="16"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Other" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+            <TabItem Header="Other Events" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
                 <Grid>
                     <Label 
                         Content="Event/Service Type" 
                         HorizontalAlignment="Left"
-                        Margin="52,16,0,0" 
+                        Margin="37,74,0,0" 
                         VerticalAlignment="Top" 
-                        Width="154" Height="25" FontSize="14"/>
+                        Width="154" Height="26" FontSize="14"/>
                     <ComboBox x:Name="EventServiceType"
                         SelectedIndex="0"
                         Height="25" 
-                        Margin="52,41,36,0" 
+                        Margin="37,100,51,0" 
                         VerticalAlignment="Top" Foreground="#FF474747" DropDownClosed="UpdateFee"/>
-                    <TextBox x:Name="Remarks" IsEnabled="True" Height="58" Margin="52,110,36,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
+                    <TextBox x:Name="Remarks" IsEnabled="True" Height="58" Margin="37,168,51,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
                     <Label 
                         Content="Remarks" 
                         HorizontalAlignment="Left"
-                        Margin="52,85,0,0" 
+                        Margin="37,144,0,0" 
                         VerticalAlignment="Top" 
-                        Width="85" RenderTransformOrigin="0.5,1.979" FontSize="14" Height="25"/>
+                        Width="85" RenderTransformOrigin="0.5,1.979" FontSize="14" Height="24"/>
                     <Label 
                         Content="Offered by" 
                         HorizontalAlignment="Left"
-                        Margin="52,178,0,0" 
+                        Margin="37,236,0,0" 
                         VerticalAlignment="Top" 
-                        Width="76" RenderTransformOrigin="0.5,1.979" Height="25" FontSize="14"/>
+                        Width="76" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
                     <TextBox x:Name="OfferedBy2" 
                         HorizontalAlignment="Left" 
                         Height="23" 
-                        Margin="52,203,0,0" 
+                        Margin="37,262,0,0" 
                         TextWrapping="Wrap" 
                         VerticalAlignment="Top"
                         Width="551" Foreground="#FF474747"/>
-                    <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="52,243,0,0" Height="26" FontSize="14"/>
+                    <Label Content="Selected Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Margin="37,302,0,0" Height="26" FontSize="14"/>
                     <Label 
                         Content="Selected Time" 
                         HorizontalAlignment="Left"
-                        Margin="404,243,0,0" 
+                        Margin="389,302,0,0" 
                         VerticalAlignment="Top" 
                         Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <mah:NumericUpDown x:Name="Fee2" HorizontalAlignment="Left" Margin="100,322,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
+                    <mah:NumericUpDown x:Name="Fee2" HorizontalAlignment="Left" Margin="85,380,0,0" VerticalAlignment="Top" Width="187" Foreground="#FF474747"/>
                     <Label 
                         Content="Fee" 
                         HorizontalAlignment="Left"
-                        Margin="52,322,0,0" 
+                        Margin="37,380,0,0" 
                         VerticalAlignment="Top" 
                         Width="38" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <DatePicker x:Name="SelectedDate2" HorizontalAlignment="Left" Margin="52,274,0,0" VerticalAlignment="Top" Width="235" Foreground="#FF474747"/>
+                    <DatePicker x:Name="SelectedDate2" HorizontalAlignment="Left" Margin="37,332,0,0" VerticalAlignment="Top" Width="235" Foreground="#FF474747"/>
                     <ComboBox x:Name="AssignedPriest"
                         SelectedIndex="0"
                         Height="25" 
-                        Margin="442,322,36,0" 
+                        Margin="37,32,51,0" 
                         VerticalAlignment="Top" SelectionChanged="EnableDisableSoul" Foreground="#FF474747"/>
                     <Label 
-                        Content="Assigned Priest" 
+                        Content="Priest" 
                         HorizontalAlignment="Left"
-                        Margin="325,322,0,0" 
+                        Margin="37,6,0,0" 
                         VerticalAlignment="Top" 
                         Width="112" RenderTransformOrigin="0.5,1.979" Height="26" FontSize="14"/>
-                    <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="404,274,0,0" VerticalAlignment="Top" Width="64" DropDownClosed="SyncAvailablePriest"/>
-                    <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="473,274,0,0" VerticalAlignment="Top" Width="63" DropDownClosed="SyncAvailablePriest"/>
-                    <ComboBox x:Name="TimeMode" SelectedIndex="0" HorizontalAlignment="Left" Margin="541,274,0,0" VerticalAlignment="Top" Width="62">
+                    <ComboBox x:Name="THours" SelectedIndex="0" HorizontalAlignment="Left" Margin="389,332,0,0" VerticalAlignment="Top" Width="64" DropDownClosed="SyncAvailablePriest"/>
+                    <ComboBox x:Name="TMinutes" SelectedIndex="0" HorizontalAlignment="Left" Margin="458,332,0,0" VerticalAlignment="Top" Width="63" DropDownClosed="SyncAvailablePriest"/>
+                    <ComboBox x:Name="TimeMode" SelectedIndex="0" HorizontalAlignment="Left" Margin="526,332,0,0" VerticalAlignment="Top" Width="62">
                         <ComboBoxItem Content="AM"/>
                         <ComboBoxItem Content="PM"/>
                     </ComboBox>
-                    <UIComponents:Validator x:Name="SponsorValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,208,15,0" VerticalAlignment="Top" Width="16"/>
-                    <UIComponents:Validator x:Name="SelDateValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,279,331,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SponsorValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,266,30,0" VerticalAlignment="Top" Width="16"/>
+                    <UIComponents:Validator x:Name="SelDateValidator2" Visibility="Visible" HorizontalAlignment="Right" Height="16" Margin="0,338,346,0" VerticalAlignment="Top" Width="16"/>
                 </Grid>
             </TabItem>
         </TabControl>

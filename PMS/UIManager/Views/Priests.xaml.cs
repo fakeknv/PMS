@@ -71,12 +71,14 @@ namespace PMS.UIManager.Views
 							count = 0;
 						}
 					}
+					int temp = 1;
 					foreach (var cur in priests)
 					{
 						if (cur.Page == CurrentPage.Value)
 						{
 							priests_final.Add(new Priest()
 							{
+								No = temp,
 								PriestID = cur.PriestID,
 								Name = cur.Name,
 								Status = cur.Status,
@@ -85,6 +87,7 @@ namespace PMS.UIManager.Views
 								Unfinished = cur.Unfinished,
 								Page = cur.Page
 							});
+							temp++;
 						}
 					}
 					//close Connection
@@ -255,6 +258,19 @@ namespace PMS.UIManager.Views
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Actions Help", "You can add or edit priests in this menu. Priests are used for the signatory of certificates and the scheduling of appointments.");
+		}
+		private async void DeletePriestButton_Click(object sender, RoutedEventArgs e)
+		{
+			Priest priest = (Priest)PriestsItemContainer.SelectedItem;
+			if (priest == null)
+			{
+				MsgNoItemSelected();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmDeletePriestWindow(this, priest.PriestID), this.PriestsMainGrid);
+			}
 		}
 	}
 }

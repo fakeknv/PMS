@@ -168,7 +168,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Name" SortMemberPath="FullName" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Name" SortMemberPath="FullName" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -204,7 +204,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Parents" SortMemberPath="Parent1" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Parents" SortMemberPath="Parent1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -216,7 +216,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Godparents" SortMemberPath="Godparent1" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Godparents" SortMemberPath="Godparent1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

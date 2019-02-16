@@ -85,12 +85,14 @@ namespace PMS.UIManager.Views
 								count = 0;
 							}
 						}
+						int temp = 1;
 						foreach (var cur in eventtypes)
 						{
 							if (cur.Page == CurrentPage.Value)
 							{
 								eventtypes_final.Add(new EventType()
 								{
+									No = temp,
 									TypeID = cur.TypeID,
 									AppointmentType = cur.AppointmentType,
 									IsCustom = cur.IsCustom,
@@ -98,6 +100,7 @@ namespace PMS.UIManager.Views
 									IsActive = cur.IsActive,
 									Page = cur.Page
 								});
+								temp++;
 							}
 						}
 						//close Connection
@@ -192,6 +195,24 @@ namespace PMS.UIManager.Views
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Actions Help", "You can appointments/events in this menu. Entries in here will be reflected on the scheduling module.");
+		}
+
+		private async void DeleteEventTypeButton_Click(object sender, RoutedEventArgs e)
+		{
+			EventType et = (EventType)EventTypeItemContainer.SelectedItem;
+			if (et == null)
+			{
+				MsgNoItemSelected();
+			}
+			else if (et.AppointmentType == "Thanksgiving Mass" || et.AppointmentType == "Petition Mass" || et.AppointmentType == "Special Intention" || et.AppointmentType == "All Souls" || et.AppointmentType == "Soul/s of" || et.AppointmentType == "Funeral Mass")
+			{
+				MsgDefault();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmDeleteEventTypeWindow(this, et.TypeID), this.EventTypesMainGrid);
+			}
 		}
 	}
 }

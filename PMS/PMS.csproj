@@ -189,6 +189,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RowToIndexConverter.cs" />
     <Compile Include="StatusConverter.cs" />
     <Compile Include="DateConverter.cs" />
     <Compile Include="DBConnectionManager.cs" />
@@ -262,9 +263,6 @@
     </Compile>
     <Compile Include="UIComponents\TimeSlot.cs" />
     <Compile Include="UIComponents\Transaction.cs" />
-    <Compile Include="UIComponents\TransactionItem.xaml.cs">
-      <DependentUpon>TransactionItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UIComponents\Validator.xaml.cs">
       <DependentUpon>Validator.xaml</DependentUpon>
     </Compile>
@@ -283,6 +281,21 @@
     </Compile>
     <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml.cs">
       <DependentUpon>ViewDirectoryEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmDeleteTimeSlotWindow.xaml.cs">
+      <DependentUpon>ConfirmDeleteTimeSlotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmDeletePriestWindow.xaml.cs">
+      <DependentUpon>ConfirmDeletePriestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmDeleteEventTypeWindow.xaml.cs">
+      <DependentUpon>ConfirmDeleteEventTypeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\ConfirmDeleteAccountWindow.xaml.cs">
+      <DependentUpon>ConfirmDeleteAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\EditAppointmentWindow.xaml.cs">
+      <DependentUpon>EditAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindow2.xaml.cs">
       <DependentUpon>AddAppointmentWindow2.xaml</DependentUpon>
@@ -507,10 +520,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UIComponents\TransactionItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UIComponents\Validator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -528,6 +537,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmDeleteTimeSlotWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmDeletePriestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmDeleteEventTypeWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\ConfirmDeleteAccountWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\EditAppointmentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

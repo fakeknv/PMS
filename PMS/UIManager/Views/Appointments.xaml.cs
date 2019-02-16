@@ -162,6 +162,7 @@ namespace PMS.UIManager.Views
 				conn.Open();
 				if (conn.State == ConnectionState.Open)
 				{
+					int temp = 1;
 					if (ListType.SelectedIndex == 0)
 					{
 						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
@@ -183,6 +184,7 @@ namespace PMS.UIManager.Views
 										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											No = temp,
 											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
@@ -193,12 +195,14 @@ namespace PMS.UIManager.Views
 											Priest = GetPriest(db_reader.GetString("assigned_priest")),
 											Page = 0
 										});
+										temp++;
 									}
 									else
 									{
 										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											No = temp,
 											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
@@ -209,6 +213,7 @@ namespace PMS.UIManager.Views
 											Priest = GetPriest(db_reader.GetString("assigned_priest")),
 											Page = 0
 										});
+										temp++;
 									}
 								}
 								EventsHolder.Items.Refresh();
@@ -241,6 +246,7 @@ namespace PMS.UIManager.Views
 										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											No = temp,
 											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
@@ -251,6 +257,7 @@ namespace PMS.UIManager.Views
 											Priest = GetPriest(db_reader.GetString("assigned_priest")),
 											Page = 0
 										});
+										temp++;
 									}
 								}
 								EventsHolder.Items.Refresh();
@@ -279,6 +286,7 @@ namespace PMS.UIManager.Views
 										status = GetStatus(db_reader.GetString("appointment_id"));
 										events.Add(new EventsItem()
 										{
+											No = temp,
 											AppID = db_reader.GetString("appointment_id"),
 											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
 											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
@@ -289,6 +297,7 @@ namespace PMS.UIManager.Views
 											Priest = GetPriest(db_reader.GetString("assigned_priest")),
 											Page = 0
 										});
+										temp++;
 									}
 									else
 									{

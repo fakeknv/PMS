@@ -87,6 +87,32 @@
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>
+            <Button
+                Margin="0,3,259,0" 
+                VerticalAlignment="Top" 
+                Width="116" 
+                Height="30" 
+                Click="EditButton_Click"
+                Background="#FFEAB94F" 
+                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="16"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome EditRegular}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Edit Event" 
+                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                </StackPanel>
+            </Button>
         </Grid>
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,488,0,0" Height="46" VerticalAlignment="Top">
             <Grid HorizontalAlignment="Left" Width="816" Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
@@ -145,8 +171,17 @@
             <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="582,2,0,0" VerticalAlignment="Top" Height="27" Width="234" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
         </Grid>
         <Grid Margin="0,69,0,46">
-            <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False">
+            <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

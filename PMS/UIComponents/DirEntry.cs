@@ -8,6 +8,7 @@ namespace PMS.UIComponents
 {
 	class DirEntry
 	{
+		public int No { get; set; }
 		public string DirectoryID { get; set; }
 		public string RecordID { get; set; }
 		public string Lot { get; set; }

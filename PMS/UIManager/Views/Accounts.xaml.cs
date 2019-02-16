@@ -70,10 +70,12 @@ namespace PMS.UIManager.Views
 						count = 0;
 					}
 				}
+				int temp = 1;
 				foreach (var cur in accounts) {
 					if (cur.Page == CurrentPage.Value) {
 						accounts_final.Add(new Account()
 						{
+							No = temp,
 							AccountID = cur.AccountID,
 							Username = cur.Username,
 							Role = cur.Role,
@@ -82,6 +84,7 @@ namespace PMS.UIManager.Views
 							CreationTime = cur.CreationTime,
 							Page = cur.Page
 						});
+						temp++;
 					}
 				}
 				//close Connection
@@ -132,6 +135,20 @@ namespace PMS.UIManager.Views
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Actions Help", "You can add or edit accounts in this menu. Accounts are used to login to the system. Custom privileged accounts are also supported.");
+		}
+
+		private async void DeleteAccountButton_Click(object sender, RoutedEventArgs e)
+		{
+			Account ac = (Account)AccountsItemContainer.SelectedItem;
+			if (ac == null)
+			{
+				MsgNoItemSelected();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmDeleteAccountWindow(this, ac.AccountID), this.AccountsMainGrid);
+			}
 		}
 	}
 }

@@ -13,15 +13,17 @@ namespace PMS.UIManager.Views.ChildWindows
 	/// <summary>
 	/// Interaction logic for DummyWindow.xaml
 	/// </summary>
-	public partial class AddAppointmentWindow : ChildWindow
+	public partial class EditAppointmentWindow : ChildWindow
 	{
 		private DBConnectionManager dbman;
 		private PMSUtil pmsutil;
 
 		private ManageEventsWindow _caller;
+		private string _aid;
 
-		public AddAppointmentWindow(ManageEventsWindow caller)
+		public EditAppointmentWindow(ManageEventsWindow caller, string aid)
 		{
+			_aid = aid;
 			_caller = caller;
 			InitializeComponent();
 			MassType.SelectedIndex = 0;
@@ -34,6 +36,8 @@ namespace PMS.UIManager.Views.ChildWindows
 			FetchMassFee();
 			UpdateFee2();
 			FetchPriests();
+			PopulateFields(aid);
+			
 
 			if (DateTime.Parse(SelectedDate2.Text) < DateTime.Now)
 			{
@@ -56,6 +60,145 @@ namespace PMS.UIManager.Views.ChildWindows
 		private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			this.Close();
+		}
+		private bool IsCustom(string aid)
+		{
+			bool ret = false;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT custom FROM appointments, appointment_types WHERE appointments.appointment_id = @aid AND appointments.appointment_type = appointment_types.type_id;";
+				cmd.Parameters.AddWithValue("@aid", aid);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("custom") == 1)
+					{
+						ret = false;
+					}
+					else
+					{
+						ret = true;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = false;
+			}
+			return ret;
+		}
+		private void PopulateFields(string aid)
+		{
+			//DUMMY DATA CHANGE THIS
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT * FROM appointments WHERE appointment_id = @aid LIMIT 1;";
+				cmd.Parameters.AddWithValue("@aid", aid);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (IsCustom(aid) == false)
+					{
+						Tab1.IsEnabled = true;
+						Tab2.IsEnabled = false;
+						TabControl1.SelectedIndex = 0;
+
+						for (int i = 0; i < MassType.Items.Count; i++)
+						{
+							var item = (string)MassType.Items[i];
+							if (db_reader.GetString("appointment_type") == GetATypeID(item))
+							{
+								MassType.SelectedIndex = i;
+							}
+						}
+						SoulsOf.Text = db_reader.GetString("remarks");
+						for (int i = 0; i < AssignedPriest.Items.Count; i++)
+						{
+							var item = (ComboBoxItem)AssignedPriest.Items[i];
+							if (db_reader.GetString("assigned_priest") == GetPriest(item.Content.ToString()))
+							{
+								AssignedPriest.SelectedIndex = i;
+							}
+						}
+
+						OfferedBy1.Text = db_reader.GetString("requested_by");
+
+						for (int i = 0; i < SelectedTime1.Items.Count; i++)
+						{
+							var item = (string)SelectedTime1.Items[i];
+							if (DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt") == item)
+							{
+								SelectedTime1.SelectedIndex = i;
+							}
+						}
+					}
+					else
+					{
+						Tab1.IsEnabled = false;
+						Tab2.IsEnabled = true;
+						TabControl1.SelectedIndex = 1;
+						
+						for (int i = 0; i < AssignedPriest.Items.Count; i++)
+						{
+							var item = (ComboBoxItem)AssignedPriest.Items[i];
+							if (db_reader.GetString("assigned_priest") == GetPriest(item.Content.ToString()))
+							{
+								AssignedPriest.SelectedIndex = i;
+							}
+						}
+						for (int i = 0; i < EventServiceType.Items.Count; i++)
+						{
+							var item = (string)EventServiceType.Items[i];
+							if (db_reader.GetString("appointment_type") == GetATypeID(item))
+							{
+								EventServiceType.SelectedIndex = i;
+							}
+						}
+						Remarks.Text = db_reader.GetString("remarks");
+						OfferedBy2.Text = db_reader.GetString("requested_by");
+						for (int i = 0; i < THours.Items.Count; i++)
+						{
+							var item = (string)THours.Items[i];
+							if (DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh") == item)
+							{
+								THours.SelectedIndex = i;
+							}
+						}
+						for (int i = 0; i < TMinutes.Items.Count; i++)
+						{
+							var item = (string)TMinutes.Items[i];
+							if (DateTime.Parse(db_reader.GetString("appointment_time")).ToString("mm") == item)
+							{
+								TMinutes.SelectedIndex = i;
+							}
+						}
+						for (int i = 0; i < TimeMode.Items.Count; i++)
+						{
+							var item = (ComboBoxItem)TimeMode.Items[i];
+							if (DateTime.Parse(db_reader.GetString("appointment_time")).ToString("tt") == item.Content.ToString())
+							{
+								TimeMode.SelectedIndex = i;
+							}
+						}
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
 		}
 		private void GetFixedTimeSchedules() {
 			//DUMMY DATA CHANGE THIS
@@ -96,7 +239,6 @@ namespace PMS.UIManager.Views.ChildWindows
 				while (db_reader.Read())
 				{
 					Fee.Value = db_reader.GetDouble("fee");
-					Console.WriteLine(db_reader.GetDouble("fee"));
 				}
 				//close Connection
 				dbman.DBClose();
@@ -201,10 +343,11 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE assigned_priest = @apriest AND appointment_date = @adate AND appointment_time = @atime;";
-				cmd.Parameters.AddWithValue("apriest", apriest);
-				cmd.Parameters.AddWithValue("adate", adate);
-				cmd.Parameters.AddWithValue("atime", atime);
+				cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE appointment_id != @aid AND assigned_priest = @apriest AND appointment_date = @adate AND appointment_time = @atime;";
+				cmd.Parameters.AddWithValue("@aid", _aid);
+				cmd.Parameters.AddWithValue("@apriest", apriest);
+				cmd.Parameters.AddWithValue("@adate", adate);
+				cmd.Parameters.AddWithValue("@atime", atime);
 				cmd.Prepare();
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
@@ -329,7 +472,6 @@ namespace PMS.UIManager.Views.ChildWindows
 					//TODO
 					try
 					{
-						string apmID = pmsutil.GenAppointmentID();
 						MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 						string soulsof_tmp = SoulsOf.Text;
 						if (MassType.Text == "All Souls" || MassType.Text == "Soul/s of")
@@ -341,9 +483,8 @@ namespace PMS.UIManager.Views.ChildWindows
 							soulsof_tmp = "NA.";
 						}
 						cmd.CommandText =
-							"INSERT INTO appointments(appointment_id, appointment_date, appointment_time, appointment_type, requested_by, placed_by, remarks, status)" +
-							"VALUES(@appointment_id, @appointment_date, @appointment_time, @appointment_type, @requested_by, @placed_by, @remarks, @status)";
-						cmd.Parameters.AddWithValue("@appointment_id", apmID);
+							"UPDATE appointments SET appointment_date = @appointment_date, appointment_time = @appointment_time, appointment_type = @appointment_type, requested_by = @requested_by, placed_by = @placed_by, remarks = @remarks, status = @status WHERE appointment_id = @aid;";
+						cmd.Parameters.AddWithValue("@aid", _aid);
 						cmd.Parameters.AddWithValue("@appointment_date", DateTime.Parse(SelectedDate1.Text).ToString("yyyy-MM-dd"));
 						cmd.Parameters.AddWithValue("@appointment_time", DateTime.Parse(SelectedTime1.Text).ToString("HH:mm:ss"));
 						cmd.Parameters.AddWithValue("@appointment_type", GetATypeID(MassType.Text));
@@ -364,8 +505,7 @@ namespace PMS.UIManager.Views.ChildWindows
 						{
 							MsgFail();
 						}
-						string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
-						pmsutil.InsertTransaction("Regular Serv. - " + MassType.Text, "Unpaid", apmID, Convert.ToDouble(Fee.Value));
+						string tmp = pmsutil.LogScheduling(_aid, "LOGC-02");
 					}
 					catch (MySqlException ex)
 					{
@@ -395,12 +535,10 @@ namespace PMS.UIManager.Views.ChildWindows
 						//TODO
 						try
 						{
-							string apmID = pmsutil.GenAppointmentID();
 							MySqlCommand cmd = dbman.DBConnect().CreateCommand();
 							cmd.CommandText =
-								"INSERT INTO appointments(appointment_id, appointment_date, appointment_time, appointment_type, requested_by, placed_by, remarks, status, assigned_priest)" +
-								"VALUES(@appointment_id, @appointment_date, @appointment_time, @appointment_type, @requested_by, @placed_by, @remarks, @status, @a_priest)";
-							cmd.Parameters.AddWithValue("@appointment_id", apmID);
+								"UPDATE appointments SET appointment_date = @appointment_date, appointment_time = @appointment_time, appointment_type = @appointment_type, requested_by = @requested_by, placed_by = @placed_by, remarks = @remarks, status = @status WHERE appointment_id = @aid;";
+							cmd.Parameters.AddWithValue("@aid", _aid);
 							cmd.Parameters.AddWithValue("@appointment_date", DateTime.Parse(SelectedDate2.Text).ToString("yyyy-MM-dd"));
 							cmd.Parameters.AddWithValue("@appointment_time", DateTime.Parse(selTime).ToString("HH:mm:ss"));
 							cmd.Parameters.AddWithValue("@appointment_type", GetATypeID(EventServiceType.Text));
@@ -422,12 +560,11 @@ namespace PMS.UIManager.Views.ChildWindows
 							{
 								MsgFail();
 							}
-							string tmp = pmsutil.LogScheduling(apmID, "LOGC-01");
-							pmsutil.InsertTransaction("Special Serv. - " + EventServiceType.Text, "Unpaid", apmID, Convert.ToDouble(Fee2.Value));
+							string tmp = pmsutil.LogScheduling(_aid, "LOGC-02");
 						}
 						catch (MySqlException ex)
 						{
-							Console.WriteLine("Error: {0}", ex.ToString());
+							
 						}
 					}
 				}

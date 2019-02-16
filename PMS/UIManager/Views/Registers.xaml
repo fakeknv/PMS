@@ -42,8 +42,8 @@
             </Grid>
             <Grid Grid.Column="1" Margin="5,0,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="210"/>
-                    <ColumnDefinition Width="299*"/>
+                    <ColumnDefinition Width="84"/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button
                 x:Name="CreateRequestButton_Copy" 
@@ -269,7 +269,7 @@
                 </ListView>
             </Grid>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Registers" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Registers" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

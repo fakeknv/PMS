@@ -14,7 +14,15 @@
     Margin="0" 
     Padding="0" 
     d:DesignHeight="1809.513" 
-    d:DesignWidth="947.25">
+    d:DesignWidth="1077.25">
+    <UserControl.Resources>
+        <local:RowToIndexConverter x:Key="RowToIndexConverter" />
+        <DataTemplate x:Key="xtabHeader">
+            <Grid Background="#FF4396CF">
+                <TextBlock Text="{Binding}" FontWeight="Bold" Padding="15,0,15,0" Foreground="White"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid 
         x:Name="RequestMainGrid" 
         Background="#FFF1F1F3">
@@ -57,13 +65,22 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Grid>
-        <mah:MetroAnimatedTabControl Margin="7,51,7,7">
-            <TabItem Header="Transactions" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+        <TabControl Margin="7,51,7,7">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="HeaderTemplate" Value="{StaticResource xtabHeader}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.ItemContainerStyle>
+            <TabItem Header="Transactions" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="0">
                 <Grid Margin="0,0,0,-2">
                     <ScrollViewer>
                         <Grid Height="1663">
                             <Grid Margin="0,0,0,579">
-                                <lvc:CartesianChart x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Bottom" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Background="#FFE8E4E4" Foreground="#FF323232" Margin="0,0,0,625" >
+                                <lvc:CartesianChart ToolTip="Annual Transaction Graph (Per Month)" x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Bottom" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Background="#FFE8E4E4" Foreground="#FF323232" Margin="0,0,0,625" >
                                     <lvc:CartesianChart.AxisY>
                                         <lvc:Axis x:Name="YLabel" Foreground="#FF575757" FontSize="14" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Title="Transactions" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                                     </lvc:CartesianChart.AxisY>
@@ -72,10 +89,11 @@
                                     </lvc:CartesianChart.AxisX>
                                 </lvc:CartesianChart>
                                 <Button
+                                    ToolTip="Print Graph and Summary"
                         x:Name="CreateRequestButton_Copy" 
                         Margin="0,17,3,0" 
                         VerticalAlignment="Top" 
-                        Width="123" 
+                        Width="139" 
                         Height="30" 
                         Background="WhiteSmoke" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
@@ -96,15 +114,15 @@
                                             </Rectangle.Fill>
                                         </Rectangle>
                                         <TextBlock 
-                                Text=" Print" 
+                                Text=" Print Overview" 
                                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                                     </StackPanel>
                                 </Button>
-                                <ComboBox x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,131,0" VerticalAlignment="Top" Width="147" Height="30" DropDownClosed="UpdateChart">
+                                <ComboBox ToolTip="Display Transaction Count or Amount" x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,147,0" VerticalAlignment="Top" Width="147" Height="30" DropDownClosed="UpdateChart">
                                     <ComboBoxItem Content="Transaction Count"/>
                                     <ComboBoxItem Content="Transaction Amount"/>
                                 </ComboBox>
-                                <ComboBox x:Name="StatusType" SelectedIndex="1" HorizontalAlignment="Right" Margin="0,17,283,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
+                                <ComboBox ToolTip="Status of Transaction" x:Name="StatusType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,299,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
                                     <ComboBoxItem Content="All"/>
                                     <ComboBoxItem Content="Unpaid"/>
                                     <ComboBoxItem Content="Paid"/>
@@ -121,35 +139,29 @@
                             <Label x:Name="ReportLabel_Copy6" Content="This Year:" HorizontalAlignment="Left" Margin="155,652,0,0" VerticalAlignment="Top" Height="30" Width="160" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy7" Content="Amount:" HorizontalAlignment="Left" Margin="553,618,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ReportLabel_Copy8" Content="Amount:" HorizontalAlignment="Left" Margin="553,654,0,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy9" Content="Transactions Breakdown" HorizontalAlignment="Left" Margin="58,767,0,0" VerticalAlignment="Top" Height="50" Width="306" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747"/>
-                            <Grid x:Name="xxx" Width="480" Margin="0,0,439,546" Height="295" VerticalAlignment="Bottom">
-                                <lvc:PieChart x:Name="PieChart" LegendLocation="Bottom" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="294" VerticalAlignment="Bottom">
-                                    <lvc:PieChart.Series>
-                                        <lvc:PieSeries x:Name="BaptismalVal" Title="Baptismal" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel}"/>
-                                        <lvc:PieSeries x:Name="ConfirmationVal" Title="Confirmation" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                        <lvc:PieSeries x:Name="MatrimonialVal" Title="Matrimonial" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                        <lvc:PieSeries x:Name="BurialVal" Title="Burial" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                        <lvc:PieSeries x:Name="OthersVal" Title="Others" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel}"/>
-                                    </lvc:PieChart.Series>
-                                </lvc:PieChart>
+                            <Label x:Name="ReportLabel_Copy9" Content="Parish Transactions" HorizontalAlignment="Left" Margin="58,767,0,0" VerticalAlignment="Top" Height="50" Width="306" FontFamily="Segoe UI Light" FontSize="24" Foreground="#FF474747"/>
+                            <Grid x:Name="xxx" Margin="32,0,369,546" Height="295" VerticalAlignment="Bottom">
+                                <lvc:CartesianChart x:Name="BarChart" Series="{Binding SeriesCollection3}" LegendLocation="Bottom" Background="#FFE8E4E4">
+                                    <lvc:CartesianChart.AxisX>
+                                        <lvc:Axis Title="Status" Foreground="#FF575757" Labels="{Binding Labels3}"></lvc:Axis>
+                                    </lvc:CartesianChart.AxisX>
+                                    <lvc:CartesianChart.AxisY>
+                                        <lvc:Axis x:Name="YAxis" Title="Count" Foreground="#FF575757" LabelFormatter="{Binding Formatter3}"></lvc:Axis>
+                                    </lvc:CartesianChart.AxisY>
+                                </lvc:CartesianChart>
                             </Grid>
-                            <Label x:Name="ReportLabel_Copy10" Content="Certificate Retrieval:" HorizontalAlignment="Right" Margin="0,835,302,0" VerticalAlignment="Top" Height="30" Width="161" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy11" Content="Baptismal:" HorizontalAlignment="Right" Margin="0,871,307,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy12" Content="Confirmation:" HorizontalAlignment="Right" Margin="0,905,307,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy13" Content="Matrimonial:" HorizontalAlignment="Right" Margin="0,941,307,0" VerticalAlignment="Top" Height="30" Width="104" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy14" Content="Burial:" HorizontalAlignment="Right" Margin="0,975,307,0" VerticalAlignment="Top" Height="30" Width="59" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ReportLabel_Copy15" Content="Other Services:" HorizontalAlignment="Right" Margin="0,1045,304,0" VerticalAlignment="Top" Height="30" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="TotalCertificateRetrieval" Content="123" HorizontalAlignment="Right" Margin="0,835,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="BaptismalCount" Content="123" HorizontalAlignment="Right" Margin="0,871,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="ConfirmationCount" Content="123" HorizontalAlignment="Right" Margin="0,905,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="MatrimonialCount" Content="123" HorizontalAlignment="Right" Margin="0,941,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="BurialCount" Content="123" HorizontalAlignment="Right" Margin="0,975,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
-                            <Label x:Name="OtherCount" Content="123" HorizontalAlignment="Right" Margin="0,1045,20,0" VerticalAlignment="Top" Height="30" Width="277" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy10" Content="Certificate Retrieval:" HorizontalAlignment="Right" Margin="0,835,200,0" VerticalAlignment="Top" Height="30" Width="161" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy11" Content="Baptismal:" HorizontalAlignment="Right" Margin="0,871,205,0" VerticalAlignment="Top" Height="30" Width="89" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy12" Content="Confirmation:" HorizontalAlignment="Right" Margin="0,905,205,0" VerticalAlignment="Top" Height="30" Width="111" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy13" Content="Matrimonial:" HorizontalAlignment="Right" Margin="0,941,205,0" VerticalAlignment="Top" Height="30" Width="104" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy14" Content="Burial:" HorizontalAlignment="Right" Margin="0,975,205,0" VerticalAlignment="Top" Height="30" Width="59" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ReportLabel_Copy15" Content="Other Services:" HorizontalAlignment="Right" Margin="0,1045,202,0" VerticalAlignment="Top" Height="30" Width="124" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="TotalCertificateRetrieval" Content="123" HorizontalAlignment="Right" Margin="0,835,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="BaptismalCount" Content="123" HorizontalAlignment="Right" Margin="0,871,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="ConfirmationCount" Content="123" HorizontalAlignment="Right" Margin="0,905,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="MatrimonialCount" Content="123" HorizontalAlignment="Right" Margin="0,941,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="BurialCount" Content="123" HorizontalAlignment="Right" Margin="0,975,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
+                            <Label x:Name="OtherCount" Content="123" HorizontalAlignment="Right" Margin="0,1045,10,0" VerticalAlignment="Top" Height="30" Width="185" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="TotalTransactions" HorizontalAlignment="Left" Margin="321,548,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ThisWeeksTransactions" HorizontalAlignment="Left" Margin="321,584,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="ThisMonthsTransactions" HorizontalAlignment="Left" Margin="321,618,0,0" VerticalAlignment="Top" Height="30" Width="216" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
@@ -158,13 +170,22 @@
                             <Label x:Name="Amount2" HorizontalAlignment="Left" Margin="647,584,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="Amount3" HorizontalAlignment="Left" Margin="647,618,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
                             <Label x:Name="Amount4" HorizontalAlignment="Left" Margin="647,654,0,0" VerticalAlignment="Top" Height="30" Width="207" FontFamily="Segoe UI Symbol" FontSize="16" Foreground="#FF474747"/>
-                            <ComboBox x:Name="PieRerortType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,778,41,0" VerticalAlignment="Top" Width="152" Height="30" DropDownClosed="UpdatePieChart">
+                            <ComboBox x:Name="PieReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,778,41,0" VerticalAlignment="Top" Width="152" Height="30" DropDownClosed="UpdatePieChart">
                                 <ComboBoxItem Content="Transaction Count"/>
                                 <ComboBoxItem Content="Transaction Amount"/>
                             </ComboBox>
                             <Label Content="Report Type: " HorizontalAlignment="Right" Margin="0,778,193,0" VerticalAlignment="Top" Height="30" Width="96" FontFamily="Segoe UI Symbol" FontSize="14"/>
-                            <DataGrid x:Name="TransactionItemsContainer" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="10,1243,15,10" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
+                            <DataGrid x:Name="TransactionItemsContainer" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="10,1243,15,10" AutoGenerateColumns="False" FontFamily="/PMS;component/Assets/Fonts/#Roboto">
                                 <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                     <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -240,7 +261,7 @@
                             <Label Content="to" HorizontalAlignment="Right" Margin="0,732,613,0" VerticalAlignment="Top" Height="24" Width="28" HorizontalContentAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" RenderTransformOrigin="-1.357,0.5"/>
                             <DatePicker x:Name="MinDate" HorizontalAlignment="Right" Margin="0,732,645,0" VerticalAlignment="Top" Width="124" Height="24"/>
                             <Label Content="Report Range: " HorizontalAlignment="Right" Margin="0,732,771,0" VerticalAlignment="Top" Height="24" Width="88" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                            <Label Content="Transactions List" HorizontalAlignment="Left" Margin="10,1198,0,0" VerticalAlignment="Top" Height="34" Width="186" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="20"/>
+                            <Label Content="Parish Transactions List" HorizontalAlignment="Left" Margin="10,1198,0,0" VerticalAlignment="Top" Height="34" Width="264" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="20"/>
                             <ComboBox x:Name="RepStatus" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,732,331,0" VerticalAlignment="Top" Width="100" Height="24">
                                 <ComboBoxItem>All</ComboBoxItem>
                                 <ComboBoxItem>Paid</ComboBoxItem>
@@ -299,11 +320,18 @@
                             <Label Margin="19,710,15,0" VerticalAlignment="Top" BorderBrush="LightGray" BorderThickness="0,1,0,0"/>
                             <Label Margin="19,481,15,0" VerticalAlignment="Top" BorderBrush="LightGray" BorderThickness="0,1,0,0"/>
                             <Label Margin="19,1178,15,0" VerticalAlignment="Top" BorderBrush="LightGray" BorderThickness="0,1,0,0"/>
+                            <ComboBox x:Name="Preset" SelectedIndex="0" DropDownClosed="Preset_DropDownClosed" HorizontalAlignment="Right" Margin="0,732,865,0" VerticalAlignment="Top" Width="100" Height="24">
+                                <ComboBoxItem Content="Custom"/>
+                                <ComboBoxItem Content="Weekly"/>
+                                <ComboBoxItem Content="Monthly"/>
+                                <ComboBoxItem Content="Yearly"/>
+                            </ComboBox>
+                            <Label Content="Preset" HorizontalAlignment="Right" Margin="0,732,969,0" VerticalAlignment="Top" Height="24" Width="44" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Registers and Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin">
+            <TabItem Header="Registers and Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="15,0,15,0" Margin="0,0,15,0">
                 <ScrollViewer>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -374,7 +402,7 @@
                         </Grid>
 
                         <Label Content="Registers List" HorizontalAlignment="Left" Margin="13,416,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="20" Grid.ColumnSpan="2"/>
-                        <DataGrid x:Name="RegistersItemContainer" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" AutoGenerateColumns="False" Height="472" Margin="13,471,10,0" VerticalAlignment="Top" FontFamily="Segoe UI" Grid.ColumnSpan="2">
+                        <DataGrid x:Name="RegistersItemContainer" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" AutoGenerateColumns="False" Height="472" Margin="13,471,10,0" VerticalAlignment="Top" FontFamily="Segoe UI" Grid.ColumnSpan="2">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
                                     <DataGridTemplateColumn.CellTemplate>
@@ -460,8 +488,8 @@
                     </Grid>
                 </ScrollViewer>
             </TabItem>
-        </mah:MetroAnimatedTabControl>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Reports" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        </TabControl>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Reports" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

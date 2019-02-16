@@ -100,7 +100,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (string.IsNullOrWhiteSpace(RegisterType.Text))
 			{
 				RegTypeValidator.Visibility = Visibility.Visible;
-				RegTypeValidator.ToolTip = "This field is requried.";
+				RegTypeValidator.ToolTip = "This field is required.";
 				RegTypeValidator.Foreground = Brushes.Red;
 				RegisterType.BorderBrush = Brushes.Red;
 
@@ -109,7 +109,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (BookNo.Value < 0 || string.IsNullOrWhiteSpace(BookNo.Value.ToString()))
 			{
 				BookNumValidator.Visibility = Visibility.Visible;
-				BookNumValidator.ToolTip = "This field is requried.";
+				BookNumValidator.ToolTip = "This field is required.";
 				BookNumValidator.Foreground = Brushes.Red;
 				BookNo.BorderBrush = Brushes.Red;
 
@@ -118,7 +118,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (string.IsNullOrWhiteSpace(RegisterNo.Value.ToString()))
 			{
 				RegNumValidator.Visibility = Visibility.Visible;
-				RegNumValidator.ToolTip = "This field is requried.";
+				RegNumValidator.ToolTip = "This field is required.";
 				RegNumValidator.Foreground = Brushes.Red;
 				RegisterNo.BorderBrush = Brushes.Red;
 
@@ -127,7 +127,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (string.IsNullOrWhiteSpace(Book.Text))
 			{
 				BookNameValidator.Visibility = Visibility.Visible;
-				BookNameValidator.ToolTip = "This field is requried.";
+				BookNameValidator.ToolTip = "This field is required.";
 				BookNameValidator.Foreground = Brushes.Red;
 				Book.BorderBrush = Brushes.Red;
 
@@ -136,7 +136,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (string.IsNullOrWhiteSpace(CreationDate.Text))
 			{
 				CreationDateValidator.Visibility = Visibility.Visible;
-				CreationDateValidator.ToolTip = "This field is requried.";
+				CreationDateValidator.ToolTip = "This field is required.";
 				CreationDateValidator.Foreground = Brushes.Red;
 				CreationDate.BorderBrush = Brushes.Red;
 

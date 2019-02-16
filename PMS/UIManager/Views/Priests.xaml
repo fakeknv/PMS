@@ -6,12 +6,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:PMS"
     mc:Ignorable="d"
     x:Class="PMS.UIManager.Views.Priests"
     Margin="0" 
     Padding="0" 
     d:DesignHeight="837.513" 
     d:DesignWidth="947.25">
+    <UserControl.Resources>
+        <local:RowToIndexConverter x:Key="RowToIndexConverter" />
+    </UserControl.Resources>
     <Grid 
         x:Name="PriestsMainGrid" 
         Background="#FFF1F1F3">
@@ -100,9 +104,41 @@
                         Text=" Add Priest" />
                 </StackPanel>
             </Button>
+            <Button
+                Margin="0,7,259,0" 
+                VerticalAlignment="Top" 
+                Width="90" 
+                Height="31" 
+                Background="#FFC94F3C" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFC94F3C" BorderThickness="1" Click="DeletePriestButton_Click" Grid.Column="1">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="18"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome UserMinusSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Delete" />
+                </StackPanel>
+            </Button>
         </Grid>
         <DataGrid x:Name="PriestsItemContainer" BorderBrush="LightGray" GridLinesVisibility="All" Height="746" Margin="33,82,36,0" VerticalAlignment="Top" AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="*" Header="Priest ID" SortMemberPath="PriestID" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -169,7 +205,7 @@
             <ComboBoxItem>25</ComboBoxItem>
             <ComboBoxItem>30</ComboBoxItem>
         </ComboBox>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Residing Priests" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="378" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Residing Priests" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="446" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
         <Button
             Style="{DynamicResource MetroCircleButtonStyle}" 

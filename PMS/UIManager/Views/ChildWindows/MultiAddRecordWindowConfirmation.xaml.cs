@@ -60,16 +60,27 @@ namespace PMS.UIManager.Views.ChildWindows
 			ConfirmBtn.IsEnabled = true;
 			if (_statcode > 0)
 			{
-				_vre.Sync(_bookNum);
-				MsgSuccess();
-				this.Close();
+				if (_statcode == 601)
+				{
+					ValidatorIcon.Visibility = Visibility.Visible;
+					ValidatorMsg.Visibility = Visibility.Visible;
+				}
+				else
+				{
+					ValidatorIcon.Visibility = Visibility.Hidden;
+					ValidatorMsg.Visibility = Visibility.Hidden;
+
+					_vre.Sync(_bookNum);
+					MsgSuccess();
+					this.Close();
+				}
 			}
 			else
 			{
 				MsgFail();
 			}
 		}
-		private void ImportButton_Click(object sender, RoutedEventArgs e)
+		private async void ImportButton_Click(object sender, RoutedEventArgs e)
 		{
 			String file_path = "";
 			OpenFileDialog opfile = new OpenFileDialog();
@@ -80,6 +91,10 @@ namespace PMS.UIManager.Views.ChildWindows
 			}
 			try
 			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				var controller = await metroWindow.ShowProgressAsync("Importing...", "Please wait while the system is reading the file.");
+				controller.SetIndeterminate();
+
 				String Path = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + file_path + ";Extended Properties = \"Excel 12.0 Xml;HDR=YES\"; ";
 				OleDbConnection conn = new OleDbConnection(Path);
 				String s = "Sheet1";
@@ -87,7 +102,8 @@ namespace PMS.UIManager.Views.ChildWindows
 				DataTable dt = new DataTable();
 				connAd.Fill(dt);
 				datacon.ItemsSource = dt.AsDataView();
-				//MessageBox.Show(dt.Rows[0][0].ToString());
+				// Close...
+				await controller.CloseAsync();
 			}
 			catch { }
 		}
@@ -115,49 +131,69 @@ namespace PMS.UIManager.Views.ChildWindows
 						conn.Open();
 						if (conn.State == ConnectionState.Open)
 						{
-							App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+							bool doProceed = false;
+							//Check inputs
+							for (int _tmp = 0; _tmp < 12; _tmp++)
 							{
-								string recID = pmsutil.GenRecordID();
-								MySqlCommand cmd = conn.CreateCommand();
-								cmd.CommandText =
-									"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
-									"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@record_id", recID);
-								cmd.Parameters.AddWithValue("@book_number", _bookNum);
-								cmd.Parameters.AddWithValue("@page_number", PageNum.Value);
-								cmd.Parameters.AddWithValue("@entry_number", Convert.ToInt32(dt.Rows[i][0].ToString()));
-								cmd.Parameters.AddWithValue("@record_date", dt.Rows[i][1].ToString());
-								cmd.Parameters.AddWithValue("@recordholder_fullname", dt.Rows[i][2].ToString());
-								cmd.Parameters.AddWithValue("@parent1_fullname", dt.Rows[i][7].ToString());
-								cmd.Parameters.AddWithValue("@parent2_fullname", dt.Rows[i][8].ToString());
-								int stat_code = cmd.ExecuteNonQuery();
-								conn.Close();
+								if (String.IsNullOrEmpty(dt.Rows[i][i].ToString()) == true)
+								{
+									doProceed = false;
+								}
+								else
+								{
+									doProceed = true;
+								}
+							}
+							if (doProceed == true)
+							{
+								App.Current.Dispatcher.Invoke((Action)delegate // <--- HERE
+								{
+									string recID = pmsutil.GenRecordID();
+									MySqlCommand cmd = conn.CreateCommand();
+									cmd.CommandText =
+										"INSERT INTO records(record_id, book_number, page_number, entry_number, record_date, recordholder_fullname, parent1_fullname, parent2_fullname)" +
+										"VALUES(@record_id, @book_number, @page_number, @entry_number, @record_date, @recordholder_fullname, @parent1_fullname, @parent2_fullname)";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@record_id", recID);
+									cmd.Parameters.AddWithValue("@book_number", _bookNum);
+									cmd.Parameters.AddWithValue("@page_number", PageNum.Value);
+									cmd.Parameters.AddWithValue("@entry_number", Convert.ToInt32(dt.Rows[i][0].ToString()));
+									cmd.Parameters.AddWithValue("@record_date", dt.Rows[i][1].ToString());
+									cmd.Parameters.AddWithValue("@recordholder_fullname", dt.Rows[i][2].ToString());
+									cmd.Parameters.AddWithValue("@parent1_fullname", dt.Rows[i][7].ToString());
+									cmd.Parameters.AddWithValue("@parent2_fullname", dt.Rows[i][8].ToString());
+									int stat_code = cmd.ExecuteNonQuery();
+									conn.Close();
 
-								conn.Open();
-								//Phase 2
-								cmd = dbman.DBConnect().CreateCommand();
-								cmd.CommandText =
-									"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
-									"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
-								cmd.Prepare();
-								cmd.Parameters.AddWithValue("@record_id", recID);
-								cmd.Parameters.AddWithValue("@age", Convert.ToInt32(dt.Rows[i][3].ToString()));
-								cmd.Parameters.AddWithValue("@parish", dt.Rows[i][4].ToString());
-								cmd.Parameters.AddWithValue("@province", dt.Rows[i][5].ToString());
-								cmd.Parameters.AddWithValue("@place_of_baptism", dt.Rows[i][6].ToString());
-								cmd.Parameters.AddWithValue("@sponsor", dt.Rows[i][9].ToString());
-								cmd.Parameters.AddWithValue("@sponsor2", dt.Rows[i][10].ToString());
-								cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(dt.Rows[i][11].ToString()));
-								cmd.Parameters.AddWithValue("@minister", dt.Rows[i][12].ToString());
-								cmd.Parameters.AddWithValue("@remarks", dt.Rows[i][13].ToString());
-								stat_code = cmd.ExecuteNonQuery();
+									conn.Open();
+									//Phase 2
+									cmd = dbman.DBConnect().CreateCommand();
+									cmd.CommandText =
+										"INSERT INTO confirmation_records(record_id, age, parochia, province, place_of_baptism, sponsor, sponsor2, stipend, minister, remarks)" +
+										"VALUES(@record_id, @age, @parish, @province, @place_of_baptism, @sponsor, @sponsor2, @stipend, @minister, @remarks)";
+									cmd.Prepare();
+									cmd.Parameters.AddWithValue("@record_id", recID);
+									cmd.Parameters.AddWithValue("@age", Convert.ToInt32(dt.Rows[i][3].ToString()));
+									cmd.Parameters.AddWithValue("@parish", dt.Rows[i][4].ToString());
+									cmd.Parameters.AddWithValue("@province", dt.Rows[i][5].ToString());
+									cmd.Parameters.AddWithValue("@place_of_baptism", dt.Rows[i][6].ToString());
+									cmd.Parameters.AddWithValue("@sponsor", dt.Rows[i][9].ToString());
+									cmd.Parameters.AddWithValue("@sponsor2", dt.Rows[i][10].ToString());
+									cmd.Parameters.AddWithValue("@stipend", Convert.ToDouble(dt.Rows[i][11].ToString()));
+									cmd.Parameters.AddWithValue("@minister", dt.Rows[i][12].ToString());
+									cmd.Parameters.AddWithValue("@remarks", dt.Rows[i][13].ToString());
+									stat_code = cmd.ExecuteNonQuery();
 
-								conn.Close();
-								string tmp = pmsutil.LogRecord(recID, "LOGC-01");
-								_statcode = stat_code;
-								//return stat_code;
-							});
+									conn.Close();
+									string tmp = pmsutil.LogRecord(recID, "LOGC-01");
+									_statcode = stat_code;
+									//return stat_code;
+								});
+							}
+							else
+							{
+								_statcode = 601;
+							}
 						}
 						else
 						{

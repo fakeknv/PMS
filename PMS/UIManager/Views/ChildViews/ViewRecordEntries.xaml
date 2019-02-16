@@ -18,10 +18,10 @@
         Background="#FFF1F1F3">
         <Grid Background="White" Height="46" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="438*"/>
-                <ColumnDefinition Width="509*"/>
+                <ColumnDefinition Width="483*"/>
+                <ColumnDefinition Width="464*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="0,0,464,0">
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                 <Button
                     x:Name="BackButton" 
                     Style="{DynamicResource MetroCircleButtonStyle}" 
@@ -35,6 +35,16 @@
                     Foreground="#FF009BE4" 
                     Width="30" 
                     HorizontalAlignment="Left" Click="BackButton_Click"/>
+                <Button
+                Style="{DynamicResource MetroCircleButtonStyle}" 
+                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                Margin="431,6,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Background="White" 
+                BorderBrush="{x:Null}" 
+                RenderTransformOrigin="0.824,0.294" 
+                Foreground="#FF717171" Click="Button_Click" HorizontalAlignment="Left" Width="30"/>
             </Grid>
             <Grid 
                 Grid.Column="1" HorizontalAlignment="Right" Width="459">
@@ -71,6 +81,7 @@
             </Button>
             <Label x:Name="RegisterType" Content="Label" HorizontalAlignment="Left" Margin="184,7,0,0" VerticalAlignment="Top" Height="29" Width="244" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="16" Foreground="#FF009BE4"/>
             <Button
+                ToolTip="Add Record by Importing Excel File"
                 Margin="0,7,150,0" 
                 VerticalAlignment="Top" 
                 Width="155" 
@@ -95,7 +106,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock 
-                        Text=" Batch Add Record" 
+                        Text=" Add Batch Record" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                 </StackPanel>
             </Button>

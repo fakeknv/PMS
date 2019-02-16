@@ -54,9 +54,41 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+            <Button
+                Margin="0,7,259,0" 
+                VerticalAlignment="Top" 
+                Width="90" 
+                Height="31" 
+                Background="#FFC94F3C" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFC94F3C" BorderThickness="1" Click="DeleteTimeSlotButton_Click" Grid.Column="1">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="18"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome UserMinusSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Delete" />
+                </StackPanel>
+            </Button>
         </Grid>
         <DataGrid BorderBrush="LightGray" GridLinesVisibility="All" x:Name="TimeslotsItemContainer" Height="746" Margin="55,82,61,0" VerticalAlignment="Top" AutoGenerateColumns="False" FontFamily="Segoe UI Historic">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="*" Header="Time Slot" SortMemberPath="Timeslot" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -135,7 +167,7 @@
                     Text=" Add Timeslot" />
             </StackPanel>
         </Button>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Timeslots" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Timeslots" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
         <Button
             Style="{DynamicResource MetroCircleButtonStyle}" 

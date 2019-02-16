@@ -54,9 +54,41 @@
                     <ColumnDefinition Width="137*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
+            <Button
+                Margin="0,7,259,0" 
+                VerticalAlignment="Top" 
+                Width="90" 
+                Height="31" 
+                Background="#FFC94F3C" 
+                Foreground="White" 
+                HorizontalAlignment="Right" BorderBrush="#FFC94F3C" BorderThickness="1" Click="DeleteEventTypeButton_Click" Grid.Column="1">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <Rectangle 
+                        Width="18"
+                        Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush 
+                                Stretch="Fill"
+                                Visual="{iconPacks:FontAwesome TrashAltSolid}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock 
+                        Text=" Delete" />
+                </StackPanel>
+            </Button>
         </Grid>
         <DataGrid x:Name="EventTypeItemContainer" BorderBrush="LightGray" GridLinesVisibility="All" Height="746" Margin="32,82,33,0" VerticalAlignment="Top" AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="*" Header="Appointment Type" SortMemberPath="AppointmentType" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -151,7 +183,7 @@
                     Text=" Add Type" />
             </StackPanel>
         </Button>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Appointment Types" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="415" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Appointment Types" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="463" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
         <Button
             Style="{DynamicResource MetroCircleButtonStyle}" 

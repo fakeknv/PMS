@@ -146,7 +146,7 @@
             <Label Content="Control Panel" HorizontalAlignment="Left" Margin="31,29,0,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Width="221" FontSize="18" Height="24" Padding="5,0" Foreground="White"/>
             <Label Content="Welcome Administrator" HorizontalAlignment="Left" Margin="31,53,0,0" VerticalAlignment="Top" Width="221" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="5,0" Foreground="White"/>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Settings" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Settings" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

@@ -196,8 +196,17 @@
             </TabItem>
             <TabItem Header="Account Log">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid x:Name="LogHolder" Margin="1,0,0,0" AutoGenerateColumns="False">
+                    <DataGrid x:Name="LogHolder" Margin="1,0,0,0" AutoGenerateColumns="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
                         <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Width="*" Header="Details" SortMemberPath="Details" CanUserSort="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -231,7 +240,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Label Foreground="#FF545454" Content="Parish Management System | My Account" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | My Account" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

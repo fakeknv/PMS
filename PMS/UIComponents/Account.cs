@@ -8,6 +8,7 @@ namespace PMS.UIComponents
 {
     class Account
     {
+		public int No { get; set; }
 		public string AccountID { get; set; }
 		public string Username { get; set; }
 		public string Role { get; set; }

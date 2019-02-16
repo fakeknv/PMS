@@ -20,6 +20,8 @@
         </Grid.RowDefinitions>
 
         <Button
+            Visibility="Hidden"
+            IsEnabled="False"
             x:Name="ArchiveRegisterButton"
                 Margin="0,4,0,0" 
                 VerticalAlignment="Top" 
@@ -64,8 +66,10 @@
         <Label x:Name="BookTypeHolder" Content="Book #" HorizontalAlignment="Left" Margin="24,87,0,0" Grid.Row="1" VerticalAlignment="Top" Width="164" HorizontalContentAlignment="Center" FontSize="14" Foreground="#FF383838" Height="27"/>
         <Label x:Name="AccessFrequency" Content="Access Frequency: Normal" HorizontalAlignment="Left" Margin="10,52,0,0" Grid.Row="2" VerticalAlignment="Top" Width="186" HorizontalContentAlignment="Center" Foreground="#FF383838" Height="27"/>
         <Button
+            Visibility="Hidden"
+            IsEnabled="False"
             x:Name="RestoreRegisterButton"
-            Margin="0,4,91,0" 
+            Margin="0,4,0,0" 
             VerticalAlignment="Top" 
             Width="86" 
             Height="27" 

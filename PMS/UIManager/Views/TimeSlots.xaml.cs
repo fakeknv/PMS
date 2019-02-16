@@ -68,17 +68,20 @@ namespace PMS.UIManager.Views
 								count = 0;
 							}
 						}
+						int temp = 1;
 						foreach (var cur in timeslots)
 						{
 							if (cur.Page == CurrentPage.Value)
 							{
 								timeslots_final.Add(new TimeSlot()
 								{
+									No = temp,
 									TimeSlotID = cur.TimeSlotID,
 									Timeslot = cur.Timeslot,
 									Status = cur.Status,
 									Page = cur.Page
 								});
+								temp++;
 							}
 						}
 						//close Connection
@@ -164,6 +167,19 @@ namespace PMS.UIManager.Views
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Actions Help", "You can add timeslots here. Timeslots will be used as a preset in the scheduling module.");
+		}
+		private async void DeleteTimeSlotButton_Click(object sender, RoutedEventArgs e)
+		{
+			TimeSlot ts = (TimeSlot)TimeslotsItemContainer.SelectedItem;
+			if (ts == null)
+			{
+				MsgNoItemSelected();
+			}
+			else
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowChildWindowAsync(new ConfirmDeleteTimeSlotWindow(this, ts.TimeSlotID), this.TimeSlotsMainGrid);
+			}
 		}
 	}
 }

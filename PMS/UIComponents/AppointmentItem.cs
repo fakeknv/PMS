@@ -8,6 +8,7 @@ namespace PMS.UIComponents
 {
     class AppointmentItem
     {
+		public int No { get; set; }
 		public string Time { get; set; }
 		public string Offered_by { get; set; }
 		public string Souls_of { get; set; }

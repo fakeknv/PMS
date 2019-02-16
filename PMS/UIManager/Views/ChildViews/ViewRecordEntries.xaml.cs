@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIComponents;
@@ -181,6 +182,30 @@ namespace PMS.UIManager.Views.ChildViews
 		private void BackToMainView(object sender, MouseButtonEventArgs e)
 		{
 			this.Content = new Registers();
+		}
+
+		private async void Button_Click(object sender, RoutedEventArgs e)
+		{
+			if (GetRegisterType(booknum) == "Confirmation")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowMessageAsync("Description", "This is a Confirmation Register. This contains data about a person's confirmation.");
+			}
+			else if (GetRegisterType(booknum) == "Baptismal")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowMessageAsync("Description", "This is a Baptismal Register. This contains data about a person's baptismal.");
+			}
+			else if (GetRegisterType(booknum) == "Matrimonial")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowMessageAsync("Description", "This is a Matrimonial Register. This contains data about people's marriages.");
+			}
+			else if (GetRegisterType(booknum) == "Burial")
+			{
+				var metroWindow = (Application.Current.MainWindow as MetroWindow);
+				await metroWindow.ShowMessageAsync("Description", "This is a Burial Register. This contains data about a person's death.");
+			}
 		}
 	}
 }

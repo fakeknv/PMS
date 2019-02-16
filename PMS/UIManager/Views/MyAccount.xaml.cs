@@ -49,14 +49,17 @@ namespace PMS.UIManager.Views
 						cmd.CommandText = "SELECT * FROM account_logs WHERE account_id = @aid;";
 						cmd.Parameters.AddWithValue("@aid", uid);
 						MySqlDataReader db_reader = cmd.ExecuteReader();
+						int temp = 1;
 						while (db_reader.Read())
 						{
 							entries.Add(new MyLogsEntry()
 							{
+								No = temp,
 								Details = db_reader.GetString("log_details"),
 								Date = DateTime.Parse(db_reader.GetString("log_date")).ToString("MMM dd, yyyy"),
 								Time = DateTime.Parse(db_reader.GetString("log_time")).ToString("hh:mm tt")
 							});
+							temp++;
 						}
 					}
 				}

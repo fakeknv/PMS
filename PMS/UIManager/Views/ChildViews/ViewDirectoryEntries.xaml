@@ -74,6 +74,15 @@
         <Grid Margin="10,51,10,10" x:Name="EntriesHolderGrid">
             <DataGrid x:Name="DirectoryItemsContainer" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,48,0,0" AutoGenerateColumns="False">
                 <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="*" Header="Lot" SortMemberPath="Lot" CanUserSort="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

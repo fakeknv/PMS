@@ -99,7 +99,7 @@
                 Width="30" 
                 HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Global Record Search" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Global Record Search" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="424" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

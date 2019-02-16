@@ -8,6 +8,7 @@ namespace PMS.UIComponents
 {
 	class MyLogsEntry
 	{
+		public int No { get; set; }
 		public string Details { get; set; }
 		public string Date { get; set; }
 		public string Time { get; set; }

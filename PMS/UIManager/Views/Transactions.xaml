@@ -428,8 +428,17 @@
                 Background="White">
                 <Grid 
                     Margin="0,50,0,0">
-                    <DataGrid x:Name="TransactionItemsContainer" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,42,1,0" AutoGenerateColumns="False">
+                    <DataGrid x:Name="TransactionItemsContainer" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,42,1,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -574,11 +583,11 @@
                     HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
                 </Grid>
                 <Label 
-                    Content="Transactions" 
+                    Content="Parish Transactions" 
                     HorizontalAlignment="Left" 
                     Margin="10,4,0,0" 
                     VerticalAlignment="Top" 
-                    Width="125" 
+                    Width="186" 
                     FontSize="20" 
                     FontWeight="Bold" 
                     Foreground="#FF545454" FontFamily="Segoe UI Semilight"/>
@@ -602,7 +611,7 @@
                     HorizontalAlignment="Right" Click="TransTypeHelp_Click"/>
             </Grid>
         </Grid>
-        <Label Foreground="#FF545454" Content="Parish Management System | Manage Billing" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="341" FontSize="14" Height="30"/>
+        <Label Foreground="#FF545454" Content="Parish Management System | Manage Billing" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="383" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <iconPacks:PackIconFontAwesome Foreground="#FF545454" Kind="EllipsisVSolid" HorizontalAlignment="Left" Margin="20,-35,0,0" VerticalAlignment="Top" Height="19" Width="17"/>
     </Grid>
 </UserControl>

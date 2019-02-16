@@ -28,6 +28,10 @@ namespace PMS.UIManager.Views
 
 		private ObservableCollection<RegisterItemArchive> registers;
 		private ObservableCollection<RegisterItemArchive> registers_final;
+
+		private ObservableCollection<RegisterItemArchive> arcregisters;
+		private ObservableCollection<RegisterItemArchive> arcregisters_final;
+
 		private PMSUtil pmsutil;
 
 		private string archiveDrive = "init";
@@ -38,6 +42,7 @@ namespace PMS.UIManager.Views
 		{
 			InitializeComponent();
 			SyncRegisters();
+			SyncArcRegisters();
 
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
@@ -241,7 +246,7 @@ namespace PMS.UIManager.Views
 				if (conn.State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT * FROM registers;";
+					cmd.CommandText = "SELECT * FROM registers WHERE status = 'Normal';";
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{
@@ -249,8 +254,19 @@ namespace PMS.UIManager.Views
 						RegisterItemArchive ri = new RegisterItemArchive();
 						if (db_reader.GetString("status") == "Archived")
 						{
+							ri.RestoreRegisterButton.Visibility = Visibility.Visible;
+							ri.RestoreRegisterButton.IsEnabled = true;
+							ri.ArchiveRegisterButton.Visibility = Visibility.Hidden;
+							ri.ArchiveRegisterButton.IsEnabled = false;
+
 							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
 							ri.RegIcon.ToolTip = "This register is archived.";
+						}
+						else {
+							ri.ArchiveRegisterButton.Visibility = Visibility.Visible;
+							ri.ArchiveRegisterButton.IsEnabled = true;
+							ri.RestoreRegisterButton.Visibility = Visibility.Hidden;
+							ri.RestoreRegisterButton.IsEnabled = false;
 						}
 						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
 						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
@@ -297,6 +313,101 @@ namespace PMS.UIManager.Views
 					RegistersItemContainer.Items.Refresh();
 					RegistersItemContainer.ItemsSource = registers_final;
 					RegistersItemContainer.Items.Refresh();
+				}
+				else
+				{
+
+				}
+			}
+		}
+		/// <summary>
+		/// Updates the Register list.
+		/// </summary>
+		internal void SyncArcRegisters()
+		{
+			arcregisters = new ObservableCollection<RegisterItemArchive>();
+			arcregisters_final = new ObservableCollection<RegisterItemArchive>();
+
+			ComboBoxItem ci = (ComboBoxItem)ItemsPerPage.SelectedItem;
+			int itemsPerPage = Convert.ToInt32(ci.Content);
+			int page = 1;
+			int count = 0;
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM registers WHERE status = 'Archived';";
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						int bookNum = Convert.ToInt32(db_reader.GetString("book_number"));
+						RegisterItemArchive ri = new RegisterItemArchive();
+						if (db_reader.GetString("status") == "Archived")
+						{
+							ri.RestoreRegisterButton.Visibility = Visibility.Visible;
+							ri.RestoreRegisterButton.IsEnabled = true;
+							ri.ArchiveRegisterButton.Visibility = Visibility.Hidden;
+							ri.ArchiveRegisterButton.IsEnabled = false;
+
+							ri.RegIcon.Kind = MahApps.Metro.IconPacks.PackIconFontAwesomeKind.ArchiveSolid;
+							ri.RegIcon.ToolTip = "This register is archived.";
+						}
+						else
+						{
+							ri.ArchiveRegisterButton.Visibility = Visibility.Visible;
+							ri.ArchiveRegisterButton.IsEnabled = true;
+							ri.RestoreRegisterButton.Visibility = Visibility.Hidden;
+							ri.RestoreRegisterButton.IsEnabled = false;
+						}
+						ri.BookTypeHolder.Content = db_reader.GetString("book_type");
+						ri.BookNoHolder.Content = "Book #" + db_reader.GetString("book_number");
+						ri.BookContentStatHolder.Content = CountEntries(Convert.ToInt32(db_reader.GetString("book_number"))) + " Entries | " + CountPages(Convert.ToInt32(db_reader.GetString("book_number"))) + " Pages";
+						ri.ArchiveRegisterButton.Click += (sender, e) => { ArchiveRegister_Click(sender, e, bookNum); };
+						ri.RestoreRegisterButton.Click += (sender, e) => { RestoreRegister_Click(sender, e, bookNum); };
+						ri.AccessFrequency.Content = "Access Frequency: " + CheckFrequency(bookNum);
+						if (CheckFrequency(bookNum) == "Very Low")
+						{
+							ri.AccessFrequency.Foreground = Brushes.OrangeRed;
+						}
+						else if (CheckFrequency(bookNum) == "Low")
+						{
+							ri.AccessFrequency.Foreground = Brushes.Orange;
+						}
+						else if (CheckFrequency(bookNum) == "Moderate")
+						{
+							ri.AccessFrequency.Foreground = Brushes.ForestGreen;
+						}
+						else if (CheckFrequency(bookNum) == "High")
+						{
+							ri.AccessFrequency.Foreground = Brushes.DeepSkyBlue;
+						}
+						ri.Page.Content = page;
+						arcregisters.Add(ri);
+
+						count++;
+						if (count == itemsPerPage)
+						{
+							page++;
+							count = 0;
+						}
+					}
+					foreach (var cur in arcregisters)
+					{
+						if (Convert.ToInt32(cur.Page.Content) == CurrentPage.Value)
+						{
+							arcregisters_final.Add(cur);
+						}
+					}
+					//close Connection
+					conn.Close();
+
+					ArchivedRegistersItemContainer.Items.Refresh();
+					ArchivedRegistersItemContainer.ItemsSource = arcregisters_final;
+					ArchivedRegistersItemContainer.Items.Refresh();
 				}
 				else
 				{

@@ -8,6 +8,7 @@ namespace PMS.UIComponents
 {
     class TimeSlot
 	{
+		public int No { get; set; }
 		public string TimeSlotID { get; set; }
 		public string Timeslot { get; set; }
 		public string Status { get; set; }
