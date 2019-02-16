@@ -71,7 +71,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				if (conn.State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT COUNT(*) residing_priests WHERE priest_name = @pname";
+					cmd.CommandText = "SELECT COUNT(*) FROM residing_priests WHERE priest_name = @pname";
 					cmd.Prepare();
 					cmd.Parameters.AddWithValue("@pname", PriestName.Text);
 					using (MySqlDataReader db_reader = cmd.ExecuteReader())

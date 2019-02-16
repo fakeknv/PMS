@@ -44,7 +44,7 @@ namespace PMS.UIManager.Views.ChildWindows
 				if (conn.State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "DELETE FROM appointment_types WHERE appointment_id = @eid LIMIT 1;";
+					cmd.CommandText = "DELETE FROM appointment_types WHERE type_id = @eid LIMIT 1;";
 					cmd.Parameters.AddWithValue("@eid", eid);
 					cmd.Prepare();
 					int stat_code = cmd.ExecuteNonQuery();
