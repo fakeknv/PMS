@@ -1222,6 +1222,22 @@ namespace PMS.UIManager.Views
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 340));
 
+			PdfPageBase page2 = pdfDoc.Pages.Add();
+			page2.Canvas.DrawString("Prepared By: ",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 10);
+
+			page2.Canvas.DrawString(pmsutil.GetEmpName(Application.Current.Resources["uid"].ToString()),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 50);
+
+			page2.Canvas.DrawString("St. Raphael Parish - Administrator",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 70);
+
 			string fname = "Transactions_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
 			pdfDoc.SaveToFile(@"..\..\" + fname);
@@ -1834,6 +1850,22 @@ namespace PMS.UIManager.Views
 			table.Columns[5].Width = width * 0.24f * width;
 			table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new PointF(10, 320));
+
+			PdfPageBase page2 = pdfDoc.Pages.Add();
+			page2.Canvas.DrawString("Prepared By: ",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 10);
+
+			page2.Canvas.DrawString(pmsutil.GetEmpName(Application.Current.Resources["uid"].ToString()),
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 50);
+
+			page2.Canvas.DrawString("St. Raphael Parish - Administrator",
+			new PdfFont(PdfFontFamily.TimesRoman, 12f, PdfFontStyle.Bold),
+			new PdfSolidBrush(System.Drawing.Color.Black),
+			10, 70);
 
 			string fname = "Registers_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
