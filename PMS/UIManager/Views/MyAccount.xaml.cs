@@ -28,7 +28,7 @@ namespace PMS.UIManager.Views
 			InitializeComponent();
 			NameTextbox.Text = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
 			SyncMyLogs();
-			AccountNameHolder.Content = pmsutil.GetFullName(Application.Current.Resources["uid"].ToString());
+			AccountNameHolder.Content = pmsutil.GetEmpName(Application.Current.Resources["uid"].ToString());
 			AccountRoleHolder.Content = pmsutil.GetAccountType(Application.Current.Resources["uid"].ToString());
 		}
 		internal void SyncMyLogs() {
