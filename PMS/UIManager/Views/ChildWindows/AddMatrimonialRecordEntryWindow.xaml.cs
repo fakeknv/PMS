@@ -152,6 +152,22 @@ namespace PMS.UIManager.Views.ChildWindows
 
 				ret = false;
 			}
+			if (CheckRequirements() == false)
+			{
+				MsgError();
+
+				HusbandValidator.Visibility = Visibility.Visible;
+				HusbandValidator.ToolTip = "This person already has a record.";
+				HusbandValidator.Foreground = Brushes.Red;
+				FullName1.BorderBrush = Brushes.Red;
+
+				WifeValidator.Visibility = Visibility.Visible;
+				WifeValidator.ToolTip = "This person already has a record.";
+				WifeValidator.Foreground = Brushes.Red;
+				FullName2.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
 			if (string.IsNullOrWhiteSpace(FullName2.Text))
 			{
 				WifeValidator.Visibility = Visibility.Visible;
@@ -363,6 +379,40 @@ namespace PMS.UIManager.Views.ChildWindows
 				Console.WriteLine("Error: {0}", ex.ToString());
 				return 0;
 			}
+		}
+		private async void MsgError()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "A record of the same name and type already exists.");
+		}
+		private bool CheckRequirements()
+		{
+			bool ret = false;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM records, registers, matrimonial_records WHERE registers.book_type = 'Matrimonial' AND registers.book_number = records.book_number AND records.record_id = matrimonial_records.record_id AND (records.recordholder_fullname = @fname OR matrimonial_records.recordholder2_fullname = @fname OR records.recordholder_fullname = @fname2 OR matrimonial_records.recordholder2_fullname = @fname2);";
+				cmd.Parameters.AddWithValue("@fname", FullName1.Text);
+				cmd.Parameters.AddWithValue("@fname2", FullName2.Text);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("COUNT(*)") == 0)
+					{
+						ret = true;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = false;
+			}
+			return ret;
 		}
 		/// <summary>
 		/// Fetches default confirmation stipend value.

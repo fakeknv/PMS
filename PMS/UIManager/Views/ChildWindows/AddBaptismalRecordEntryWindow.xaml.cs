@@ -99,6 +99,37 @@ namespace PMS.UIManager.Views.ChildWindows
 				return 0;
 			}
 		}
+		private async void MsgError()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "A record of the same name and type already exists.");
+		}
+		private bool CheckRequirements() {
+			bool ret = false;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM records, registers WHERE registers.book_type = 'Baptismal' AND registers.book_number = records.book_number AND records.recordholder_fullname = @fname;";
+				cmd.Parameters.AddWithValue("@fname", FullName.Text);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("COUNT(*)") == 0) {
+						ret = true;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = false;
+			}
+			return ret;
+		}
 		private void FetchBookEntryNum() {
 			int ret = 0;
 			PageNum.Value = vre.Page.Value;
@@ -246,6 +277,17 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				NameValidator.Visibility = Visibility.Visible;
 				NameValidator.ToolTip = "This field is required.";
+				NameValidator.Foreground = Brushes.Red;
+				FullName.BorderBrush = Brushes.Red;
+
+				ret = false;
+			}
+			if (CheckRequirements() == false)
+			{
+				MsgError();
+
+				NameValidator.Visibility = Visibility.Visible;
+				NameValidator.ToolTip = "This person already has a record.";
 				NameValidator.Foreground = Brushes.Red;
 				FullName.BorderBrush = Brushes.Red;
 
