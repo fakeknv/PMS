@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
+using MahApps.Metro.SimpleChildWindow;
 using System;
 using MySql.Data.MySqlClient;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Drawing;
 using Spire.Pdf.Tables;
 using System.Reflection;
 using Spire.Pdf;
+using System.Windows.Input;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -48,6 +50,75 @@ namespace PMS.UIManager.Views.ChildWindows
 			ItemsPerPage.SelectionChanged += Update2;
 			CurrentPage.ValueChanged += Update;
 		}
+		private System.Windows.Point? _startPoint;
+
+		private void EventsHolder_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			_startPoint = null;
+		}
+		private void EventsHolder_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			_startPoint = e.GetPosition(null);
+		}
+		private void EventsHolder_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			// No drag operation
+			if (_startPoint == null)
+				return;
+
+			var dg = sender as DataGrid;
+			if (dg == null) return;
+			// Get the current mouse position
+			System.Windows.Point mousePos = e.GetPosition(null);
+			Vector diff = _startPoint.Value - mousePos;
+			// test for the minimum displacement to begin the drag
+			if (e.LeftButton == MouseButtonState.Pressed &&
+				(Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
+				Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
+			{
+
+				// Get the dragged DataGridRow
+				var DataGridRow = FindAnchestor<DataGridRow>((DependencyObject)e.OriginalSource);
+
+				if (DataGridRow == null)
+					return;
+
+				this.Close();
+				EventsItem ei = dg.SelectedItem as EventsItem;
+
+				Label _lbl = new Label();
+				_lbl.Content = new EventTypeItemDraggable(null, ei.AppID);
+				// Initialize the drag & drop operation
+				DataObject dragData = new DataObject("myFormat", _lbl);
+				DragDrop.DoDragDrop(_lbl, dragData, DragDropEffects.Move);
+				
+				//DragDrop.DoDragDrop(dg, dataObj, DragDropEffects.Copy);
+				_startPoint = null;
+			}
+		}
+		// Helper to search up the VisualTree
+		private static T FindAnchestor<T>(DependencyObject current)
+			where T : DependencyObject
+			{
+			do
+			{
+				if (current is T)
+				{
+					return (T)current;
+				}
+				current = VisualTreeHelper.GetParent(current);
+			}
+			while (current != null);
+			return null;
+		}
+		private void DragTest(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			this.Close();
+			Label _lbl = sender as Label;
+			// Initialize the drag & drop operation
+			DataObject dragData = new DataObject("myFormat", _lbl);
+			DragDrop.DoDragDrop(_lbl, dragData, DragDropEffects.Move);
+		}
 		private void SyncEvent(DateTime dt) {
 			_events = new ObservableCollection<EventsItem>();
 			_events_final = new ObservableCollection<EventsItem>();
@@ -78,6 +149,8 @@ namespace PMS.UIManager.Views.ChildWindows
 							while (db_reader.Read())
 							{
 								status = GetStatus(db_reader.GetString("appointment_id"));
+
+								Label lbl = new Label();
 								_events.Add(new EventsItem()
 								{
 									AppID = db_reader.GetString("appointment_id"),
@@ -104,6 +177,7 @@ namespace PMS.UIManager.Views.ChildWindows
 								{
 									_events_final.Add(new EventsItem()
 									{
+										AppID = cur.AppID,
 										No = temp,
 										Date = cur.Date,
 										Time = cur.Time,
@@ -184,6 +258,7 @@ namespace PMS.UIManager.Views.ChildWindows
 								{
 									_events_final.Add(new EventsItem()
 									{
+										AppID = cur.AppID,
 										No = temp,
 										Date = cur.Date,
 										Time = cur.Time,
@@ -309,15 +384,6 @@ namespace PMS.UIManager.Views.ChildWindows
 				ret = false;
 			}
 			return ret;
-		}
-		/// <summary>
-		/// Interaction logic for the AddRegConfirm button. Gathers and prepares the data
-		/// for database insertion.
-		/// </summary>
-		private async void ConfirmPayment_Click(object sender, System.Windows.RoutedEventArgs e)
-		{
-			var metroWindow = (Application.Current.MainWindow as MetroWindow);
-			await metroWindow.ShowChildWindowAsync(new AddAppointmentWindow(this));
 		}
 		/// <summary>
 		/// Closes the AddRequestForm Window.
@@ -696,7 +762,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			else
 			{
 				var metroWindow = (Application.Current.MainWindow as MetroWindow);
-				await metroWindow.ShowChildWindowAsync(new EditAppointmentWindow(this, ei.AppID));
+				await metroWindow.ShowChildWindowAsync(new MoveAppointmentWindowPopup(ei.AppID, DateTime.Parse(ei.Date)));
 			}
 		}
 	}

@@ -1,0 +1,109 @@
+﻿<simpleChildWindow:ChildWindow
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:UIComponents="clr-namespace:PMS.UIComponents" 
+    x:Class="PMS.UIManager.Views.ChildWindows.MoveAppointmentWindowPopup"
+    ShowTitleBar="False"
+    d:DesignHeight="573.955"
+    BorderBrush="{DynamicResource AccentBaseColorBrush}"
+    BorderThickness="1"
+    IsOpen="True"
+    IsModal="False"
+    CloseOnOverlay="True"
+    GlowBrush="{DynamicResource AccentColorBrush}"
+    ShowCloseButton="True"
+    mc:Ignorable="d" Width="653">
+    <simpleChildWindow:ChildWindow.OverlayBrush>
+        <SolidColorBrush 
+            Opacity="0.7" 
+            Color="{StaticResource BlackColor}" />
+    </simpleChildWindow:ChildWindow.OverlayBrush>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="643" Height="564">
+        <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
+            <Label Content="EDIT APPOINTMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
+        </Grid>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,518,0,0">
+            <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
+                <Button x:Name="CancelButton1" 
+                    Content="Close" 
+                    Margin="0,8,132,8"
+                    FontFamily="Bahnschrift Light" 
+                    Click="Cancel_Click"
+                    Background="#FFF0A63A" 
+                    Foreground="White" HorizontalAlignment="Right" Width="114"/>
+                <Button
+                    Margin="0,8,10,0" 
+                    VerticalAlignment="Top" 
+                    Width="117" 
+                    Height="30" 
+                    Click="CreateAppointment_Click"
+                    Background="#FF3C7AC9" 
+                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
+                    Foreground="White" 
+                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    <StackPanel 
+                        Orientation="Horizontal">
+                        <Rectangle 
+                            Width="16"
+                            Height="16">
+                            <Rectangle.Fill>
+                                <VisualBrush 
+                                    Stretch="Fill"
+                                    Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock 
+                            Text=" Confirm" 
+                            FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <Label Content="SELECTED APPOINTMENT TYPE:" HorizontalAlignment="Left" Margin="25,48,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="TypeHolder" Content="" HorizontalAlignment="Left" Margin="55,75,0,0" VerticalAlignment="Top" Width="286" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderBrush="#FFD4D4D4" BorderThickness="0,1,1,1" Foreground="#FF303030"/>
+        <Label Content="SELECTED DATE:" HorizontalAlignment="Left" Margin="378,48,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="SelectedDate" Content="" HorizontalAlignment="Left" Margin="408,75,0,0" VerticalAlignment="Top" Width="205" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderBrush="#FFD4D4D4" BorderThickness="0,1,1,1" Foreground="#FF303030"/>
+        <Label Margin="25,75,588,460" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="DotCircleSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Margin="378,75,235,460" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="CalendarCheckSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="TIME:" HorizontalAlignment="Left" Margin="25,121,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="SelectedTimeIcon" Margin="25,148,588,387" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="ClockSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <ComboBox SelectedIndex="0" DropDownClosed="SelectedTime_DropDownClosed" x:Name="SelectedTime" HorizontalAlignment="Left" Margin="55,148,0,0" VerticalAlignment="Top" Width="286" Height="29" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label Content="PRIEST:" HorizontalAlignment="Left" Margin="378,121,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="AssignedPriestIcon" Margin="378,148,235,387" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <ComboBox x:Name="AssignedPriest" HorizontalAlignment="Left" Margin="408,148,0,0" VerticalAlignment="Top" Width="205" Height="29" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label Content="ADDITIONAL INFO" HorizontalAlignment="Left" Margin="25,192,0,0" VerticalAlignment="Top" Width="588" FontFamily="Calibri" FontSize="16" Foreground="#FF5D5D5D" FontWeight="Bold" BorderThickness="0,0,0,1" BorderBrush="#FFCCCCCC"/>
+        <Label Content="VENUE:" HorizontalAlignment="Left" Margin="25,236,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="29" Margin="55,263,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="286"/>
+        <Label x:Name="VenueIcon" Margin="25,263,588,272" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="MapMarkedAltSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="VENUE:" HorizontalAlignment="Left" Margin="25,236,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <TextBox x:Name="Venue" HorizontalAlignment="Left" Height="29" Margin="55,263,0,0" TextWrapping="Wrap" Text="St. Raphael Parish" VerticalAlignment="Top" Width="286" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label x:Name="RequestedByIcon" Margin="378,263,235,272" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="REQUESTED BY:" HorizontalAlignment="Left" Margin="378,236,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <TextBox x:Name="RequestedBy" HorizontalAlignment="Left" Height="29" Margin="408,263,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="205" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label Margin="378,457,235,77" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="DollarSignSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="FEE:" HorizontalAlignment="Left" Margin="378,430,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <mah:NumericUpDown x:Name="Fee" Minimum="0" HorizontalAlignment="Left" Margin="408,457,0,0" VerticalAlignment="Top" Height="30" Width="205" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label Content="REMARKS:" HorizontalAlignment="Left" Margin="25,314,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <TextBox x:Name="Remarks" HorizontalAlignment="Left" Height="84" Margin="25,341,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="588" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+    </Grid>
+</simpleChildWindow:ChildWindow>

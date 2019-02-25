@@ -428,7 +428,7 @@
                 Background="White">
                 <Grid 
                     Margin="0,50,0,0">
-                    <DataGrid x:Name="TransactionItemsContainer" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,42,1,0" AutoGenerateColumns="False">
+                    <DataGrid x:Name="TransactionItemsContainer" SelectionMode="Extended" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" Margin="0,42,1,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -487,7 +487,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="*" Header="Confirmed" SortMemberPath="TimeConfirmed" CanUserSort="True">
+                            <DataGridTemplateColumn Visibility="Hidden" Width="*" Header="Confirmed" SortMemberPath="TimeConfirmed" CanUserSort="True">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>

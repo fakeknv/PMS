@@ -262,7 +262,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			System.Diagnostics.Process.Start("Output\\print_file.pdf");
 
 			string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
-			pmsutil.InsertTransaction("Matrimonial Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
+			pmsutil.InsertTransaction("Matrimonial Cert.", "Unpaid", recordID, Convert.ToDouble(PrintingFee.Value));
 			return 1;
 		}
 		private int FetchMatrimonialStipend()

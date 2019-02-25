@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using PMS.UIManager;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -16,7 +17,7 @@ namespace PMS
 			return conn;
 		}
 		internal string GetConnStr() {
-			string conn_str = "Server=localhost;Database=pms_db;Uid=pms;Pwd=pms2018!;SslMode=none";
+			string conn_str = ConfigurationManager.AppSettings["ConnectionString"];
 			return conn_str;
 		}
 		internal void DBClose()

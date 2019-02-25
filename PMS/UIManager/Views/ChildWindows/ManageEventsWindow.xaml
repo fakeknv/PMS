@@ -36,33 +36,7 @@
     <Grid Height="534" Width="816">
         <Grid HorizontalAlignment="Left" Height="37" Margin="0,32,0,0" VerticalAlignment="Top" Width="816" Background="#FFE6E6E6">
             <Button
-                Margin="0,3,3,0" 
-                VerticalAlignment="Top" 
-                Width="116" 
-                Height="30" 
-                Click="ConfirmPayment_Click"
-                Background="#FF3C7AC9" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="White" 
-                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
-                <StackPanel 
-                    Orientation="Horizontal">
-                    <Rectangle 
-                        Width="16"
-                        Height="16">
-                        <Rectangle.Fill>
-                            <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome CheckCircleSolid}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock 
-                        Text=" Add Event" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                </StackPanel>
-            </Button>
-            <Button
-                Margin="0,3,124,0" 
+                Margin="0,3,10,0" 
                 VerticalAlignment="Top" 
                 Width="130" 
                 Height="30" 
@@ -88,7 +62,7 @@
                 </StackPanel>
             </Button>
             <Button
-                Margin="0,3,259,0" 
+                Margin="0,3,145,0" 
                 VerticalAlignment="Top" 
                 Width="116" 
                 Height="30" 
@@ -166,18 +140,18 @@
             </Grid>
         </Border>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
-            <Label Content="MANAGE EVENTS" Margin="44,3,553,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <Label MouseDown="DragTest" Content="MANAGE EVENTS" Margin="44,3,553,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
-            <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="582,2,0,0" VerticalAlignment="Top" Height="27" Width="234" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
+            <Label x:Name="SelectedDate" Content="Label" HorizontalAlignment="Left" Margin="582,3,0,0" VerticalAlignment="Top" Height="26" Width="234" FontFamily="Calibri" FontSize="14" Foreground="White"/>
         </Grid>
         <Grid Margin="0,69,0,46">
-            <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
+            <DataGrid x:Name="EventsHolder" PreviewMouseUp="EventsHolder_PreviewMouseUp" MouseLeftButtonDown="EventsHolder_MouseLeftButtonDown" PreviewMouseMove="EventsHolder_PreviewMouseMove" SelectionMode="Single" AutoGenerateColumns="False" CanUserAddRows="False" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock Padding="0,10,0,10" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -236,7 +210,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="*" Header="Additional Info" SortMemberPath="Info" CanUserSort="True">
+                    <DataGridTemplateColumn Width="*" Header="Remarks" SortMemberPath="Info" CanUserSort="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>

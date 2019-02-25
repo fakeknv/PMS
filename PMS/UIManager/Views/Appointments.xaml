@@ -27,197 +27,24 @@
         x:Name="AppointmentMainGrid" 
         Background="#FFF1F1F3">
         <Label Visibility="Hidden" x:Name="dayActivitiesTitle" Content="Today's Activities" Margin="10,5,571,0" BorderBrush="#FFE6E6E6" BorderThickness="0,0,0,1" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF888888"/>
-        <Grid Background="White" Height="46" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="438*"/>
-                <ColumnDefinition Width="509*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Stretch">
-                <TextBox 
-                    x:Name="SearchRequestBox" 
-                    TextWrapping="Wrap" 
-                    Margin="10,7,10,0"
-                    BorderThickness="0,0,0,1" 
-                    Height="31" 
-                    HorizontalAlignment="Stretch" 
-                    VerticalAlignment="Top" 
-                    mah:TextBoxHelper.Watermark="Search"
-                    RenderTransformOrigin="0,0.5" 
-                    FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                    FontSize="14"
-                    VerticalContentAlignment="Center"/>
-                <Button 
-                    x:Name="SearchRequestButton" 
-                    Style="{DynamicResource MetroCircleButtonStyle}" 
-                    Content="{iconPacks:FontAwesome SearchSolid}" 
-                    Margin="0,2,10,0" 
-                    VerticalAlignment="Top" 
-                    Height="34" 
-                    Background="White" 
-                    BorderBrush="{x:Null}" 
-                    RenderTransformOrigin="0.824,0.294" 
-                    Foreground="#FF717171" Width="34" HorizontalAlignment="Right"/>
+        <Grid Margin="0">
+            <Grid Background="#FFE5E5E5" x:Name="CalendarHolder" Margin="10,10,254,10">
+                <UIComponents:Calendar Background="White"/>
             </Grid>
-            <Grid 
-                Grid.Column="1" HorizontalAlignment="Right" Width="430">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="277*"/>
-                    <ColumnDefinition Width="153*"/>
-                </Grid.ColumnDefinitions>
-                <Button
-                Style="{DynamicResource MetroCircleButtonStyle}" 
-                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
-                Margin="0,6,10,0" 
-                VerticalAlignment="Top" 
-                Height="30" 
-                Background="White" 
-                BorderBrush="{x:Null}" 
-                RenderTransformOrigin="0.824,0.294" 
-                Foreground="#FF717171" 
-                Width="30" 
-                HorizontalAlignment="Right" Click="ActionsHelp_Click" Grid.Column="1"/>
-            </Grid>
-        </Grid>
-        <Grid Margin="0,46,0,0">
-            <TabControl Margin="20,10,270,10">
-                <TabControl.ItemContainerStyle>
-                    <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True" >
-                                <Setter Property="HeaderTemplate" Value="{StaticResource xtabHeader}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TabControl.ItemContainerStyle>
-                <TabItem Header="List" Padding="0">
-                    <Grid Background="#FFE5E5E5">
-                        <ComboBox x:Name="ListType" DropDownClosed="SyncList" Margin="0,5,5,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="146">
-                            <ComboBoxItem>All</ComboBoxItem>
-                            <ComboBoxItem>Daily Mass</ComboBoxItem>
-                            <ComboBoxItem>Parish Services</ComboBoxItem>
-                        </ComboBox>
-                        <DatePicker x:Name="ListMinDate" HorizontalAlignment="Left" Margin="49,5,0,0" VerticalAlignment="Top" Width="128"/>
-                        <Label Content="Start:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"/>
-                        <DatePicker x:Name="ListMaxDate" HorizontalAlignment="Left" Margin="221,5,0,0" VerticalAlignment="Top" Width="128"/>
-                        <Label Content="End:" HorizontalAlignment="Left" Margin="182,5,0,0" VerticalAlignment="Top"/>
-                        <DataGrid x:Name="EventsHolder" AutoGenerateColumns="False" Margin="0,36,0,0" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray" GridLinesVisibility="All" CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="No" SortMemberPath="No" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding No}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Date" SortMemberPath="Date" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock Padding="0,10,0,10" TextAlignment="Center" Text="{Binding Date}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Time" SortMemberPath="Time" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Time}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Type" SortMemberPath="Type" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Type}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Status" SortMemberPath="Status" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Foreground="{Binding Path=Status, Converter={StaticResource StatusConverter}}" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Sponsor" SortMemberPath="Sponsor" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Sponsor}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Priest" SortMemberPath="Priest" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Priest}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="*" Header="Info" SortMemberPath="Info" CanUserSort="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel>
-                                                <TextBlock TextAlignment="Center" Text="{Binding Info}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Calendar" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="15,0,15,0">
-                    <Grid Background="#FFE5E5E5">
-                        <UIComponents:Calendar Background="White"/>
-                    </Grid>
-                </TabItem>
-            </TabControl>
             <Grid Margin="0,10,10,10" Background="White" HorizontalAlignment="Right" Width="239">
-                <Button
-                    ToolTip="Adds an appointment/schedule."
-                x:Name="CreateRequestButton" 
-                Margin="0,53,31,0" 
-                VerticalAlignment="Top" 
-                Width="176" 
-                Height="31" 
-                Background="WhiteSmoke" 
-                FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="#FF474747" 
-                HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="1" Click="AddAppointment_Click">
-                    <StackPanel 
-                    Orientation="Horizontal">
-                        <Rectangle 
-                        Width="14"
-                        Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush 
-                                Stretch="Fill"
-                                Visual="{iconPacks:FontAwesome CalendarAltRegular}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock 
-                        Text=" Add Appointment" 
-                        FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
-                    </StackPanel>
-                </Button>
+                <DatePicker x:Name="ListMinDate" HorizontalAlignment="Left" Margin="58,50,0,0" VerticalAlignment="Top" Width="171"/>
+                <DatePicker x:Name="ListMaxDate" HorizontalAlignment="Left" Margin="58,87,0,0" VerticalAlignment="Top" Width="171"/>
+                <ComboBox x:Name="ListType" Margin="0,125,10,0" SelectedIndex="0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="171">
+                    <ComboBoxItem>All</ComboBoxItem>
+                    <ComboBoxItem>Daily Mass</ComboBoxItem>
+                    <ComboBoxItem>Parish Services</ComboBoxItem>
+                </ComboBox>
                 <Button 
                     ToolTip="Creates the list of events."
-                    Margin="0,89,31,0" 
+                    Margin="0,163,10,0" 
                     VerticalAlignment="Top" 
-                    Width="176" 
-                    Height="31" 
+                    Width="214" 
+                    Height="32" 
                     Background="WhiteSmoke" 
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     Foreground="#FF474747" 
@@ -238,12 +65,37 @@
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
-                <Label Content="Actions" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,0,0,1" BorderBrush="#FF474747"/>
-                <Label Content="Overview" Margin="10,174,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,0,0,1" BorderBrush="#FF474747"/>
-                <Label x:Name="Year" Content="Total Schedules: " Margin="10,214,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
-                <Label x:Name="Month" Content="This Month: " Margin="10,322,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
-                <Label x:Name="Week" Content="This Week: " Margin="10,286,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
-                <Label x:Name="Day" Content="This Day: " Margin="10,250,10,0" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI Symbol" Foreground="#FF474747"/>
+                <Label Content="Actions" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF46A1D4" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
+                <Button
+                Style="{DynamicResource MetroCircleButtonStyle}" 
+                Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
+                Margin="0,10,10,0" 
+                VerticalAlignment="Top" 
+                Height="30" 
+                Background="White" 
+                BorderBrush="{x:Null}" 
+                RenderTransformOrigin="0.824,0.294" 
+                Foreground="#FF717171" 
+                Width="30" 
+                HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
+                <Label Content="Add Appointment" Margin="9,213,11,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF46A1D4" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
+                <ListView Name="AppointmentTypeList" Margin="10,286,10,10" BorderBrush="#FFE9E9E9" BorderThickness="1" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+                <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="18,253,0,0" VerticalAlignment="Top" Foreground="#FF1D7ABB" RenderTransformOrigin="0.625,1.104"/>
+                <TextBlock TextWrapping="WrapWithOverflow" Text="Drag event to desired date to add appointment." Margin="39,253,11,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="28" Foreground="#FF575757"/>
+                <Label Content="Type: " HorizontalAlignment="Left" Margin="15,125,0,0" VerticalAlignment="Top" Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
+                <Label Content="Start: " HorizontalAlignment="Left" Margin="15,50,0,0" VerticalAlignment="Top" Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
+                <Label Content="End: " HorizontalAlignment="Left" Margin="21,87,0,0" VerticalAlignment="Top" Width="37" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
             </Grid>
         </Grid>
         <Label Foreground="#FF545454" Content="Parish Management System | Scheduling" HorizontalAlignment="Left" Margin="37,-40,0,0" VerticalAlignment="Top" Width="477" FontSize="17" Height="40" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>

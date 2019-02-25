@@ -42,7 +42,6 @@ namespace PMS.UIManager.Views
 			app = this;
             InitializeComponent();
 			dayActivitiesTitle.Content = DateTime.Now.ToString("MMMM d, yyyy");
-			SyncOverview();
 
 			DateTime date = DateTime.Now;
 			var min = new DateTime(date.Year, date.Month, 1);
@@ -50,269 +49,33 @@ namespace PMS.UIManager.Views
 			ListMinDate.SelectedDate = min;
 			ListMaxDate.SelectedDate = max;
 
-			SyncEvent2();
-
-			ListMinDate.SelectedDateChanged += SyncList2;
-			ListMaxDate.SelectedDateChanged += SyncList2;
+			FetchAptType();
 		}
-		private void SyncOverview() {
+		internal void FetchAptType() {
 			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))
 			{
 				conn.Open();
 				if (conn.State == ConnectionState.Open)
 				{
-					//Year
-					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM appointment_types;";
+					cmd.Prepare();
+					using (MySqlDataReader db_reader = cmd.ExecuteReader())
 					{
-						string[] dt = pmsutil.GetServerDateTime().Split(null);
-						DateTime cDate = Convert.ToDateTime(dt[0]);
-						var start = new DateTime(cDate.Year, 1, 1);
-						var end = new DateTime(cDate.Year, 12, 31);
-
-						conn2.Open();
-						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE appointment_date > @min AND appointment_date < @max;";
-						cmd.Parameters.AddWithValue("@min", start.ToString("yyyy-MM-dd"));
-						cmd.Parameters.AddWithValue("@max", end.ToString("yyyy-MM-dd"));
-						cmd.Prepare();
-						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						while (db_reader.Read())
 						{
-							while (db_reader.Read())
-							{
-								Year.Content = "This Year: " + db_reader.GetInt32("COUNT(*)");
-							}
-						}
-					}
-					//Today
-					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-					{
-						string[] dt = pmsutil.GetServerDateTime().Split(null);
-						DateTime cDate = Convert.ToDateTime(dt[0]);
-
-						conn2.Open();
-						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE appointment_date = @date;";
-						cmd.Parameters.AddWithValue("@date", DateTime.Today.ToString("yyyy-MM-dd"));
-						cmd.Prepare();
-						using (MySqlDataReader db_reader = cmd.ExecuteReader())
-						{
-							while (db_reader.Read())
-							{
-								Day.Content = "This day: " + db_reader.GetInt32("COUNT(*)");
-							}
-						}
-					}
-					//This Week
-					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-					{
-						DayOfWeek day = DateTime.Now.DayOfWeek;
-						int days = day - DayOfWeek.Monday;
-						DateTime start = DateTime.Now.AddDays(-days);
-						DateTime end = start.AddDays(6);
-
-						conn2.Open();
-						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE appointment_date > @min AND appointment_date < @max;";
-						cmd.Parameters.AddWithValue("@min", start.ToString("yyyy-MM-dd"));
-						cmd.Parameters.AddWithValue("@max", end.ToString("yyyy-MM-dd"));
-						cmd.Prepare();
-						using (MySqlDataReader db_reader = cmd.ExecuteReader())
-						{
-							while (db_reader.Read())
-							{
-								Week.Content = "This Week: " + db_reader.GetInt32("COUNT(*)");
-							}
-						}
-					}
-					//This Month
-					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-					{
-						string[] dt = pmsutil.GetServerDateTime().Split(null);
-						DateTime cDate = Convert.ToDateTime(dt[0]);
-						var start = new DateTime(cDate.Year, cDate.Month, 1);
-						var end = start.AddMonths(1).AddDays(-1);
-
-						conn2.Open();
-						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT COUNT(*) FROM appointments WHERE appointment_date > @min AND appointment_date < @max;";
-						cmd.Parameters.AddWithValue("@min", start.ToString("yyyy-MM-dd"));
-						cmd.Parameters.AddWithValue("@max", end.ToString("yyyy-MM-dd"));
-						cmd.Prepare();
-						using (MySqlDataReader db_reader = cmd.ExecuteReader())
-						{
-							while (db_reader.Read())
-							{
-								Month.Content = "This Month: " + db_reader.GetInt32("COUNT(*)");
-							}
+							Label lbl = new Label();
+							lbl.HorizontalAlignment = HorizontalAlignment.Stretch;
+							var bc = new System.Windows.Media.BrushConverter();
+							lbl.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#FF3E3E3E");
+							lbl.MouseDown += DragTest;
+							lbl.Content = new EventTypeItemDraggable(db_reader.GetString("appointment_type"), null);
+							AppointmentTypeList.Items.Add(lbl);
 						}
 					}
 				}
 			}
-		}
-		internal void SyncEvent2()
-		{
-			ObservableCollection<EventsItem> events = new ObservableCollection<EventsItem>();
-
-			dbman = new DBConnectionManager();
-
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
-				{
-					int temp = 1;
-					if (ListType.SelectedIndex == 0)
-					{
-						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-						{
-							conn2.Open();
-							MySqlCommand cmd = conn2.CreateCommand();
-							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
-							cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
-							cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
-							cmd.Prepare();
-							using (MySqlDataReader db_reader = cmd.ExecuteReader())
-							{
-								string status = "null";
-
-								while (db_reader.Read())
-								{
-									if (IsCustom(db_reader.GetString("appointment_type")) == true)
-									{
-										status = GetStatus(db_reader.GetString("appointment_id"));
-										events.Add(new EventsItem()
-										{
-											No = temp,
-											AppID = db_reader.GetString("appointment_id"),
-											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
-											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
-											Type = GetAType(db_reader.GetString("appointment_type")),
-											Status = status,
-											Sponsor = db_reader.GetString("requested_by"),
-											Info = db_reader.GetString("remarks"),
-											Priest = GetPriest(db_reader.GetString("assigned_priest")),
-											Page = 0
-										});
-										temp++;
-									}
-									else
-									{
-										status = GetStatus(db_reader.GetString("appointment_id"));
-										events.Add(new EventsItem()
-										{
-											No = temp,
-											AppID = db_reader.GetString("appointment_id"),
-											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
-											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
-											Type = GetAType(db_reader.GetString("appointment_type")),
-											Status = status,
-											Sponsor = db_reader.GetString("requested_by"),
-											Info = db_reader.GetString("remarks"),
-											Priest = GetPriest(db_reader.GetString("assigned_priest")),
-											Page = 0
-										});
-										temp++;
-									}
-								}
-								EventsHolder.Items.Refresh();
-								EventsHolder.ItemsSource = events;
-								EventsHolder.Items.Refresh();
-							}
-						}
-					}
-					else if (ListType.SelectedIndex == 1) {
-						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-						{
-							conn2.Open();
-							MySqlCommand cmd = conn2.CreateCommand();
-							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
-							cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
-							cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
-							cmd.Prepare();
-							using (MySqlDataReader db_reader = cmd.ExecuteReader())
-							{
-								string status = "null";
-
-								while (db_reader.Read())
-								{
-									if (IsCustom(db_reader.GetString("appointment_type")) == true)
-									{
-										
-									}
-									else
-									{
-										status = GetStatus(db_reader.GetString("appointment_id"));
-										events.Add(new EventsItem()
-										{
-											No = temp,
-											AppID = db_reader.GetString("appointment_id"),
-											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
-											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
-											Type = GetAType(db_reader.GetString("appointment_type")),
-											Status = status,
-											Sponsor = db_reader.GetString("requested_by"),
-											Info = db_reader.GetString("remarks"),
-											Priest = GetPriest(db_reader.GetString("assigned_priest")),
-											Page = 0
-										});
-										temp++;
-									}
-								}
-								EventsHolder.Items.Refresh();
-								EventsHolder.ItemsSource = events;
-								EventsHolder.Items.Refresh();
-							}
-						}
-					}
-					else {
-						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
-						{
-							conn2.Open();
-							MySqlCommand cmd = conn2.CreateCommand();
-							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
-							cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
-							cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
-							cmd.Prepare();
-							using (MySqlDataReader db_reader = cmd.ExecuteReader())
-							{
-								string status = "null";
-
-								while (db_reader.Read())
-								{
-									if (IsCustom(db_reader.GetString("appointment_type")) == true)
-									{
-										status = GetStatus(db_reader.GetString("appointment_id"));
-										events.Add(new EventsItem()
-										{
-											No = temp,
-											AppID = db_reader.GetString("appointment_id"),
-											Date = DateTime.Parse(db_reader.GetString("appointment_date")).ToString("MMM dd, yyyy"),
-											Time = DateTime.Parse(db_reader.GetString("appointment_time")).ToString("h:mm tt"),
-											Type = GetAType(db_reader.GetString("appointment_type")),
-											Status = status,
-											Sponsor = db_reader.GetString("requested_by"),
-											Info = db_reader.GetString("remarks"),
-											Priest = GetPriest(db_reader.GetString("assigned_priest")),
-											Page = 0
-										});
-										temp++;
-									}
-									else
-									{
-										
-									}
-								}
-								EventsHolder.Items.Refresh();
-								EventsHolder.ItemsSource = events;
-								EventsHolder.Items.Refresh();
-							}
-						}
-					}
-				}
-			}
-			EventsHolder.ItemsSource = events;
 		}
 		private string GetStatus(string aid)
 		{
@@ -412,6 +175,7 @@ namespace PMS.UIManager.Views
 			await controller.CloseAsync();
 		}
 		private void GenerateDailyReport() {
+			pmsutil = new PMSUtil();
 
 			string[] dt = pmsutil.GetServerDateTime().Split(null);
 			DateTime cDate = Convert.ToDateTime(dt[0]);
@@ -437,7 +201,7 @@ namespace PMS.UIManager.Views
 			new PdfSolidBrush(Color.Black),
 			280, 20);
 
-			page.Canvas.DrawLine(new PdfPen(Color.Black), new PointF(1,49), new PointF(530,49));
+			page.Canvas.DrawLine(new PdfPen(Color.Black), new PointF(1, 49), new PointF(530, 49));
 
 			page.Canvas.DrawString("PMS Scheduling Module Report",
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
@@ -456,10 +220,18 @@ namespace PMS.UIManager.Views
 
 			page.Canvas.DrawLine(new PdfPen(Color.Black), new PointF(1, 70), new PointF(530, 70));
 
-			page.Canvas.DrawString(cDate.ToString("MMMM dd, yyyy").ToUpper() + " (" + cDate.ToString("dddd").ToUpper() + ")",
-			new PdfFont(PdfFontFamily.TimesRoman, 12f),
-			new PdfSolidBrush(Color.Black),
-			10, 90);
+			if (ListType.SelectedIndex == 1) {
+				page.Canvas.DrawString(cDate.ToString("MMMM dd, yyyy").ToUpper() + " (" + cDate.ToString("dddd").ToUpper() + ")",
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(Color.Black),
+				10, 90);
+			}
+			else {
+				page.Canvas.DrawString(DateTime.Parse(ListMinDate.SelectedDate.ToString()).ToString("MMMM dd, yyyy").ToUpper() + " TO " + DateTime.Parse(ListMaxDate.SelectedDate.ToString()).ToString("MMMM dd, yyyy").ToUpper(),
+				new PdfFont(PdfFontFamily.TimesRoman, 12f),
+				new PdfSolidBrush(Color.Black),
+				10, 90);
+			}
 
 			PdfTable table = new PdfTable();
 			table.Style.CellPadding = 2;
@@ -486,6 +258,13 @@ namespace PMS.UIManager.Views
 			table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[3].Width = width * 0.24f * width;
 			table.Columns[3].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			table.Columns[4].Width = width * 0.24f * width;
+			table.Columns[4].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			if (ListType.SelectedIndex == 2)
+			{
+				table.Columns[5].Width = width * 0.24f * width;
+				table.Columns[5].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
+			}
 			table.Draw(page, new PointF(10, 120));
 
 			string fname = "Scheduling_Report-" + ListType.Text + "-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
@@ -497,48 +276,114 @@ namespace PMS.UIManager.Views
 		private DataTable GenerateList()
 		{
 			DataTable dtNames = new DataTable();
-			dtNames.Columns.Add("Time", typeof(string));
-			dtNames.Columns.Add("Type", typeof(string));
-			dtNames.Columns.Add("Sponsor", typeof(string));
-			dtNames.Columns.Add("Additional Info", typeof(string));
 
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
+			if (ListType.SelectedIndex == 2) {
+				dtNames.Columns.Add("No", typeof(string));
+				dtNames.Columns.Add("Time", typeof(string));
+				dtNames.Columns.Add("Type", typeof(string));
+				dtNames.Columns.Add("Sponsor", typeof(string));
+				dtNames.Columns.Add("Venue", typeof(string));
+				dtNames.Columns.Add("Remarks", typeof(string));
+
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
 				{
-					//Year
-					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
 					{
-						string[] dt = pmsutil.GetServerDateTime().Split(null);
-						DateTime cDate = Convert.ToDateTime(dt[0]);
-
-						conn2.Open();
-						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
-						cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
-						cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
-						cmd.Prepare();
-						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						//Year
+						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
 						{
-							while (db_reader.Read())
+							string[] dt = pmsutil.GetServerDateTime().Split(null);
+							DateTime cDate = Convert.ToDateTime(dt[0]);
+
+							conn2.Open();
+							MySqlCommand cmd = conn2.CreateCommand();
+							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
+							cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
+							cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
+							cmd.Prepare();
+							using (MySqlDataReader db_reader = cmd.ExecuteReader())
 							{
-								if (ListType.SelectedIndex == 0) {
-									dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
-								}
-								else if (ListType.SelectedIndex == 1) {
-									if (IsCustom(db_reader.GetString("appointment_type")) == false)
+								int count = 1;
+								while (db_reader.Read())
+								{
+									if (ListType.SelectedIndex == 0)
 									{
-										dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+										dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("venue"), db_reader.GetString("remarks"));
 									}
-								}
-								else {
-									if (IsCustom(db_reader.GetString("appointment_type")) == true)
+									else if (ListType.SelectedIndex == 1)
 									{
-										dtNames.Rows.Add(DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+										if (IsCustom(db_reader.GetString("appointment_type")) == false)
+										{
+											dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("venue"), db_reader.GetString("remarks"));
+										}
 									}
+									else
+									{
+										if (IsCustom(db_reader.GetString("appointment_type")) == true)
+										{
+											dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("venue"), db_reader.GetString("remarks"));
+										}
+									}
+									count++;
+								}
+							}
+						}
+					}
+				}
+			}
+			else {
+				dtNames.Columns.Add("No", typeof(string));
+				dtNames.Columns.Add("Time", typeof(string));
+				dtNames.Columns.Add("Type", typeof(string));
+				dtNames.Columns.Add("Sponsor", typeof(string));
+				dtNames.Columns.Add("Remarks", typeof(string));
+
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
+				{
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
+					{
+						//Year
+						using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+						{
+							string[] dt = pmsutil.GetServerDateTime().Split(null);
+							DateTime cDate = Convert.ToDateTime(dt[0]);
+
+							conn2.Open();
+							MySqlCommand cmd = conn2.CreateCommand();
+							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date > @min AND appointment_date < @max ORDER BY appointment_date ASC;";
+							cmd.Parameters.AddWithValue("@min", DateTime.Parse(ListMinDate.SelectedDate.ToString()));
+							cmd.Parameters.AddWithValue("@max", DateTime.Parse(ListMaxDate.SelectedDate.ToString()));
+							cmd.Prepare();
+							using (MySqlDataReader db_reader = cmd.ExecuteReader())
+							{
+								int count = 1;
+								while (db_reader.Read())
+								{
+									if (ListType.SelectedIndex == 0)
+									{
+										dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+									}
+									else if (ListType.SelectedIndex == 1)
+									{
+										if (IsCustom(db_reader.GetString("appointment_type")) == false)
+										{
+											dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+										}
+									}
+									else
+									{
+										if (IsCustom(db_reader.GetString("appointment_type")) == true)
+										{
+											dtNames.Rows.Add(count, DateTime.Parse(db_reader.GetString("appointment_time")).ToString("hh:mm tt"), GetAType(db_reader.GetString("appointment_type")), db_reader.GetString("requested_by"), db_reader.GetString("remarks"));
+										}
+									}
+									count++;
 								}
 							}
 						}
@@ -572,20 +417,18 @@ namespace PMS.UIManager.Views
 			}
 			return ret;
 		}
-
-		private void SyncList(object sender, EventArgs e)
-		{
-			SyncEvent2();
-		}
-
-		private void SyncList2(object sender, SelectionChangedEventArgs e)
-		{
-			SyncEvent2();
-		}
 		private async void ActionsHelp_Click(object sender, RoutedEventArgs e)
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Actions Help", "You can add appointments and schedule mass in this menu. The system will list available priests on the given date and time.");
+		}
+
+		private void DragTest(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			Label _lbl = sender as Label;
+			// Initialize the drag & drop operation
+			DataObject dragData = new DataObject("myFormat", _lbl);
+			DragDrop.DoDragDrop(_lbl, dragData, DragDropEffects.Move);
 		}
 	}
 }

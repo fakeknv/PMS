@@ -9,7 +9,6 @@
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     Title="Add Request"
     ShowTitleBar="False"
-    d:DesignHeight="427.5"
     BorderBrush="{DynamicResource AccentBaseColorBrush}"
     BorderThickness="1"
     IsModal="False"
@@ -17,7 +16,7 @@
     CloseOnOverlay="True"
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
-    mc:Ignorable="d" Width="466">
+    mc:Ignorable="d" Width="679" Height="694.5">
     <simpleChildWindow:ChildWindow.Icon>
         <iconPacks:PackIconFontAwesome 
             Width="22"
@@ -30,29 +29,28 @@
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid Height="206">
-        <TextBox x:Name="OR" Height="23" Margin="10,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF474747"/>
-        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
-        <TextBlock HorizontalAlignment="Left" Margin="31,52,0,0" TextWrapping="Wrap" Text="ENTER RECEIPT NUMBER TO CONFIRM PAYMENT!" VerticalAlignment="Top" Width="321" Height="16" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464"/>
-        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,160,0,0">
-            <Grid HorizontalAlignment="Left" Width="362" Height="46" VerticalAlignment="Bottom">
+    <Grid Height="340" Width="603">
+        <TextBlock HorizontalAlignment="Left" Margin="66,250,0,0" TextWrapping="Wrap" Text="Please review the receipt details before printing." VerticalAlignment="Top" Width="321" Height="16" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF646464" FontSize="14"/>
+        <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Margin="0,296,0,0">
+            <Grid HorizontalAlignment="Left" Width="603" Height="42" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton" 
                 Content="Close" 
-                Margin="138,8,132,8"
+                Margin="366,6,132,6"
                 FontFamily="Bahnschrift Light" 
                 Click="CancelButton_Click"
                 Background="#FFF0A63A" 
                 Foreground="White"/>
                 <Button
-                    Margin="0,8,10,0" 
+                    x:Name="ConfirmButton"
+                    Margin="0,6,10,0" 
                     VerticalAlignment="Top" 
                     Width="117" 
                     Height="30" 
-                    Click="ConfirmPayment_Click"
                     Background="#FF3C7AC9" 
                     FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                     Foreground="White" 
-                    HorizontalAlignment="Right" BorderBrush="#FFE9E9E9" BorderThickness="0">
+                    HorizontalAlignment="Right" 
+                    BorderBrush="#FFE9E9E9" BorderThickness="0">
                     <StackPanel 
                         Orientation="Horizontal">
                         <Rectangle 
@@ -69,13 +67,34 @@
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
+                <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
             </Grid>
         </Border>
-        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
-        <Label x:Name="InfoArea" Content="" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="342" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+        <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="45,249,0,0" VerticalAlignment="Top" Foreground="#FF646464"/>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="CONFIRM PAYMENT" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="CheckCircleSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
         </Grid>
+        <Label x:Name="CashTenderedIcon" Margin="307,88,266,224" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="MoneyBillSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="CASH TENDERED:" HorizontalAlignment="Left" Margin="307,61,0,0" VerticalAlignment="Top" Width="109" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <mah:NumericUpDown Value="0" x:Name="CashTendered" Minimum="0" HorizontalAlignment="Left" Height="28" Margin="336,88,0,0" VerticalAlignment="Top" Width="237" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="#FF303030"/>
+        <Label x:Name="VenueIcon_Copy" Margin="36,88,537,224" BorderThickness="1,1,1,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="DollarSignSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="AMOUNT TO BE PAID:" HorizontalAlignment="Left" Margin="36,60,0,0" VerticalAlignment="Top" Width="156" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="AmountToBePaid" Content="" HorizontalAlignment="Left" Margin="66,88,0,0" VerticalAlignment="Top" Width="195" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderBrush="#FFD4D4D4" BorderThickness="0,1,1,1" Foreground="#FF303030" Height="28"/>
+        <Label x:Name="VenueIcon_Copy1" Margin="36,161,537,151" BorderThickness="1,1,1,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="MoneyBillWaveSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="CHANGE:" HorizontalAlignment="Left" Margin="36,133,0,0" VerticalAlignment="Top" Width="156" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="Change" Content="" HorizontalAlignment="Left" Margin="66,161,0,0" VerticalAlignment="Top" Width="195" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderBrush="#FFD4D4D4" BorderThickness="0,1,1,1" Foreground="#FF303030" Height="28"/>
+        <Label x:Name="VenueIcon_Copy2" Margin="307,161,266,151" BorderThickness="1,1,0,1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="RECEIVED FROM:" HorizontalAlignment="Left" Margin="307,133,0,0" VerticalAlignment="Top" Width="156" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <TextBox x:Name="ReceivedFrom" HorizontalAlignment="Left" Margin="337,161,0,0" VerticalAlignment="Top" Width="236" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" BorderBrush="#FFD4D4D4" BorderThickness="1,1,1,1" Foreground="#FF303030" Height="28"/>
+        <Label Content="NOTE:" HorizontalAlignment="Left" Margin="36,218,0,0" VerticalAlignment="Top" Width="156" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
     </Grid>
 </simpleChildWindow:ChildWindow>

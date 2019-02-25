@@ -17,6 +17,28 @@ namespace PMS
 		private string curDate;
 		private string curTime;
 
+		internal string GenerateReceiptNum()
+		{
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(transaction_id) FROM transactions;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					ret = String.Format("{0:000000}", (db_reader.GetInt32("COUNT(transaction_id)") + 1));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+
 		internal bool IsArchived(string recordID) {
 			bool ret = false;
 			dbman = new DBConnectionManager();
@@ -82,7 +104,6 @@ namespace PMS
 			return ret;
 		}
 		internal int InsertTransaction(string type, string status, string targetID, double fee) {
-			Console.WriteLine(fee);
 			string uid = Application.Current.Resources["uid"].ToString();
 			string[] dt = GetServerDateTime().Split(null);
 			cDate = Convert.ToDateTime(dt[0]);
@@ -111,6 +132,7 @@ namespace PMS
 				cmd.Parameters.AddWithValue("@completed_by", null);
 				cmd.Parameters.AddWithValue("@target_id", targetID);
 				cmd.Parameters.AddWithValue("@fee", fee);
+				//cmd.Parameters.AddWithValue("@or_number", this.GenerateReceiptNum());
 				int stat_code = cmd.ExecuteNonQuery();
 				dbman.DBClose();
 				//string tmp = pmsutil.LogRecord(recID, "LOGC-01");

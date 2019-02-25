@@ -170,7 +170,7 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			//Reference
 			string tmp = pmsutil.LogRecord(recordID, "LOGC-03");
-			pmsutil.InsertTransaction("Burial Cert.", "Paying", recordID, Convert.ToDouble(PrintingFee.Value));
+			pmsutil.InsertTransaction("Burial Cert.", "Unpaid", recordID, Convert.ToDouble(PrintingFee.Value));
 			return 1;
 		}
 		private void GetResidingPriests()

@@ -710,11 +710,7 @@ namespace PMS.UIManager.Views
 
 		private async void ConfirmPayment_Click(object sender, RoutedEventArgs e)
 		{
-			if (TransactionItemsContainer.SelectedItem == null)
-			{
-				MsgNoItemSelected();
-			}
-			else
+			if (TransactionItemsContainer.SelectedItems.Count == 1)
 			{
 				Transaction ti = (Transaction)TransactionItemsContainer.SelectedItem;
 				//Label transactionID = (Label)ti.FindName("IDLabel");
@@ -739,7 +735,6 @@ namespace PMS.UIManager.Views
 							}
 							else if (db_reader.GetString("status") == "Cancelled")
 							{
-								//MessageBox.Show("Already cancelled!");
 								MsgCancelled();
 							}
 							else
@@ -751,6 +746,84 @@ namespace PMS.UIManager.Views
 					}
 				}
 			}
+			else
+			{
+				Transaction transaction = (Transaction)TransactionItemsContainer.SelectedItem;
+
+				if (transaction == null)
+				{
+					MsgNoItemSelected();
+				}
+				else
+				{
+					int doProceed = 0;
+					for (int i = 0; i < TransactionItemsContainer.SelectedItems.Count; i++)
+					{
+						Transaction recordx = (Transaction)TransactionItemsContainer.SelectedItems[i];
+						if (CheckTrans(recordx.TransactionID) == 0)
+						{
+							doProceed = 0;
+						}
+						else if (CheckTrans(recordx.TransactionID) == 1)
+						{
+							doProceed = 1;
+						}
+						else if (CheckTrans(recordx.TransactionID) == 2)
+						{
+							doProceed = 2;
+						}
+					}
+
+					if (doProceed == 0)
+					{
+						MsgAlreadyPaid();
+					}
+					else if (doProceed == 1)
+					{
+						MsgCancelled();
+					}
+					else
+					{
+						var metroWindow = (Application.Current.MainWindow as MetroWindow);
+						await metroWindow.ShowChildWindowAsync(new ConfirmPaymentWindow(this, TransactionItemsContainer.SelectedItems));
+					}
+				}
+			}
+			
+		}
+		private int CheckTrans(string tid)
+		{
+			int ret = 2;
+			dbman = new DBConnectionManager();
+			pmsutil = new PMSUtil();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+					cmd.Parameters.AddWithValue("@transaction_id", tid);
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						if (db_reader.GetString("status") == "Paid")
+						{
+							ret = 0;
+						}
+						else if (db_reader.GetString("status") == "Cancelled")
+						{
+							ret = 1;
+						}
+						else
+						{
+							
+						}
+					}
+				}
+			}
+			return ret;
 		}
 		private async void MsgCancelled()
 		{

@@ -1163,13 +1163,13 @@ namespace PMS.UIManager.Views
 
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(229, 97), new PointF(295, 97));
 
-			SaveToPng(ChartEx, "chart1.png");
+			//SaveToPng(ChartEx, "chart1.png");
 
-			logo = PdfImage.FromFile(@"chart1.png");
-			_width = 490;
-			height = 230;
-			x = (page.Canvas.ClientSize.Width - _width) / 2;
-			page.Canvas.DrawImage(logo, 20, 80, _width, height);
+			//logo = PdfImage.FromFile(@"chart1.png");
+			//_width = 490;
+			//height = 230;
+			//x = (page.Canvas.ClientSize.Width - _width) / 2;
+			//page.Canvas.DrawImage(logo, 20, 80, _width, height);
 
 			DataTable dtNames = new DataTable();
 			dtNames.Columns.Add("Month", typeof(string));
@@ -1307,43 +1307,43 @@ namespace PMS.UIManager.Views
 
 			page.Canvas.DrawLine(new PdfPen(System.Drawing.Color.Black), new PointF(170, 97), new PointF(360, 97));
 
-			SaveToPng(BarChart, "chart2.png");
+			//SaveToPng(BarChart, "chart2.png");
 
-			logo = PdfImage.FromFile(@"chart2.png");
-			_width = 490;
-			height = 230;
-			x = (page.Canvas.ClientSize.Width - _width) / 2;
-			page.Canvas.DrawImage(logo, 20, 120, _width, height);
+			//logo = PdfImage.FromFile(@"chart2.png");
+			//_width = 490;
+			//height = 230;
+			//x = (page.Canvas.ClientSize.Width - _width) / 2;
+			//page.Canvas.DrawImage(logo, 20, 120, _width, height);
 
 			page.Canvas.DrawString("Total Certificate Retrieval: " + TotalCertificateRetrieval.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			60, 365);
+			60, 130);
 
 			page.Canvas.DrawString("Baptismal: " + BaptismalCount.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			60, 385);
+			60, 150);
 
 			page.Canvas.DrawString("Confirmation: " + ConfirmationCount.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			60, 405);
+			60, 170);
 
 			page.Canvas.DrawString("Matrimonial: " + MatrimonialCount.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			60, 425);
+			60, 190);
 
 			page.Canvas.DrawString("Burial: " + BurialCount.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			60, 445);
+			60, 210);
 
 			page.Canvas.DrawString("Others: " + OtherCount.Content,
 			new PdfFont(PdfFontFamily.TimesRoman, 12f),
 			new PdfSolidBrush(System.Drawing.Color.Black),
-			360, 365);
+			60, 230);
 
 			DataTable dtNames = new DataTable();
 			dtNames.Columns.Add("No", typeof(int));
@@ -1506,7 +1506,7 @@ namespace PMS.UIManager.Views
 			table.Columns[6].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Columns[7].Width = width * 0.24f * width;
 			table.Columns[7].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
-			table.Draw(page, new PointF(10, 470));
+			table.Draw(page, new PointF(10, 260));
 
 			PdfPageBase page2 = pdfDoc.Pages.Add();
 			page2.Canvas.DrawString("Prepared By: ",

@@ -76,11 +76,11 @@
                 </Style>
             </TabControl.ItemContainerStyle>
             <TabItem Header="Transactions" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="0">
-                <Grid Margin="0,0,0,-2">
-                    <ScrollViewer>
+                <Grid Margin="0,0,0,-2" Background="White">
+                    <ScrollViewer VerticalScrollBarVisibility="Hidden">
                         <Grid Height="1663">
                             <Grid Margin="0,0,0,579">
-                                <lvc:CartesianChart ToolTip="Annual Transaction Graph (Per Month)" x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Bottom" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Background="#FFE8E4E4" Foreground="#FF323232" Margin="0,0,0,625" >
+                                <lvc:CartesianChart ToolTip="Annual Transaction Graph (Per Month)" x:Name="ChartEx" Series="{Binding SeriesCollection}" LegendLocation="Right" Height="401" VerticalAlignment="Bottom" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Background="#FFE8E4E4" Foreground="#FF323232" Margin="42,0,45,625" >
                                     <lvc:CartesianChart.AxisY>
                                         <lvc:Axis x:Name="YLabel" Foreground="#FF575757" FontSize="14" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Title="Transactions" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
                                     </lvc:CartesianChart.AxisY>
@@ -91,9 +91,9 @@
                                 <Button
                                     ToolTip="Print Graph and Summary"
                         x:Name="CreateRequestButton_Copy" 
-                        Margin="0,17,3,0" 
+                        Margin="0,17,47,0" 
                         VerticalAlignment="Top" 
-                        Width="139" 
+                        Width="37" 
                         Height="30" 
                         Background="WhiteSmoke" 
                         FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
@@ -114,15 +114,15 @@
                                             </Rectangle.Fill>
                                         </Rectangle>
                                         <TextBlock 
-                                Text=" Print Overview" 
+                                Text="" 
                                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                                     </StackPanel>
                                 </Button>
-                                <ComboBox ToolTip="Display Transaction Count or Amount" x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,147,0" VerticalAlignment="Top" Width="147" Height="30" DropDownClosed="UpdateChart">
+                                <ComboBox ToolTip="Display Transaction Count or Amount" x:Name="ReportType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,89,0" VerticalAlignment="Top" Width="147" Height="30" DropDownClosed="UpdateChart">
                                     <ComboBoxItem Content="Transaction Count"/>
                                     <ComboBoxItem Content="Transaction Amount"/>
                                 </ComboBox>
-                                <ComboBox ToolTip="Status of Transaction" x:Name="StatusType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,299,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
+                                <ComboBox ToolTip="Status of Transaction" x:Name="StatusType" SelectedIndex="0" HorizontalAlignment="Right" Margin="0,17,241,0" VerticalAlignment="Top" Width="125" Height="30" DropDownClosed="UpdateChart">
                                     <ComboBoxItem Content="All"/>
                                     <ComboBoxItem Content="Unpaid"/>
                                     <ComboBoxItem Content="Paid"/>
@@ -332,7 +332,7 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Registers and Archives" FontFamily="/PMS;component/Assets/Fonts/#Roboto Thin" Padding="15,0,15,0" Margin="0,0,15,0">
-                <ScrollViewer>
+                <ScrollViewer Background="White">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="103*"/>

@@ -12,10 +12,10 @@
         <Grid Margin="0,0,0,410" Background="White">
             <Button 
                 x:Name="prevMonthBtn"
-                Margin="0,4,55,0" 
+                Margin="0,5,55,0" 
                 VerticalAlignment="Top" 
                 Width="45" 
-                Height="31" 
+                Height="30" 
                 Background="{x:Null}" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 Foreground="#FF888888" 
@@ -39,10 +39,10 @@
             </Button>
             <Button 
                 x:Name="nextMonthBtn"
-                Margin="0,4,10,0" 
+                Margin="0,5,10,0" 
                 VerticalAlignment="Top" 
                 Width="45" 
-                Height="31" 
+                Height="30" 
                 Background="{x:Null}" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 Foreground="#FF888888" 
@@ -68,12 +68,12 @@
                 x:Name="monthNameHolder" 
                 Content="Label" 
                 HorizontalAlignment="Left"
-                Margin="10,0,0,0" 
+                Margin="10,5,0,0" 
                 VerticalAlignment="Top" 
-                Height="40" 
+                Height="30" 
                 Width="190" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                FontSize="20" 
+                FontSize="18" 
                 VerticalContentAlignment="Center" Foreground="#FF888888"/>
         </Grid>
         <DockPanel 

@@ -75,6 +75,9 @@
     <Reference Include="Google.Protobuf, Version=3.5.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.5.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
+    <Reference Include="Humanizer, Version=2.5.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.5.16\lib\netstandard2.0\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.WpfDesign, Version=6.1.106.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ICSharpCode.WpfDesigner.6.1.106\lib\net40\ICSharpCode.WpfDesign.dll</HintPath>
     </Reference>
@@ -207,6 +210,9 @@
       <DependentUpon>DirectoryItem2.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\DirEntry.cs" />
+    <Compile Include="UIComponents\EventTypeItemDraggable.xaml.cs">
+      <DependentUpon>EventTypeItemDraggable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\HistoryItem.cs" />
     <Compile Include="UIComponents\MyLogsEntry.cs" />
     <Compile Include="UIComponents\RegisterItemArchive.xaml.cs">
@@ -281,6 +287,12 @@
     </Compile>
     <Compile Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml.cs">
       <DependentUpon>ViewDirectoryEntries.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\MoveAppointmentWindowPopup.xaml.cs">
+      <DependentUpon>MoveAppointmentWindowPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIManager\Views\ChildWindows\AddAppointmentWindowPopup.xaml.cs">
+      <DependentUpon>AddAppointmentWindowPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIManager\Views\ChildWindows\ConfirmDeleteTimeSlotWindow.xaml.cs">
       <DependentUpon>ConfirmDeleteTimeSlotWindow.xaml</DependentUpon>
@@ -468,6 +480,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UIComponents\EventTypeItemDraggable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UIComponents\RegisterItemArchive.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -537,6 +553,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UIManager\Views\ChildViews\ViewDirectoryEntries.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\MoveAppointmentWindowPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIManager\Views\ChildWindows\AddAppointmentWindowPopup.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

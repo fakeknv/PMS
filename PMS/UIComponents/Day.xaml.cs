@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using PMS.UIManager.Views;
@@ -48,7 +49,7 @@ namespace PMS.UIComponents
 				isToday = value;
 				if (this.IsToday == true)
 				{
-					this.Background = Brushes.LightGray;
+					this.Background = Brushes.LightBlue;
 					//If via Hex
 					//this.Background = Color.FromArgb(0xFF0­0FF);
 				}
@@ -69,7 +70,7 @@ namespace PMS.UIComponents
 				isMarked = value;
 				if (this.IsMarked == true) {
 					DateTime dt = Convert.ToDateTime(this.DateVal.Content.ToString());
-					this.AppointmentCountHolder.Visibility = Visibility.Visible;
+					//this.AppointmentCountHolder.Visibility = Visibility.Visible;
 					if (CountEvents(dt) == 1) {
 						EventCount.Content = CountEvents(dt) + " Event";
 					}
@@ -84,19 +85,47 @@ namespace PMS.UIComponents
 			get { return date; }
   			set {
 				date = value;
-				DayHolder.Content = value.ToString("dd");
+				DayHolder.Content = value.ToString("%d");
 				DateVal.Content = value.ToString("MMMM dd, yyyy");
+
+				if (CountEvents(Date) > 0)
+				{
+					List<string> events = GetEvents(value);
+
+					if (events.Count > 0) {
+						EventItem1.Visibility = Visibility.Visible;
+						EventItem1Val.Content = events[0];
+						if (events.Count > 1)
+						{
+							EventItem2.Visibility = Visibility.Visible;
+							EventItem2Val.Content = events[1];
+							Console.WriteLine(events[1]);
+							if (events.Count > 2)
+							{
+								EventItem3.Visibility = Visibility.Visible;
+								EventItem3Val.Content = events[2];
+							}
+						}
+					}
+					if (CountEvents(Date) > 3)
+					{
+						MoreIndicator.Visibility = Visibility.Visible;
+						MoreValHolder.Content = (CountEvents(Date)-3) + " more.";
+					}
+					else
+					{
+						MoreIndicator.Visibility = Visibility.Hidden;
+					}
+				}
 			}
 		}
 		public Day()
         {
             InitializeComponent();
         }
-		
 		private async void Day_Click(object sender, RoutedEventArgs args)
 		{
 			//Changing label dayActivitiesTitle in Appointments class.
-			//DateTime curDate = Convert.ToDateTime(this.DateVal.Content.ToString());
 			Appointments.app.Current_Date = this.DateVal.Content.ToString();
 
 			ObservableCollection<AppointmentItem> items = new ObservableCollection<AppointmentItem>();
@@ -105,6 +134,91 @@ namespace PMS.UIComponents
 
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowChildWindowAsync(new ManageEventsWindow(dt));
+		}
+		private List<string> GetEvents(DateTime d)
+		{
+			List<string> events = new List<string>();
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					using (MySqlConnection conn2 = new MySqlConnection(dbman.GetConnStr()))
+					{
+						conn2.Open();
+						MySqlCommand cmd = conn2.CreateCommand();
+						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @sdate LIMIT 5;";
+						cmd.Parameters.AddWithValue("@sdate", d.ToString("yyyy-MM-dd"));
+						cmd.Prepare();
+						using (MySqlDataReader db_reader = cmd.ExecuteReader())
+						{
+							while (db_reader.Read())
+							{
+								events.Add(GetAType(db_reader.GetString("appointment_type")) + " - " + GetPriest(db_reader.GetString("assigned_priest")));
+							}
+						}
+					}
+				}
+			}
+			return events;
+		}
+		private string GetAType(string tid)
+		{
+			string ret = "";
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT appointment_type FROM appointment_types WHERE type_id = @tid;";
+					cmd.Parameters.AddWithValue("@tid", tid);
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						ret = db_reader.GetString("appointment_type");
+					}
+				}
+				else
+				{
+					ret = "";
+				}
+			}
+
+			return ret;
+		}
+		private string GetPriest(string pid)
+		{
+			string ret = "";
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT priest_name FROM residing_priests WHERE priest_id = @pid LIMIT 1;";
+					cmd.Parameters.AddWithValue("@pid", pid);
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						ret = db_reader.GetString("priest_name");
+					}
+				}
+				else
+				{
+					ret = "";
+				}
+			}
+
+			return ret;
 		}
 		private int CountEvents(DateTime d)
 		{
@@ -152,6 +266,29 @@ namespace PMS.UIComponents
 			DayHolder.Foreground = (Brush)bc.ConvertFrom("#FF888888");
 			AppointmentCountHolder.Background = (Brush)bc.ConvertFrom("#FF03BAFF");
 			EventCount.Foreground = Brushes.White;
+		}
+
+		private void DropReceiver(object sender, DragEventArgs e)
+		{
+			// object draggedItem = e.Data.GetData(this.Name);
+			Label lbl = e.Data.GetData("myFormat") as Label;
+			EventTypeItemDraggable det = lbl.Content as EventTypeItemDraggable;
+			if (det.EventName != null)
+			{
+				TestDropEvent(det.EventName);
+			}
+			else {
+				TestDropEvent2(det.AppID);
+			}
+		}
+		private async void TestDropEvent(string data) {
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new AddAppointmentWindowPopup(data, Date));
+		}
+		private async void TestDropEvent2(string data)
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowChildWindowAsync(new MoveAppointmentWindowPopup(data, Date));
 		}
 	}
 }
