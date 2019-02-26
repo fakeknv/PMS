@@ -199,86 +199,63 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var bc = new BrushConverter();
 
-			BaptismDateValidator.Visibility = Visibility.Hidden;
-			BaptismDateValidator.Foreground = Brushes.Transparent;
 			BaptismDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			BirthDateValidator.Visibility = Visibility.Hidden;
-			BirthDateValidator.Foreground = Brushes.Transparent;
 			Birthdate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			NameValidator.Visibility = Visibility.Hidden;
-			NameValidator.Foreground = Brushes.Transparent;
 			FullName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			PlaceOfBirthValidator.Visibility = Visibility.Hidden;
-			PlaceOfBirthValidator.Foreground = Brushes.Transparent;
 			PlaceOfBirth.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			Sponsor1Validator.Visibility = Visibility.Hidden;
-			Sponsor1Validator.Foreground = Brushes.Transparent;
 			Sponsor1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			Sponsor2Validator.Visibility = Visibility.Hidden;
-			Sponsor2Validator.Foreground = Brushes.Transparent;
 			Sponsor2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			Parent1Validator.Visibility = Visibility.Hidden;
-			Parent1Validator.Foreground = Brushes.Transparent;
 			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			MinisterValidator.Visibility = Visibility.Hidden;
-			MinisterValidator.Foreground = Brushes.Transparent;
 			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			LegitimacyValidator.Visibility = Visibility.Hidden;
-			LegitimacyValidator.Foreground = Brushes.Transparent;
 			Legitimacy.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(BaptismDate.Text))
 			{
-				BaptismDateValidator.Visibility = Visibility.Visible;
-				BaptismDateValidator.ToolTip = "This field is required.";
-				BaptismDateValidator.Foreground = Brushes.Red;
+				BaptismDate.ToolTip = "This field is required.";
 				BaptismDate.BorderBrush = Brushes.Red;
+				Icon3.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (EntryNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.ToolTip = "Must be greater than zero.";
 				EntryNum.BorderBrush = Brushes.Red;
+				Icon2.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (PageNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.ToolTip = "Must be greater than zero.";
 				PageNum.BorderBrush = Brushes.Red;
+				Icon1.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Birthdate.Text))
 			{
-				BirthDateValidator.Visibility = Visibility.Visible;
-				BirthDateValidator.ToolTip = "This field is required.";
-				BirthDateValidator.Foreground = Brushes.Red;
+				Birthdate.ToolTip = "This field is required.";
 				Birthdate.BorderBrush = Brushes.Red;
+				Icon4.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(FullName.Text))
 			{
-				NameValidator.Visibility = Visibility.Visible;
-				NameValidator.ToolTip = "This field is required.";
-				NameValidator.Foreground = Brushes.Red;
+				FullName.ToolTip = "This field is required.";
 				FullName.BorderBrush = Brushes.Red;
+				Icon5.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
@@ -286,73 +263,66 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				MsgError();
 
-				NameValidator.Visibility = Visibility.Visible;
-				NameValidator.ToolTip = "This person already has a record.";
-				NameValidator.Foreground = Brushes.Red;
+				FullName.ToolTip = "This person already has a record.";
 				FullName.BorderBrush = Brushes.Red;
+				Icon5.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (Stipend.Value == 0)
 			{
-				StipendValidator.Visibility = Visibility.Visible;
-				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
-				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.ToolTip = "Notice: Stipend is set to zero.";
 				Stipend.BorderBrush = Brushes.Orange;
+				Icon7.BorderBrush = Brushes.Red;
+
 				MsgStipend();
 				ret = true;
 			}
 			if (string.IsNullOrWhiteSpace(PlaceOfBirth.Text))
 			{
-				PlaceOfBirthValidator.Visibility = Visibility.Visible;
-				PlaceOfBirthValidator.ToolTip = "This field is required. Type unknown if its not applicable.";
-				PlaceOfBirthValidator.Foreground = Brushes.Red;
+				PlaceOfBirth.ToolTip = "This field is required. Type unknown if its not applicable.";
 				PlaceOfBirth.BorderBrush = Brushes.Red;
+				Icon8.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Sponsor1.Text))
 			{
-				Sponsor1Validator.Visibility = Visibility.Visible;
-				Sponsor1Validator.ToolTip = "This field is required.";
-				Sponsor1Validator.Foreground = Brushes.Red;
+				Sponsor1.ToolTip = "This field is required.";
 				Sponsor1.BorderBrush = Brushes.Red;
+				Icon10.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Sponsor2.Text))
 			{
-				Sponsor2Validator.Visibility = Visibility.Visible;
-				Sponsor2Validator.ToolTip = "This field is required.";
-				Sponsor2Validator.Foreground = Brushes.Red;
+				Sponsor2.ToolTip = "This field is required.";
 				Sponsor2.BorderBrush = Brushes.Red;
+				Icon12.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent1.Text))
 			{
-				Parent1Validator.Visibility = Visibility.Visible;
-				Parent1Validator.ToolTip = "This field is required.";
-				Parent1Validator.Foreground = Brushes.Red;
+				Parent1.ToolTip = "This field is required.";
 				Parent1.BorderBrush = Brushes.Red;
+				Icon9.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Minister.Text))
 			{
-				MinisterValidator.Visibility = Visibility.Visible;
-				MinisterValidator.ToolTip = "This field is required.";
-				MinisterValidator.Foreground = Brushes.Red;
+				Minister.ToolTip = "This field is required.";
 				Minister.BorderBrush = Brushes.Red;
+				Icon11.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Legitimacy.Text))
 			{
-				LegitimacyValidator.Visibility = Visibility.Visible;
-				LegitimacyValidator.ToolTip = "This field is required.";
-				LegitimacyValidator.Foreground = Brushes.Red;
+				Legitimacy.ToolTip = "This field is required.";
 				Legitimacy.BorderBrush = Brushes.Red;
+				Icon6.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

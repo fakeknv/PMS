@@ -60,15 +60,15 @@ namespace PMS.UIManager.Views.ChildWindows
 						_sacrament = db_reader.GetString("sacrament");
 						_interment = db_reader.GetString("place_of_interment");
 
-						NameHolder.Content = "Name: " + db_reader.GetString("recordholder_fullname");
-						AgeHolder.Content = "Age: " + db_reader.GetInt32("age");
-						ResidenceHolder.Content = "Residence: " + db_reader.GetString("residence");
+						NameHolder.Content = db_reader.GetString("recordholder_fullname").ToUpper();
+						AgeHolder.Content = db_reader.GetInt32("age");
+						ResidenceHolder.Content = db_reader.GetString("residence");
 						Parent1Holder.Content = db_reader.GetString("parent1_fullname");
 						Parent2Holder.Content = db_reader.GetString("parent2_fullname");
 						DateOfDeathHolder.Content = DateTime.Parse(db_reader.GetString("record_date")).ToString("MMMM dd, yyyy");
 						BurialDateHolder.Content = DateTime.Parse(db_reader.GetString("burial_date")).ToString("MMMM dd, yyyy");
-						CauseOfDeathHolder.Content = "Cause of Death: " + db_reader.GetString("cause_of_death");
-						SacramentHolder.Content = "Sacrament: " + db_reader.GetString("sacrament");
+						CauseOfDeathHolder.Content = db_reader.GetString("cause_of_death");
+						SacramentHolder.Content = db_reader.GetString("sacrament");
 						PlaceOfIntermentHolder.Text = db_reader.GetString("place_of_interment");
 
 					}
@@ -114,9 +114,9 @@ namespace PMS.UIManager.Views.ChildWindows
 						_lot = db_reader.GetString("lot");
 						_plot = db_reader.GetString("plot");
 
-						BlockHolder.Content = "Block: " + db_reader.GetString("block");
-						LotHolder.Content = "Lot: " + db_reader.GetString("lot");
-						PlotHolder.Content = "Plot: " + db_reader.GetString("plot");
+						BlockHolder.Content = db_reader.GetString("block");
+						LotHolder.Content = db_reader.GetString("lot");
+						PlotHolder.Content = db_reader.GetString("plot");
 					}
 					conn.Close();
 				}

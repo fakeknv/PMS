@@ -14,8 +14,7 @@
     GlowBrush="{DynamicResource AccentColorBrush}"
     ShowCloseButton="True"
     mc:Ignorable="d"
-    HorizontalContentAlignment="Stretch"
-    VerticalContentAlignment="Stretch" d:DesignWidth="962.5" d:DesignHeight="603.5">
+    d:DesignWidth="962.5" Height="671.5">
     <simpleChildWindow:ChildWindow.OverlayBrush>
         <SolidColorBrush 
             Opacity="0.7" 
@@ -23,7 +22,7 @@
             
             />
     </simpleChildWindow:ChildWindow.OverlayBrush>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="628">
         <Border BorderThickness="0,1,0,0" BorderBrush="#FFDADADA" Height="46" VerticalAlignment="Bottom">
             <Grid Height="46" VerticalAlignment="Bottom" Margin="0,-1,0,0">
                 <Button x:Name="CancelButton1" 
@@ -88,67 +87,53 @@
             </Grid>
         </Border>
         <Grid Margin="0,32,0,46"/>
-        <Grid Margin="0,10,0,46">
-            <Border BorderThickness="1,1,1,1" BorderBrush="#FFAEAEAE" Margin="232,5,0,10" HorizontalAlignment="Left" Width="299">
+        <Grid Margin="0,0,0,46">
+            <Border BorderThickness="1,1,1,1" BorderBrush="#FFAEAEAE" HorizontalAlignment="Left" Width="962">
                 <Grid Margin="-1">
-                    <Grid.Background>
-                        <ImageBrush ImageSource="/PMS;component/Assets/grid2bg.jpg" Stretch="UniformToFill"/>
-                    </Grid.Background>
-                    <Label x:Name="NameHolder" Content="Name: No data found." Margin="31,46,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
-                    <Label Content="BIRTH DETAILS" Background="#FF3E4A59" VerticalAlignment="Top" BorderBrush="#FFAEAEAE" BorderThickness="0,0,0,1" Foreground="#FFFFFFFF" FontSize="14"/>
-                    <iconPacks:PackIconFontAwesome Kind="UserAltSolid" HorizontalAlignment="Left" Margin="15,52,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="14"/>
-                    <Label x:Name="AgeHolder" Content="Age: No data found." Margin="31,79,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="StarSolid" HorizontalAlignment="Left" Margin="14,84,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
-                    <Label Content="Parents:" Margin="31,199,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF252525"/>
-                    <iconPacks:PackIconFontAwesome Kind="UserFriendsSolid" HorizontalAlignment="Left" Margin="14,204,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
-                    <Label x:Name="Parent1Holder" Content="No data found." Margin="36,226,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF252525"/>
-                    <Label x:Name="Parent2Holder" Content="No data found." Margin="36,253,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF252525"/>
-                    <Label x:Name="ResidenceHolder" Content="Residence: No data found." Margin="31,145,8,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF252525"/>
-                    <iconPacks:PackIconFontAwesome Kind="HomeSolid" HorizontalAlignment="Left" Margin="14,150,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="26,235,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="9" Width="10"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="26,262,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="9" Width="10"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="12,117,9,0" VerticalAlignment="Top"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="12,198,8,0" VerticalAlignment="Top"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="12,309,8,0" VerticalAlignment="Top"/>
+                    <Label x:Name="NameHolder" Content="NAME: No data found." Margin="31,46,284,0" VerticalAlignment="Top" FontSize="24" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="" Background="#FF3E4A59" VerticalAlignment="Top" BorderBrush="#FFAEAEAE" BorderThickness="0,0,0,1" Foreground="#FFFFFFFF" FontSize="14"/>
+                    <iconPacks:PackIconFontAwesome Kind="UserAltSolid" HorizontalAlignment="Left" Margin="15,60,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="14"/>
+                    <Label x:Name="AgeHolder" Content="AGE: No data found." Margin="136,140,617,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <iconPacks:PackIconFontAwesome Kind="StarSolid" HorizontalAlignment="Left" Margin="12,146,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
+                    <Label Content="Parents:" Margin="29,177,826,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <iconPacks:PackIconFontAwesome Kind="UserFriendsSolid" HorizontalAlignment="Left" Margin="12,183,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
+                    <Label x:Name="Parent1Holder" Content="No data found." Margin="51,211,605,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <Label x:Name="Parent2Holder" Content="No data found." Margin="393,211,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <Label x:Name="ResidenceHolder" Content="RESIDENCE: No data found." Margin="136,256,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <iconPacks:PackIconFontAwesome Kind="HomeSolid" HorizontalAlignment="Left" Margin="12,262,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA"/>
+                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="32,220,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="15" Width="14"/>
+                    <Image x:Name="GravePicture" HorizontalAlignment="Left" Height="267" Margin="730,46,0,0" VerticalAlignment="Top" Width="222" Source="/PMS;component/Assets/grave-default.jpg" Stretch="UniformToFill"/>
+                    <Label x:Name="DateOfDeathHolder" Content="Date of Death: " Margin="143,342,577,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
+                    <iconPacks:PackIconFontAwesome Kind="FeatherAltSolid" HorizontalAlignment="Left" Margin="17,350,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <Label x:Name="BurialDateHolder" Content="Burial Date: " Margin="143,390,577,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <iconPacks:PackIconFontAwesome Kind="PagelinesBrands" HorizontalAlignment="Left" Margin="17,400,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <Label x:Name="SacramentHolder" Content="SACRAMENT: No data found." Margin="32,540,576,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <iconPacks:PackIconFontAwesome Kind="DoveSolid" HorizontalAlignment="Left" Margin="17,514,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <Label x:Name="CauseOfDeathHolder" Content="CAUSE OF DEATH" Margin="36,471,577,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B"/>
+                    <iconPacks:PackIconFontAwesome Kind="LeanpubBrands" HorizontalAlignment="Left" Margin="17,444,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="379,220,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="15" Width="14"/>
+                    <Label Content="BURIAL DETAILS" HorizontalAlignment="Left" Margin="12,298,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontWeight="Bold" BorderThickness="0,0,0,1" BorderBrush="#FF1EAFE6" Foreground="#FF1EAFE6" FontSize="18" Width="666"/>
+                    <Label Content="BIRTH DETAILS" HorizontalAlignment="Left" Margin="15,102,0,0" VerticalAlignment="Top" FontFamily="Calibri" FontWeight="Bold" BorderThickness="0,0,0,1" BorderBrush="#FF1EAFE6" Foreground="#FF1EAFE6" FontSize="18" Width="663"/>
+                    <Label x:Name="BlockHolder" Content="DATE OF DEATH" Margin="513,447,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
+                    <Label x:Name="LotHolder" Content="DATE OF DEATH" Margin="513,481,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
+                    <Label x:Name="PlotHolder" Content="DATE OF DEATH" Margin="513,513,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
+                    <iconPacks:PackIconFontAwesome Kind="MapMarkedAltSolid" HorizontalAlignment="Left" Margin="395,455,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <TextBlock x:Name="PlaceOfIntermentHolder" Margin="414,388,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold" Height="60"/>
+                    <iconPacks:PackIconFontAwesome Kind="MonumentSolid" HorizontalAlignment="Left" Margin="399,345,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="14"/>
+                    <Label Content="Place of Interment:" Margin="414,339,284,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Age: " Margin="33,140,826,0" VerticalAlignment="Top" FontSize="18" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Residence:" Margin="29,256,826,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Date of Death:" Margin="36,344,819,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Date of Burial:" Margin="36,392,819,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Cause of Death:" Margin="36,436,786,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Sacrament:" Margin="36,510,786,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Block:" Margin="414,449,470,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Lot:" Margin="414,481,470,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
+                    <Label Content="Plot:" Margin="414,515,470,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" FontFamily="Calibri" FontWeight="Bold"/>
                 </Grid>
             </Border>
-            <Image x:Name="GravePicture" HorizontalAlignment="Left" Height="267" Margin="5,5,0,0" VerticalAlignment="Top" Width="222" Source="/PMS;component/Assets/grave-default.jpg" Stretch="UniformToFill"/>
-            <Border BorderThickness="1,1,1,1" BorderBrush="#FFAEAEAE" Margin="536,5,5,10">
+            <Border BorderThickness="1,1,1,1" BorderBrush="#FFAEAEAE" Margin="730,330,0,10" HorizontalAlignment="Left" Width="222">
                 <Grid Margin="-1">
-                    <Grid.Background>
-                        <ImageBrush ImageSource="/PMS;component/Assets/grid2bg.jpg" Stretch="UniformToFill"/>
-                    </Grid.Background>
-                    <Label Content="BURIAL DETAILS" Background="#FF3E4A59" Foreground="#FFFFFFFF" VerticalAlignment="Top" BorderBrush="#FFAEAEAE" BorderThickness="0,0,0,1" FontSize="14"/>
-                    <Label x:Name="DateOfDeathHolder" Content="Date of Death: No data found." Margin="30,44,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B" RenderTransformOrigin="0.5,0.5"/>
-                    <iconPacks:PackIconFontAwesome Kind="FeatherAltSolid" HorizontalAlignment="Left" Margin="15,49,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <Label x:Name="BurialDateHolder" Content="Burial Date: No data found." Margin="30,77,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="PagelinesBrands" HorizontalAlignment="Left" Margin="15,82,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <Label Content="Place of Interment:" Margin="30,207,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="ChurchSolid" HorizontalAlignment="Left" Margin="15,213,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <TextBlock x:Name="PlaceOfIntermentHolder" Margin="35,235,11,0" TextWrapping="WrapWithOverflow" Text="No data found." VerticalAlignment="Top" Height="46" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="21,237,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="10" Width="12"/>
-                    <Label Content="Locator:" Margin="30,339,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="MapMarkerAltSolid" HorizontalAlignment="Left" Margin="15,345,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <Label x:Name="SacramentHolder" Content="Sacrament: No data found." Margin="30,155,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="DoveSolid" HorizontalAlignment="Left" Margin="15,160,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="26,375,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="10" Width="12"/>
-                    <Label x:Name="BlockHolder" Content="Block: No data found." Margin="38,366,2,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="26,402,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="10" Width="12"/>
-                    <Label x:Name="LotHolder" Content="Lot: No data found." Margin="38,393,2,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="ArrowCircleRightSolid" HorizontalAlignment="Left" Margin="26,429,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Height="10" Width="12"/>
-                    <Label x:Name="PlotHolder" Content="Plot: No data found." Margin="38,420,2,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <Label x:Name="CauseOfDeathHolder" Content="Cause of Death: No data found." Margin="30,122,10,0" VerticalAlignment="Top" FontSize="16" Foreground="#FF40464B"/>
-                    <iconPacks:PackIconFontAwesome Kind="LeanpubBrands" HorizontalAlignment="Left" Margin="15,127,0,0" VerticalAlignment="Top" Foreground="#FF1CA8EA" Width="15"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="15,116,11,0" VerticalAlignment="Top"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="15,198,11,0" VerticalAlignment="Top"/>
-                    <Label BorderThickness="0,1,0,0" BorderBrush="LightGray" Margin="15,308,11,0" VerticalAlignment="Top"/>
-                </Grid>
-            </Border>
-            <Border BorderThickness="1,1,1,1" BorderBrush="#FFAEAEAE" Margin="5,277,0,10" HorizontalAlignment="Left" Width="222">
-                <Grid Margin="-1">
-                    <Grid.Background>
-                        <ImageBrush ImageSource="/PMS;component/Assets/grid2bg.jpg" Stretch="UniformToFill"/>
-                    </Grid.Background>
                     <Label Content="NEAR THE LOCATION" Background="#FF3E4A59" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" BorderBrush="#FFAEAEAE" BorderThickness="0,0,0,1" Foreground="#FFFFFFFF"/>
                     <ListView x:Name="Nearby" Margin="3,25,3,10" FontSize="14" BorderBrush="{x:Null}" Background="{x:Null}">
                         <ListView.View>

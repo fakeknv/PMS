@@ -78,7 +78,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Lot}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock Padding="0,10,0,10" TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Lot}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

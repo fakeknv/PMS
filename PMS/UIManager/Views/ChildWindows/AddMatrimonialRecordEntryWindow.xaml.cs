@@ -89,66 +89,54 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var bc = new BrushConverter();
 
-			MarriageDateValidator.Visibility = Visibility.Hidden;
-			MarriageDateValidator.Foreground = Brushes.Transparent;
 			MarriageDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			HusbandValidator.Visibility = Visibility.Hidden;
-			HusbandValidator.Foreground = Brushes.Transparent;
 			FullName1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			WifeValidator.Visibility = Visibility.Hidden;
-			WifeValidator.Foreground = Brushes.Transparent;
 			FullName2.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			MinisterValidator.Visibility = Visibility.Hidden;
-			MinisterValidator.Foreground = Brushes.Transparent;
 			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(MarriageDate.Text))
 			{
-				MarriageDateValidator.Visibility = Visibility.Visible;
-				MarriageDateValidator.ToolTip = "This field is required.";
-				MarriageDateValidator.Foreground = Brushes.Red;
+				MarriageDate.ToolTip = "This field is required.";
 				MarriageDate.BorderBrush = Brushes.Red;
+				Icon3.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (EntryNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.ToolTip = "Must be greater than zero.";
 				EntryNum.BorderBrush = Brushes.Red;
+				Icon2.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (PageNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.ToolTip = "Must be greater than zero.";
 				PageNum.BorderBrush = Brushes.Red;
+				Icon1.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (Stipend.Value == 0)
 			{
-				StipendValidator.Visibility = Visibility.Visible;
-				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
-				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.ToolTip = "Notice: Stipend is set to zero.";
 				Stipend.BorderBrush = Brushes.Orange;
+				Icon4.BorderBrush = Brushes.Red;
+
 				MsgStipend();
 				ret = true;
 			}
 			if (string.IsNullOrWhiteSpace(FullName1.Text))
 			{
-				HusbandValidator.Visibility = Visibility.Visible;
-				HusbandValidator.ToolTip = "This field is required.";
-				HusbandValidator.Foreground = Brushes.Red;
+				FullName1.ToolTip = "This field is required.";
 				FullName1.BorderBrush = Brushes.Red;
+				Icon5.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
@@ -156,159 +144,139 @@ namespace PMS.UIManager.Views.ChildWindows
 			{
 				MsgError();
 
-				HusbandValidator.Visibility = Visibility.Visible;
-				HusbandValidator.ToolTip = "This person already has a record.";
-				HusbandValidator.Foreground = Brushes.Red;
+				FullName1.ToolTip = "This person already has a record.";
 				FullName1.BorderBrush = Brushes.Red;
+				Icon5.BorderBrush = Brushes.Red;
 
-				WifeValidator.Visibility = Visibility.Visible;
-				WifeValidator.ToolTip = "This person already has a record.";
-				WifeValidator.Foreground = Brushes.Red;
+				FullName2.ToolTip = "This person already has a record.";
 				FullName2.BorderBrush = Brushes.Red;
+				Icon12.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(FullName2.Text))
 			{
-				WifeValidator.Visibility = Visibility.Visible;
-				WifeValidator.ToolTip = "This field is required.";
-				WifeValidator.Foreground = Brushes.Red;
+				FullName2.ToolTip = "This field is required.";
 				FullName2.BorderBrush = Brushes.Red;
+				Icon12.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent1.Text))
 			{
-				GroupValidator1.Visibility = Visibility.Visible;
-				GroupValidator1.ToolTip = "This field is required.";
-				GroupValidator1.Foreground = Brushes.Red;
+				Parent1.ToolTip = "This field is required.";
 				Parent1.BorderBrush = Brushes.Red;
+				Icon10.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent3.Text))
 			{
-				GroupValidator1.Visibility = Visibility.Visible;
-				GroupValidator1.ToolTip = "This field is required.";
-				GroupValidator1.Foreground = Brushes.Red;
+				Parent3.ToolTip = "This field is required.";
 				Parent3.BorderBrush = Brushes.Red;
+				Icon17.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent2.Text))
 			{
-				GroupValidator2.Visibility = Visibility.Visible;
-				GroupValidator2.ToolTip = "This field is required.";
-				GroupValidator2.Foreground = Brushes.Red;
+				Parent2.ToolTip = "This field is required.";
 				Parent2.BorderBrush = Brushes.Red;
+				Icon11.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent4.Text))
 			{
-				GroupValidator2.Visibility = Visibility.Visible;
-				GroupValidator2.ToolTip = "This field is required.";
-				GroupValidator2.Foreground = Brushes.Red;
+				Parent4.ToolTip = "This field is required.";
 				Parent4.BorderBrush = Brushes.Red;
+				Icon18.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Hometown1.Text))
 			{
-				Hometown1Validator.Visibility = Visibility.Visible;
-				Hometown1Validator.ToolTip = "This field is required.";
-				Hometown1Validator.Foreground = Brushes.Red;
+				Hometown1.ToolTip = "This field is required.";
 				Hometown1.BorderBrush = Brushes.Red;
+				Icon8.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Hometown2.Text))
 			{
-				Hometown2Validator.Visibility = Visibility.Visible;
-				Hometown2Validator.ToolTip = "This field is required.";
-				Hometown2Validator.Foreground = Brushes.Red;
+				Hometown2.ToolTip = "This field is required.";
 				Hometown2.BorderBrush = Brushes.Red;
+				Icon15.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Residence1.Text))
 			{
-				Residence1Validator.Visibility = Visibility.Visible;
-				Residence1Validator.ToolTip = "This field is required.";
-				Residence1Validator.Foreground = Brushes.Red;
+				Residence1.ToolTip = "This field is required.";
 				Residence1.BorderBrush = Brushes.Red;
+				Icon9.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Residence2.Text))
 			{
-				Residence2Validator.Visibility = Visibility.Visible;
-				Residence2Validator.ToolTip = "This field is required.";
-				Residence2Validator.Foreground = Brushes.Red;
+				Residence2.ToolTip = "This field is required.";
 				Residence2.BorderBrush = Brushes.Red;
+				Icon16.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Residence3.Text))
 			{
-				GroupValidator1.Visibility = Visibility.Visible;
-				GroupValidator1.ToolTip = "This field is required.";
-				GroupValidator1.Foreground = Brushes.Red;
+				Residence3.ToolTip = "This field is required.";
 				Residence3.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Residence4.Text))
 			{
-				GroupValidator2.Visibility = Visibility.Visible;
-				GroupValidator2.ToolTip = "This field is required.";
-				GroupValidator2.Foreground = Brushes.Red;
+				Residence4.ToolTip = "This field is required.";
 				Residence4.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Sponsor1.Text))
 			{
-				GroupValidator1.Visibility = Visibility.Visible;
-				GroupValidator1.ToolTip = "This field is required.";
-				GroupValidator1.Foreground = Brushes.Red;
+				Sponsor1.ToolTip = "This field is required.";
 				Sponsor1.BorderBrush = Brushes.Red;
+				Icon19.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Sponsor2.Text))
 			{
-				GroupValidator2.Visibility = Visibility.Visible;
-				GroupValidator2.ToolTip = "This field is required.";
-				GroupValidator2.Foreground = Brushes.Red;
+				Sponsor2.ToolTip = "This field is required.";
 				Sponsor2.BorderBrush = Brushes.Red;
+				Icon21.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Minister.Text))
 			{
-				MinisterValidator.Visibility = Visibility.Visible;
-				MinisterValidator.ToolTip = "This field is required.";
-				MinisterValidator.Foreground = Brushes.Red;
+				Minister.ToolTip = "This field is required.";
 				Minister.BorderBrush = Brushes.Red;
+				Icon20.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Age1.Value.ToString()))
 			{
-				Age1Validator.Visibility = Visibility.Visible;
-				Age1Validator.ToolTip = "This field is required.";
-				Age1Validator.Foreground = Brushes.Red;
+				Age1.ToolTip = "This field is required.";
 				Age1.BorderBrush = Brushes.Red;
+				Icon6.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Age2.Value.ToString()))
 			{
-				Age2Validator.Visibility = Visibility.Visible;
-				Age2Validator.ToolTip = "This field is required.";
-				Age2Validator.Foreground = Brushes.Red;
+				Age2.ToolTip = "This field is required.";
 				Age2.BorderBrush = Brushes.Red;
+				Icon13.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
