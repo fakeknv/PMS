@@ -205,11 +205,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Place of Baptism" SortMemberPath="PlaceOfBaptism" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Place of Baptism" SortMemberPath="PlaceOfBaptism" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" MaxWidth="170" TextWrapping="WrapWithOverflow" Text="{Binding PlaceOfBaptism}"/>
+                                <TextBlock TextAlignment="Center" MaxWidth="120" TextWrapping="WrapWithOverflow" Text="{Binding PlaceOfBaptism}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -218,21 +218,21 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent1}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Parent1}"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent2}"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Parent2}"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Sponsor" SortMemberPath="Sponsor1" CanUserSort="True">
+                <DataGridTemplateColumn Width="*" Header="Sponsor" SortMemberPath="Sponsor1" CanUserSort="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Sponsor1}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Sponsor1}"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Sponsor2}"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Sponsor2}"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>

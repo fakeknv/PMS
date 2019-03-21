@@ -13,6 +13,8 @@ namespace PMS.UIComponents
     /// </summary>
     public partial class Calendar : UserControl
     {
+		internal static Calendar cal;
+
 		private MySqlConnection conn;
 		private DBConnectionManager dbman;
 
@@ -22,6 +24,7 @@ namespace PMS.UIComponents
 		public DateTime ActiveDate = DateTime.Today;
 		public Calendar()
         {
+			cal = this;
             InitializeComponent();
 			monthNameHolder.Content = DateTime.Today.ToString("MMMM yyyy");
 
@@ -30,9 +33,12 @@ namespace PMS.UIComponents
 			HeaderContainer.ItemsSource = DayNames;
 
 			Days = new ObservableCollection<Day>();
-			BuildCalendar(DateTime.Today);
-		}
 
+			GetPriestFilters();
+			BuildCalendar(DateTime.Today);
+			AppFilter.DropDownClosed += SyncCalendar;
+
+		}
 		/// <summary>
 		/// Populates the calendar with days.
 		/// </summary>
@@ -65,6 +71,32 @@ namespace PMS.UIComponents
 		private static int DayOfWeekNumber(DayOfWeek dow)
 		{
 			return Convert.ToInt32(dow.ToString("D"));
+		}
+		private string GetPriestFilters()
+		{
+			AppFilter.Items.Add("All");
+
+			string ret = "";
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT priest_name FROM residing_priests WHERE priest_name != 'NA' ORDER BY priest_name ASC";
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					AppFilter.Items.Add(db_reader.GetString("priest_name"));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = "";
+			}
+			return ret;
 		}
 		private int CheckEvents(DateTime d) {
 			int ret = 0;
@@ -115,6 +147,11 @@ namespace PMS.UIComponents
 			ActiveDate = ActiveDate.AddMonths(-1);
 			monthNameHolder.Content = ActiveDate.ToString("MMMM yyyy");
 			BuildCalendar(ActiveDate);
+		}
+
+		private void SyncCalendar(object sender, EventArgs e)
+		{
+			BuildCalendar(DateTime.Today);
 		}
 	}
 }

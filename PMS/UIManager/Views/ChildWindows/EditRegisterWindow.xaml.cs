@@ -120,46 +120,41 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			if (string.IsNullOrWhiteSpace(RegisterType.Text))
 			{
-				RegTypeValidator.Visibility = Visibility.Visible;
-				RegTypeValidator.ToolTip = "This field is requried.";
-				RegTypeValidator.Foreground = Brushes.Red;
+				RegisterType.ToolTip = "This field is required.";
 				RegisterType.BorderBrush = Brushes.Red;
+				RegisterTypeIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
-			if (BookNo.Value < 0)
+			if (BookNo.Value < 0 || string.IsNullOrWhiteSpace(BookNo.Value.ToString()))
 			{
-				BookNumValidator.Visibility = Visibility.Visible;
-				BookNumValidator.ToolTip = "This field is requried.";
-				BookNumValidator.Foreground = Brushes.Red;
+				BookNo.ToolTip = "This field is required.";
 				BookNo.BorderBrush = Brushes.Red;
+				BookNoIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(RegisterNo.Value.ToString()))
 			{
-				RegNumValidator.Visibility = Visibility.Visible;
-				RegNumValidator.ToolTip = "This field is requried.";
-				RegNumValidator.Foreground = Brushes.Red;
+				RegisterNo.ToolTip = "This field is required.";
 				RegisterNo.BorderBrush = Brushes.Red;
+				RegisterNoIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Book.Text))
 			{
-				BookNameValidator.Visibility = Visibility.Visible;
-				BookNameValidator.ToolTip = "This field is requried.";
-				BookNameValidator.Foreground = Brushes.Red;
+				Book.ToolTip = "This field is required.";
 				Book.BorderBrush = Brushes.Red;
+				BookIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(CreationDate.Text))
 			{
-				CreationDateValidator.Visibility = Visibility.Visible;
-				CreationDateValidator.ToolTip = "This field is requried.";
-				CreationDateValidator.Foreground = Brushes.Red;
+				CreationDate.ToolTip = "This field is required.";
 				CreationDate.BorderBrush = Brushes.Red;
+				CreationDateIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

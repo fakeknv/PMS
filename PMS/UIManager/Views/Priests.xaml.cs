@@ -49,7 +49,7 @@ namespace PMS.UIManager.Views
 				if (conn.State == ConnectionState.Open)
 				{
 					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT * FROM residing_priests;";
+					cmd.CommandText = "SELECT * FROM residing_priests WHERE priest_name != 'NA';";
 					MySqlDataReader db_reader = cmd.ExecuteReader();
 					while (db_reader.Read())
 					{

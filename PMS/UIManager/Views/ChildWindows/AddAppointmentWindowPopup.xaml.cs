@@ -27,6 +27,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			FetchMassFee(AptType);
 			GetFixedTimeSchedules();
 
+			FetchPriests();
 		}
 		private void GetFixedTimeSchedules()
 		{
@@ -250,6 +251,12 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var metroWindow = (Application.Current.MainWindow as MetroWindow);
 			await metroWindow.ShowMessageAsync("Success!", "The schedule has been placed successfully.");
+
+			//Resync Calendar
+			PMS.UIComponents.Calendar cal = new UIComponents.Calendar();
+			Appointments.app.CalendarHolder.Children.Clear();
+			Appointments.app.CalendarHolder.Children.Add(cal);
+			this.Close();
 		}
 		private async void MsgFail()
 		{
@@ -293,12 +300,8 @@ namespace PMS.UIManager.Views.ChildWindows
 						dbman.DBClose();
 						if (stat_code > 0)
 						{
-							MsgSuccess();
-							//Resync Calendar
-							PMS.UIComponents.Calendar cal = new UIComponents.Calendar();
-							Appointments.app.CalendarHolder.Children.Clear();
-							Appointments.app.CalendarHolder.Children.Add(cal);
 							this.Close();
+							MsgSuccess();
 						}
 						else
 						{

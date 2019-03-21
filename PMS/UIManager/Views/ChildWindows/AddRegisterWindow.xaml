@@ -33,57 +33,31 @@
         <SolidColorBrush Opacity="0.7" Color="{StaticResource BlackColor}" />
     </simpleChildWindow:ChildWindow.OverlayBrush>
     <Grid>
-        <Label x:Name="RegisterTypeLabel" 
-            Content="Register Type" 
-            HorizontalAlignment="Left" 
-            Margin="40,55,0,0" 
-            VerticalAlignment="Top" 
-            Width="112" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
         <ComboBox
             x:Name="RegisterType" 
-            Height="25"
-            Margin="40,79,42,0" 
-            VerticalAlignment="Top">
+            Height="29"
+            Margin="70,79,42,0" 
+            VerticalAlignment="Top" BorderThickness="0,1,1,1" VerticalContentAlignment="Center">
             <ComboBoxItem Content="Baptismal"/>
             <ComboBoxItem Content="Matrimonial"/>
             <ComboBoxItem Content="Confirmation"/>
             <ComboBoxItem Content="Burial"/>
         </ComboBox>
-        <Label x:Name="BookNoLabel" 
-            Content="Book No." 
-            Margin="40,118,323,0" 
-            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-        <Label x:Name="RegisterNoLabel" 
-            Content="Register No." 
-            Margin="221,118,136,0" 
-            VerticalAlignment="Top" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
         <mah:NumericUpDown 
             Minimum="1"
             x:Name="RegisterNo" 
-            Height="23" 
-            Margin="221,142,42,0" 
-            VerticalAlignment="Top"/>
-        <Label x:Name="BookLabel" 
-            Content="Book" 
-            HorizontalAlignment="Left" 
-            Margin="40,184,0,0" 
-            VerticalAlignment="Top" 
-            Width="68" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5"/>
+            Height="30" 
+            Margin="254,158,42,0" 
+            VerticalAlignment="Top" BorderThickness="0,1,1,1"/>
         <TextBox 
             x:Name="Book" 
-            Height="23" 
-            Margin="40,213,42,0" 
+            Height="29" 
+            Margin="70,241,42,0" 
             TextWrapping="Wrap" 
-            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513"/>
-        <Label x:Name="CreationDateLabel" 
-            Content="Creation Date" 
-            HorizontalAlignment="Left" 
-            Margin="40,256,0,0" 
-            VerticalAlignment="Top" 
-            Width="84" Padding="0,5,5,5" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
         <DatePicker x:Name="CreationDate" 
-            Margin="40,280,42,0" 
-            VerticalAlignment="Top"/>
+            Margin="70,316,42,0" 
+            VerticalAlignment="Top" Height="29" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
         <Grid Height="32" VerticalAlignment="Top" Background="#FF3E4A59">
             <Label Content="ADD REGISTER" Margin="44,3,180,0" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14" Foreground="White"/>
             <iconPacks:PackIconFontAwesome Kind="BookSolid" HorizontalAlignment="Left" Margin="28,8,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.531,0.031"/>
@@ -125,11 +99,26 @@
                 </Button>
             </Grid>
         </Border>
-        <UIComponents:Validator x:Name="RegTypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,83,21,0" VerticalAlignment="Top" Width="16"/>
-        <UIComponents:Validator x:Name="RegNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,146,21,0" VerticalAlignment="Top" Width="16"/>
-        <UIComponents:Validator x:Name="BookNumValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,146,221,0" VerticalAlignment="Top" Width="16"/>
-        <UIComponents:Validator x:Name="BookNameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,217,21,0" VerticalAlignment="Top" Width="16"/>
-        <UIComponents:Validator x:Name="CreationDateValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,284,21,0" VerticalAlignment="Top" Width="16"/>
-        <mah:NumericUpDown x:Name="BookNo" HorizontalAlignment="Left" Margin="40,142,0,0" VerticalAlignment="Top" Width="145"/>
+        <mah:NumericUpDown x:Name="BookNo" HorizontalAlignment="Left" Margin="70,158,0,0" VerticalAlignment="Top" Width="122" Height="30" BorderThickness="0,1,1,1"/>
+        <Label Content="REGISTER TYPE" HorizontalAlignment="Left" Margin="40,52,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="RegisterTypeIcon" Margin="40,79,359,318" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="BOOK NO" HorizontalAlignment="Left" Margin="40,132,0,0" VerticalAlignment="Top" Width="145" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label Content="REGISTER NO" HorizontalAlignment="Left" Margin="224,132,0,0" VerticalAlignment="Top" Width="145" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="BookNoIcon" Margin="40,158,359,238" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label x:Name="RegisterNoIcon" Margin="224,158,175,238" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="BOOK TITLE" HorizontalAlignment="Left" Margin="40,213,0,0" VerticalAlignment="Top" Width="145" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="BookIcon" Margin="40,241,359,156" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="BookmarkRegular" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
+        <Label Content="CREATION DATE" HorizontalAlignment="Left" Margin="40,290,0,0" VerticalAlignment="Top" Width="145" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+        <Label x:Name="CreationDateIcon" Margin="40,316,359,81" BorderThickness="1" BorderBrush="#FFD4D4D4">
+            <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+        </Label>
     </Grid>
 </simpleChildWindow:ChildWindow>

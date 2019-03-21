@@ -8,7 +8,7 @@
              mc:Ignorable="d" d:DesignWidth="228.5" Height="30">
     <Grid>
 
-        <Custom:PackIconFontAwesome Kind="ArrowRightSolid" HorizontalAlignment="Left" Margin="8,7,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="EventNameHolder"  Content="Label" Margin="29,0,0,0" VerticalAlignment="Top" Height="30"/>
+        <Custom:PackIconFontAwesome Kind="ChevronCircleRightSolid" HorizontalAlignment="Left" Margin="8,7,0,0" VerticalAlignment="Top" Foreground="#FF1D7ABB"/>
+        <Label x:Name="EventNameHolder"  Content="Label" Margin="29,0,0,0" VerticalAlignment="Top" Height="30" Foreground="#FF131313"/>
     </Grid>
 </UserControl>

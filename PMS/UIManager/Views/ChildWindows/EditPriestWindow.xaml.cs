@@ -71,10 +71,9 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			if (string.IsNullOrWhiteSpace(PriestName.Text))
 			{
-				PriestNameValidator.Visibility = Visibility.Visible;
-				PriestNameValidator.ToolTip = "Username cannot be empty!";
-				PriestNameValidator.Foreground = Brushes.Red;
+				PriestName.ToolTip = "This field is required.";
 				PriestName.BorderBrush = Brushes.Red;
+				PriestNameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

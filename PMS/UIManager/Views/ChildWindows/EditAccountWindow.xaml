@@ -66,90 +66,56 @@
             </Grid>
         </Border>
         <Grid Margin="0,32,0,46">
-            <Label 
-                Content="New Password" 
-                HorizontalAlignment="Left" 
-                Margin="75,278,0,0" 
-                VerticalAlignment="Top" 
-                Width="98" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <TextBox x:Name="Password" 
-                Height="23" 
-                Margin="178,278,68,0" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <Label 
-                Content="Your Password" 
-                HorizontalAlignment="Left" 
-                Margin="75,322,0,0" 
-                VerticalAlignment="Top" 
-                Width="98" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
             <PasswordBox x:Name="VerificationPass" 
-                Height="23" 
-                Margin="178,322,68,0" 
-                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <Label x:Name="NameLabel" 
-                Content="Employee Name" 
-                HorizontalAlignment="Left" 
-                Margin="67,192,0,0" 
-                VerticalAlignment="Top" 
-                Width="106" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
+                Height="29" 
+                Margin="353,356,44,0" 
+                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
             <TextBox x:Name="EmpName" 
-                Height="23" 
-                Margin="178,192,68,0" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <Label x:Name="LegitimacyLabel" 
-                Content="Account Type/Role" 
-                Margin="55,35,473,0" 
-                VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" RenderTransformOrigin="0.5,0.5" Height="26" Padding="0,5,5,5">
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.634"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
-            <ComboBox SelectedIndex="0" x:Name="AccountType" HorizontalAlignment="Left" Margin="178,35,0,0" VerticalAlignment="Top" Width="397" Height="26" Foreground="#FF474747">
+            Height="29" 
+            Margin="89,235,44,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
+            <ComboBox SelectedIndex="0" x:Name="AccountType" HorizontalAlignment="Left" Margin="89,52,0,0" VerticalAlignment="Top" Width="510" Height="29" Foreground="#FF474747" BorderThickness="0,1,1,1">
                 <ComboBoxItem Content="Administrator"/>
                 <ComboBoxItem Content="Secretary"/>
                 <ComboBoxItem Content="Cashier"/>
                 <ComboBoxItem Content="Registrar"/>
                 <ComboBoxItem Content="Custom"/>
             </ComboBox>
-            <Label x:Name="NameLabel_Copy" 
-                Content="Username" 
-                HorizontalAlignment="Left" 
-                Margin="100,235,0,0" 
-                VerticalAlignment="Top" 
-                Width="73" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
             <TextBox x:Name="Username" 
-                Height="23" 
-                Margin="178,235,68,0" 
-                TextWrapping="Wrap" 
-                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <CheckBox x:Name="Priv1" IsEnabled="False" Content="Secretary" HorizontalAlignment="Left" Margin="178,104,0,0" VerticalAlignment="Top" Width="137"/>
-            <CheckBox x:Name="Priv3" IsEnabled="False" Content="Cashier" HorizontalAlignment="Left" Margin="178,150,0,0" VerticalAlignment="Top" Width="137"/>
-            <CheckBox x:Name="Priv2" IsEnabled="False" Content="Registrar" HorizontalAlignment="Left" Margin="178,127,0,0" VerticalAlignment="Top" Width="137"/>
-            <Label x:Name="LegitimacyLabel_Copy" 
-                Content="Custom Privileges:" 
-                Margin="179,72,349,0" 
-                VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" RenderTransformOrigin="0.5,0.5" Height="26" Padding="0,5,5,5">
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.634"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Label.RenderTransform>
+            Height="29" 
+            Margin="89,295,44,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="Password" 
+            Height="29" 
+            Margin="89,356,344,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,1,1,1" VerticalContentAlignment="Center"/>
+            <CheckBox x:Name="Priv1" IsEnabled="False" Content="Secretary" HorizontalAlignment="Left" Margin="89,132,0,0" VerticalAlignment="Top" Width="137"/>
+            <CheckBox x:Name="Priv3" IsEnabled="False" Content="Cashier" HorizontalAlignment="Left" Margin="89,178,0,0" VerticalAlignment="Top" Width="137"/>
+            <CheckBox x:Name="Priv2" IsEnabled="False" Content="Registrar" HorizontalAlignment="Left" Margin="89,155,0,0" VerticalAlignment="Top" Width="137"/>
+            <Label x:Name="AccountTypeIcon" Margin="59,52,554,339" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="UserCogSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
             </Label>
-            <UIComponents:Validator x:Name="AccountTypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,39,47,0" VerticalAlignment="Top" Width="16"/>
-            <UIComponents:Validator x:Name="EmpNameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,196,47,0" VerticalAlignment="Top" Width="16"/>
-            <UIComponents:Validator x:Name="UsernameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,239,47,0" VerticalAlignment="Top" Width="16"/>
-            <UIComponents:Validator x:Name="PasswordValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,282,47,0" VerticalAlignment="Top" Width="16"/>
-            <UIComponents:Validator x:Name="YourPasswordValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="16" Margin="0,327,47,0" VerticalAlignment="Top" Width="16"/>
+            <Label Content="ACCOUNT TYPE/ROLE:" HorizontalAlignment="Left" Margin="59,25,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label Content="CUSTOM PRIVILEGES" HorizontalAlignment="Left" Margin="59,98,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label Content="FULLNAME" HorizontalAlignment="Left" Margin="59,208,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="EmpNameIcon" Margin="59,235,554,156" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="UserCircleSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="USERNAME" HorizontalAlignment="Left" Margin="59,268,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="UsernameIcon" Margin="59,295,554,96" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="UserSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="PASSWORD" HorizontalAlignment="Left" Margin="59,329,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="PasswordIcon" Margin="59,356,554,35" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="KeySolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="YOUR PASSWORD" HorizontalAlignment="Left" Margin="323,329,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="YourPasswordIcon" Margin="323,356,290,35" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="KeySolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
         </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

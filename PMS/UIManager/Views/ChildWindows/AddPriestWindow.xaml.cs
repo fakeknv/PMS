@@ -35,27 +35,21 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var bc = new BrushConverter();
 
-			NameValidator.Visibility = Visibility.Hidden;
-			NameValidator.Foreground = Brushes.Transparent;
-			PriestName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(PriestName.Text))
 			{
-				NameValidator.Visibility = Visibility.Visible;
-				NameValidator.ToolTip = "Username cannot be empty!";
-				NameValidator.Foreground = Brushes.Red;
+				PriestName.ToolTip = "This field is required.";
 				PriestName.BorderBrush = Brushes.Red;
+				PriestNameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (CheckDupli() == true)
 			{
-				NameValidator.Visibility = Visibility.Visible;
-				NameValidator.ToolTip = "Username cannot be empty!";
-				NameValidator.Foreground = Brushes.Red;
+				PriestName.ToolTip = "This field is required.";
 				PriestName.BorderBrush = Brushes.Red;
+				PriestNameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

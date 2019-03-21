@@ -35,26 +35,20 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var bc = new BrushConverter();
 
-			ETypeValidator.Visibility = Visibility.Hidden;
-			ETypeValidator.Foreground = Brushes.Transparent;
-			EType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(EType.Text))
 			{
-				ETypeValidator.Visibility = Visibility.Visible;
-				ETypeValidator.ToolTip = "Username cannot be empty!";
-				ETypeValidator.Foreground = Brushes.Red;
+				EType.ToolTip = "This field is required.";
 				EType.BorderBrush = Brushes.Red;
+				ETypeIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (CheckDupli() == true) {
-				ETypeValidator.Visibility = Visibility.Visible;
-				ETypeValidator.ToolTip = "Already exists!";
-				ETypeValidator.Foreground = Brushes.Red;
+				EType.ToolTip = "This field is required.";
 				EType.BorderBrush = Brushes.Red;
+				ETypeIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

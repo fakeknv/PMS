@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Data.SQLite;
 using MahApps.Metro.Controls.Dialogs;
 using System.Windows.Media;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -40,7 +42,7 @@ namespace PMS.UIManager.Views.ChildWindows
 		private int stipend;
 		private string minister;
 		private string remarks;
-
+		private string imageURI;
 
 		/// <summary>
 		/// Creates the AddRequestForm Window and Initializes DB Param.
@@ -306,6 +308,7 @@ namespace PMS.UIManager.Views.ChildWindows
 								{
 									using (MySqlConnection conn3 = new MySqlConnection(dbman.GetConnStr()))
 									{
+										conn3.Open();
 										try
 										{
 											string recID = pmsutil.GenRecordID();
@@ -400,165 +403,157 @@ namespace PMS.UIManager.Views.ChildWindows
 				return targ;
 			}
 		}
+		private async void MsgError()
+		{
+			var metroWindow = (Application.Current.MainWindow as MetroWindow);
+			await metroWindow.ShowMessageAsync("Failed!", "A record of the same name and type already exists.");
+		}
+		private bool CheckRequirements()
+		{
+			bool ret = false;
+			dbman = new DBConnectionManager();
+
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT COUNT(*) FROM records, registers WHERE registers.book_type = 'Burial' AND registers.book_number = records.book_number AND records.recordholder_fullname = @fname;";
+				cmd.Parameters.AddWithValue("@fname", FullName.Text);
+				cmd.Prepare();
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					if (db_reader.GetInt32("COUNT(*)") == 0)
+					{
+						ret = true;
+					}
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+				ret = false;
+			}
+			return ret;
+		}
 		private bool CheckInputs()
 		{
 			var bc = new BrushConverter();
 
-			DeathDateValidator.Visibility = Visibility.Hidden;
-			DeathDateValidator.Foreground = Brushes.Transparent;
 			DeathDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			EntryNumValidator.Visibility = Visibility.Hidden;
-			EntryNumValidator.Foreground = Brushes.Transparent;
-			EntryNum.BorderBrush = Brushes.Red;
-
-			EntryNumValidator.Visibility = Visibility.Hidden;
-			EntryNumValidator.Foreground = Brushes.Transparent;
-			PageNum.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			BurialDateValidator.Visibility = Visibility.Hidden;
-			BurialDateValidator.Foreground = Brushes.Transparent;
 			BurialDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			NameValidator.Visibility = Visibility.Hidden;
-			NameValidator.Foreground = Brushes.Transparent;
 			FullName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			StipendValidator.Visibility = Visibility.Hidden;
-			StipendValidator.Foreground = Brushes.Transparent;
-			Stipend.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			PlaceOfIntermentValidator.Visibility = Visibility.Hidden;
-			PlaceOfIntermentValidator.Foreground = Brushes.Transparent;
 			PlaceOfInterment.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			Parent1Validator.Visibility = Visibility.Hidden;
-			Parent1Validator.Foreground = Brushes.Transparent;
 			Parent1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			MinisterValidator.Visibility = Visibility.Hidden;
-			MinisterValidator.Foreground = Brushes.Transparent;
+			Residence1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
+
 			Minister.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			SacramentValidator.Visibility = Visibility.Hidden;
-			SacramentValidator.Foreground = Brushes.Transparent;
 			Sacrament.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
-			CauseOfDeathValidator.Visibility = Visibility.Hidden;
-			CauseOfDeathValidator.Foreground = Brushes.Transparent;
 			CauseOfDeath.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			Residence1Validator.Visibility = Visibility.Hidden;
-			Residence1Validator.Foreground = Brushes.Transparent;
-			Residence1.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
 
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(DeathDate.Text))
 			{
-				DeathDateValidator.Visibility = Visibility.Visible;
-				DeathDateValidator.ToolTip = "This field is required.";
-				DeathDateValidator.Foreground = Brushes.Red;
+				DeathDate.ToolTip = "This field is required.";
 				DeathDate.BorderBrush = Brushes.Red;
+				Icon3.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (EntryNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				EntryNum.ToolTip = "Must be greater than zero.";
 				EntryNum.BorderBrush = Brushes.Red;
+				Icon2.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (PageNum.Value < 0)
 			{
-				EntryNumValidator.Visibility = Visibility.Visible;
-				EntryNumValidator.ToolTip = "Must be greater than zero.";
-				EntryNumValidator.Foreground = Brushes.Red;
+				PageNum.ToolTip = "Must be greater than zero.";
 				PageNum.BorderBrush = Brushes.Red;
+				Icon1.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(BurialDate.Text))
 			{
-				BurialDateValidator.Visibility = Visibility.Visible;
-				BurialDateValidator.ToolTip = "This field is required.";
-				BurialDateValidator.Foreground = Brushes.Red;
+				BurialDate.ToolTip = "This field is required.";
 				BurialDate.BorderBrush = Brushes.Red;
+				Icon4.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(FullName.Text))
 			{
-				NameValidator.Visibility = Visibility.Visible;
-				NameValidator.ToolTip = "This field is required.";
-				NameValidator.Foreground = Brushes.Red;
+				FullName.ToolTip = "This field is required.";
 				FullName.BorderBrush = Brushes.Red;
+				Icon5.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (Stipend.Value == 0)
 			{
-				StipendValidator.Visibility = Visibility.Visible;
-				StipendValidator.ToolTip = "Notice: Stipend is set to zero.";
-				StipendValidator.Foreground = Brushes.Orange;
+				Stipend.ToolTip = "Notice: Stipend is set to zero.";
 				Stipend.BorderBrush = Brushes.Orange;
+				Icon8.BorderBrush = Brushes.Red;
+
 				MsgStipend();
 				ret = true;
 			}
 			if (string.IsNullOrWhiteSpace(PlaceOfInterment.Text))
 			{
-				PlaceOfIntermentValidator.Visibility = Visibility.Visible;
-				PlaceOfIntermentValidator.ToolTip = "This field is required.";
-				PlaceOfIntermentValidator.Foreground = Brushes.Red;
+				PlaceOfInterment.ToolTip = "This field is required.";
 				PlaceOfInterment.BorderBrush = Brushes.Red;
+				Icon11.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Parent1.Text))
 			{
-				Parent1Validator.Visibility = Visibility.Visible;
-				Parent1Validator.ToolTip = "This field is required.";
-				Parent1Validator.Foreground = Brushes.Red;
+				Parent1.ToolTip = "This field is required.";
 				Parent1.BorderBrush = Brushes.Red;
+				Icon12.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Minister.Text))
 			{
-				MinisterValidator.Visibility = Visibility.Visible;
-				MinisterValidator.ToolTip = "This field is required.";
-				MinisterValidator.Foreground = Brushes.Red;
+				Minister.ToolTip = "This field is required.";
 				Minister.BorderBrush = Brushes.Red;
+				Icon16.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Sacrament.Text))
 			{
-				SacramentValidator.Visibility = Visibility.Visible;
-				SacramentValidator.ToolTip = "This field is required.";
-				SacramentValidator.Foreground = Brushes.Red;
+				Sacrament.ToolTip = "This field is required.";
 				Sacrament.BorderBrush = Brushes.Red;
+				Icon9.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(CauseOfDeath.Text))
 			{
-				CauseOfDeathValidator.Visibility = Visibility.Visible;
-				CauseOfDeathValidator.ToolTip = "This field is required.";
-				CauseOfDeathValidator.Foreground = Brushes.Red;
+				CauseOfDeath.ToolTip = "This field is required.";
 				CauseOfDeath.BorderBrush = Brushes.Red;
+				Icon10.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Residence1.Text))
 			{
-				Residence1Validator.Visibility = Visibility.Visible;
-				Residence1Validator.ToolTip = "This field is required.";
-				Residence1Validator.Foreground = Brushes.Red;
+				Residence1.ToolTip = "This field is required.";
 				Residence1.BorderBrush = Brushes.Red;
+				Icon14.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
@@ -866,6 +861,22 @@ namespace PMS.UIManager.Views.ChildWindows
 			Suggestions4.Visibility = Visibility.Hidden;
 			Suggestions5.Visibility = Visibility.Hidden;
 			Suggestions6.Visibility = Visibility.Hidden;
+		}
+		private void ImagePicker_Click(object sender, RoutedEventArgs e)
+		{
+			Console.WriteLine("asd");
+			OpenFileDialog op = new OpenFileDialog
+			{
+				Title = "Select a picture",
+				Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+			  "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+			  "Portable Network Graphic (*.png)|*.png"
+			};
+			if (op.ShowDialog() == true)
+			{
+				ImagePreview.Source = new BitmapImage(new Uri(op.FileName));
+				imageURI = op.FileName;
+			}
 		}
 	}
 }

@@ -149,8 +149,15 @@ namespace PMS.UIComponents
 					{
 						conn2.Open();
 						MySqlCommand cmd = conn2.CreateCommand();
-						cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @sdate LIMIT 5;";
+
+						if (Calendar.cal.AppFilter.Text == "All") {
+							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @sdate LIMIT 5;";
+						}
+						else {
+							cmd.CommandText = "SELECT * FROM appointments WHERE appointment_date = @sdate AND assigned_priest = @priest LIMIT 5;";
+						}
 						cmd.Parameters.AddWithValue("@sdate", d.ToString("yyyy-MM-dd"));
+						cmd.Parameters.AddWithValue("@priest", GetPriestID(Calendar.cal.AppFilter.Text));
 						cmd.Prepare();
 						using (MySqlDataReader db_reader = cmd.ExecuteReader())
 						{
@@ -210,6 +217,34 @@ namespace PMS.UIComponents
 					while (db_reader.Read())
 					{
 						ret = db_reader.GetString("priest_name");
+					}
+				}
+				else
+				{
+					ret = "";
+				}
+			}
+
+			return ret;
+		}
+		private string GetPriestID(string pname)
+		{
+			string ret = "";
+
+			dbman = new DBConnectionManager();
+			using (conn = new MySqlConnection(dbman.GetConnStr()))
+			{
+				conn.Open();
+				if (conn.State == ConnectionState.Open)
+				{
+					MySqlCommand cmd = conn.CreateCommand();
+					cmd.CommandText = "SELECT priest_id FROM residing_priests WHERE priest_name = @pname LIMIT 1;";
+					cmd.Parameters.AddWithValue("@pname", pname);
+					cmd.Prepare();
+					MySqlDataReader db_reader = cmd.ExecuteReader();
+					while (db_reader.Read())
+					{
+						ret = db_reader.GetString("priest_id");
 					}
 				}
 				else

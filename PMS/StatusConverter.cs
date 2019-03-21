@@ -21,11 +21,11 @@ namespace PMS
 			{
 				return "";
 			}
-			else if ((string)value == "Paid")
+			else if ((string)value == "Paid" || (string)value == "Finished")
 			{
 				return "#FF3C7AC9";
 			}
-			else if ((string)value == "Unpaid")
+			else if ((string)value == "Unpaid" || (string)value == "Ongoing")
 			{
 				return "#FF53951C";
 			}

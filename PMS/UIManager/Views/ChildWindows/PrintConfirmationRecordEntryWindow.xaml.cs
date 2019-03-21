@@ -212,7 +212,7 @@ namespace PMS.UIManager.Views.ChildWindows
 			if (dbman.DBConnect().State == ConnectionState.Open)
 			{
 				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
-				cmd.CommandText = "SELECT * FROM residing_priests;";
+				cmd.CommandText = "SELECT * FROM residing_priests WHERE priest_name != 'NA';";
 				MySqlDataReader db_reader = cmd.ExecuteReader();
 				while (db_reader.Read())
 				{

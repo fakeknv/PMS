@@ -65,41 +65,32 @@
             </Grid>
         </Border>
         <Grid Margin="0,32,0,0" Height="183" VerticalAlignment="Top">
-            <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="251,119,0,0" VerticalAlignment="Top" Width="311" Height="26">
+            <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="360,126,0,0" VerticalAlignment="Top" Width="240" Height="29" BorderThickness="0,1,1,1">
                 <ComboBoxItem Content="Mass"/>
                 <ComboBoxItem Content="Other Service"/>
             </ComboBox>
-            <Label
-                Content="Type" 
-                HorizontalAlignment="Left" 
-                Margin="203,119,0,0" 
-                VerticalAlignment="Top" 
-                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <Label
-                Content="Event/Service/Appointment" 
-                HorizontalAlignment="Left" 
-                Margin="79,32,0,0" 
-                VerticalAlignment="Top" 
-                Width="167" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <TextBox x:Name="EType" HorizontalAlignment="Left" Height="23" Margin="251,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
-            <mah:NumericUpDown x:Name="Fee" Minimum="0" HorizontalAlignment="Left" Margin="251,76,0,0" VerticalAlignment="Top" Width="125"/>
-            <Label
-                Content="Fee" 
-                HorizontalAlignment="Left" 
-                Margin="203,76,0,0" 
-                VerticalAlignment="Top" 
-                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <Label
-                Content="Status" 
-                HorizontalAlignment="Left" 
-                Margin="388,76,0,0" 
-                VerticalAlignment="Top" 
-                Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <ComboBox x:Name="Active" HorizontalAlignment="Left" SelectedIndex="0" Margin="436,76,0,0" VerticalAlignment="Top" Width="126" Height="26">
+            <TextBox x:Name="EType" HorizontalAlignment="Left" Height="29" Margin="68,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="332" BorderThickness="0,1,1,1"/>
+            <mah:NumericUpDown x:Name="Fee" Minimum="0" HorizontalAlignment="Left" Margin="475,57,0,0" VerticalAlignment="Top" Width="125" Height="29" BorderThickness="0,1,1,1"/>
+            <ComboBox x:Name="Active" HorizontalAlignment="Left" SelectedIndex="0" Margin="68,126,0,0" VerticalAlignment="Top" Width="229" Height="29" BorderThickness="0,1,1,1">
                 <ComboBoxItem Content="Active"/>
                 <ComboBoxItem Content="Inactive"/>
             </ComboBox>
-            <UIComponents:Validator x:Name="ETypeValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="17" Margin="0,36,60,0" VerticalAlignment="Top" Width="16"/>
+            <Label x:Name="ETypeIcon" Margin="38,57,575,97" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="CalendarAltRegular" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="EVENT TITLE:" HorizontalAlignment="Left" Margin="38,30,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label Content="FEE:" HorizontalAlignment="Left" Margin="445,30,0,0" VerticalAlignment="Top" Width="97" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="FeeIcon" Margin="445,57,168,97" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="DollarSignSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="STATUS:" HorizontalAlignment="Left" Margin="38,99,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="ActiveIcon" Margin="38,126,575,28" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="AdjustSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label Content="TYPE:" HorizontalAlignment="Left" Margin="330,99,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="StatusIcon" Margin="330,126,283,28" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="CogSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
         </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

@@ -17,6 +17,8 @@
     d:DesignWidth="1077.25">
     <UserControl.Resources>
         <local:RowToIndexConverter x:Key="RowToIndexConverter" />
+        <local:FeeConverter x:Key="FeeConverter" />
+        <local:StatusConverter x:Key="StatusConverter" />
         <DataTemplate x:Key="xtabHeader">
             <Grid Background="#FF4396CF">
                 <TextBlock Text="{Binding}" FontWeight="Bold" Padding="15,0,15,0" Foreground="White"/>
@@ -208,7 +210,7 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBlock TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                    <TextBlock TextAlignment="Center" Text="{Binding Path=Fee, Converter={StaticResource FeeConverter}}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -217,7 +219,7 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBlock TextAlignment="Center" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                                    <TextBlock TextAlignment="Center" Foreground="{Binding Path=Status, Converter={StaticResource StatusConverter}}" Text="{Binding Status}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -234,14 +236,11 @@
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Width="*" Header="Confirmed" SortMemberPath="TimeConfirmed" CanUserSort="True">
+                                    <DataGridTemplateColumn Width="*" Header="Priest" SortMemberPath="TimeConfirmed" CanUserSort="True">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding TimeConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                                    <Border BorderBrush="LightGray" BorderThickness="0,1,0,0">
-                                                        <TextBlock Padding="0,5,0,5" TextAlignment="Center" Text="{Binding DateConfirmed}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                                    </Border>
+                                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding APriest}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

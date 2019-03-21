@@ -50,7 +50,32 @@ namespace PMS.UIManager.Views
 			ListMaxDate.SelectedDate = max;
 
 			FetchAptType();
+			//GetPriestFilters();
 		}
+		//private string GetPriestFilters()
+		//{
+		//	string ret = "";
+		//	dbman = new DBConnectionManager();
+
+		//	if (dbman.DBConnect().State == ConnectionState.Open)
+		//	{
+		//		MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+		//		cmd.CommandText = "SELECT priest_name FROM residing_priests ORDER BY priest_name ASC";
+		//		cmd.Prepare();
+		//		MySqlDataReader db_reader = cmd.ExecuteReader();
+		//		while (db_reader.Read())
+		//		{
+		//			PriestFilter.Items.Add(db_reader.GetString("priest_name"));
+		//		}
+		//		//close Connection
+		//		dbman.DBClose();
+		//	}
+		//	else
+		//	{
+		//		ret = "";
+		//	}
+		//	return ret;
+		//}
 		internal void FetchAptType() {
 			dbman = new DBConnectionManager();
 			using (conn = new MySqlConnection(dbman.GetConnStr()))

@@ -15,6 +15,7 @@
     d:DesignWidth="947.25">
     <UserControl.Resources>
         <local:StatusConverter x:Key="StatusConverter" />
+        <local:FeeConverter x:Key="FeeConverter" />
     </UserControl.Resources>
     <Grid 
         x:Name="RequestMainGrid" 
@@ -461,7 +462,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" Text="{Binding Fee}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                            <TextBlock TextWrapping="WrapWithOverflow" TextAlignment="Center" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Text="{Binding Path=Fee, Converter={StaticResource FeeConverter}}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

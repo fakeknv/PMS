@@ -173,9 +173,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding FullName1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding FullName1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding FullName2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding FullName2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -185,9 +185,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Status1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding Status1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Status2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding Status2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -209,9 +209,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Hometown1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding Hometown1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Hometown2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding Hometown2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -221,9 +221,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Residence1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding Residence1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Residence2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding Residence2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -233,12 +233,12 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
-                                <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,6,5,5" Text="{Binding Parent1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,6,5,7" Text="{Binding Parent2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,6,5,5" Text="{Binding Parent3}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,6,5,5" Text="{Binding Parent3}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
-                                <TextBlock TextAlignment="Center" Padding="5,6,5,7" Text="{Binding Parent4}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,6,5,7" Text="{Binding Parent4}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -247,9 +247,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding Witness1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding Witness1}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding Witness2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding Witness2}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -259,9 +259,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,0,5,23" Text="{Binding W1Residence}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,0,5,23" Text="{Binding W1Residence}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,23,5,0" Text="{Binding W2Residence}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,23,5,0" Text="{Binding W2Residence}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -271,7 +271,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Stipend}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Stipend}" FontFamily="/PMS;component/Assets/Fonts/#Roboto"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -280,7 +280,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Minister}"  FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Normal"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Minister}"  FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontWeight="Normal"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -65,7 +65,7 @@
                             FontFamily="/PMS;component/Assets/Fonts/#Roboto" />
                     </StackPanel>
                 </Button>
-                <Label Content="Actions" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF46A1D4" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
+                <Label Content="Actions" Margin="10,10,10,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF1D7ABB" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
                 <Button
                 Style="{DynamicResource MetroCircleButtonStyle}" 
                 Content="{iconPacks:FontAwesome QuestionCircleRegular}" 
@@ -78,7 +78,7 @@
                 Foreground="#FF717171" 
                 Width="30" 
                 HorizontalAlignment="Right" Click="ActionsHelp_Click"/>
-                <Label Content="Add Appointment" Margin="9,213,11,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF46A1D4" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
+                <Label Content="Add Appointment" Margin="9,213,11,0" VerticalAlignment="Top" FontSize="20" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF1D7ABB" BorderThickness="0,0,0,1" BorderBrush="#FFE9E9E9" Padding="15,5,5,5"/>
                 <ListView Name="AppointmentTypeList" Margin="10,286,10,10" BorderBrush="#FFE9E9E9" BorderThickness="1" FontFamily="/PMS;component/Assets/Fonts/#Roboto" FontSize="14">
                     <ListView.View>
                         <GridView>
@@ -91,7 +91,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" HorizontalAlignment="Left" Margin="18,253,0,0" VerticalAlignment="Top" Foreground="#FF1D7ABB" RenderTransformOrigin="0.625,1.104"/>
+                <iconPacks:PackIconFontAwesome Kind="HandPaperRegular" HorizontalAlignment="Left" Margin="15,253,0,0" VerticalAlignment="Top" Foreground="#FF1D7ABB" RenderTransformOrigin="0.625,1.104" Height="19" Width="19"/>
                 <TextBlock TextWrapping="WrapWithOverflow" Text="Drag event to desired date to add appointment." Margin="39,253,11,0" VerticalAlignment="Top" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="28" Foreground="#FF575757"/>
                 <Label Content="Type: " HorizontalAlignment="Left" Margin="15,125,0,0" VerticalAlignment="Top" Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>
                 <Label Content="Start: " HorizontalAlignment="Left" Margin="15,50,0,0" VerticalAlignment="Top" Width="43" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Height="26"/>

@@ -4,6 +4,7 @@ using MahApps.Metro.SimpleChildWindow;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,13 +23,16 @@ namespace PMS.UIManager.Views.ChildWindows
 
 		public MoveAppointmentWindowPopup(string AptID, DateTime date)
 		{
+			string sysFormat = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
+
 			_aid = AptID;
 
 			InitializeComponent();
+			SelectedDate.Content = date.ToString(sysFormat);
 
 			GetFixedTimeSchedules();
 
-			SelectedDate.Content = date.ToString("MMMM dd, yyyy");
+			FetchPriests();
 
 			dbman = new DBConnectionManager();
 

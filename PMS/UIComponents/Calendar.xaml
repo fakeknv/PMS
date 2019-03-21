@@ -18,7 +18,7 @@
                 Height="30" 
                 Background="{x:Null}" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="#FF888888" 
+                Foreground="#FF1D7ABB" 
                 HorizontalAlignment="Right" 
                 Click="PrevMonthButton_Click">
                 <StackPanel 
@@ -45,7 +45,7 @@
                 Height="30" 
                 Background="{x:Null}" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
-                Foreground="#FF888888" 
+                Foreground="#FF1D7ABB" 
                 HorizontalAlignment="Right" 
                 Click="NextMonthButton_Click">
                 <StackPanel 
@@ -68,13 +68,15 @@
                 x:Name="monthNameHolder" 
                 Content="Label" 
                 HorizontalAlignment="Left"
-                Margin="10,5,0,0" 
+                Margin="334,5,0,0" 
                 VerticalAlignment="Top" 
                 Height="30" 
                 Width="190" 
                 FontFamily="/PMS;component/Assets/Fonts/#Roboto" 
                 FontSize="18" 
-                VerticalContentAlignment="Center" Foreground="#FF888888"/>
+                VerticalContentAlignment="Center" Foreground="#FF1D7ABB" HorizontalContentAlignment="Center"/>
+            <ComboBox x:Name="AppFilter" SelectedIndex="0" HorizontalAlignment="Left" Margin="62,7,0,0" VerticalAlignment="Top" Width="220" FontFamily="Calibri" FontSize="16"/>
+            <Label Content="Filter: " HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Width="52" FontFamily="Calibri" Foreground="#FF1D7ABB" Height="26" FontSize="16" FontWeight="Bold"/>
         </Grid>
         <DockPanel 
             Margin="0,40,0,0" Background="White">

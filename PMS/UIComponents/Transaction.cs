@@ -19,6 +19,7 @@ namespace PMS.UIComponents
 		public string TimePlaced { get; set; }
 		public string DateConfirmed { get; set; }
 		public string TimeConfirmed { get; set; }
+		public string APriest { get; set; }
 		public int Page { get; set; }
 	}
 }

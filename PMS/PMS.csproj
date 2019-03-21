@@ -192,6 +192,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FeeConverter.cs" />
     <Compile Include="RowToIndexConverter.cs" />
     <Compile Include="StatusConverter.cs" />
     <Compile Include="DateConverter.cs" />
@@ -865,6 +866,9 @@
     <Content Include="Data\test_mat.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Data\temp_receipt.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

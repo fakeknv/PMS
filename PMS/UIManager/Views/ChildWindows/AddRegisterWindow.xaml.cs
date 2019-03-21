@@ -74,80 +74,54 @@ namespace PMS.UIManager.Views.ChildWindows
 		private bool CheckInputs()
 		{
 			var bc = new BrushConverter();
-
-			RegTypeValidator.Visibility = Visibility.Hidden;
-			RegTypeValidator.Foreground = Brushes.Transparent;
-			RegisterType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			BookNumValidator.Visibility = Visibility.Hidden;
-			BookNumValidator.Foreground = Brushes.Transparent;
-			BookNo.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			RegNumValidator.Visibility = Visibility.Hidden;
-			RegNumValidator.Foreground = Brushes.Transparent;
-			RegisterNo.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			BookNameValidator.Visibility = Visibility.Hidden;
-			BookNameValidator.Foreground = Brushes.Transparent;
-			Book.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			CreationDateValidator.Visibility = Visibility.Hidden;
-			CreationDateValidator.Foreground = Brushes.Transparent;
-			CreationDate.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
+			
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(RegisterType.Text))
 			{
-				RegTypeValidator.Visibility = Visibility.Visible;
-				RegTypeValidator.ToolTip = "This field is required.";
-				RegTypeValidator.Foreground = Brushes.Red;
+				RegisterType.ToolTip = "This field is required.";
 				RegisterType.BorderBrush = Brushes.Red;
+				RegisterTypeIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (BookNo.Value < 0 || string.IsNullOrWhiteSpace(BookNo.Value.ToString()))
 			{
-				BookNumValidator.Visibility = Visibility.Visible;
-				BookNumValidator.ToolTip = "This field is required.";
-				BookNumValidator.Foreground = Brushes.Red;
+				BookNo.ToolTip = "This field is required.";
 				BookNo.BorderBrush = Brushes.Red;
+				BookNoIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(RegisterNo.Value.ToString()))
 			{
-				RegNumValidator.Visibility = Visibility.Visible;
-				RegNumValidator.ToolTip = "This field is required.";
-				RegNumValidator.Foreground = Brushes.Red;
+				RegisterNo.ToolTip = "This field is required.";
 				RegisterNo.BorderBrush = Brushes.Red;
+				RegisterNoIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Book.Text))
 			{
-				BookNameValidator.Visibility = Visibility.Visible;
-				BookNameValidator.ToolTip = "This field is required.";
-				BookNameValidator.Foreground = Brushes.Red;
+				Book.ToolTip = "This field is required.";
 				Book.BorderBrush = Brushes.Red;
+				BookIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(CreationDate.Text))
 			{
-				CreationDateValidator.Visibility = Visibility.Visible;
-				CreationDateValidator.ToolTip = "This field is required.";
-				CreationDateValidator.Foreground = Brushes.Red;
+				CreationDate.ToolTip = "This field is required.";
 				CreationDate.BorderBrush = Brushes.Red;
+				CreationDateIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (CheckDupli() == true)
 			{
-				BookNumValidator.Visibility = Visibility.Visible;
-				BookNumValidator.ToolTip = "Already exists!";
-				BookNumValidator.Foreground = Brushes.Red;
+				BookNo.ToolTip = "This field is required.";
 				BookNo.BorderBrush = Brushes.Red;
+				BookNoIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}

@@ -38,57 +38,37 @@ namespace PMS.UIManager.Views.ChildWindows
 		{
 			var bc = new BrushConverter();
 
-			AccountTypeValidator.Visibility = Visibility.Hidden;
-			AccountTypeValidator.Foreground = Brushes.Transparent;
-			AccountType.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			EmpNameValidator.Visibility = Visibility.Hidden;
-			EmpNameValidator.Foreground = Brushes.Transparent;
-			EmpName.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			UsernameValidator.Visibility = Visibility.Hidden;
-			UsernameValidator.Foreground = Brushes.Transparent;
-			Username.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
-			PasswordValidator.Visibility = Visibility.Hidden;
-			PasswordValidator.Foreground = Brushes.Transparent;
-			Password.BorderBrush = (Brush)bc.ConvertFrom("#FFCCCCCC");
-
 			bool ret = true;
 
 			if (string.IsNullOrWhiteSpace(AccountType.Text))
 			{
-				AccountTypeValidator.Visibility = Visibility.Visible;
-				AccountTypeValidator.ToolTip = "This field is requried.";
-				AccountTypeValidator.Foreground = Brushes.Red;
+				AccountType.ToolTip = "This field is required.";
 				AccountType.BorderBrush = Brushes.Red;
+				AccountTypeIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(EmpName.Text))
 			{
-				EmpNameValidator.Visibility = Visibility.Visible;
-				EmpNameValidator.ToolTip = "This field is requried.";
-				EmpNameValidator.Foreground = Brushes.Red;
+				EmpName.ToolTip = "This field is required.";
 				EmpName.BorderBrush = Brushes.Red;
+				EmpNameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Username.Text))
 			{
-				UsernameValidator.Visibility = Visibility.Visible;
-				UsernameValidator.ToolTip = "This field is requried.";
-				UsernameValidator.Foreground = Brushes.Red;
+				Username.ToolTip = "This field is required.";
 				Username.BorderBrush = Brushes.Red;
+				UsernameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (string.IsNullOrWhiteSpace(Password.Text))
 			{
-				PasswordValidator.Visibility = Visibility.Visible;
-				PasswordValidator.ToolTip = "This field is requried.";
-				PasswordValidator.Foreground = Brushes.Red;
+				Password.ToolTip = "This field is required.";
 				Password.BorderBrush = Brushes.Red;
+				PasswordIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
@@ -96,19 +76,17 @@ namespace PMS.UIManager.Views.ChildWindows
 			//FIELD LEVEL VALIDATION
 			if (Password.Text.Length < 5)
 			{
-				PasswordValidator.Visibility = Visibility.Visible;
-				PasswordValidator.ToolTip = "Password should be 5 characters long or more.";
-				PasswordValidator.Foreground = Brushes.Red;
+				Password.ToolTip = "Password should be 5 characters long or more.";
 				Password.BorderBrush = Brushes.Red;
+				PasswordIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
 			if (Username.Text.Length < 5)
 			{
-				UsernameValidator.Visibility = Visibility.Visible;
-				UsernameValidator.ToolTip = "Username should be 5 characters long or more.";
-				UsernameValidator.Foreground = Brushes.Red;
+				Username.ToolTip = "Username should be 5 characters long or more.";
 				Username.BorderBrush = Brushes.Red;
+				UsernameIcon.BorderBrush = Brushes.Red;
 
 				ret = false;
 			}
@@ -137,10 +115,9 @@ namespace PMS.UIManager.Views.ChildWindows
 						{
 							if (db_reader.GetInt32("COUNT(*)") > 0)
 							{
-								UsernameValidator.Visibility = Visibility.Visible;
-								UsernameValidator.ToolTip = "Username already exists.";
-								UsernameValidator.Foreground = Brushes.Red;
+								Username.ToolTip = "Username already exists.";
 								Username.BorderBrush = Brushes.Red;
+								UsernameIcon.BorderBrush = Brushes.Red;
 								return true;
 							}
 							else {

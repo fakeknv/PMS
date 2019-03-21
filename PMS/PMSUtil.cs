@@ -17,7 +17,7 @@ namespace PMS
 		private string curDate;
 		private string curTime;
 
-		internal string GenerateReceiptNum()
+		internal string GenerateReceiptNum2()
 		{
 			dbman = new DBConnectionManager();
 			if (dbman.DBConnect().State == ConnectionState.Open)
@@ -28,6 +28,37 @@ namespace PMS
 				while (db_reader.Read())
 				{
 					ret = String.Format("{0:000000}", (db_reader.GetInt32("COUNT(transaction_id)") + 1));
+				}
+				//close Connection
+				dbman.DBClose();
+			}
+			else
+			{
+
+			}
+			return ret;
+		}
+		internal string GenerateReceiptNum()
+		{
+			string ret = "000001";
+			dbman = new DBConnectionManager();
+			if (dbman.DBConnect().State == ConnectionState.Open)
+			{
+				MySqlCommand cmd = dbman.DBConnect().CreateCommand();
+				cmd.CommandText = "SELECT DISTINCT * FROM transactions  WHERE status = 'Paid' ORDER BY or_number;";
+				MySqlDataReader db_reader = cmd.ExecuteReader();
+				while (db_reader.Read())
+				{
+					string orRecent;
+					if (string.IsNullOrEmpty(db_reader.GetString("or_number")))
+					{
+						orRecent = "000001";
+					}
+					else {
+						orRecent = db_reader.GetString("or_number");
+					}
+					Console.WriteLine(orRecent);
+					ret = String.Format("{0:000000}", (int.Parse(orRecent.TrimStart(new Char[] { '0' })) + 1));
 				}
 				//close Connection
 				dbman.DBClose();

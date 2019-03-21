@@ -11,6 +11,7 @@ using Spire.Pdf.Tables;
 using Spire.Pdf;
 using Humanizer;
 using PMS.UIComponents;
+using Spire.Doc;
 
 namespace PMS.UIManager.Views.ChildWindows
 {
@@ -141,9 +142,9 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			var bc = new BrushConverter();
 
-			if (string.IsNullOrWhiteSpace(CashTendered.Value.ToString()) || CashTendered.Value < 0)
+			if (string.IsNullOrWhiteSpace(CashTendered.Value.ToString()) || CashTendered.Value < 0 || CashTendered.Value < Double.Parse(AmountToBePaid.Content.ToString()))
 			{
-				CashTendered.ToolTip = "Cannot be less than zero!.";
+				CashTendered.ToolTip = "Cannot be less than zero/amount to pay!.";
 				CashTendered.BorderBrush = Brushes.Red;
 				CashTenderedIcon.BorderBrush = Brushes.Red;
 
@@ -153,6 +154,106 @@ namespace PMS.UIManager.Views.ChildWindows
 			return ret;
 		}
 		private void ConfirmPayment_Click(object sender, System.Windows.RoutedEventArgs e)
+		{
+			if (CheckInputs() == true) {
+				//dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+
+				int amnt = int.Parse(AmountToBePaid.Content.ToString());
+				string OR = pmsutil.GenerateReceiptNum();
+
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
+				{
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
+					{
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+						cmd.Parameters.AddWithValue("@transaction_id", tid);
+						cmd.Prepare();
+						MySqlDataReader db_reader = cmd.ExecuteReader();
+						while (db_reader.Read())
+						{
+							if (db_reader.GetString("status") == "Unpaid")
+							{
+								ornum = OR;
+								using (conn2 = new MySqlConnection(dbman.GetConnStr()))
+								{
+									conn2.Open();
+									MySqlCommand cmd2 = conn2.CreateCommand();
+									cmd2.CommandText = "SELECT COUNT(*) FROM transactions WHERE or_number = @or_number;";
+									cmd2.Parameters.AddWithValue("@or_number", OR);
+									cmd2.Prepare();
+									int counter = int.Parse(cmd2.ExecuteScalar().ToString());
+									if (counter > 0)
+									{
+										InfoArea.Foreground = new SolidColorBrush(Colors.Red);
+										InfoArea.Content = "Duplicate Receipt Number Detected!";
+									}
+									else
+									{
+										UpdateTransaction();
+										trans1.SyncTransactions();
+										MsgSuccess();
+										this.Close();
+									}
+								}
+							}
+						}
+					}
+				}
+
+				Document doc = new Document();
+				doc.LoadFromFile("Data\\temp_receipt.docx");
+				doc.Replace("date", DateTime.Now.ToString("MM/dd/yyyy"), true, true);
+				doc.Replace("name", ReceivedFrom.Text, true, true);
+				doc.Replace("wordsum", amnt.ToWords(), true, true);
+				doc.Replace("amount", AmountToBePaid.Content.ToString(), true, true);
+				doc.Replace("Total1", "P " + AmountToBePaid.Content.ToString(), true, true);
+				doc.Replace("cashier", pmsutil.GetEmpName(Application.Current.Resources["uid"].ToString()), true, true);
+				doc.Replace("123456", OR, true, true);
+
+				////Transactions
+				dbman = new DBConnectionManager();
+				pmsutil = new PMSUtil();
+				using (conn = new MySqlConnection(dbman.GetConnStr()))
+				{
+					int count1 = 1;
+					conn.Open();
+					if (conn.State == ConnectionState.Open)
+					{
+						MySqlCommand cmd = conn.CreateCommand();
+						cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
+						cmd.Parameters.AddWithValue("@transaction_id", tid);
+						cmd.Prepare();
+						MySqlDataReader db_reader = cmd.ExecuteReader();
+						while (db_reader.Read())
+						{
+							doc.Replace("Item" + count1, db_reader.GetString("type"), true, true);
+							doc.Replace("Amount" + count1, db_reader.GetString("fee"), true, true);
+							count1++;
+						}
+					}
+				}
+
+				string fname = "Receipt-No-" + OR + "-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
+				doc.SaveToFile("Data\\print_receipt.docx", Spire.Doc.FileFormat.Docx);
+
+				//Load Document
+				Document document = new Document();
+				document.LoadFromFile(@"Data\\print_receipt.docx");
+
+				//Convert Word to PDF
+				document.SaveToFile("Output\\" + fname, Spire.Doc.FileFormat.PDF);
+
+				System.Diagnostics.Process.Start("Output\\" + fname);
+
+			}
+			else {
+
+			}
+		}
+		private void ConfirmPayment_Click2(object sender, System.Windows.RoutedEventArgs e)
 		{
 			//dbman = new DBConnectionManager();
 			pmsutil = new PMSUtil();
@@ -201,237 +302,17 @@ namespace PMS.UIManager.Views.ChildWindows
 				}
 			}
 
-			//create a new pdf document
-			PdfDocument pdfDoc = new PdfDocument();
-
-			PdfPageBase page = pdfDoc.Pages.Add();
-
-			string uid = Application.Current.Resources["uid"].ToString();
-			string[] dt = pmsutil.GetServerDateTime().Split(null);
-			cDate = Convert.ToDateTime(dt[0]);
-			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-
-			page.Canvas.DrawString(cDate.ToString("MM/dd/yyyy"),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			230, 45);
-
-			page.Canvas.DrawString(ReceivedFrom.Text,
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			55, 75);
-
-			page.Canvas.DrawString(amnt.ToWords(),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			55, 125);
-
-			page.Canvas.DrawString(amnt.ToString(),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			15, 145);
-
-			//Transactions
-			dbman = new DBConnectionManager();
-			pmsutil = new PMSUtil();
-			using (conn = new MySqlConnection(dbman.GetConnStr()))
-			{
-				conn.Open();
-				if (conn.State == ConnectionState.Open)
-				{
-					MySqlCommand cmd = conn.CreateCommand();
-					cmd.CommandText = "SELECT * FROM transactions WHERE transaction_id = @transaction_id LIMIT 1;";
-					cmd.Parameters.AddWithValue("@transaction_id", tid);
-					cmd.Prepare();
-					MySqlDataReader db_reader = cmd.ExecuteReader();
-					while (db_reader.Read())
-					{
-						//Max 12
-						page.Canvas.DrawString(db_reader.GetString("type"),
-						new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						new PdfSolidBrush(System.Drawing.Color.Black),
-						10, 185);
-
-						page.Canvas.DrawString(db_reader.GetString("fee"),
-						new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						new PdfSolidBrush(System.Drawing.Color.Black),
-						230, 185);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 200);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 200);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 215);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 215);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 230);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 230);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 245);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 245);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 260);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 260);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 275);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 275);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 290);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 290);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 305);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 305);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 320);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 320);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 335);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 335);
-
-						//page.Canvas.DrawString(db_reader.GetString("type"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//10, 350);
-
-						//page.Canvas.DrawString(db_reader.GetString("fee"),
-						//new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						//new PdfSolidBrush(System.Drawing.Color.Black),
-						//230, 350);
-
-						page.Canvas.DrawString(AmountToBePaid.Content.ToString(),
-						new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						new PdfSolidBrush(System.Drawing.Color.Black),
-						230, 440);
-
-						page.Canvas.DrawString("x",
-						new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						new PdfSolidBrush(System.Drawing.Color.Black),
-						180, 455);
-
-						page.Canvas.DrawString(pmsutil.GetEmpName(uid),
-						new PdfFont(PdfFontFamily.TimesRoman, 13f),
-						new PdfSolidBrush(System.Drawing.Color.Black),
-						180, 545);
-					}
-				}
-			}
-
-			string fname = "Receipt-No-"+ OR + "-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
-			//save
-			pdfDoc.SaveToFile(@"..\..\Receipts" + fname);
-			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\Receipts" + fname);
-		}
-		private void ConfirmPayment_Click2(object sender, System.Windows.RoutedEventArgs e)
-		{
-			pmsutil = new PMSUtil();
-
-			int amnt = int.Parse(AmountToBePaid.Content.ToString());
-			string OR = pmsutil.GenerateReceiptNum();
-
-
-			//create a new pdf document
-			PdfDocument pdfDoc = new PdfDocument();
-
-			PdfPageBase page = pdfDoc.Pages.Add();
-
-			string uid = Application.Current.Resources["uid"].ToString();
-			string[] dt = pmsutil.GetServerDateTime().Split(null);
-			cDate = Convert.ToDateTime(dt[0]);
-			cTime = DateTime.Parse(dt[1] + " " + dt[2]);
-
-			page.Canvas.DrawString(cDate.ToString("MM/dd/yyyy"),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			230, 45);
-
-			page.Canvas.DrawString(ReceivedFrom.Text,
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			55, 75);
-
-			page.Canvas.DrawString(amnt.ToWords(),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			55, 125);
-
-			page.Canvas.DrawString(amnt.ToString(),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			15, 145);
-
-			int initH = 185;
-			int counterX = 1;
-
+			Document doc = new Document();
+			doc.LoadFromFile("Data\\temp_receipt.docx");
+			doc.Replace("date", DateTime.Now.ToString("MM/dd/yyyy"), true, true);
+			doc.Replace("name", ReceivedFrom.Text, true, true);
+			doc.Replace("wordsum", amnt.ToWords(), true, true);
+			doc.Replace("amount", AmountToBePaid.Content.ToString(), true, true);
+			doc.Replace("Total1", "P " + AmountToBePaid.Content.ToString(), true, true);
+			doc.Replace("cashier", pmsutil.GetEmpName(Application.Current.Resources["uid"].ToString()), true, true);
+			doc.Replace("123456", OR, true, true);
+			
+			int count1 = 1;
 			for (int i = 0; i < _list.Count; i++)
 			{
 				Transaction ti = (Transaction)_list[i];
@@ -453,56 +334,45 @@ namespace PMS.UIManager.Views.ChildWindows
 								tid = ti.TransactionID;
 								ornum = OR;
 
-								if (counterX < 12) {
-									page.Canvas.DrawString(db_reader.GetString("type"),
-									new PdfFont(PdfFontFamily.TimesRoman, 13f),
-									new PdfSolidBrush(System.Drawing.Color.Black),
-									10, initH);
-									page.Canvas.DrawString(db_reader.GetString("fee"),
-									new PdfFont(PdfFontFamily.TimesRoman, 13f),
-									new PdfSolidBrush(System.Drawing.Color.Black),
-									230, initH);
-									initH += 15;
-									counterX++;
-								}
+								doc.Replace("Item" + count1, db_reader.GetString("type"), true, true);
+								doc.Replace("Amount" + count1, db_reader.GetString("fee"), true, true);
+								count1++;
+
 								UpdateTransaction();
 							}
 						}
 					}
 				}
 			}
-			MsgSuccess();
-			this.Close();
-			trans1.SyncTransactions();
-
-			page.Canvas.DrawString(AmountToBePaid.Content.ToString(),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			230, 440);
-
-			page.Canvas.DrawString("x",
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			180, 455);
-
-			page.Canvas.DrawString(pmsutil.GetEmpName(uid),
-			new PdfFont(PdfFontFamily.TimesRoman, 13f),
-			new PdfSolidBrush(System.Drawing.Color.Black),
-			180, 545);
+			for (int xtemp = 12; count1 <= xtemp; count1++) {
+				doc.Replace("Item" + count1, "", true, true);
+				doc.Replace("Amount" + count1, "", true, true);
+			}
 
 			string fname = "Receipt-No-" + OR + "-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
-			//save
-			pdfDoc.SaveToFile(@"..\..\Receipts" + fname);
-			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\Receipts" + fname);
+			doc.SaveToFile("Data\\print_receipt.docx", Spire.Doc.FileFormat.Docx);
+
+			//Load Document
+			Document document = new Document();
+			document.LoadFromFile(@"Data\\print_receipt.docx");
+
+			//Convert Word to PDF
+			document.SaveToFile("Output\\" + fname, Spire.Doc.FileFormat.PDF);
+
+			System.Diagnostics.Process.Start("Output\\" + fname);
+			this.Close();
+			trans1.SyncTransactions();
 		}
 		private void GenReceipt() {
+			int amnt = int.Parse(AmountToBePaid.Content.ToString());
+			string OR = pmsutil.GenerateReceiptNum();
+
 			PdfDocument pdfDoc = new PdfDocument();
 			PdfPageBase page = pdfDoc.Pages.Add();
 			PdfStringFormat format1 = new PdfStringFormat(PdfTextAlignment.Center);
 
 			page.Canvas.DrawString("ROMAN CATHOLIC BISHOP OF LEGAZPI, INC.",
-			new PdfFont(PdfFontFamily.TimesRoman, 18f, PdfFontStyle.Bold),
+			new PdfFont(PdfFontFamily.TimesRoman, 14f, PdfFontStyle.Bold),
 			new PdfSolidBrush(System.Drawing.Color.Black), 240, 0, format1);
 
 			page.Canvas.DrawString("\n\nThe Chancery, Cathedral Compound,\nAlbay District. Legazpi City 4500\nTel. No. (052) 481-2178 . NON-VAT Reg.TIN No. 000-636-377-000",
@@ -515,12 +385,12 @@ namespace PMS.UIManager.Views.ChildWindows
 
 			page.Canvas.DrawString("\nDate: _______________",
 			new PdfFont(PdfFontFamily.Helvetica, 10f),
-			new PdfSolidBrush(System.Drawing.Color.Black), 340, 75);
+			new PdfSolidBrush(System.Drawing.Color.Black), 285, 70);
 
-			page.Canvas.DrawString("Received From______________________________________________________________" +
-									"\nwith TIN__________________and address at______________________________________" +
-									"\nengaged in the business style of________________________________________________" +
-									"\nthe sum of_____________________________________________________________pesos" +
+			page.Canvas.DrawString("Received From " + ReceivedFrom.Text +
+									"\nwith TIN__________________and address at ___________________________" +
+									"\nengaged in the business style of______________________________________" +
+									"\nthe sum of__________________________________________________ pesos" +
 									"\n(P___________) in parial/full payment of the following:",
 
 			new PdfFont(PdfFontFamily.Helvetica, 10f),
@@ -553,14 +423,16 @@ namespace PMS.UIManager.Views.ChildWindows
 				dataSource[i] = data[i].Split(';');
 			}
 			PdfTable table = new PdfTable();
+
+
 			table.Style.CellPadding = 2;
 			table.DataSource = dataSource;
 			float width = page.Canvas.ClientSize.Width - (table.Columns.Count + 1);
 			table.Columns[0].Width = width * 0.1f * width;
 			table.Columns[0].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			table.Columns[1].Width = width * 0.04f * width;
+			table.Columns[1].Width = width * 0.02f * width;
 			table.Columns[1].StringFormat = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Middle);
-			table.Columns[2].Width = width * 0.04f * width;
+			table.Columns[2].Width = width * 0.03f * width;
 			table.Columns[2].StringFormat = new PdfStringFormat(PdfTextAlignment.Center, PdfVerticalAlignment.Middle);
 			table.Draw(page, new System.Drawing.PointF(40, 170));
 

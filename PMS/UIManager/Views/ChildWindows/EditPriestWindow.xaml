@@ -65,28 +65,23 @@
             </Grid>
         </Border>
         <Grid Margin="0,32,0,0" Height="183" VerticalAlignment="Top">
-            <Label
-                Content="Priest Name" 
-                HorizontalAlignment="Left" 
-                Margin="67,66,0,0" 
-                VerticalAlignment="Top" 
-                Width="106" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
             <TextBox x:Name="PriestName" 
-                Height="23" 
-                Margin="178,66,68,0" 
+                Height="29" 
+                Margin="86,57,47,0" 
                 TextWrapping="Wrap" 
-                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747"/>
-            <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="178,110,0,0" VerticalAlignment="Top" Width="169">
+                VerticalAlignment="Top" RenderTransformOrigin="0.488,0.513" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Foreground="#FF474747" BorderThickness="0,1,1,1"/>
+            <ComboBox x:Name="Status" HorizontalAlignment="Left" SelectedIndex="0" Margin="86,125,0,0" VerticalAlignment="Top" Width="169" Height="29" BorderThickness="0,1,1,1">
                 <ComboBoxItem Content="Active"/>
                 <ComboBoxItem Content="Inactive"/>
             </ComboBox>
-            <Label
-                Content="Status" 
-                HorizontalAlignment="Left" 
-                Margin="67,110,0,0" 
-                VerticalAlignment="Top" 
-                Width="106" FontFamily="/PMS;component/Assets/Fonts/#Roboto" Padding="0,5,5,5" Height="26"/>
-            <UIComponents:Validator x:Name="PriestNameValidator" Visibility="Hidden" HorizontalAlignment="Right" Height="18" Margin="0,70,47,0" VerticalAlignment="Top" Width="16"/>
+            <Label Content="PRIEST NAME:" HorizontalAlignment="Left" Margin="56,30,0,0" VerticalAlignment="Top" Width="210" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label Content="STATUS:" HorizontalAlignment="Left" Margin="56,98,0,0" VerticalAlignment="Top" Width="77" FontFamily="Calibri" FontSize="14" Foreground="#FF5D5D5D" FontWeight="Bold"/>
+            <Label x:Name="PriestNameIcon" Margin="56,57,557,97" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="UserCogSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
+            <Label x:Name="StatusIcon" Margin="56,125,557,29" BorderThickness="1" BorderBrush="#FFD4D4D4">
+                <iconPacks:PackIconFontAwesome Kind="AdjustSolid" HorizontalAlignment="Left" VerticalAlignment="Top" BorderThickness="0" Height="17" Width="19" Foreground="#FF3484D4"/>
+            </Label>
         </Grid>
     </Grid>
 </simpleChildWindow:ChildWindow>

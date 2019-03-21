@@ -172,7 +172,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding FullName}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding FullName}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -181,7 +181,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding BirthDate}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding BirthDate}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -190,7 +190,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Legitimacy}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Legitimacy}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -208,9 +208,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent1}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Parent1}"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Parent2}"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Parent2}"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -220,9 +220,9 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Godparent1}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Godparent1}"/>
                                 <Border BorderBrush="#DDDDDD" BorderThickness="0,1,0,0">
-                                    <TextBlock TextAlignment="Center" Padding="5,10,5,10" Text="{Binding Godparent2}"/>
+                                    <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Padding="5,10,5,10" Text="{Binding Godparent2}"/>
                                 </Border>
                             </StackPanel>
                         </DataTemplate>
@@ -241,7 +241,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock TextAlignment="Center" Text="{Binding Minister}"/>
+                                <TextBlock TextAlignment="Center" TextWrapping="WrapWithOverflow" Text="{Binding Minister}"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

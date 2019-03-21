@@ -149,7 +149,28 @@ namespace PMS.UIManager.Views.ChildWindows
 							while (db_reader.Read())
 							{
 								status = GetStatus(db_reader.GetString("appointment_id"));
-
+								if (status == "Paid")
+								{
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Finished";
+									}
+									else
+									{
+										status = "Ongoing";
+									}
+								}
+								if (status == "Unpaid")
+								{
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Cancelled";
+									}
+									else
+									{
+										status = "Ongoing";
+									}
+								}
 								Label lbl = new Label();
 								_events.Add(new EventsItem()
 								{
@@ -232,6 +253,26 @@ namespace PMS.UIManager.Views.ChildWindows
 							while (db_reader.Read())
 							{
 								status = GetStatus(db_reader.GetString("appointment_id"));
+								if (status == "Paid") {
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Finished";
+									}
+									else {
+										status = "Ongoing";
+									}
+								}
+								if (status == "Unpaid")
+								{
+									if (DateTime.Parse(db_reader.GetString("appointment_date")) < DateTime.Now)
+									{
+										status = "Cancelled";
+									}
+									else
+									{
+										status = "Ongoing";
+									}
+								}
 								_events.Add(new EventsItem()
 								{
 									AppID = db_reader.GetString("appointment_id"),
