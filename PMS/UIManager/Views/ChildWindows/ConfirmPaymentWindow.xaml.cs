@@ -244,9 +244,9 @@ namespace PMS.UIManager.Views.ChildWindows
 				document.LoadFromFile(@"Data\\print_receipt.docx");
 
 				//Convert Word to PDF
-				document.SaveToFile("Output\\" + fname, Spire.Doc.FileFormat.PDF);
+				document.SaveToFile("Receipts\\" + fname, Spire.Doc.FileFormat.PDF);
 
-				System.Diagnostics.Process.Start("Output\\" + fname);
+				System.Diagnostics.Process.Start("Receipts\\" + fname);
 
 			}
 			else {
@@ -357,9 +357,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			document.LoadFromFile(@"Data\\print_receipt.docx");
 
 			//Convert Word to PDF
-			document.SaveToFile("Output\\" + fname, Spire.Doc.FileFormat.PDF);
+			document.SaveToFile("Receipts\\" + fname, Spire.Doc.FileFormat.PDF);
 
-			System.Diagnostics.Process.Start("Output\\" + fname);
+			System.Diagnostics.Process.Start("Receipts\\" + fname);
 			this.Close();
 			trans1.SyncTransactions();
 		}
@@ -460,9 +460,9 @@ namespace PMS.UIManager.Views.ChildWindows
 			new PdfSolidBrush(System.Drawing.Color.Black), 250, 510); ;
 
 			string fname = "test.pdf";
-			pdfDoc.SaveToFile(@"..\..\" + fname);
+			pdfDoc.SaveToFile(@"Receipts\" + fname);
 			//MessageBox.Show("yey");
-			System.Diagnostics.Process.Start(@"..\..\" + fname);
+			System.Diagnostics.Process.Start(@"Receipts\" + fname);
 		}
 		private async void MsgSuccess()
 		{

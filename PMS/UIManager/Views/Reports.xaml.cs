@@ -1332,9 +1332,9 @@ namespace PMS.UIManager.Views
 
 			string fname = "Transactions_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\" + fname);
+			pdfDoc.SaveToFile(@"Reports\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\" + fname);
+			System.Diagnostics.Process.Start(@"Reports\" + fname);
 		}
 		private async void GenReport2(object sender, RoutedEventArgs e)
 		{
@@ -1543,9 +1543,9 @@ namespace PMS.UIManager.Views
 
 			string fname = "Transactions_Report-" + DateTime.Parse(MinDate.Text).ToString("yyyy-MM-dd") + "_to_" + DateTime.Parse(MaxDate.Text).ToString("yyyy-MM-dd") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\" + fname);
+			pdfDoc.SaveToFile(@"Reports\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\" + fname);
+			System.Diagnostics.Process.Start(@"Reports\" + fname);
 		}
 		private void SyncRegisterSummary() {
 			dbman = new DBConnectionManager();
@@ -1886,9 +1886,9 @@ namespace PMS.UIManager.Views
 
 			string fname = "Registers_Report-" + DateTime.Now.ToString("MMM_dd_yyyy") + ".pdf";
 			//save
-			pdfDoc.SaveToFile(@"..\..\" + fname);
+			pdfDoc.SaveToFile(@"Reports\" + fname);
 			//launch the pdf document
-			System.Diagnostics.Process.Start(@"..\..\" + fname);
+			System.Diagnostics.Process.Start(@"Reports\" + fname);
 		}
 		private int CountT(int month, string type) {
 			int ret = 0;
